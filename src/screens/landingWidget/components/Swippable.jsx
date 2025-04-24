@@ -1,62 +1,69 @@
 import { useEffect, useState } from 'react';
 import {
   FlatList,
+  Image,
   LayoutAnimation,
   StyleSheet,
   Text,
   TouchableOpacity,
   UIManager,
-  View
+  View,
 } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors/index.js';
 import { fonts } from '../../../utils/fonts/index.js';
 
-const SwipeableItem = ({item, onSwipeLeft, onSwipeRight, showContent}) => {
+const YourSwipeableItem = ({
+  item,
+  onSwipeLeft,
+  onSwipeRight,
+  showContent,
+  styles,
+}) => {
+  const renderLeftActions = () => <View style={{width: 200}} />;
+  const renderRightActions = () => <View style={{width: 200}} />;
+
   return (
-    // <Swipeable
-    //   leftActionActivationDistance={200}
-    //   rightActionActivationDistance={200}
-    //   onLeftActionRelease={() => onSwipeLeft(item.id)}
-    //   onRightActionRelease={() => onSwipeRight(item.id)}
-    //   leftContent={<Text>{''}</Text>}
-    //   rightContent={<Text>{''}</Text>}>
-    //   <TouchableOpacity
-    //     style={styles?.swipeButton}
-    //     >
-    //     {/* Hide content for lower items */}
-    //     {showContent && (
-    //       <View style={styles?.swipeButtonContainer}>
-    //         <Image
-    //           style={styles?.profileIcon}
-    //           source={require('../../../assets/images/onboarding/Onboarding1.png')}
-    //         />
-    //         <View style={{marginLeft: width * 0.0125}}>
-    //           <Text
-    //             style={styles?.profileName}>
-    //             Mohammad Mustafa
-    //           </Text>
-    //           <Text
-    //             style={styles?.notificationMessage}>
-    //             An amazing night with the friends in kar...
-    //           </Text>
-    //         </View>
-    //         <Text
-    //           style={styles?.notificationTime}>
-    //           9:41 AM
-    //         </Text>
-    //       </View>
-    //     )}
-    //   </TouchableOpacity>
-    // </Swipeable>
-    <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
+    <GestureHandlerRootView>
+      <ReanimatedSwipeable
+        containerStyle={{
+          height: 50,
+          backgroundColor: 'papayawhip',
+          alignItems: 'center',
+        }}
+        friction={2}
+        enableTrackpadTwoFingerGesture
+        rightThreshold={40}
+        renderLeftActions={renderLeftActions}
+        renderRightActions={renderRightActions}
+        onSwipeLeft={() => onSwipeLeft(item.id)}
+        onSwipeRight={() => onSwipeRight(item.id)}>
+        <TouchableOpacity style={styles?.swipeButton}>
+          {showContent && (
+            <View style={styles?.swipeButtonContainer}>
+              <Image
+                style={styles?.profileIcon}
+                source={require('../../../assets/images/onboarding/Onboarding1.png')}
+              />
+              <View style={{marginLeft: width * 0.0125}}>
+                <Text style={styles?.profileName}>Mohammad Mustafa</Text>
+                <Text style={styles?.notificationMessage}>
+                  An amazing night with the friends in kar...
+                </Text>
+              </View>
+              <Text style={styles?.notificationTime}>9:41 AM</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </ReanimatedSwipeable>
+    </GestureHandlerRootView>
   );
 };
 
-const SwipeableList = ({
-  setVisibility,
-}) => {
+const SwipeableList = ({setVisibility}) => {
   const [items, setItems] = useState([
     {id: '1', text: 'Item 1'},
     {id: '2', text: 'Item 2'},
@@ -64,16 +71,20 @@ const SwipeableList = ({
     // Add more items as needed
   ]);
 
-  const handleSwipeLeft = (itemId) => {
+  const handleSwipeLeft = itemId => {
     const updatedItems = items.filter(item => item.id !== itemId);
     setItems(updatedItems);
-    if (updatedItems.length === 0) {setVisibility(false);}
+    if (updatedItems.length === 0) {
+      setVisibility(false);
+    }
   };
 
-  const handleSwipeRight = (itemId) => {
+  const handleSwipeRight = itemId => {
     const updatedItems = items.filter(item => item.id !== itemId);
     setItems(updatedItems);
-    if (updatedItems?.length === 0) {setVisibility(false);}
+    if (updatedItems?.length === 0) {
+      setVisibility(false);
+    }
   };
 
   return (
@@ -82,7 +93,7 @@ const SwipeableList = ({
         data={items}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <SwipeableItem
+          <YourSwipeableItem
             item={item}
             onSwipeLeft={handleSwipeLeft}
             onSwipeRight={handleSwipeRight}
@@ -113,7 +124,7 @@ export const StackedNotifications = ({count}) => {
     }
   }, []);
 
-  const handleSwipe = (itemId) => {
+  const handleSwipe = itemId => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     const newItems = items.filter(item => item.id !== itemId);
     setItems(newItems);
@@ -157,8 +168,7 @@ export const StackedNotifications = ({count}) => {
       };
 
   return (
-    <View
-      style={styles?.stackContainer}>
+    <View style={styles?.stackContainer}>
       {items?.length > 0 && (
         <TouchableOpacity onPress={toggleExpand} style={toggleButtonStyle}>
           {expanded && (
@@ -207,7 +217,7 @@ export const StackedNotifications = ({count}) => {
 
         return (
           <View key={item.id} style={[styles.stackItem, itemStyle]}>
-            <SwipeableItem
+            <YourSwipeableItem
               item={item}
               onSwipeLeft={() => handleSwipe(item.id)}
               onSwipeRight={() => handleSwipe(item.id)}
@@ -250,7 +260,7 @@ const styles = StyleSheet.create({
   dropdown: {
     marginRight: 5,
   },
-  crossButton : {
+  crossButton: {
     backgroundColor: 'rgba(250, 250, 250, 0.34)',
     justifyContent: 'center',
     alignItems: 'center',
@@ -265,7 +275,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.text,
   },
-  swipeButton : {
+  swipeButton: {
     backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
     width: '100%',
     alignSelf: 'center',
@@ -276,36 +286,36 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-  profileIcon : {
+  profileIcon: {
     height: 40,
     width: 40,
     borderRadius: 20,
   },
-  swipeButtonContainer : {flexDirection: 'row'},
-  profileName : {
+  swipeButtonContainer: {flexDirection: 'row'},
+  profileName: {
     fontSize: 13,
     fontFamily: 'Montserrat-Bold',
     color: 'black',
   },
-  notificationMessage : {
+  notificationMessage: {
     fontSize: 11,
     fontFamily: 'Montserrat-Regular',
     color: 'black',
   },
-  notificationTime : {
+  notificationTime: {
     fontFamily: 'Montserrat-Regular',
     fontSize: width * 0.0245,
     alignSelf: 'center',
     marginTop: -20,
     color: 'black',
   },
-  stackContainer : {
+  stackContainer: {
     minHeight: 150,
     // flex : 1,
     // justifyContent: 'center',
     alignItems: 'center',
   },
-  stackToggleButton : {
+  stackToggleButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
