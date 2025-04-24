@@ -115,6 +115,7 @@ const LandingWidget = ({navigation}) => {
         <Image
           style={styles?.podcastThumbnail}
           source={require('../../assets/images/onboarding/Onboarding1.png')}
+          resizeMethod='contain'
         />
         <View style={styles?.podcastMediaContainer}>
           <Text style={styles?.podcastHeading}>It shall so soon</Text>
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
     height: height * 0.04,
     backgroundColor: 'white',
     width: width * 0.18,
-    borderRadius: 5,
+    borderRadius: width * 0.01,
     justifyContent: 'center',
     alignSelf: 'flex-end',
     marginTop: height * 0.0225,
@@ -271,7 +272,8 @@ const styles = StyleSheet.create({
   skiptetxt: {
     color: '#27869f',
     textAlign: 'center',
-    fontWeight: '900',
+    fontFamily : fonts?.montserratExtraBold,
+    fontSize : width * 0.035
   },
   GreetText: {
     color: 'white',
@@ -284,29 +286,29 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: colors.black,
     fontSize: 18,
-    fontFamily: 'Montserrat-ExtraBold',
+    fontFamily: fonts?.montserratExtraBold,
     // marginTop: -height * 0.01,
-    width: '90%',
+    width: width * 0.9,
     alignSelf: 'center',
     letterSpacing: 0,
   },
   welcomeTextY: {
-    color: 'white',
+    color: colors?.white,
     fontSize: width * 0.049,
-    fontFamily: 'Montserrat-ExtraBold',
+    fontFamily: fonts?.montserratExtraBold,
   },
   logo: {
-    tintColor: 'white',
+    tintColor: colors?.white,
   },
   timewidget: {
     height: height * 0.22,
-    width: '90%',
+    width: width * 0.9,
     backgroundColor: 'rgba(250, 250, 250, 0.75)',
     alignSelf: 'center',
-    borderRadius: 20,
+    borderRadius: width * 0.05,
     marginTop: height * 0.025,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     // paddingHorizontal: -20,
     marginBottom: height * 0.01,
@@ -325,83 +327,83 @@ const styles = StyleSheet.create({
   day: {
     color: 'red',
     fontFamily: fonts?.montserratBold,
-    fontSize: 10,
-    // marginBottom: -20,
+    fontSize: width * 0.03,
+    marginBottom: -height * 0.025,
   },
   hours: {
     color: colors.text,
     fontFamily: fonts.montserratExtraBold,
-    fontSize: 65,
-    // marginBottom: -25,
+    fontSize: width * 0.17,
+    marginBottom: -height * 0.03,
     textAlign: 'center',
   },
   minutes: {
     color: colors.text,
     fontFamily: fonts.montserratMedium,
-    fontSize: 55,
+    fontSize: width * 0.15,
     textAlign: 'center',
   },
   notificationScroll: {
     height: height * 0.37,
   },
   changeWidgetButton: {
-    borderWidth: 1,
+    borderWidth: width * 0.002,
     borderColor: 'white',
     width: width * 0.63,
     height: height * 0.045,
     alignSelf: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: width * 0.02,
     marginTop: height * 0.0125,
   },
   footer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 6,
+    marginTop: width * 0.01,
   },
   dontShowText: {
     color: colors.white,
     fontFamily: fonts?.montserratMedium,
-    fontSize: 13,
-    marginLeft: 10,
+    fontSize: width * 0.035,
+    marginLeft: width * 0.02,
   },
   dateContainer: {
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: width * 0.02,
   },
   podcastThumbnail: {
-    width: 130,
-    height: 160,
-    borderRadius: 20,
-    marginLeft: 10,
+    width: width * 0.3,
+    height: height * 0.2,
+    borderRadius: width * 0.03,
+    marginLeft: width * 0.02,
   },
   reactionButtons: {
     alignSelf: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginRight: 18,
-    marginTop: 10,
-    width: 60,
+    marginRight: width * 0.035,
+    marginTop: width * 0.02,
+    width: width * 0.15,
     // marginBottom: -10,
     // padding : 10
   },
   podcastMediaContainer: {
-    width: '63%',
+    width: width * 0.53,
     alignItems: 'center',
   },
   podcastHeading: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: width * 0.045,
     color: colors.text,
     fontFamily: fonts.montserratBlack,
   },
   podcastSubheading: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: width * 0.03,
     color: colors.text,
     fontFamily: fonts.montserratMedium,
-    marginVertical: 2,
+    marginVertical: width * 0.008,
   },
 });

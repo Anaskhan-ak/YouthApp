@@ -16,10 +16,9 @@ import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors/index.js';
 import { fonts } from '../../../utils/fonts/index.js';
 
-const YourSwipeableItem = ({
+const SwipeableItem = ({
   item,
-  onSwipeLeft,
-  onSwipeRight,
+  onSwipe,
   showContent,
 }) => {
   const renderLeftActions = () => <View style={{width: 200}} />;
@@ -28,13 +27,13 @@ const YourSwipeableItem = ({
   return (
     <GestureHandlerRootView>
       <ReanimatedSwipeable
-        friction={1}
+        friction={2}
         enableTrackpadTwoFingerGesture
         rightThreshold={40}
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}
-        onSwipeLeft={() => onSwipeLeft(item.id)}
-        onSwipeRight={() => onSwipeRight(item.id)}>
+        onSwipeableOpenStartDrag={() => onSwipe(item.id)}
+        >
         <TouchableOpacity style={styles?.swipeButton}>
         {showContent && (
           <View style={styles?.swipeButtonContainer}>
@@ -69,18 +68,10 @@ const SwipeableList = ({setVisibility}) => {
     // Add more items as needed
   ]);
 
-  const handleSwipeLeft = itemId => {
+  const handleSwipe = itemId => {
     const updatedItems = items.filter(item => item.id !== itemId);
     setItems(updatedItems);
     if (updatedItems.length === 0) {
-      setVisibility(false);
-    }
-  };
-
-  const handleSwipeRight = itemId => {
-    const updatedItems = items.filter(item => item.id !== itemId);
-    setItems(updatedItems);
-    if (updatedItems?.length === 0) {
       setVisibility(false);
     }
   };
@@ -91,10 +82,9 @@ const SwipeableList = ({setVisibility}) => {
         data={items}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <YourSwipeableItem
+          <SwipeableItem
             item={item}
-            onSwipeLeft={handleSwipeLeft}
-            onSwipeRight={handleSwipeRight}
+            onSwipe={handleSwipe}
             showContent={true}
           />
           // <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
@@ -215,10 +205,9 @@ export const StackedNotifications = ({count}) => {
 
         return (
           <View key={item.id} style={[styles.stackItem, itemStyle]}>
-            <YourSwipeableItem
+            <SwipeableItem
               item={item}
-              onSwipeLeft={() => handleSwipe(item.id)}
-              onSwipeRight={() => handleSwipe(item.id)}
+              onSwipe={() => handleSwipe(item.id)}
               showContent={expanded || isTop}
             />
           </View>

@@ -10,6 +10,7 @@ import {
   PinkRewindAUdioButton,
   PinkVolume,
 } from '../../../assets/images/svgs';
+import { height, width } from '../../../constant/index';
 import { colors } from '../../../utils/colors/index';
 
 Sound.setCategory('Playback');
@@ -159,8 +160,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 20,
     marginVertical: 5,
-    width: 170,
-    height: 45,
+    width: width * 0.5,
+    height: height * 0.08,
   },
   sliderContainer: {
     flexDirection: 'row',
