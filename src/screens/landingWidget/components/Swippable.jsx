@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   UIManager,
-  View,
+  View
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -21,7 +21,6 @@ const YourSwipeableItem = ({
   onSwipeLeft,
   onSwipeRight,
   showContent,
-  styles,
 }) => {
   const renderLeftActions = () => <View style={{width: 200}} />;
   const renderRightActions = () => <View style={{width: 200}} />;
@@ -29,12 +28,7 @@ const YourSwipeableItem = ({
   return (
     <GestureHandlerRootView>
       <ReanimatedSwipeable
-        containerStyle={{
-          height: 50,
-          backgroundColor: 'papayawhip',
-          alignItems: 'center',
-        }}
-        friction={2}
+        friction={1}
         enableTrackpadTwoFingerGesture
         rightThreshold={40}
         renderLeftActions={renderLeftActions}
@@ -42,22 +36,26 @@ const YourSwipeableItem = ({
         onSwipeLeft={() => onSwipeLeft(item.id)}
         onSwipeRight={() => onSwipeRight(item.id)}>
         <TouchableOpacity style={styles?.swipeButton}>
-          {showContent && (
-            <View style={styles?.swipeButtonContainer}>
-              <Image
-                style={styles?.profileIcon}
-                source={require('../../../assets/images/onboarding/Onboarding1.png')}
-              />
-              <View style={{marginLeft: width * 0.0125}}>
-                <Text style={styles?.profileName}>Mohammad Mustafa</Text>
-                <Text style={styles?.notificationMessage}>
-                  An amazing night with the friends in kar...
-                </Text>
-              </View>
-              <Text style={styles?.notificationTime}>9:41 AM</Text>
+        {showContent && (
+          <View style={styles?.swipeButtonContainer}>
+            <Image
+              style={styles?.profileIcon}
+              source={require('../../../assets/images/onboarding/Onboarding1.png')}
+            />
+            <View style={{ marginLeft: width * 0.0125 }}>
+              <Text style={styles?.profileName}>
+                Mohammad Mustafa
+              </Text>
+              <Text style={styles?.notificationMessage}>
+                An amazing night with the friends in kar...
+              </Text>
             </View>
-          )}
-        </TouchableOpacity>
+            <Text style={styles?.notificationTime}>
+              9:41 AM
+            </Text>
+          </View>
+        )}
+      </TouchableOpacity>
       </ReanimatedSwipeable>
     </GestureHandlerRootView>
   );
