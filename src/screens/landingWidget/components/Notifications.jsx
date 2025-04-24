@@ -8,7 +8,7 @@ import { Myfont } from '../../../assets/fonts/Fonts';
 import { DropDownIcon } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
-import SwipeableItem from '../components/Swippable';
+import SwipeableList from './Swippable';
 
   const Notifications = ({
     title,
@@ -52,14 +52,20 @@ import SwipeableItem from '../components/Swippable';
           )}
         </View>
         {/* Notification bars */}
-        <View className="w-full justify-center items-center">
+        <View style={{
+          width : '100%',
+          justifyContent : 'center',
+          alignItems : 'center'
+        }}>
           {toggle ? (
             <TouchableOpacity
-              className="w-[90%]"
+              style={{width : width*0.9}}
               onPress={() => {
                 setToggle(false);
               }}>
-              <SwipeableItem setVisibility={setVisibility} />
+              <SwipeableList setVisibility={setVisibility} />
+              {/* <SwipeableList/> */}
+              {/* <Text>QQQQQQQQ</Text> */}
             </TouchableOpacity>
           ) : null}
         </View>

@@ -3,33 +3,25 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Sound from 'react-native-sound';
+import { PinkForwardAudioButton, PinkPauseAudioButton, PinkPlayAudioButton, PinkRewindAUdioButton, PinkVolume } from '../../../assets/images/svgs';
 import { colors } from '../../../utils/colors/index';
-import {
-  PinkForwardAudioButton,
-  PinkPauseAudioButton,
-  PinkPlayAudioButton,
-  PinkRewindAUdioButton,
-  PinkVolume,
-} from '../../utils/svgs';
 
 Sound.setCategory('Playback');
 
-const AudioPlayer = ({audioURL, pink}) => {
+const LandingWidgetAudioPlayer = ({audioURL, pink}) => {
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  useEffect(() => {
-    loadSound(audioURL);
-    return () => {
-      if (sound) {
-        sound.release();
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audioURL]);
-
+  // useEffect(() => {
+  //   loadSound(audioURL);
+  //   return () => {
+  //     if (sound) {
+  //       sound.release();
+  //     }
+  //   };
+  // }, []);
   const loadSound = url => {
     const newSound = new Sound(url, '', error => {
       if (error) {
@@ -213,4 +205,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default AudioPlayer;
+export default LandingWidgetAudioPlayer;

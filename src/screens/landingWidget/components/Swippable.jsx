@@ -1,57 +1,56 @@
 import { useEffect, useState } from 'react';
 import {
   FlatList,
-  Image,
   LayoutAnimation,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   UIManager,
-  View,
+  View
 } from 'react-native';
-import Swipeable from 'react-native-swipeable';
-import DropDownIcon from '../../../assets/images/svgs/index.js';
+import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors/index.js';
 import { fonts } from '../../../utils/fonts/index.js';
 
 const SwipeableItem = ({item, onSwipeLeft, onSwipeRight, showContent}) => {
   return (
-    <Swipeable
-      leftActionActivationDistance={200}
-      rightActionActivationDistance={200}
-      onLeftActionRelease={() => onSwipeLeft(item.id)}
-      onRightActionRelease={() => onSwipeRight(item.id)}
-      leftContent={<Text>{''}</Text>}
-      rightContent={<Text>{''}</Text>}>
-      <TouchableOpacity
-        style={styles?.swipeButton}>
-        {/* Hide content for lower items */}
-        {showContent && (
-          <View style={styles?.swipeButtonContainer}>
-            <Image
-              style={styles?.profileIcon}
-              source={require('../../../assets/images/onboarding/Onboarding1.png')}
-            />
-            <View style={{marginLeft: width * 0.0125}}>
-              <Text
-                style={styles?.profileName}>
-                Mohammad Mustafa
-              </Text>
-              <Text
-                style={styles?.notificationMessage}>
-                An amazing night with the friends in kar...
-              </Text>
-            </View>
-            <Text
-              style={styles?.notificationTime}>
-              9:41 AM
-            </Text>
-          </View>
-        )}
-      </TouchableOpacity>
-    </Swipeable>
+    // <Swipeable
+    //   leftActionActivationDistance={200}
+    //   rightActionActivationDistance={200}
+    //   onLeftActionRelease={() => onSwipeLeft(item.id)}
+    //   onRightActionRelease={() => onSwipeRight(item.id)}
+    //   leftContent={<Text>{''}</Text>}
+    //   rightContent={<Text>{''}</Text>}>
+    //   <TouchableOpacity
+    //     style={styles?.swipeButton}
+    //     >
+    //     {/* Hide content for lower items */}
+    //     {showContent && (
+    //       <View style={styles?.swipeButtonContainer}>
+    //         <Image
+    //           style={styles?.profileIcon}
+    //           source={require('../../../assets/images/onboarding/Onboarding1.png')}
+    //         />
+    //         <View style={{marginLeft: width * 0.0125}}>
+    //           <Text
+    //             style={styles?.profileName}>
+    //             Mohammad Mustafa
+    //           </Text>
+    //           <Text
+    //             style={styles?.notificationMessage}>
+    //             An amazing night with the friends in kar...
+    //           </Text>
+    //         </View>
+    //         <Text
+    //           style={styles?.notificationTime}>
+    //           9:41 AM
+    //         </Text>
+    //       </View>
+    //     )}
+    //   </TouchableOpacity>
+    // </Swipeable>
+    <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
   );
 };
 
@@ -89,6 +88,7 @@ const SwipeableList = ({
             onSwipeRight={handleSwipeRight}
             showContent={true}
           />
+          // <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
         )}
       />
     </View>

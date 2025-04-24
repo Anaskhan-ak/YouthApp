@@ -10,10 +10,14 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { DontShowLandingWidget } from '../../assets/images/svgs';
+import { BlackLike, BlackShare, DontShowLandingWidget } from '../../assets/images/svgs';
 import { colors } from '../../utils/colors/index';
 import { fonts } from '../../utils/fonts/index';
+import LandingWidgetAudioPlayer from './components/AudioPlayer';
 import Calendar from './components/Calender';
+import AnalogWatch from './components/Clock';
+import Notifications from './components/Notifications';
+import { StackedNotifications } from './components/Swippable';
 // import {useDispatch, useSelector} from 'react-redux';
 
 const {height, width} = Dimensions.get('window');
@@ -66,7 +70,7 @@ const LandingWidget = ({navigation}) => {
     linkedAccounts: [],
   };
 
-  const [widget, changeWidget] = useState('date');
+  const [widget, changeWidget] = useState('podcast');
 
   const toggleWidget = () => {
     if (widget === 'calender') {
@@ -139,7 +143,9 @@ const LandingWidget = ({navigation}) => {
         backgroundColor={'transparent'}
         translucent
       />
-      <ScrollView contentContainerStyle={styles?.scrollView}>
+      <ScrollView 
+      contentContainerStyle={styles?.scrollView}
+      >
         <TouchableOpacity
           onPress={() => {
             navigation.replace('Dashboard', {screen: 'Home'});
@@ -177,7 +183,7 @@ const LandingWidget = ({navigation}) => {
         )}
 
         {/* Notifications */}
-        {/* <ScrollView style={styles?.notificationScroll}>
+        <ScrollView style={styles?.notificationScroll}>
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -219,7 +225,7 @@ const LandingWidget = ({navigation}) => {
             isVisible={walletVisible}
             setVisibility={setWalletVisible}
           />
-        </ScrollView> */}
+        </ScrollView>
 
         <TouchableOpacity
           onPress={toggleWidget}
@@ -248,7 +254,9 @@ export default LandingWidget;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
-  scrollView: {paddingBottom: 20, marginTop: 25},
+  scrollView: {
+    marginTop : height * 0.02
+  },
   skipButton: {
     height: height * 0.04,
     backgroundColor: 'white',
@@ -268,8 +276,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: width * 0.15,
     fontFamily: 'Montserrat-ExtraBold',
-    width: 320,
-    alignSelf: 'center',
+    // width: 320,
+    // alignSelf: 'center',
+    marginLeft : width * 0.04
   },
   welcomeText: {
     color: colors.black,
@@ -332,7 +341,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   notificationScroll: {
-    height: height * 0.32,
+    height: height * 0.37,
   },
   changeWidgetButton: {
     borderWidth: 1,
