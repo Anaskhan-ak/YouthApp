@@ -3,7 +3,13 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Sound from 'react-native-sound';
-import { PinkForwardAudioButton, PinkPauseAudioButton, PinkPlayAudioButton, PinkRewindAUdioButton, PinkVolume } from '../../../assets/images/svgs';
+import {
+  PinkForwardAudioButton,
+  PinkPauseAudioButton,
+  PinkPlayAudioButton,
+  PinkRewindAUdioButton,
+  PinkVolume,
+} from '../../../assets/images/svgs';
 import { colors } from '../../../utils/colors/index';
 
 Sound.setCategory('Playback');
@@ -122,9 +128,7 @@ const LandingWidgetAudioPlayer = ({audioURL, pink}) => {
         <Text style={styles.timeText}>{formatTime(duration)}</Text>
         <View style={styles?.audioProgress}>
           <PinkVolume width={13} height={13} />
-          <View
-            style={styles?.audioVolume}
-          />
+          <View style={styles?.audioVolume} />
         </View>
       </View>
 
@@ -203,6 +207,5 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
-
 
 export default LandingWidgetAudioPlayer;

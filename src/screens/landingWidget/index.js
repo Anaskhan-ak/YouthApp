@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch, useSelector } from 'react-redux';
 import { BlackLike, BlackShare, DontShowLandingWidget } from '../../assets/images/svgs';
 import { colors } from '../../utils/colors/index';
 import { fonts } from '../../utils/fonts/index';
@@ -33,42 +34,42 @@ const LandingWidget = ({navigation}) => {
   const [walletVisible, setWalletVisible] = useState(true);
   const [socialVisible, setSocialVisible] = useState(true);
   const [stackNotificationCount, setStackNotificationCount] = useState(-1);
-  // const user = useSelector(state => state.auth.data);
-  // const landingWidget = useSelector(state => state.generic.landingWidget);
-  // const dispatch = useDispatch();
-  const user = {
-    id: 'cm60ql39f003l91r8l18bd80z',
-    firstName: 'Sannya01',
-    lastName: 'Wasim',
-    email: 'sannya.wasim01@gmail.com',
-    password: '$2b$10$Cb7LzbunTQT1gdt7QaeI9ut8sa73ZVkp1fhe6S5WgPBCLm.6njWUq',
-    country: 'Pakistan',
-    phoneNo: '+923368214535',
-    gender: 'female',
-    DoB: '2001-08-04T00:00:00.000Z',
-    sign_in_provider: null,
-    UiD: null,
-    status: true,
-    photo:
-      'https://youthapp.s3.eu-north-1.amazonaws.com/4139875506profilePicture.jpg',
-    links: ['www.youthapp.io'],
-    fcm_token:
-      'cV9EFlDqS9-pYfUHx2mcik:APA91bGiU2OWD2JP1872UmMq7_tffyBN0DeBaerTgRa1j2zkvA-CIIofiSt9zPN6MOseAf8augAJYFYDmtDEEYjxPEVwFViwmxwwaM-E7e_qVLfEfZ9GFf4',
-    createdAt: '2025-01-17T12:29:18.148Z',
-    isFirstLogin: false,
-    coverImage:
-      'https://youthapp.s3.eu-north-1.amazonaws.com/319080719609coverImage.jpg',
-    bio: 'I am an engineer.',
-    isVerified: true,
-    friendFriends: [],
-    friendships: [],
-    LinkedAccount: [],
-    numPosts: 87,
-    numFollowers: 5,
-    numFollowing: 2,
-    favorites: [],
-    linkedAccounts: [],
-  };
+  const user = useSelector(state => state?.auth?.data);
+  const landingWidget = useSelector(state => state?.generic?.landingWidget);
+  const dispatch = useDispatch();
+  // const user = {
+  //   id: 'cm60ql39f003l91r8l18bd80z',
+  //   firstName: 'Sannya01',
+  //   lastName: 'Wasim',
+  //   email: 'sannya.wasim01@gmail.com',
+  //   password: '$2b$10$Cb7LzbunTQT1gdt7QaeI9ut8sa73ZVkp1fhe6S5WgPBCLm.6njWUq',
+  //   country: 'Pakistan',
+  //   phoneNo: '+923368214535',
+  //   gender: 'female',
+  //   DoB: '2001-08-04T00:00:00.000Z',
+  //   sign_in_provider: null,
+  //   UiD: null,
+  //   status: true,
+  //   photo:
+  //     'https://youthapp.s3.eu-north-1.amazonaws.com/4139875506profilePicture.jpg',
+  //   links: ['www.youthapp.io'],
+  //   fcm_token:
+  //     'cV9EFlDqS9-pYfUHx2mcik:APA91bGiU2OWD2JP1872UmMq7_tffyBN0DeBaerTgRa1j2zkvA-CIIofiSt9zPN6MOseAf8augAJYFYDmtDEEYjxPEVwFViwmxwwaM-E7e_qVLfEfZ9GFf4',
+  //   createdAt: '2025-01-17T12:29:18.148Z',
+  //   isFirstLogin: false,
+  //   coverImage:
+  //     'https://youthapp.s3.eu-north-1.amazonaws.com/319080719609coverImage.jpg',
+  //   bio: 'I am an engineer.',
+  //   isVerified: true,
+  //   friendFriends: [],
+  //   friendships: [],
+  //   LinkedAccount: [],
+  //   numPosts: 87,
+  //   numFollowers: 5,
+  //   numFollowing: 2,
+  //   favorites: [],
+  //   linkedAccounts: [],
+  // };
 
   const [widget, changeWidget] = useState('podcast');
 
@@ -235,7 +236,7 @@ const LandingWidget = ({navigation}) => {
         <View style={styles?.footer}>
           <TouchableOpacity
             onPress={() => {
-              // dispatch(toggleLandingWidget(false));
+              dispatch(toggleLandingWidget(false));
               // navigation.navigate('Dashboard');
             }}>
             <View>
