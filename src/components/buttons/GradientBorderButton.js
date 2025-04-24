@@ -1,24 +1,20 @@
 import {
-  StyleSheet,
-  Text,
-  View,
   Dimensions,
   TouchableOpacity,
-  Image,
-  TouchableOpacityProps,
-  ActivityIndicator,
+  View
 } from 'react-native';
-import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {styles} from './styles';
+import { colors } from '../../utils/colors';
 import GradientText from '../text/GradientText';
-import {colors} from '../../utils/colors';
+import { styles } from './styles';
 
 const {height, width} = Dimensions.get('window');
 
 export const GradientBorderButton = props => {
   return (
-    <TouchableOpacity onPress={props.onPress} style={props.style}>
+    <TouchableOpacity onPress={props.onPress} 
+    // style={props.style}
+    >
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}

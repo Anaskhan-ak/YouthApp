@@ -1,30 +1,24 @@
+import { useState } from 'react';
 import {
   Dimensions,
+  Image,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Image,
-  ScrollView,
-  StatusBar,
 } from 'react-native';
-import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {StackedNotifications} from './components/Notifications';
-import AnalogWatch from './components/Clock';
-import Calendar from './components/Calender';
+import { DontShowLandingWidget } from '../../assets/images/svgs';
 import { colors } from '../../utils/colors/index';
-import { Myfont } from '../../utils/fonts/index';
+import { fonts } from '../../utils/fonts/index';
+import Calendar from './components/Calender';
 // import {useDispatch, useSelector} from 'react-redux';
-import { BlackLike, BlackShare } from '../../assets/images/svgs/index';
-import {toggleLandingWidget} from '../../../Redux/slices/GenericSlice';
-import LandingWidgetAudioPlayer from './components/AudioPlayer';
-import Notifications from './components/Notifications';
-import { DontShowLandingWidget } from '../../assets/images/svgs/index';
 
 const {height, width} = Dimensions.get('window');
 
-const LandingWiget = ({navigation}) => {
+const LandingWidget = ({navigation}) => {
   const [chatToggle, setChatToggle] = useState(true);
   const [educationToggle, setEducationToggle] = useState(true);
   const [walletToggle, setWalletToggle] = useState(true);
@@ -38,6 +32,40 @@ const LandingWiget = ({navigation}) => {
   // const user = useSelector(state => state.auth.data);
   // const landingWidget = useSelector(state => state.generic.landingWidget);
   // const dispatch = useDispatch();
+  const user = {
+    id: 'cm60ql39f003l91r8l18bd80z',
+    firstName: 'Sannya01',
+    lastName: 'Wasim',
+    email: 'sannya.wasim01@gmail.com',
+    password: '$2b$10$Cb7LzbunTQT1gdt7QaeI9ut8sa73ZVkp1fhe6S5WgPBCLm.6njWUq',
+    country: 'Pakistan',
+    phoneNo: '+923368214535',
+    gender: 'female',
+    DoB: '2001-08-04T00:00:00.000Z',
+    sign_in_provider: null,
+    UiD: null,
+    status: true,
+    photo:
+      'https://youthapp.s3.eu-north-1.amazonaws.com/4139875506profilePicture.jpg',
+    links: ['www.youthapp.io'],
+    fcm_token:
+      'cV9EFlDqS9-pYfUHx2mcik:APA91bGiU2OWD2JP1872UmMq7_tffyBN0DeBaerTgRa1j2zkvA-CIIofiSt9zPN6MOseAf8augAJYFYDmtDEEYjxPEVwFViwmxwwaM-E7e_qVLfEfZ9GFf4',
+    createdAt: '2025-01-17T12:29:18.148Z',
+    isFirstLogin: false,
+    coverImage:
+      'https://youthapp.s3.eu-north-1.amazonaws.com/319080719609coverImage.jpg',
+    bio: 'I am an engineer.',
+    isVerified: true,
+    friendFriends: [],
+    friendships: [],
+    LinkedAccount: [],
+    numPosts: 87,
+    numFollowers: 5,
+    numFollowing: 2,
+    favorites: [],
+    linkedAccounts: [],
+  };
+
   const [widget, changeWidget] = useState('date');
 
   const toggleWidget = () => {
@@ -149,7 +177,7 @@ const LandingWiget = ({navigation}) => {
         )}
 
         {/* Notifications */}
-        <ScrollView style={styles?.notificationScroll}>
+        {/* <ScrollView style={styles?.notificationScroll}>
           <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
@@ -191,7 +219,7 @@ const LandingWiget = ({navigation}) => {
             isVisible={walletVisible}
             setVisibility={setWalletVisible}
           />
-        </ScrollView>
+        </ScrollView> */}
 
         <TouchableOpacity
           onPress={toggleWidget}
@@ -202,13 +230,11 @@ const LandingWiget = ({navigation}) => {
           <TouchableOpacity
             onPress={() => {
               // dispatch(toggleLandingWidget(false));
-              navigation.navigate('Dashboard');
+              // navigation.navigate('Dashboard');
             }}>
-            {/* <Image
-              resizeMode="contain"
-              source={require('../../../Assets/Icons/round.png')}
-            /> */}
-            <View><DontShowLandingWidget/></View>
+            <View>
+              <DontShowLandingWidget />
+            </View>
           </TouchableOpacity>
           <Text style={styles?.dontShowText}> Don’t show me this page</Text>
         </View>
@@ -217,7 +243,8 @@ const LandingWiget = ({navigation}) => {
   );
 };
 
-export default LandingWiget;
+
+export default LandingWidget;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
@@ -248,7 +275,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 18,
     fontFamily: 'Montserrat-ExtraBold',
-    marginTop: -height * 0.01,
+    // marginTop: -height * 0.01,
     width: '90%',
     alignSelf: 'center',
     letterSpacing: 0,
@@ -271,7 +298,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: -20,
+    // paddingHorizontal: -20,
     marginBottom: height * 0.01,
   },
   welcomeTextz: {
@@ -285,17 +312,22 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-ExtraBold',
     textAlign: 'center',
   },
-  day: {color: 'red', fontFamily: Myfont.Bold, fontSize: 10, marginBottom: -20},
+  day: {
+    color: 'red',
+    fontFamily: fonts?.montserratBold,
+    fontSize: 10,
+    // marginBottom: -20,
+  },
   hours: {
     color: colors.text,
-    fontFamily: Myfont.ExtraBold,
+    fontFamily: fonts.montserratExtraBold,
     fontSize: 65,
-    marginBottom: -25,
+    // marginBottom: -25,
     textAlign: 'center',
   },
   minutes: {
     color: colors.text,
-    fontFamily: Myfont.Medium,
+    fontFamily: fonts.montserratMedium,
     fontSize: 55,
     textAlign: 'center',
   },
@@ -321,7 +353,7 @@ const styles = StyleSheet.create({
   },
   dontShowText: {
     color: colors.white,
-    fontFamily: Myfont?.Medium,
+    fontFamily: fonts?.montserratMedium,
     fontSize: 13,
     marginLeft: 10,
   },
@@ -342,7 +374,7 @@ const styles = StyleSheet.create({
     marginRight: 18,
     marginTop: 10,
     width: 60,
-    marginBottom: -10,
+    // marginBottom: -10,
     // padding : 10
   },
   podcastMediaContainer: {
@@ -353,13 +385,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     color: colors.text,
-    fontFamily: Myfont.Black,
+    fontFamily: fonts.montserratBlack,
   },
   podcastSubheading: {
     textAlign: 'center',
     fontSize: 14,
     color: colors.text,
-    fontFamily: Myfont.Medium,
+    fontFamily: fonts.montserratMedium,
     marginVertical: 2,
   },
 });

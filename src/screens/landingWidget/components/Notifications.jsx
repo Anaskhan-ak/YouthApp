@@ -1,14 +1,14 @@
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-  } from 'react-native';
-  import {DropDownIcon} from '../../../utils/svgs';
-  import {colors} from '../../../Assets/Color/Color';
-  import SwipeableItem from '../components/Swippable';
-  import { width } from '../../../constant';
-  import { Myfont } from 'assets/fonts/Fonts';
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Myfont } from '../../../assets/fonts/Fonts';
+import { DropDownIcon } from '../../../assets/images/svgs';
+import { width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import SwipeableItem from '../components/Swippable';
 
   const Notifications = ({
     title,

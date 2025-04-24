@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Slider from '@react-native-community/slider';
-import Sound from 'react-native-sound';
-import {colors} from '../../Assets/Color/Color';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Sound from 'react-native-sound';
+import { colors } from '../../../utils/colors/index';
 import {
   PinkForwardAudioButton,
   PinkPauseAudioButton,

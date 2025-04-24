@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
   FlatList,
-  TouchableOpacity,
   Image,
-  StyleSheet,
   LayoutAnimation,
   Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
   UIManager,
+  View,
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { Myfont } from 'assets/fonts/Fonts';
 import DropDownIcon from '../../../assets/images/svgs/index.js';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors/index.js';
+import { fonts } from '../../../utils/fonts/index.js';
 
 const SwipeableItem = ({item, onSwipeLeft, onSwipeRight, showContent}) => {
   return (
@@ -32,7 +32,7 @@ const SwipeableItem = ({item, onSwipeLeft, onSwipeRight, showContent}) => {
           <View style={styles?.swipeButtonContainer}>
             <Image
               style={styles?.profileIcon}
-              source={require('../Assets/Images/images.png')}
+              source={require('../../../assets/images/onboarding/Onboarding1.png')}
             />
             <View style={{marginLeft: width * 0.0125}}>
               <Text
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     fontSize: width * 0.023,
-    fontFamily: Myfont.Regular,
+    fontFamily: fonts.Regular,
     color: colors.black,
   },
   dropdown: {
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     // marginRight : -10
   },
   crossText: {
-    fontFamily: Myfont.Regular,
+    fontFamily: fonts.Regular,
     fontSize: 9,
     textAlign: 'center',
     color: colors.text,
