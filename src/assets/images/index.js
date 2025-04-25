@@ -9,4 +9,5 @@ export const images = {
     background:require('./background.png'),
     splashLogo:require('./SplashLogo.png'),
     signup:require('./SignupImage.jpeg'),
+    login:require('./loginBackground.png'),
 }

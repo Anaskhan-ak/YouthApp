@@ -21,7 +21,8 @@ export const colors = {
   alertBlue: '#e5f5fc',
   linkBlue: '#64CFFF',
   lightGrey:'#424242',
-  extraLightGrey:'rgba(234, 234, 234, 1)'
+  extraLightGrey:'rgba(234, 234, 234, 1)',
+  red:'rgba(255, 9, 9, 1)'
 };
 
 // Dark theme colors

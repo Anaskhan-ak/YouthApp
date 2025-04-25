@@ -14,12 +14,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors?.white,
     paddingHorizontal: width * 0.06,
-    paddingVertical: height * 0.015,
   },
-  image: {height:height*0.45,width:width*1},
+  image: {height:Platform?.OS==='ios'?height*0.5:height*0.6,width:width*1},
   heading: {
     fontSize: width * 0.055,
     fontFamily: fonts?.montserratExtraBold,
+    marginTop:10
   },
   title: {
     fontSize: width * 0.05,
@@ -58,10 +58,24 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     fontSize: width * 0.03,
   },
-  bottomContentView:{flexDirection: 'row', alignItems: 'center'},
+  bottomContentView:{flexDirection: 'row', alignItems: 'center',justifyContent:"space-between",marginVertical:height*0.02},
   scrollViewContainer:{
     flexGrow: 1, 
     justifyContent: 'center',
     alignItems: 'center',
+    },
+    rememberMe:{
+      width:12,
+      height:12,
+      borderRadius:12,
+      alignItems:"center",
+      justifyContent:"center"
+    },
+    rememberMeContainer:{flexDirection:"row",alignItems:"center"},
+    checkRememberMe:{
+      width:9,
+      height:9,
+      borderRadius:9,
+      backgroundColor:colors?.white
     }
 });

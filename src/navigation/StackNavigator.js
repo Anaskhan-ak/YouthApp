@@ -4,12 +4,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Onboarding from '../screens/onboarding';
 import Splash from '../screens/Splash';
 import SignUp from '../screens/signup';
+import Login from '../screens/login';
 
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="SignUp">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -23,6 +24,11 @@ const StackNavigator = () => {
         <Stack.Screen
         name="SignUp"
         component={SignUp}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="Login"
+        component={Login}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

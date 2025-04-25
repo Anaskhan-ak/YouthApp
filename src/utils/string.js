@@ -37,3 +37,17 @@ export const onboardingContent = [
         '“Time is what we want most but what we use worst.” - The more you spend time and engage the more you Earn',
     },
   ];
+export const gender = [
+    {
+      id: 0,
+      name: 'Male',
+    },
+    {
+      id: 1,
+      name: 'Female',
+    },
+    {
+      id: 2,
+      name: 'Other',
+    },
+  ];
