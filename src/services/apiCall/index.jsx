@@ -1,5 +1,5 @@
 
-import { deleted, get, patch, post } from '../Methods';
+import {get, post, patch, documentPost, put, deleted} from '../Methods';
 import { apis } from '../endPoints';
 
 export const apiCall = {
@@ -16,15 +16,6 @@ export const apiCall = {
   getNationalities: async params => {
     let result = await get(Apis.nationalities, params);
     if (result.status === 200) return result.data;
-  },
-
-  getNotifications : async params => {
-    let result = await get(`${apis?.getNotification}/${params?.page}/${params?.pageSize}`)
-    // let result = await get(
-    //   'http://51.20.253.189:3000/api/v1/notification/1/10'
-    // )
-    if (result?.status) return result?.data?.data
-    else throw result
   },
   
   // PATCH API CALL
