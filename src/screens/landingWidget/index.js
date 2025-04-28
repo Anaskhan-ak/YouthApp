@@ -40,7 +40,7 @@ const LandingWidget = ({navigation}) => {
   const [socialVisible, setSocialVisible] = useState(true);
   const [stackNotificationCount, setStackNotificationCount] = useState(-1);
 
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
