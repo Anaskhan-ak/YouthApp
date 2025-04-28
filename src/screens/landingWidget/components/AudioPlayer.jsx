@@ -2,7 +2,7 @@ import Slider from '@react-native-community/slider';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Sound from 'react-native-sound';
+import SoundPlayer from 'react-native-sound-player';
 import {
   PinkForwardAudioButton,
   PinkPauseAudioButton,
@@ -13,96 +13,90 @@ import {
 import { height, width } from '../../../constant/index';
 import { colors } from '../../../utils/colors/index';
 
-Sound.setCategory('Playback');
-
-const LandingWidgetAudioPlayer = ({audioURL, pink}) => {
-  const [sound, setSound] = useState(null);
+const LandingWidgetAudioPlayer = ({  pink }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
 
   // useEffect(() => {
-  //   loadSound(audioURL);
-  //   return () => {
-  //     if (sound) {
-  //       sound.release();
-  //     }
-  //   };
-  // }, []);
-  const loadSound = url => {
-    const newSound = new Sound(url, '', error => {
-      if (error) {
-        console.log('Failed to load the sound', error);
-        return;
-      }
-      setSound(newSound);
-      setDuration(newSound.getDuration() * 1000);
-    });
-  };
+  //   console.log("********* AUDIO URL **********", audioURL);
+  //   console.log("SOUND", SoundPlayer)
+  //   try {
+  //     SoundPlayer.loadUrl(audioURL);
+  //     const checkDuration = setTimeout(async () => {
+  //       const info = await SoundPlayer.getInfo();
+  //       setDuration(info.duration * 1000); // convert to ms
+  //     }, 1000);
+
+  //     return () => {
+  //       clearTimeout(checkDuration);
+  //       SoundPlayer.stop();
+  //     };
+  //   } catch (e) {
+  //     console.log('Cannot load sound file', e);
+  //   }
+  // }, [audioURL]);
 
   const playPauseHandler = () => {
-    if (sound) {
+    try {
       if (isPlaying) {
-        sound.pause();
+        SoundPlayer.pause();
       } else {
-        sound.play(success => {
-          if (success) {
-            setIsPlaying(false);
-            setPosition(0);
-            setDuration(0);
-            console.log('Successfully finished playing');
-          } else {
-            console.log('Playback failed due to audio decoding errors');
-          }
-        });
+        SoundPlayer.playUrl(audioURL);
       }
       setIsPlaying(!isPlaying);
+    } catch (e) {
+      console.log('Error in playPauseHandler:', e);
     }
   };
 
-  const forwardHandler = () => {
-    if (sound) {
-      const newPosition = Math.min(position + 5000, duration);
-      sound.setCurrentTime(newPosition / 1000);
-      setPosition(newPosition);
+  const forwardHandler = async () => {
+    try {
+      const info = await SoundPlayer.getInfo();
+      let newTime = Math.min(info.currentTime + 5, info.duration);
+      SoundPlayer.seek(newTime);
+    } catch (e) {
+      console.log('Error in forwardHandler:', e);
     }
   };
 
-  const backwardHandler = () => {
-    if (sound) {
-      const newPosition = Math.max(position - 5000, 0);
-      sound.setCurrentTime(newPosition / 1000);
-      setPosition(newPosition);
+  const backwardHandler = async () => {
+    try {
+      const info = await SoundPlayer.getInfo();
+      let newTime = Math.max(info.currentTime - 5, 0);
+      SoundPlayer.seek(newTime);
+    } catch (e) {
+      console.log('Error in backwardHandler:', e);
     }
   };
 
   useEffect(() => {
     let interval = null;
     if (isPlaying) {
-      interval = setInterval(() => {
-        sound?.getCurrentTime(seconds => setPosition(seconds * 1000));
+      interval = setInterval(async () => {
+        try {
+          const info = await SoundPlayer.getInfo();
+          setPosition(info.currentTime * 1000);
+        } catch (e) {
+          console.log('getInfo error:', e);
+        }
       }, 1000);
     } else if (!isPlaying && position !== 0) {
-      if (interval) {
-        clearInterval(interval);
-      }
+      clearInterval(interval);
     }
+
     return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
+      clearInterval(interval);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, sound]);
+  }, [isPlaying]);
 
   const formatTime = milliseconds => {
     const minutes = Math.floor(milliseconds / 60000);
     const seconds = Math.floor((milliseconds % 60000) / 1000);
-
-    const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
-    const paddedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
-
-    return `${paddedMinutes}:${paddedSeconds}`;
+    return `${minutes < 10 ? '0' + minutes : minutes}:${
+      seconds < 10 ? '0' + seconds : seconds
+    }`;
   };
 
   return (
@@ -117,10 +111,8 @@ const LandingWidgetAudioPlayer = ({audioURL, pink}) => {
           minimumValue={0}
           maximumValue={duration}
           onSlidingComplete={value => {
-            if (sound) {
-              sound.setCurrentTime(value / 1000);
-              setPosition(value);
-            }
+            SoundPlayer.seek(value / 1000); // SoundPlayer expects seconds
+            setPosition(value);
           }}
           minimumTrackTintColor="white"
           maximumTrackTintColor="rgba(255, 255, 255, 0.5)"
