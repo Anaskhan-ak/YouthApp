@@ -4,10 +4,9 @@ import {
   Image,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,14 +16,13 @@ import {
   DontShowLandingWidget,
 } from '../../assets/images/svgs';
 import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors/index';
-import { fonts } from '../../utils/fonts/index';
 import LandingWidgetAudioPlayer from './components/AudioPlayer';
 import Calendar from './components/Calender';
 import AnalogWatch from './components/Clock';
 import Notifications from './components/Notifications';
 import { StackedNotifications } from './components/Swippable';
 // import {useDispatch, useSelector} from 'react-redux';
+import { styles } from './styles/index';
 
 const {height, width} = Dimensions.get('window');
 
@@ -117,7 +115,7 @@ const LandingWidget = ({navigation}) => {
   const DateComponent = () => {
     return (
       <View style={styles?.dateContainer}>
-        <Text style={styles.day}>
+        <Text style={styles?.day}>
           {
             [
               'Sunday',
@@ -130,10 +128,10 @@ const LandingWidget = ({navigation}) => {
             ][new Date().getDay()]
           }
         </Text>
-        <Text style={styles.hours}>
+        <Text style={styles?.hours}>
           {new Date().getHours().toString().padStart(2, '0')}
         </Text>
-        <Text style={styles.minutes}>
+        <Text style={styles?.minutes}>
           {new Date().getMinutes().toString().padStart(2, '0')}
         </Text>
       </View>
@@ -142,7 +140,7 @@ const LandingWidget = ({navigation}) => {
 
   const Podcast = () => {
     return (
-      <View style={styles.timewidget}>
+      <View style={styles?.timewidget}>
         <Image
           style={styles?.podcastThumbnail}
           source={require('../../assets/images/onboarding/Onboarding1.png')}
@@ -181,14 +179,14 @@ const LandingWidget = ({navigation}) => {
           onPress={() => {
             navigation.replace('Dashboard', {screen: 'Home'});
           }}
-          style={styles.skipButton}>
-          <Text style={styles.skiptetxt}>Skip it</Text>
+          style={styles?.skipButton}>
+          <Text style={styles?.skiptetxt}>Skip it</Text>
         </TouchableOpacity>
-        <Text style={styles.GreetText}>Hi,</Text>
-        <Text style={[styles.GreetText, {marginTop: -height * 0.025}]}>
+        <Text style={styles?.GreetText}>Hi,</Text>
+        <Text style={[styles?.GreetText, {marginTop: -height * 0.025}]}>
           {user.firstName}
         </Text>
-        <Text style={styles.welcomeText}>
+        <Text style={styles?.welcomeText}>
           Welcome back to {''}
           <Image
             style={styles?.logo}
@@ -200,12 +198,12 @@ const LandingWidget = ({navigation}) => {
         </Text>
 
         {widget === 'calender' ? (
-          <View style={styles.timewidget}>
+          <View style={styles?.timewidget}>
             <AnalogWatch />
             <Calendar />
           </View>
         ) : widget === 'date' ? (
-          <View style={styles.timewidget}>
+          <View style={styles?.timewidget}>
             <DateComponent />
             <Calendar />
           </View>
@@ -280,7 +278,7 @@ const LandingWidget = ({navigation}) => {
         <TouchableOpacity
           onPress={toggleWidget}
           style={styles?.changeWidgetButton}>
-          <Text style={styles.welcomeTextzO}>Change This widget</Text>
+          <Text style={styles?.welcomeTextzO}>Change This widget</Text>
         </TouchableOpacity>
         <View style={styles?.footer}>
           <TouchableOpacity
@@ -301,156 +299,3 @@ const LandingWidget = ({navigation}) => {
 
 export default LandingWidget;
 
-const styles = StyleSheet.create({
-  container: {flex: 1},
-  scrollView: {
-    marginTop: height * 0.02,
-  },
-  skipButton: {
-    height: height * 0.04,
-    backgroundColor: 'white',
-    width: width * 0.18,
-    borderRadius: width * 0.01,
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-    marginTop: height * 0.0225,
-    marginRight: width * 0.045,
-  },
-  skiptetxt: {
-    color: '#27869f',
-    textAlign: 'center',
-    fontFamily: fonts?.montserratExtraBold,
-    fontSize: width * 0.035,
-  },
-  GreetText: {
-    color: 'white',
-    fontSize: width * 0.15,
-    fontFamily: 'Montserrat-ExtraBold',
-    // width: 320,
-    // alignSelf: 'center',
-    marginLeft: width * 0.04,
-  },
-  welcomeText: {
-    color: colors.black,
-    fontSize: 18,
-    fontFamily: fonts?.montserratExtraBold,
-    // marginTop: -height * 0.01,
-    width: width * 0.9,
-    alignSelf: 'center',
-    letterSpacing: 0,
-  },
-  welcomeTextY: {
-    color: colors?.white,
-    fontSize: width * 0.049,
-    fontFamily: fonts?.montserratExtraBold,
-  },
-  logo: {
-    tintColor: colors?.white,
-  },
-  timewidget: {
-    height: height * 0.22,
-    width: width * 0.9,
-    backgroundColor: 'rgba(250, 250, 250, 0.75)',
-    alignSelf: 'center',
-    borderRadius: width * 0.05,
-    marginTop: height * 0.025,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    // paddingHorizontal: -20,
-    marginBottom: height * 0.01,
-  },
-  welcomeTextz: {
-    color: 'rgba(250, 250, 250, 0.75)',
-    fontSize: width * 0.039,
-    fontFamily: 'Montserrat-ExtraBold',
-  },
-  welcomeTextzO: {
-    color: 'white',
-    fontSize: width * 0.035,
-    fontFamily: 'Montserrat-ExtraBold',
-    textAlign: 'center',
-  },
-  day: {
-    color: 'red',
-    fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.03,
-    marginBottom: -height * 0.025,
-  },
-  hours: {
-    color: colors.text,
-    fontFamily: fonts.montserratExtraBold,
-    fontSize: width * 0.17,
-    marginBottom: -height * 0.03,
-    textAlign: 'center',
-  },
-  minutes: {
-    color: colors.text,
-    fontFamily: fonts.montserratMedium,
-    fontSize: width * 0.15,
-    textAlign: 'center',
-  },
-  notificationScroll: {
-    height: height * 0.37,
-  },
-  changeWidgetButton: {
-    borderWidth: width * 0.002,
-    borderColor: 'white',
-    width: width * 0.63,
-    height: height * 0.045,
-    alignSelf: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-    borderRadius: width * 0.02,
-    marginTop: height * 0.0125,
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: width * 0.01,
-  },
-  dontShowText: {
-    color: colors.white,
-    fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.035,
-    marginLeft: width * 0.02,
-  },
-  dateContainer: {
-    justifyContent: 'center',
-    marginLeft: width * 0.02,
-  },
-  podcastThumbnail: {
-    width: width * 0.3,
-    height: height * 0.2,
-    borderRadius: width * 0.03,
-    marginLeft: width * 0.02,
-  },
-  reactionButtons: {
-    alignSelf: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginRight: width * 0.035,
-    marginTop: width * 0.02,
-    width: width * 0.15,
-    // marginBottom: -10,
-    // padding : 10
-  },
-  podcastMediaContainer: {
-    width: width * 0.53,
-    alignItems: 'center',
-  },
-  podcastHeading: {
-    textAlign: 'center',
-    fontSize: width * 0.045,
-    color: colors.text,
-    fontFamily: fonts.montserratBlack,
-  },
-  podcastSubheading: {
-    textAlign: 'center',
-    fontSize: width * 0.03,
-    color: colors.text,
-    fontFamily: fonts.montserratMedium,
-    marginVertical: width * 0.008,
-  },
-});

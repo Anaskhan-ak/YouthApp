@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import Svg, { Circle, Line, Text } from 'react-native-svg';
+import { styles } from '../styles/Clock';
 
 const AnalogWatch = () => {
   const [time, setTime] = useState(new Date());
@@ -22,7 +23,7 @@ const AnalogWatch = () => {
   const secondAngle = (360 / 60) * seconds;
 
   return (
-    <View style={styles.container}>
+    <View style={styles?.container}>
       <Svg height="150" width="150">
         {/* White Border Circle */}
         <Circle cx="75" cy="75" r="70" stroke="white" strokeWidth="1" fill="white" />
@@ -102,13 +103,5 @@ const AnalogWatch = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 150,
-    width: 150,
-  },
-});
 
 export default AnalogWatch;

@@ -4,18 +4,16 @@ import {
   FlatList,
   Image,
   LayoutAnimation,
-  StyleSheet,
   Text,
   TouchableOpacity,
   UIManager,
-  View,
+  View
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors/index.js';
-import { fonts } from '../../../utils/fonts/index.js';
+import { styles } from '../styles/Swippable';
 
 const SwipeableItem = ({item, onSwipe, showContent}) => {
   const renderLeftActions = () => <View style={{width: 200}} />;
@@ -175,7 +173,7 @@ export const StackedNotifications = ({count, notifications}) => {
                   ]}>
                   <DropDownIcon />
                 </View>
-                <Text style={styles.toggleText}>Show Less</Text>
+                <Text style={styles?.toggleText}>Show Less</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles?.crossButton}
@@ -208,7 +206,7 @@ export const StackedNotifications = ({count, notifications}) => {
             };
 
         return (
-          <View key={item.id} style={[styles.stackItem, itemStyle]}>
+          <View key={item.id} style={[styles?.stackItem, itemStyle]}>
             <SwipeableItem
               item={item}
               onSwipe={() => handleSwipe(item.id)}
@@ -221,91 +219,6 @@ export const StackedNotifications = ({count, notifications}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stackItem: {
-    alignSelf: 'center',
-  },
-  toggleText: {
-    fontSize: width * 0.023,
-    fontFamily: fonts.Regular,
-    color: colors.black,
-  },
-  dropdown: {
-    marginRight: width * 0.02,
-  },
-  crossButton: {
-    backgroundColor: 'rgba(250, 250, 250, 0.34)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: width * 0.04,
-    height: width * 0.04,
-    borderRadius: (width * 0.08) / 2,
-  },
-  crossText: {
-    fontFamily: fonts.Regular,
-    fontSize: width * 0.025,
-    textAlign: 'center',
-    color: colors.text,
-  },
-  swipeButton: {
-    backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
-    width: width * 0.9,
-    alignSelf: 'center',
-    borderRadius: width * 0.03,
-    margin: width * 0.005,
-    height: height * 0.085,
-    justifyContent: 'space-between',
-    // alignContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    flexDirection: 'row',
-  },
-  profileIcon: {
-    height: width * 0.11,
-    width: width * 0.11,
-    borderRadius: (width * 0.11) / 2,
-  },
-  swipeButtonContainer: {flexDirection: 'row'},
-  profileName: {
-    fontSize: width * 0.037,
-    fontFamily: fonts?.montserratBold,
-    color: colors?.text,
-  },
-  notificationMessage: {
-    fontSize: width * 0.03,
-    fontFamily: fonts?.montserratRegular,
-    color: colors?.text,
-  },
-  notificationTime: {
-    fontFamily: fonts?.montserratRegular,
-    fontSize: width * 0.0245,
-    alignSelf: 'center',
-    marginTop: -height * 0.03,
-    color: colors?.text,
-    left : width * 0.3
-  },
-  stackContainer: {
-    minHeight: height * 0.28,
-    // flex : 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-  },
-  stackToggleButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginRight: width * 0.03,
-    backgroundColor: 'rgba(250, 250, 250, 0.34)',
-    paddingVertical: height * 0.003,
-    paddingHorizontal: width * 0.025,
-    borderRadius: width * 0.2,
-  },
-});
+
 
 export default SwipeableList;

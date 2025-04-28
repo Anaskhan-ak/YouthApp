@@ -1,6 +1,6 @@
 import Slider from '@react-native-community/slider';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import {
@@ -10,15 +10,14 @@ import {
   PinkRewindAUdioButton,
   PinkVolume,
 } from '../../../assets/images/svgs';
-import { height, width } from '../../../constant/index';
 import { colors } from '../../../utils/colors/index';
+import { styles } from '../styles/AudioPlayer';
 
 const LandingWidgetAudioPlayer = ({  pink }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-
   // useEffect(() => {
   //   console.log("********* AUDIO URL **********", audioURL);
   //   console.log("SOUND", SoundPlayer)
@@ -101,12 +100,12 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
 
   return (
     <LinearGradient
-      style={styles.container}
+      style={styles?.container}
       colors={[colors.RGB1, colors.RGB2]}>
-      <View style={styles.sliderContainer}>
-        <Text style={styles.timeText}>{formatTime(position)}</Text>
+      <View style={styles?.sliderContainer}>
+        <Text style={styles?.timeText}>{formatTime(position)}</Text>
         <Slider
-          style={styles.slider}
+          style={styles?.slider}
           value={position}
           minimumValue={0}
           maximumValue={duration}
@@ -118,14 +117,14 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
           maximumTrackTintColor="rgba(255, 255, 255, 0.5)"
           thumbTintColor="transparent"
         />
-        <Text style={styles.timeText}>{formatTime(duration)}</Text>
+        <Text style={styles?.timeText}>{formatTime(duration)}</Text>
         <View style={styles?.audioProgress}>
           <PinkVolume width={13} height={13} />
           <View style={styles?.audioVolume} />
         </View>
       </View>
 
-      <View style={styles.controls}>
+      <View style={styles?.controls}>
         <TouchableOpacity onPress={backwardHandler}>
           <PinkRewindAUdioButton />
         </TouchableOpacity>
@@ -144,61 +143,6 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 6,
-    paddingHorizontal: 5,
-    paddingVertical: 20,
-    marginVertical: 5,
-    width: width * 0.5,
-    height: height * 0.08,
-  },
-  sliderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: -10,
-  },
-  controls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    columnGap: 30,
-  },
-  slider: {
-    flex: 1,
-    height: 20,
-  },
-  timeText: {
-    color: 'white',
-    fontSize: 8,
-  },
-  controlButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  playPauseButton: {
-    backgroundColor: 'white',
-    width: 15,
-    height: 15,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 2,
-  },
-  audioProgress: {
-    marginLeft: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: 2,
-  },
-  audioVolume: {
-    height: 3,
-    backgroundColor: colors.white,
-    width: 15,
-    marginLeft: 5,
-  },
-});
+
 
 export default LandingWidgetAudioPlayer;
