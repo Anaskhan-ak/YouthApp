@@ -11,6 +11,7 @@ const Notifications = ({
   setToggle,
   isVisible,
   setVisibility,
+  notifications
 }) => {
   if (!isVisible) {
     return null;
@@ -52,7 +53,7 @@ const Notifications = ({
             onPress={() => {
               setToggle(false);
             }}>
-            <SwipeableList setVisibility={setVisibility} />
+            <SwipeableList setVisibility={setVisibility} items={notifications}/>
           </TouchableOpacity>
         ) : null}
       </View>

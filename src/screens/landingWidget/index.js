@@ -226,36 +226,48 @@ const LandingWidget = ({navigation}) => {
                   : stackNotificationCount * (height * 0.12),
               alignItems: 'center',
             }}>
-            <StackedNotifications count={setStackNotificationCount} items={items}/>
+            <StackedNotifications
+              count={setStackNotificationCount}
+              items={items}
+            />
           </View>
-          <Notifications
-            title="Chat"
-            toggle={chatToggle}
-            setToggle={setChatToggle}
-            isVisible={chatVisible}
-            setVisibility={setChatVisible}
-          />
-          <Notifications
-            title="Social"
-            toggle={socialToggle}
-            setToggle={setSocialToggle}
-            isVisible={socialVisible}
-            setVisibility={setSocialVisible}
-          />
-          <Notifications
-            title="Educational"
-            toggle={educationToggle}
-            setToggle={setEducationToggle}
-            isVisible={educationVisible}
-            setVisibility={setEducationVisible}
-          />
-          <Notifications
-            title="Wallet"
-            toggle={walletToggle}
-            setToggle={setWalletToggle}
-            isVisible={walletVisible}
-            setVisibility={setWalletVisible}
-          />
+          {items?.length > 0 && (
+            <Notifications
+              title="Chat"
+              toggle={chatToggle}
+              setToggle={setChatToggle}
+              isVisible={chatVisible}
+              setVisibility={setChatVisible}
+              notifications={items}
+            />
+          )}
+          {items?.length > 0 && (
+            <Notifications
+              title="Social"
+              toggle={socialToggle}
+              setToggle={setSocialToggle}
+              isVisible={socialVisible}
+              setVisibility={setSocialVisible}
+            />
+          )}
+          {items?.length > 0 && (
+            <Notifications
+              title="Educational"
+              toggle={educationToggle}
+              setToggle={setEducationToggle}
+              isVisible={educationVisible}
+              setVisibility={setEducationVisible}
+            />
+          )}
+          {items?.length > 0 && (
+            <Notifications
+              title="Wallet"
+              toggle={walletToggle}
+              setToggle={setWalletToggle}
+              isVisible={walletVisible}
+              setVisibility={setWalletVisible}
+            />
+          )}
         </ScrollView>
 
         <TouchableOpacity

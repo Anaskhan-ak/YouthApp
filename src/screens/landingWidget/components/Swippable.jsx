@@ -14,7 +14,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
-import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors/index.js';
 import { fonts } from '../../../utils/fonts/index.js';
 
@@ -53,32 +52,32 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
   );
 };
 
-const SwipeableList = ({setVisibility}) => {
-  const [items, setItems] = useState();
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const notifications = await apiCall?.getNotifications({
-          page: 1,
-          pageSize: 5,
-        });
-        console.log('Notifications', notifications);
-        setItems(
-          notifications?.map(item => ({
-            id: item?.id,
-            userId: item?.userId,
-            content: item?.content,
-            userName: `${item?.notificationFrom?.firstName} ${item?.notificationFrom?.lastName}`,
-            userImage: item?.notificationFrom?.photo,
-            createdAt: item?.create_at,
-          })),
-        );
-      } catch (e) {
-        console.log('Error fetching notifications', e);
-      }
-    };
-    fetchNotifications();
-  }, []);
+const SwipeableList = ({setVisibility, items}) => {
+  // const [items, setItems] = useState();
+  // useEffect(() => {
+  //   const fetchNotifications = async () => {
+  //     try {
+  //       const notifications = await apiCall?.getNotifications({
+  //         page: 1,
+  //         pageSize: 5,
+  //       });
+  //       console.log('Notifications', notifications);
+  //       setItems(
+  //         notifications?.map(item => ({
+  //           id: item?.id,
+  //           userId: item?.userId,
+  //           content: item?.content,
+  //           userName: `${item?.notificationFrom?.firstName} ${item?.notificationFrom?.lastName}`,
+  //           userImage: item?.notificationFrom?.photo,
+  //           createdAt: item?.create_at,
+  //         })),
+  //       );
+  //     } catch (e) {
+  //       console.log('Error fetching notifications', e);
+  //     }
+  //   };
+  //   fetchNotifications();
+  // }, []);
   const handleSwipe = itemId => {
     const updatedItems = items.filter(item => item.id !== itemId);
     setItems(updatedItems);
