@@ -110,12 +110,8 @@ const SwipeableList = ({setVisibility}) => {
   );
 };
 
-export const StackedNotifications = ({count}) => {
-  const [items, setItems] = useState([
-    {id: '1', text: 'Item 1'},
-    {id: '2', text: 'Item 2'},
-    {id: '3', text: 'Item 3'},
-  ]);
+export const StackedNotifications = ({count, items}) => {
+console.log("Items", items)
   const [expanded, setExpanded] = useState(false);
 
   // Enable animations on Android
@@ -275,8 +271,8 @@ const styles = StyleSheet.create({
     // alignContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal : 15,
-    flexDirection : "row"
+    paddingHorizontal: 15,
+    flexDirection: 'row',
   },
   profileIcon: {
     height: width * 0.11,

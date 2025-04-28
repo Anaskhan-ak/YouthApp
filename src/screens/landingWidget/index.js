@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -11,7 +11,12 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
-import { BlackLike, BlackShare, DontShowLandingWidget } from '../../assets/images/svgs';
+import {
+  BlackLike,
+  BlackShare,
+  DontShowLandingWidget,
+} from '../../assets/images/svgs';
+import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors/index';
 import { fonts } from '../../utils/fonts/index';
 import LandingWidgetAudioPlayer from './components/AudioPlayer';
@@ -34,6 +39,32 @@ const LandingWidget = ({navigation}) => {
   const [walletVisible, setWalletVisible] = useState(true);
   const [socialVisible, setSocialVisible] = useState(true);
   const [stackNotificationCount, setStackNotificationCount] = useState(-1);
+
+  const [items, setItems] = useState();
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const notifications = await apiCall?.getNotifications({
+          page: 1,
+          pageSize: 5,
+        });
+        // console.log('Notifications', notifications);
+        setItems(
+          notifications?.map(item => ({
+            id: item?.id,
+            userId: item?.userId,
+            content: item?.content,
+            userName: `${item?.notificationFrom?.firstName} ${item?.notificationFrom?.lastName}`,
+            userImage: item?.notificationFrom?.photo,
+            createdAt: item?.create_at,
+          })),
+        );
+      } catch (e) {
+        console.log('Error fetching notifications', e);
+      }
+    };
+    fetchNotifications();
+  }, []);
   const user = useSelector(state => state?.auth?.data);
   const landingWidget = useSelector(state => state?.generic?.landingWidget);
   const dispatch = useDispatch();
@@ -115,7 +146,7 @@ const LandingWidget = ({navigation}) => {
         <Image
           style={styles?.podcastThumbnail}
           source={require('../../assets/images/onboarding/Onboarding1.png')}
-          resizeMethod='contain'
+          resizeMethod="contain"
         />
         <View style={styles?.podcastMediaContainer}>
           <Text style={styles?.podcastHeading}>It shall so soon</Text>
@@ -145,9 +176,7 @@ const LandingWidget = ({navigation}) => {
         backgroundColor={'transparent'}
         translucent
       />
-      <ScrollView 
-      contentContainerStyle={styles?.scrollView}
-      >
+      <ScrollView contentContainerStyle={styles?.scrollView}>
         <TouchableOpacity
           onPress={() => {
             navigation.replace('Dashboard', {screen: 'Home'});
@@ -197,7 +226,7 @@ const LandingWidget = ({navigation}) => {
                   : stackNotificationCount * (height * 0.12),
               alignItems: 'center',
             }}>
-            <StackedNotifications count={setStackNotificationCount} />
+            <StackedNotifications count={setStackNotificationCount} items={items}/>
           </View>
           <Notifications
             title="Chat"
@@ -251,13 +280,12 @@ const LandingWidget = ({navigation}) => {
   );
 };
 
-
 export default LandingWidget;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
   scrollView: {
-    marginTop : height * 0.02
+    marginTop: height * 0.02,
   },
   skipButton: {
     height: height * 0.04,
@@ -272,8 +300,8 @@ const styles = StyleSheet.create({
   skiptetxt: {
     color: '#27869f',
     textAlign: 'center',
-    fontFamily : fonts?.montserratExtraBold,
-    fontSize : width * 0.035
+    fontFamily: fonts?.montserratExtraBold,
+    fontSize: width * 0.035,
   },
   GreetText: {
     color: 'white',
@@ -281,7 +309,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-ExtraBold',
     // width: 320,
     // alignSelf: 'center',
-    marginLeft : width * 0.04
+    marginLeft: width * 0.04,
   },
   welcomeText: {
     color: colors.black,
