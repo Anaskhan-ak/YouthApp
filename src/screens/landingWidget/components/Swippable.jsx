@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: -height * 0.03,
     color: colors?.text,
+    left : width * 0.3
   },
   stackContainer: {
     minHeight: height * 0.28,
