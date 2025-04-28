@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import apiInstance from '../../../axios';
-import {errorHandler} from './errorHandler';
+import { errorHandler } from './errorHandler';
 
 
 const rawConfig = {

@@ -22,12 +22,11 @@ export {
   Apple, BlackLike,
   BlackShare, Calendar, Cross, DontShowLandingWidget, DropDown, DropDownIcon, Error,
   ErrorWhite, Google,
-  GreenCheckMark, PasswordHide, PasswordHide, PasswordShow, PasswordShow, PinkForwardAudioButton,
+  GreenCheckMark, PasswordHide, PasswordShow, PinkForwardAudioButton,
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
   PinkVolume,
-  YouthIcon,
   YouthIcon
 };
 
