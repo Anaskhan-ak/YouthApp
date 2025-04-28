@@ -28,6 +28,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen
         name="LandingWidget"
+        options={{headerShown: false, animation: 'slide_from_left'}}
         component={LandingWidget}/>
        <Stack.Screen
         name="Login"

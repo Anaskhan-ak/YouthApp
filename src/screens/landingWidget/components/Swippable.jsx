@@ -31,23 +31,31 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}
         onSwipeableOpenStartDrag={() => onSwipe(item.id)}>
-        <TouchableOpacity style={styles?.swipeButton}>
-          {showContent && (
+        {showContent && (
+          <TouchableOpacity style={styles?.swipeButton}>
             <View style={styles?.swipeButtonContainer}>
               <Image
                 style={styles?.profileIcon}
-                source={item?.userImage ? {uri : item?.userImage} : require('../../../assets/images/onboarding/Onboarding1.png')}
+                source={
+                  item?.userImage
+                    ? {uri: item?.userImage}
+                    : require('../../../assets/images/onboarding/Onboarding1.png')
+                }
               />
               <View style={{marginLeft: width * 0.0125}}>
                 <Text style={styles?.profileName}>{item?.userName}</Text>
                 <Text style={styles?.notificationMessage}>
-                  {item?.content?.length > 15 ? `${item?.content?.slice(0,15)}...` : item?.content}
+                  {item?.content?.length > 15
+                    ? `${item?.content?.slice(0, 15)}...`
+                    : item?.content}
                 </Text>
               </View>
-              <Text style={styles?.notificationTime}>{moment(item?.createdAt)?.format('HH:mm')}</Text>
             </View>
-          )}
-        </TouchableOpacity>
+            <Text style={styles?.notificationTime}>
+              {moment(item?.createdAt)?.format('HH:mm')}
+            </Text>
+          </TouchableOpacity>
+        )}
       </ReanimatedSwipeable>
     </GestureHandlerRootView>
   );
@@ -58,15 +66,19 @@ const SwipeableList = ({setVisibility}) => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const notifications = await apiCall?.getNotifications({page : 1, pageSize : 5});
-        console.log("Notifications", notifications)
-        setItems(notifications?.map(item => ({
+        const notifications = await apiCall?.getNotifications({
+          page: 1,
+          pageSize: 5,
+        });
+        // console.log("Notifications", notifications)
+        setItems(
+          notifications?.map(item => ({
             id: item?.id,
             userId: item?.userId,
             content: item?.content,
             userName: `${item?.notificationFrom?.firstName} ${item?.notificationFrom?.lastName}`,
             userImage: item?.notificationFrom?.photo,
-            createdAt : item?.create_at
+            createdAt: item?.create_at,
           })),
         );
       } catch (e) {
@@ -90,11 +102,7 @@ const SwipeableList = ({setVisibility}) => {
         data={items}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <SwipeableItem
-            item={item}
-            onSwipe={handleSwipe}
-            showContent={true}
-          />
+          <SwipeableItem item={item} onSwipe={handleSwipe} showContent={true} />
           // <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
         )}
       />
@@ -263,9 +271,12 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.03,
     margin: width * 0.005,
     height: height * 0.085,
-    justifyContent: 'center',
-    alignContent: 'center',
+    justifyContent: 'space-between',
+    // alignContent: 'center',
     alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal : 15,
+    flexDirection : "row"
   },
   profileIcon: {
     height: width * 0.11,
