@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import {
   FlatList,
@@ -35,15 +36,15 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
             <View style={styles?.swipeButtonContainer}>
               <Image
                 style={styles?.profileIcon}
-                source={require('../../../assets/images/onboarding/Onboarding1.png')}
+                source={item?.userImage ? {uri : item?.userImage} : require('../../../assets/images/onboarding/Onboarding1.png')}
               />
               <View style={{marginLeft: width * 0.0125}}>
-                <Text style={styles?.profileName}>Mohammad Mustafa</Text>
+                <Text style={styles?.profileName}>{item?.userName}</Text>
                 <Text style={styles?.notificationMessage}>
-                  An amazing night with the friends in kar...
+                  {item?.content?.length > 15 ? `${item?.content?.slice(0,15)}...` : item?.content}
                 </Text>
               </View>
-              <Text style={styles?.notificationTime}>9:41 AM</Text>
+              <Text style={styles?.notificationTime}>{moment(item?.createdAt)?.format('HH:mm')}</Text>
             </View>
           )}
         </TouchableOpacity>
