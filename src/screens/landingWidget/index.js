@@ -215,7 +215,9 @@ const LandingWidget = ({navigation}) => {
 
         {/* Notifications */}
         <ScrollView style={styles?.notificationScroll}>
-          <View
+          {
+            items?.length > 0 && (
+              <View
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
               height:
@@ -228,9 +230,11 @@ const LandingWidget = ({navigation}) => {
             }}>
             <StackedNotifications
               count={setStackNotificationCount}
-              items={items}
+              notifications={items}
             />
           </View>
+            )
+          }
           {items?.length > 0 && (
             <Notifications
               title="Chat"

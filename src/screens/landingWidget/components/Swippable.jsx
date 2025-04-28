@@ -54,6 +54,7 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
 
 const SwipeableList = ({setVisibility, notifications}) => {
   const [items, setItems] = useState(notifications);
+  console.log("::NOTIFICATIONS::::::::::", items)
   // useEffect(() => {
   //   const fetchNotifications = async () => {
   //     try {
@@ -100,13 +101,9 @@ const SwipeableList = ({setVisibility, notifications}) => {
   );
 };
 
-export const StackedNotifications = ({count, items}) => {
-  // const [items, setItems] = useState([
-  //   {id: '1', text: 'Item 1'},
-  //   {id: '2', text: 'Item 2'},
-  //   {id: '3', text: 'Item 3'},
-  //   // Add more items as needed
-  // ]);
+export const StackedNotifications = ({count, notifications}) => {
+  const [items, setItems] = useState(notifications);
+  // console.log("::NOTIFICATIONS::::::::::", notifications)
   const [expanded, setExpanded] = useState(false);
 
   // Enable animations on Android
