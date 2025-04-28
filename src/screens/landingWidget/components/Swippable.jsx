@@ -7,23 +7,20 @@ import {
   Text,
   TouchableOpacity,
   UIManager,
-  View
+  View,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
+import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors/index.js';
 import { fonts } from '../../../utils/fonts/index.js';
 
-const SwipeableItem = ({
-  item,
-  onSwipe,
-  showContent,
-}) => {
+const SwipeableItem = ({item, onSwipe, showContent}) => {
   const renderLeftActions = () => <View style={{width: 200}} />;
   const renderRightActions = () => <View style={{width: 200}} />;
-
+// console.log('::::::::ITEM:::::::::;', item)s
   return (
     <GestureHandlerRootView>
       <ReanimatedSwipeable
@@ -32,42 +29,55 @@ const SwipeableItem = ({
         rightThreshold={40}
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}
-        onSwipeableOpenStartDrag={() => onSwipe(item.id)}
-        >
+        onSwipeableOpenStartDrag={() => onSwipe(item.id)}>
         <TouchableOpacity style={styles?.swipeButton}>
-        {showContent && (
-          <View style={styles?.swipeButtonContainer}>
-            <Image
-              style={styles?.profileIcon}
-              source={require('../../../assets/images/onboarding/Onboarding1.png')}
-            />
-            <View style={{ marginLeft: width * 0.0125 }}>
-              <Text style={styles?.profileName}>
-                Mohammad Mustafa
-              </Text>
-              <Text style={styles?.notificationMessage}>
-                An amazing night with the friends in kar...
-              </Text>
+          {showContent && (
+            <View style={styles?.swipeButtonContainer}>
+              <Image
+                style={styles?.profileIcon}
+                source={require('../../../assets/images/onboarding/Onboarding1.png')}
+              />
+              <View style={{marginLeft: width * 0.0125}}>
+                <Text style={styles?.profileName}>Mohammad Mustafa</Text>
+                <Text style={styles?.notificationMessage}>
+                  An amazing night with the friends in kar...
+                </Text>
+              </View>
+              <Text style={styles?.notificationTime}>9:41 AM</Text>
             </View>
-            <Text style={styles?.notificationTime}>
-              9:41 AM
-            </Text>
-          </View>
-        )}
-      </TouchableOpacity>
+          )}
+        </TouchableOpacity>
       </ReanimatedSwipeable>
     </GestureHandlerRootView>
   );
 };
 
 const SwipeableList = ({setVisibility}) => {
-  const [items, setItems] = useState([
-    {id: '1', text: 'Item 1'},
-    {id: '2', text: 'Item 2'},
-    {id: '3', text: 'Item 3'},
-    // Add more items as needed
-  ]);
-
+  const [items, setItems] = useState();
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const notifications = await apiCall?.getNotifications({
+          page: 1,
+          pageSize: 5,
+        });
+        console.log('Notifications', notifications);
+        setItems(
+          notifications?.map(item => ({
+            id: item?.id,
+            userId: item?.userId,
+            content: item?.content,
+            userName: `${item?.notificationFrom?.firstName} ${item?.notificationFrom?.lastName}`,
+            userImage: item?.notificationFrom?.photo,
+            createdAt: item?.create_at,
+          })),
+        );
+      } catch (e) {
+        console.log('Error fetching notifications', e);
+      }
+    };
+    fetchNotifications();
+  }, []);
   const handleSwipe = itemId => {
     const updatedItems = items.filter(item => item.id !== itemId);
     setItems(updatedItems);
@@ -237,7 +247,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.04,
     height: width * 0.04,
-    borderRadius: width * 0.08/2,
+    borderRadius: (width * 0.08) / 2,
   },
   crossText: {
     fontFamily: fonts.Regular,
@@ -247,7 +257,7 @@ const styles = StyleSheet.create({
   },
   swipeButton: {
     backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
-    width : width * 0.9,
+    width: width * 0.9,
     alignSelf: 'center',
     borderRadius: width * 0.03,
     margin: width * 0.005,
@@ -262,7 +272,7 @@ const styles = StyleSheet.create({
   profileIcon: {
     height: width * 0.11,
     width: width * 0.11,
-    borderRadius: width * 0.11/2,
+    borderRadius: (width * 0.11) / 2,
   },
   swipeButtonContainer: {flexDirection: 'row'},
   profileName: {
