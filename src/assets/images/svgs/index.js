@@ -9,20 +9,25 @@ import PinkPlayAudioButton from './PinkPlayAudioButton.svg';
 import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
 import PinkVolume from './PinkVolume.svg';
 import YouthIcon from './YouthIcon.svg';
-import DropDownIcon from './dropdown.svg';
+import Apple from './apple.svg';
+import Calendar from './calendar.svg';
+import Cross from './cross.svg';
+import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
+import Error from './error.svg';
+import ErrorWhite from './error1.svg';
+import Google from './google.svg';
+import GreenCheckMark from './greenCheckMark.svg';
 
 export {
-  BlackLike,
-  BlackShare,
-  DontShowLandingWidget,
-  DropDownIcon,
-  PasswordHide,
-  PasswordShow,
-  PinkForwardAudioButton,
+  Apple, BlackLike,
+  BlackShare, Calendar, Cross, DontShowLandingWidget, DropDown, DropDownIcon, Error,
+  ErrorWhite, Google,
+  GreenCheckMark, PasswordHide, PasswordHide, PasswordShow, PasswordShow, PinkForwardAudioButton,
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
   PinkVolume,
+  YouthIcon,
   YouthIcon
 };
 

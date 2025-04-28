@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: width * 0.03,
-    color: '#000',
+    color: colors.black,
     fontFamily: fonts?.montserratRegular,
     alignItems: 'center',
   },
