@@ -52,8 +52,8 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
   );
 };
 
-const SwipeableList = ({setVisibility, items}) => {
-  // const [items, setItems] = useState();
+const SwipeableList = ({setVisibility, notifications}) => {
+  const [items, setItems] = useState(notifications);
   // useEffect(() => {
   //   const fetchNotifications = async () => {
   //     try {

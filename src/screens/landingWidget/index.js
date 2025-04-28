@@ -248,6 +248,7 @@ const LandingWidget = ({navigation}) => {
               setToggle={setSocialToggle}
               isVisible={socialVisible}
               setVisibility={setSocialVisible}
+              notifications={items}
             />
           )}
           {items?.length > 0 && (
@@ -257,6 +258,7 @@ const LandingWidget = ({navigation}) => {
               setToggle={setEducationToggle}
               isVisible={educationVisible}
               setVisibility={setEducationVisible}
+              notifications={items}
             />
           )}
           {items?.length > 0 && (
@@ -266,6 +268,7 @@ const LandingWidget = ({navigation}) => {
               setToggle={setWalletToggle}
               isVisible={walletVisible}
               setVisibility={setWalletVisible}
+              notifications={items}
             />
           )}
         </ScrollView>
