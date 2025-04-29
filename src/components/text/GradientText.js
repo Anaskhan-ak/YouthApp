@@ -11,7 +11,7 @@ const GradientText = props => {
         end={{x: 1, y: 0}}
         style={styles.root}>
         <Text {...props} 
-        // style={[props.style, {opacity: 0}]} 
+        style={[props.style, {opacity: 0}]} 
         />
       </LinearGradient>
     </MaskedView>

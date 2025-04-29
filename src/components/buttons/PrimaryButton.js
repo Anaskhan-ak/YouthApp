@@ -24,7 +24,8 @@ export const PrimaryButton = props => {
               ? props.borderRadius
               : width * 0.02,
           },
-          // ...styles.primaryButton,
+          // ...props?.styles,
+          ...styles?.primaryButton
         }}>
         {!props?.isLoading ? (
           <Text style={styles.primaryText}>{props?.title}</Text>
