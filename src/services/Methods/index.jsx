@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import apiInstance from '../../../axios';
-import {errorHandler} from './errorHandler';
+import { errorHandler } from './errorHandler';
 
 
 const rawConfig = {
@@ -32,7 +32,6 @@ export const post = async (endPoint, data) => {
       Authorization: `Bearer ${token}`,
       'deviceuid': '123',
     };
-   
     const result = await apiInstance.post(endPoint, data);
     return result;
   } catch (e) {

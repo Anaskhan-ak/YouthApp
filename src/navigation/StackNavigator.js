@@ -7,12 +7,13 @@ import SignUp from '../screens/signup';
 import Login from '../screens/login';
 import Otp from '../screens/otp';
 import EmailVerification from '../screens/emailVerification';
-
+import FindFriends from '../screens/findFriends';
+import LandingWidget from '../screens/landingWidget';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Onboarding">
+    <Stack.Navigator initialRouteName="LandingWidget">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -28,6 +29,10 @@ const StackNavigator = () => {
         component={SignUp}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
+      <Stack.Screen
+        name="LandingWidget"
+        options={{headerShown: false, animation: 'slide_from_left'}}
+        component={LandingWidget}/>
        <Stack.Screen
         name="Login"
         component={Login}
@@ -41,6 +46,11 @@ const StackNavigator = () => {
        <Stack.Screen
         name="EmailVerification"
         component={EmailVerification}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+      <Stack.Screen
+        name="FindFriends"
+        component={FindFriends}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

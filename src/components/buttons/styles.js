@@ -1,5 +1,6 @@
-import {Dimensions, Platform, StyleSheet} from 'react-native';
-import {fonts} from '../../utils/fonts/index';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
+import { colors } from '../../utils/colors';
+import { fonts } from '../../utils/fonts/index';
 const {height, width} = Dimensions.get('window');
 export const styles = StyleSheet.create({
   nextButton: {
@@ -24,7 +25,7 @@ export const styles = StyleSheet.create({
   },
   primaryText: {
     color: 'white',
-    fontSize: width * 0.037,
+    fontSize: width * 0.04,
     fontFamily: 'Montserrat-Bold',
   },
   BoldButton: {
@@ -42,7 +43,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   gradientText: {
-    fontSize: width * 0.037,
+    fontSize: width * 0.04,
     fontFamily: fonts?.montserratExtraBold,
     alignSelf: 'center',
     marginTop: Platform.OS === 'ios' && height * 0.015,
@@ -82,4 +83,18 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontFamily: fonts.montserratMedium,
   },
+  gbb1: {
+    height: height * 0.05,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  gbb2 : {
+    height: height * 0.046,
+    borderRadius: 3,
+    justifyContent: 'center',
+    backgroundColor: colors.white,
+  }
 });

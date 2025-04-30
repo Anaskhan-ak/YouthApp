@@ -1,17 +1,12 @@
 import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-  TouchableOpacityProps,
   ActivityIndicator,
+  Dimensions,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {styles} from './styles';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
+import { styles } from './styles';
 
 const {height, width} = Dimensions.get('window');
 
@@ -31,7 +26,10 @@ export const PrimaryButton = props => {
           props?.style, 
         ])}>
         {!props?.isLoading ? (
-          <Text style={styles.primaryText}>{props?.title}</Text>
+          <Text
+            style={props?.textStyle ? props?.textStyle : styles.primaryText}>
+            {props?.title}
+          </Text>
         ) : (
           <ActivityIndicator size="small" color={colors.white} />
         )}

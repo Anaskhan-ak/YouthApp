@@ -4,7 +4,13 @@ export const apis = {
   login: 'api/v1/login',
   otp: 'api/v1/verifyOtp',
   //GET ENDPOINTS
-  getNotification:'api/v1/notification'
+  getNotification:'api/v1/notification',
+  getContactSuggestions : 'api/v1/contactSuggetion',
+  follow : 'api/v1/follow',
+  unfollow : 'api/v1/unfollow',
+  getFollowing : 'api/v1/getFollower/',
+  //GET ENDPOINTS
+  getNotification : `api/v1/notification`
   // DELETE ENDPOINTS
   // PATCH ENDPOINTS
 };
