@@ -11,6 +11,13 @@ export const apiCall = {
     if (result?.status==201) return result.data;
     else throw result;
   },
+
+  getContactSuggestions : async params => {
+    console.log("Params", apis?.getContactSuggestions, params)
+    let result = await post(apis?.getContactSuggestions, params)
+    if (result?.status === 200) return result?.data?.data
+    else throw result
+  },
  
   //GET API CALL
   getNationalities: async params => {

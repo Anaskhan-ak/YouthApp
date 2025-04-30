@@ -2,7 +2,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { colors } from '../../utils/colors';
@@ -18,17 +18,15 @@ export const PrimaryButton = props => {
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
         style={{
-          ...{width: props.width ? props.width : width * 0.69},
-          ...{
-            borderRadius: props.borderRadius
-              ? props.borderRadius
-              : width * 0.02,
-          },
-          // ...props?.styles,
-          ...styles?.primaryButton
+          width: props.width ? props.width : width * 0.69,
+          borderRadius: props.borderRadius ? props.borderRadius : width * 0.02,
+          ...(props?.styles ? props.styles : styles?.primaryButton),
         }}>
         {!props?.isLoading ? (
-          <Text style={styles.primaryText}>{props?.title}</Text>
+          <Text
+            style={props?.textStyle ? props?.textStyle : styles.primaryText}>
+            {props?.title}
+          </Text>
         ) : (
           <ActivityIndicator size="small" color={colors.white} />
         )}
