@@ -11,7 +11,7 @@ const CustomSearchBar = props => {
       round={true}
       placeholder="Search"
       value={props?.search}
-      onChangeText={value => props?.setSearch(value)}
+      onChangeText={props?.setSearch}
       containerStyle={styles?.searchContainerStyle}
       inputContainerStyle={styles?.inputContainerStyle}
       searchIcon={<SearchIcon />}

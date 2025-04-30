@@ -1,12 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
 import {
-  BackHandler,
   FlatList,
   Image,
   Modal,
-  PermissionsAndroid,
-  Platform,
   SafeAreaView,
   StatusBar,
   Text,
@@ -25,12 +23,13 @@ import { styles } from './styles';
 
 const FindFriends = () => {
   const [modal, setModal] = useState(false);
+  const [inviteModal, setInviteModal] = useState(false)
   const [search, setSearch] = useState();
   const [phoneNos, setPhoneNos] = useState(['03228214535']);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [following, setFollowing] = useState([]);
-  const navigation  = useNavigation()
+  const navigation = useNavigation();
   const items = [
     {
       name: 'Sannya Wasim',
@@ -49,67 +48,46 @@ const FindFriends = () => {
     },
   ];
 
-  const handleSearch = value => {
-    setSearch(value);
-    // console.log("Search value", search)
-  };
-
+  const handleSearch = useCallback(
+    _.debounce(value => {
+      setSearch(value);
+      getYouthappContacts(value); // call your function here with debounced input
+    }, 1000),
+    [],
+  );
+  async function requestContactsPermission() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+      {
+        title: 'Contacts Permission',
+        message: 'This app needs access to your contacts to find friends.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  }
   const getContacts = async () => {
-    try {
-      // Step 1: Request permission
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-          {
-            title: 'Contacts Permission',
-            message: 'This app needs access to your contacts.',
-            buttonPositive: 'OK',
-          },
-        );
-
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          console.warn('Contacts permission denied');
-          return [];
-        }
+      const permission = await requestContactsPermission();
+      if (permission) {
+        console.log("anas1")
+        Contacts.getAll()
+          .then(contacts => {
+            console.log('Contacts:', contacts);
+          })
+          .catch(e => {
+            console.error('Failed to load contacts:', e);
+          });
       }
-
-      // Step 2: Fetch contacts
-      const contacts = await Contacts.getAll();
-
-      // Optional: Sort or format the contacts
-      const formattedContacts = contacts.map((contact, index) => ({
-        id: index,
-        fullName:
-          contact.displayName ||
-          `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
-        photo: contact.thumbnailPath, // Path to the contact's photo (if available)
-        phoneNumbers: contact.phoneNumbers.map(pn => pn.number), // Array of phone numbers
-      }));
-
-      setPhoneNumbers(formattedContacts);
-      setFilteredContacts(formattedContacts);
-      formattedContacts && setPhoneLoading(false);
-
-      // set youth contacts
-      const sanitizeNumber = (number) => {
-        if (!number) return null; // Remove undefined numbers
-        const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
-        return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
-      };
-      const extractedNumbers = contacts
-        ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
-        .filter(Boolean); // Remove null/undefined/short values
-      console.log('Extracted numbers', extractedNumbers[0]);
-
-      return extractedNumbers;
-    } catch (error) {
-      console.error('Error fetching contacts:', error);
-      return [];
-    }
+    
   };
 
-  const getYouthappContacts = async () => {
-    const response = await apiCall?.getContactSuggestions({contacts: phoneNos});
+  const getYouthappContacts = async value => {
+    const response = await apiCall?.getContactSuggestions({
+      contacts: phoneNos,
+      name: value ? value : null,
+    });
     console.log('Response', response?.user);
     setUsers(
       response?.user?.map(u => ({
@@ -180,12 +158,9 @@ const FindFriends = () => {
   useEffect(() => {
     getFollowing();
     getContacts();
-    getYouthappContacts()
-    BackHandler.addEventListener('hardwareBackPress', handleBack);
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', handleBack);
-    };
+    getYouthappContacts();
   }, []);
+
 
   return (
     <SafeAreaView style={styles?.container}>
@@ -232,7 +207,8 @@ const FindFriends = () => {
             </View>
             <CustomSearchBar
               search={search}
-              setSearch={value => handleSearch(value)}
+              setSearch={handleSearch}
+              func={getYouthappContacts}
             />
             <FlatList
               data={users}
@@ -289,8 +265,7 @@ const FindFriends = () => {
                     styles={styles?.gradientButton}
                     textStyle={styles?.gradientButtonText}
                   /> */}
-                  <TouchableOpacity
-                    style={styles?.grayButton}>
+                  <TouchableOpacity style={styles?.grayButton}>
                     <Text style={styles?.grayButtonText}>Invite</Text>
                   </TouchableOpacity>
                 </View>
@@ -300,6 +275,11 @@ const FindFriends = () => {
           </View>
         </Modal>
       )}
+      {/* {
+        inviteModal && (
+          <InviteModal/>
+        )
+      } */}
     </SafeAreaView>
   );
 };
