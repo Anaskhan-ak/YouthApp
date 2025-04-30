@@ -1,5 +1,7 @@
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
+  BackHandler,
   FlatList,
   Image,
   Modal,
@@ -9,7 +11,7 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Contacts from 'react-native-contacts';
 import { BackArrow, Cross } from '../../assets/images/svgs';
@@ -28,6 +30,7 @@ const FindFriends = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const navigation  = useNavigation()
   const items = [
     {
       name: 'Sannya Wasim',
@@ -45,7 +48,6 @@ const FindFriends = () => {
       button: 'Follow',
     },
   ];
-  const items1 = [...items, ...items, ...items, ...items];
 
   const handleSearch = value => {
     setSearch(value);
@@ -89,7 +91,7 @@ const FindFriends = () => {
       formattedContacts && setPhoneLoading(false);
 
       // set youth contacts
-      const sanitizeNumber = (number: any) => {
+      const sanitizeNumber = (number) => {
         if (!number) return null; // Remove undefined numbers
         const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
         return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
@@ -170,10 +172,19 @@ const FindFriends = () => {
     // }
   };
 
+  const handleBack = () => {
+    navigation.goBack();
+    return true;
+  };
+
   useEffect(() => {
     getFollowing();
     getContacts();
-    getYouthappContacts();
+    getYouthappContacts()
+    BackHandler.addEventListener('hardwareBackPress', handleBack);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBack);
+    };
   }, []);
 
   return (
