@@ -5,16 +5,23 @@ import { apis } from '../endPoints';
 export const apiCall = {
   //POST API CALL
   SignUp: async obj => {
-    console.log(obj)
     let result = await post(apis?.signUp, obj);
-    console.log("res",result)
     if (result?.status==201) return result.data;
     else throw result;
   },
- 
+  Login: async obj => {
+    let result = await post(apis?.login, obj);
+    if (result?.status==201) return result.data;
+    else throw result;
+  },
+  VerifyOtp: async obj => {
+    let result = await post(apis?.otp, obj);
+    if (result?.status==201) return result.data;
+    else throw result;
+  },
   //GET API CALL
-  getNationalities: async params => {
-    let result = await get(Apis.nationalities, params);
+  getNotification: async params => {
+    let result = await get(apis?.getNotification, params);
     if (result.status === 200) return result.data;
   },
   

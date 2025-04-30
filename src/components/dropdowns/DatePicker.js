@@ -4,8 +4,6 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 const DateMonthPicker = ({setSelectedDate, showDate, selectedDate,setShowDate}) => {
   const handleDateConfirm = date => {
-    const formattedDate = moment(date).format('yy-MM-dd');
-    console.log("formatedDate",formattedDate)
     setSelectedDate(date);
     setShowDate(false);
    };

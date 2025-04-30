@@ -54,7 +54,7 @@ const Onboarding = ({navigation}) => {
         <View
           style={[
             styles.bottomContainer,
-            {marginTop: page === 4 ? height * 0.65 : height * 0.61},
+            {marginTop: page === 4 ? height * 0.63 : height * 0.61},
           ]}>
           <GradientText style={styles.Heading}>
             {onboardingContent[page]?.heading}
@@ -64,13 +64,13 @@ const Onboarding = ({navigation}) => {
             <>
               <PrimaryButton
                 onPress={() => {
-                  // navigation.navigate('SignIn');
+                 navigation.navigate('Login');
                 }}
                 title="Sign in"
               />
               <PrimaryButton
                 onPress={() => {
-                  // navigation.navigate('SignUp');
+                 navigation.navigate('SignUp');
                 }}
                 title="Sign Up"
               />
@@ -114,7 +114,6 @@ const Onboarding = ({navigation}) => {
               <NextButton onPress={handleOnPress} />
             </>
           )}
-
           {page === 4 && (
             <>
               <View style={styles.slider}>

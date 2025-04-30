@@ -12,27 +12,24 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {styles} from './styles';
 import {images} from '../../assets/images';
 import {height, width} from '../../constant';
-import {Calendar, DropDown, YouthIcon} from '../../assets/images/svgs';
+import {YouthIcon} from '../../assets/images/svgs';
 import {useForm, Controller} from 'react-hook-form';
 import {emailValidation} from '../../helper';
-import AuthInput from '../../components/inputs/AuthInput';
-import CountryPickerDropDown from '../../components/dropdowns/CountryPicker';
+import AuthInput from '../../components/inputs/authInput';
 import {colors} from '../../utils/colors';
-import DatePicker from '../../components/dropdowns/DatePicker';
-import DateMonthPicker from '../../components/dropdowns/DatePicker';
-import moment from 'moment';
 import {PrimaryButton} from '../../components/buttons/PrimaryButton';
 import {SocialButton} from '../../components/buttons/SocialButton';
 import GradientText from '../../components/text/GradientText';
-import GenderModal from '../../components/modals/genderModal';
 import AuthError from '../../components/authErrorPopup';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { apiCall } from '../../services/apiCall';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigation = useNavigation()
   const {
     control,
@@ -45,9 +42,25 @@ const Login = () => {
     },
   });
 
-  const onSubmit = data => {
-     console.log("data");
+  const onSubmit = async data => {
     console.log(data);
+    const obj = {
+      login_user: data?.email,
+      password: data?.password,
+      fcm_token:'test'
+    }
+    try {
+      let result = await apiCall?.Login(obj);
+      console.log('result', result);
+    } catch (e) {
+      console.log('e', e);
+      setShowError(true);
+      setErrorMessage({
+        title: 'Sign Up Error',
+        message: Array.isArray(e) ? e[0]?.message : e,
+      });
+    } finally {
+    }
   };
   const handleRememberMe = () => {setRememberMe(!rememberMe)};
   const handleSignUp = () => {
@@ -69,7 +82,14 @@ const Login = () => {
             borderBottomRightRadius={width * 0.1}
             style={styles.image}
             source={images?.login}>
-            {showError && <AuthError setShowError={setShowError} />}
+            {showError && 
+            <View style={styles?.authView}>
+            <AuthError    
+            title={errorMessage?.title}
+            message={errorMessage?.message}
+            setShowError={setShowError} />
+            </View>
+            }
           </ImageBackground>
         </View>
         <View style={styles?.contentView}>
@@ -82,7 +102,6 @@ const Login = () => {
             control={control}
             rules={{
               required: 'email is required',
-              validate: emailValidation,
             }}
             render={({field: {onChange, onBlur, value}}) => (
               <AuthInput

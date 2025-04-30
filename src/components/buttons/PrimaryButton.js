@@ -22,15 +22,14 @@ export const PrimaryButton = props => {
         colors={[colors.primary, colors.RGB2]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        style={{
-          ...{width: props.width ? props.width : width * 0.69},
-          ...{
-            borderRadius: props.borderRadius
-              ? props.borderRadius
-              : width * 0.02,
+        style={StyleSheet.flatten([
+          {
+            width: props?.width || width * 0.69,
+            borderRadius: props?.borderRadius || width * 0.02,
           },
-          ...styles.primaryButton,
-        }}>
+          styles.primaryButton,
+          props?.style, 
+        ])}>
         {!props?.isLoading ? (
           <Text style={styles.primaryText}>{props?.title}</Text>
         ) : (

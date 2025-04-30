@@ -23,6 +23,7 @@
     "react-native-country-codes-picker": "^2.3.5",
     "react-native-date-picker": "^5.0.12",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-otp-textinput": "^1.1.6",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "^4.10.0",
     "react-native-svg": "^15.11.2"

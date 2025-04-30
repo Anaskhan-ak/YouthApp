@@ -15,10 +15,8 @@ import {height, width} from '../../constant';
 import {Calendar, DropDown, YouthIcon} from '../../assets/images/svgs';
 import {useForm, Controller} from 'react-hook-form';
 import {emailValidation} from '../../helper';
-import AuthInput from '../../components/inputs/AuthInput';
+import AuthInput from '../../components/inputs/authInput';
 import CountryPickerDropDown from '../../components/dropdowns/CountryPicker';
-import {colors} from '../../utils/colors';
-import DatePicker from '../../components/dropdowns/DatePicker';
 import DateMonthPicker from '../../components/dropdowns/DatePicker';
 import moment from 'moment';
 import {PrimaryButton} from '../../components/buttons/PrimaryButton';
@@ -44,6 +42,7 @@ const SignUp = () => {
     control,
     handleSubmit,
     formState: {errors},
+    watch,
   } = useForm({
     defaultValues: {
       firstName: '',
@@ -51,31 +50,38 @@ const SignUp = () => {
       email: '',
       password: '',
       confirmPassword: '',
+      phone: '',
     },
   });
   const handleDatePress = () => {
     setShowDate(!showDate);
   };
   const onSubmit = async data => {
-    console.log('data');
     const obj = {
-      firstName: 'Jamil',
-      lastName: 'Ahmed',
-      email: 'jamil451@youthapp.com',
-      password: 'Abcd@123',
-      confirmPassword: 'Abcd@123',
-      country: 'Pakistan',
-      gender: 'Male',
-      phoneNo: '+92443323525317',
-      DoB: '6/2/1994',
+      firstName: data?.firstName,
+      lastName: data?.lastName,
+      email: data?.email,
+      password: data?.password,
+      confirmPassword: data?.confirmPassword,
+      country: countryDetails?.countryDetails?.en,
+      gender: gender,
+      phoneNo: countryDetails?.dial_code + data?.phone,
+      DoB: selectedDate,
     };
+    console.log(obj);
     try {
       let result = await apiCall?.SignUp(obj);
-      console.log('result', result);
+      navigation?.navigate('Otp', {
+        countryDetails: countryDetails,
+        phone: data?.phone,
+      });
     } catch (e) {
-      console.log('anas');
+      console.log('e', e);
       setShowError(true);
-      setErrorMessage({title: 'Sign Up Error', message: e});
+      setErrorMessage({
+        title: 'Sign Up Error',
+        message: Array.isArray(e) ? e[0]?.message : e,
+      });
     } finally {
     }
   };
@@ -238,6 +244,8 @@ const SignUp = () => {
                 control={control}
                 rules={{
                   required: 'confirm password is required',
+                  validate: value =>
+                    value === watch('password') || 'Passwords do not match',
                 }}
                 render={({field: {onChange, onBlur, value}}) => (
                   <AuthInput
@@ -271,9 +279,9 @@ const SignUp = () => {
             <View style={[styles?.textView, {width: '70%'}]}>
               <Controller
                 control={control}
-                rules={{
-                  required: 'Date of birth is required',
-                }}
+                // rules={{
+                //   required: 'Date of birth is required',
+                // }}
                 render={({field: {onChange, onBlur, value}}) => (
                   <>
                     <AuthInput
