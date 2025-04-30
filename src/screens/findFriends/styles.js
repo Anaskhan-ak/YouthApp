@@ -104,6 +104,19 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors?.white,
   },
+  grayButton: {
+    width: width * 0.18,
+    height: height * 0.04,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor : colors?.gray,
+    borderRadius : width * 0.02
+  },
+  grayButtonText: {
+    fontFamily: fonts?.montserratBold,
+    textAlign: 'center',
+    color: colors?.text,
+  },
   list : {
     height: height * 0.85,
     padding : width * 0.03

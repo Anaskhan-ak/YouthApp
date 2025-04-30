@@ -13,8 +13,25 @@ export const apiCall = {
   },
 
   getContactSuggestions : async params => {
-    console.log("Params", apis?.getContactSuggestions, params)
     let result = await post(apis?.getContactSuggestions, params)
+    if (result?.status === 200) return result?.data?.data
+    else throw result
+  },
+
+  getFollowing : async params => {
+    let result = await post(`${apis?.getFollowing}${params}`)
+    if (result?.status === 200) return result?.data?.data
+    else throw result
+  },
+
+  follow : async params => {
+    let result = await post(apis?.follow, params)
+    if (result?.status === 200) return result?.data?.data
+    else throw result
+  },
+
+  unfollow : async params => {
+    let result = await post(apis?.unfollow, params)
     if (result?.status === 200) return result?.data?.data
     else throw result
   },

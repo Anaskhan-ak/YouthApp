@@ -25,6 +25,7 @@ const FindFriends = () => {
   const [phoneNos, setPhoneNos] = useState(['03228214535']);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const items = [
     {
       name: 'Sannya Wasim',
@@ -50,7 +51,6 @@ const FindFriends = () => {
   };
 
   const getContacts = async () => {
-    console.log(':::::::::::::');
     if (Platform.OS === 'android') {
       const permission = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
@@ -60,20 +60,83 @@ const FindFriends = () => {
           buttonPositive: 'Please accept bare mortal',
         },
       );
-      console.log('Permission status:', permission);
       if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
         setModal(false);
         return;
-      }   
+      }
     }
-    // const contacts = await Contacts.getCount()
-    // console.log('Contacts', contacts)
-    const response = await apiCall?.getContactSuggestions(phoneNos)
-    console.log("Response", response)
+    // const contacts = await Contacts.getCount();
+    // console.log('Contacts', contacts);
+    const response = await apiCall?.getContactSuggestions({contacts: phoneNos});
+    console.log('Response', response?.user);
+    setUsers(
+      response?.user?.map(u => ({
+        id: u?.id,
+        name: `${u?.firstName} ${u?.lastName}`,
+        photo: u?.photo,
+      })),
+    );
+  };
+
+  const getFollowing = async () => {
+    try {
+      const result = await apiCall?.getFollowing('cm60ql39f003l91r8l18bd80z');
+      console.log('Following successfully fetched', result);
+      setFollowing(result)
+    } catch (error) {
+      console.log('error fetching following', error);
+    }
+  };
+
+  const toggleFollow = async followingId => {
+    // setLoadingStates(prevState => ({
+    //   ...prevState,
+    //   [followingId]: true,
+    // }));
+    console.log(":::::::::")
+    try {
+      const isAlreadyFollowing = following?.includes(followingId);
+      console.log('isAlreadyFollowing', isAlreadyFollowing)
+      let response;
+      if (isAlreadyFollowing === false) {
+        response = await apiCall?.follow({
+          // followerId: userId,
+          followerId: 'cm60ql39f003l91r8l18bd80z',
+          // followingId: followingId,
+          followingId: 'cm64oiovt005391r8pjysmd7b',
+        });
+      } else {
+        response = await apiCall?.unfollow({
+          // followerId: userId,
+          followerId: 'cm60ql39f003l91r8l18bd80z',
+          // followingId: followingId,
+          followingId: 'cm64oiovt005391r8pjysmd7b',
+        });
+      }
+
+      if (response) {
+        // Update the `following` state dynamically
+        setFollowing(
+          prevFollowing =>
+            isAlreadyFollowing
+              ? prevFollowing.filter(id => id !== followingId) // Remove if unfollowing
+              : [...prevFollowing, followingId], // Add if following
+        );
+      }
+    } catch (error) {
+      console.error('Error toggling follow state:', error);
+    }
+    // finally {
+    //   // Clear loader state for the specific user
+    //   setLoadingStates(prevState => ({
+    //     ...prevState,
+    //     [followingId]: false,
+    //   }));
+    // }
   };
 
   useEffect(() => {
-    
+    getFollowing();
     getContacts();
   }, []);
 
@@ -102,7 +165,11 @@ const FindFriends = () => {
           width={width * 0.74}
           onPress={() => setModal(true)}
         />
-        <GradientBorderButton title={'Skip'} width={width * 0.75} onPress={getContacts}/>
+        <GradientBorderButton
+          title={'Skip'}
+          width={width * 0.75}
+          onPress={getContacts}
+        />
       </View>
       {modal && (
         <Modal animationType="slide" visible={modal} statusBarTranslucent>
@@ -121,22 +188,41 @@ const FindFriends = () => {
               setSearch={value => handleSearch(value)}
             />
             <FlatList
-              data={items}
+              data={users}
               keyExtractor={(item, index) => index.toString()}
               ListHeaderComponent={() => (
                 <Text style={styles?.contentHeading}>Youthapp Contacts</Text>
               )}
-              renderItem={({item}) => (
-                <View style={styles?.contentItem}>
-                  <Image source={item?.photo} style={styles?.itemImage} />
-                  <Text style={styles?.itemName}>{item?.name}</Text>
-                  <PrimaryButton
-                    title={item?.button}
-                    styles={styles?.gradientButton}
-                    textStyle={styles?.gradientButtonText}
-                  />
-                </View>
-              )}
+              renderItem={({item}) => {
+                const isFollowing = following.includes(item?.id);
+                return (
+                  <View style={styles?.contentItem}>
+                    <Image
+                      source={
+                        item?.photo
+                          ? {uri: item?.photo}
+                          : require('../../assets/images/SignupImage.jpeg')
+                      }
+                      style={styles?.itemImage}
+                    />
+                    <Text style={styles?.itemName}>{item?.name}</Text>
+                    {isFollowing ? (
+                      <PrimaryButton
+                        title="Followed"
+                        styles={styles?.gradientButton}
+                        textStyle={styles?.gradientButtonText}
+                        onPress={() => toggleFollow(item?.id)}
+                      />
+                    ) : (
+                      <TouchableOpacity
+                        style={styles?.grayButton}
+                        onPress={() => toggleFollow(item?.id)}>
+                        <Text style={styles?.grayButtonText}>Follow</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                );
+              }}
               style={styles?.list}
             />
             <FlatList
