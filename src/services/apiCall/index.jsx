@@ -32,7 +32,7 @@ export const apiCall = {
 
   unfollow : async params => {
     let result = await post(apis?.unfollow, params)
-    if (result?.status === 200) return result?.data?.data
+    if (result?.status === 200) return result?.status
     else throw result
   },
  

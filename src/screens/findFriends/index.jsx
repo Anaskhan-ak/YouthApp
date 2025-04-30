@@ -4,12 +4,14 @@ import {
   Image,
   Modal,
   PermissionsAndroid,
+  Platform,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Contacts from 'react-native-contacts';
 import { BackArrow, Cross } from '../../assets/images/svgs';
 import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
@@ -51,22 +53,60 @@ const FindFriends = () => {
   };
 
   const getContacts = async () => {
-    if (Platform.OS === 'android') {
-      const permission = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-        {
-          title: 'Contacts Permission',
-          message: 'This app would like to view your contacts.',
-          buttonPositive: 'Please accept bare mortal',
-        },
-      );
-      if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
-        setModal(false);
-        return;
+    try {
+      // Step 1: Request permission
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+          {
+            title: 'Contacts Permission',
+            message: 'This app needs access to your contacts.',
+            buttonPositive: 'OK',
+          },
+        );
+
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          console.warn('Contacts permission denied');
+          return [];
+        }
       }
+
+      // Step 2: Fetch contacts
+      const contacts = await Contacts.getAll();
+
+      // Optional: Sort or format the contacts
+      const formattedContacts = contacts.map((contact, index) => ({
+        id: index,
+        fullName:
+          contact.displayName ||
+          `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
+        photo: contact.thumbnailPath, // Path to the contact's photo (if available)
+        phoneNumbers: contact.phoneNumbers.map(pn => pn.number), // Array of phone numbers
+      }));
+
+      setPhoneNumbers(formattedContacts);
+      setFilteredContacts(formattedContacts);
+      formattedContacts && setPhoneLoading(false);
+
+      // set youth contacts
+      const sanitizeNumber = (number: any) => {
+        if (!number) return null; // Remove undefined numbers
+        const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
+        return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
+      };
+      const extractedNumbers = contacts
+        ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
+        .filter(Boolean); // Remove null/undefined/short values
+      console.log('Extracted numbers', extractedNumbers[0]);
+
+      return extractedNumbers;
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      return [];
     }
-    // const contacts = await Contacts.getCount();
-    // console.log('Contacts', contacts);
+  };
+
+  const getYouthappContacts = async () => {
     const response = await apiCall?.getContactSuggestions({contacts: phoneNos});
     console.log('Response', response?.user);
     setUsers(
@@ -82,7 +122,7 @@ const FindFriends = () => {
     try {
       const result = await apiCall?.getFollowing('cm60ql39f003l91r8l18bd80z');
       console.log('Following successfully fetched', result);
-      setFollowing(result)
+      setFollowing(result);
     } catch (error) {
       console.log('error fetching following', error);
     }
@@ -93,35 +133,30 @@ const FindFriends = () => {
     //   ...prevState,
     //   [followingId]: true,
     // }));
-    console.log(":::::::::")
     try {
       const isAlreadyFollowing = following?.includes(followingId);
-      console.log('isAlreadyFollowing', isAlreadyFollowing)
       let response;
-      if (isAlreadyFollowing === false) {
+
+      if (!isAlreadyFollowing) {
         response = await apiCall?.follow({
-          // followerId: userId,
           followerId: 'cm60ql39f003l91r8l18bd80z',
-          // followingId: followingId,
           followingId: 'cm64oiovt005391r8pjysmd7b',
         });
+        console.log('User successfully followed', response);
+
+        if (response) {
+          setFollowing(prev => [...prev, followingId]); // Add to state
+        }
       } else {
         response = await apiCall?.unfollow({
-          // followerId: userId,
           followerId: 'cm60ql39f003l91r8l18bd80z',
-          // followingId: followingId,
           followingId: 'cm64oiovt005391r8pjysmd7b',
         });
-      }
+        console.log('User successfully unfollowed', response);
 
-      if (response) {
-        // Update the `following` state dynamically
-        setFollowing(
-          prevFollowing =>
-            isAlreadyFollowing
-              ? prevFollowing.filter(id => id !== followingId) // Remove if unfollowing
-              : [...prevFollowing, followingId], // Add if following
-        );
+        if (response) {
+          setFollowing(prev => prev.filter(id => id !== followingId)); // Remove from state
+        }
       }
     } catch (error) {
       console.error('Error toggling follow state:', error);
@@ -138,6 +173,7 @@ const FindFriends = () => {
   useEffect(() => {
     getFollowing();
     getContacts();
+    getYouthappContacts();
   }, []);
 
   return (
@@ -237,11 +273,15 @@ const FindFriends = () => {
                 <View style={styles?.contentItem}>
                   <Image source={item?.photo} style={styles?.itemImage} />
                   <Text style={styles?.itemName}>{item?.name}</Text>
-                  <PrimaryButton
+                  {/* <PrimaryButton
                     title={item?.button}
                     styles={styles?.gradientButton}
                     textStyle={styles?.gradientButtonText}
-                  />
+                  /> */}
+                  <TouchableOpacity
+                    style={styles?.grayButton}>
+                    <Text style={styles?.grayButtonText}>Invite</Text>
+                  </TouchableOpacity>
                 </View>
               )}
               style={[styles?.list, {marginTop: height * 0.02}]}
