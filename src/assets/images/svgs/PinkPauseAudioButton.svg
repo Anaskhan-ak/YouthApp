@@ -1,0 +1,18 @@
+<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M0.0224609 10.7316C0.0224609 5.20794 4.4901 0.730103 9.99818 0.730103C15.5063 0.730103 19.9739 5.20819 19.9739 10.7316C19.9739 16.255 15.5063 20.7334 9.99818 20.7334C4.4901 20.7334 0.0224609 16.2557 0.0224609 10.7316Z" fill="url(#paint0_linear)"/>
+
+  <!-- Pause Icon shifted 1.5 units right -->
+  <g transform="translate(1.5, 0)">
+    <path d="M7.32241 6.5C7.32241 5.674 6.64802 5 5.81611 5C4.98421 5 4.30981 5.674 4.30981 6.5V14.5C4.30981 15.326 4.98421 16 5.81611 16C6.64802 16 7.32241 15.326 7.32241 14.5V6.5Z" fill="white"/>
+    <path d="M13.3476 6.5C13.3476 5.674 12.6732 5 11.8413 5C11.0094 5 10.335 5.674 10.335 6.5V14.5C10.335 15.326 11.0094 16 11.8413 16C12.6732 16 13.3476 15.326 13.3476 14.5V6.5Z" fill="white"/>
+  </g>
+
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0.0224609" y1="0.730103" x2="0.0224609" y2="20.7334" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FE6587"/>
+      <stop offset="1" stop-color="#F52D6A"/>
+    </linearGradient>
+  </defs>
+</svg>

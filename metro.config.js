@@ -10,6 +10,7 @@ const config = {
   transformer: {
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
   },
+  resetCache : true
 };
 
 module.exports = mergeConfig(defaultConfig, config);

@@ -1,0 +1,19 @@
+<svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left Shape -->
+  <path d="M0.727295 19.6861L14.6775 9.93883L0.727295 0.19519V19.6861Z" fill="url(#paint0_linear)" />
+  
+  <!-- Right Shape -->
+  <path d="M15 0.19519V19.6861H16.7388L16.5156 1.76045L15 0.19519Z" fill="url(#paint1_linear)" />
+
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="paint0_linear" x1="0.727295" y1="0.19519" x2="0.727295" y2="19.6861" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FE6587"/>
+      <stop offset="1" stop-color="#F52D6A"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="15" y1="0.19519" x2="15" y2="19.6861" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FE6587"/>
+      <stop offset="1" stop-color="#F52D6A"/>
+    </linearGradient>
+  </defs>
+</svg>

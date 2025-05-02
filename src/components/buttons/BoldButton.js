@@ -1,17 +1,11 @@
 import {
-  StyleSheet,
-  Text,
-  View,
   Dimensions,
-  TouchableOpacity,
-  Image,
-  TouchableOpacityProps,
-  ActivityIndicator,
+  Text,
+  TouchableOpacity
 } from 'react-native';
-import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {styles} from './styles';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
+import { styles } from './styles';
 
 const {height, width} = Dimensions.get('window');
 
@@ -24,7 +18,7 @@ export const BoldButton = props => {
         colors={[colors.primary, colors.RGB2]} // Gradient colors
         start={{x: 0, y: 0}} // Gradient start point (left-top)
         end={{x: 1, y: 0}} // Gradient end point (right-top)
-        style={props?.style ? props?.style : styles.BoldButton} // Style for the container
+        // style={props?.style ? props?.style : styles.BoldButton} // Style for the container
       >
         <Text style={props.textStyle ? props.textStyle : styles.BoldButtonText}>
           {props.title}
