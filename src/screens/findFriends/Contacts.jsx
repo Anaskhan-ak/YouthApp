@@ -48,7 +48,7 @@ const ContactsList = ({
             <Text style={styles?.contentHeading}>Youthapp Contacts</Text>
           )}
           renderItem={({item}) => {
-            const isFollowing = following.includes(item?.id);
+            const isFollowing = following.some(f => f.followingId === item?.id);
             return (
               <View style={styles?.contentItem}>
                 <View style={styles?.itemLeftContent}>

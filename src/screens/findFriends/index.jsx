@@ -140,28 +140,28 @@ const FindFriends = () => {
     //   [followingId]: true,
     // }));
     try {
-      const isAlreadyFollowing = following?.includes(followingId);
+      const isAlreadyFollowing = following.some(f => f.followingId === followingId);
       let response;
 
       if (!isAlreadyFollowing) {
         response = await apiCall?.follow({
           followerId: 'cm60ql39f003l91r8l18bd80z',
-          followingId: 'cm64oiovt005391r8pjysmd7b',
+          followingId: followingId,
         });
         console.log('User successfully followed', response);
 
         if (response) {
-          setFollowing(prev => [...prev, followingId]); // Add to state
+          setFollowing(prev => [...prev, response]); // Add to state
         }
       } else {
         response = await apiCall?.unfollow({
           followerId: 'cm60ql39f003l91r8l18bd80z',
-          followingId: 'cm64oiovt005391r8pjysmd7b',
+          followingId: followingId,
         });
         console.log('User successfully unfollowed', response);
 
-        if (response) {
-          setFollowing(prev => prev.filter(id => id !== followingId)); // Remove from state
+        if (response === 200) {
+          setFollowing(prev => prev.filter(f => f?.followingId !== followingId)); // Remove from state
         }
       }
     } catch (error) {
