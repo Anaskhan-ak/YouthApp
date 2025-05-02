@@ -56,6 +56,11 @@ const FindFriends = () => {
     [users, phoneNos]
   );
 
+  const onChangeSearchText = (text) => {
+    setSearch(text);           // Immediate UI update
+    handleSearch(text);        // Debounced filtering
+  };
+
   const getYouthappContacts = async numbers => {
     const response = await apiCall?.getContactSuggestions({
       contacts: numbers,
@@ -223,7 +228,7 @@ const FindFriends = () => {
           modal={modal}
           setModal={setModal}
           search={search}
-          handleSearch={handleSearch}
+          handleSearch={onChangeSearchText}
           getYouthappContacts={getYouthappContacts}
           users={filteredUsers}
           following={following}
