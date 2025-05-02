@@ -219,8 +219,7 @@ const FindFriends = () => {
         <GradientBorderButton
           title={'Skip'}
           width={width * 0.75}
-          // onPress={() => setInviteModal(true)}
-          onPress={getContacts}
+          onPress={() => setInviteModal(true)}
         />
       </View>
       {modal && (
@@ -236,7 +235,7 @@ const FindFriends = () => {
           toggleFollow={toggleFollow}
         />
       )}
-      {inviteModal && <InviteModal />}
+      {inviteModal && <InviteModal setModal={setInviteModal}/>}
     </SafeAreaView>
   );
 };
