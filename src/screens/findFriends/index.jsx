@@ -27,28 +27,10 @@ const FindFriends = () => {
   const [modal, setModal] = useState(false);
   const [inviteModal, setInviteModal] = useState(false);
   const [search, setSearch] = useState();
-  const [phoneNos, setPhoneNos] = useState(['03228214535']);
+  const [phoneNos, setPhoneNos] = useState([]);
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
   const [following, setFollowing] = useState([]);
   const navigation = useNavigation();
-  const items = [
-    {
-      name: 'Sannya Wasim',
-      photo: require('../../assets/images/SignupImage.jpeg'),
-      button: 'Follow',
-    },
-    {
-      name: 'Sannya Wasim',
-      photo: require('../../assets/images/SignupImage.jpeg'),
-      button: 'Follow',
-    },
-    {
-      name: 'Sannya Wasim',
-      photo: require('../../assets/images/SignupImage.jpeg'),
-      button: 'Follow',
-    },
-  ];
 
   const handleSearch = useCallback(
     _.debounce(value => {
@@ -57,19 +39,21 @@ const FindFriends = () => {
     }, 1000),
     [],
   );
-  async function requestContactsPermission() {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-      {
-        title: 'Contacts Permission',
-        message: 'This app needs access to your contacts to find friends.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
+
+  const getYouthappContacts = async numbers => {
+    console.log("NUMBERS FOR API", numbers)
+    const response = await apiCall?.getContactSuggestions({
+      contacts: numbers,
+      // name: value ? value : null,
+    });
+    setUsers(
+      response?.user?.map(u => ({
+        id: u?.id,
+        name: `${u?.firstName} ${u?.lastName}`,
+        photo: u?.photo,
+      })),
     );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
-  }
+  };
   const getContacts = async () => {
     try {
       if (Platform.OS === 'android') {
@@ -87,25 +71,30 @@ const FindFriends = () => {
         }
       }
       const results = await Contacts?.getAll();
-      console.log('Contacts', results);
+      // console.log('Contacts', results);
+      const formattedContacts = results.map((contact, index) => ({
+        id: index,
+        fullName:
+          contact.displayName ||
+          `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
+        photo: contact.thumbnailPath, // Path to the contact's photo (if available)
+        phoneNumbers: contact.phoneNumbers.map(pn => pn.number), // Array of phone numbers
+      }));
+      // console.log('Formatted contacts', formattedContacts?.slice(0, 4));
+      const sanitizeNumber = (number) => {
+        if (!number) return null; // Remove undefined numbers
+        const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
+        return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
+      };
+      const extractedNumbers = results
+        ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
+        .filter(Boolean); // Remove null/undefined/short values
+      getYouthappContacts(extractedNumbers)
+      setPhoneNos(formattedContacts);
     } catch (error) {
       console.log('Error fetching contacts', error);
     }
     // }
-  };
-
-  const getYouthappContacts = async value => {
-    const response = await apiCall?.getContactSuggestions({
-      contacts: phoneNos,
-      name: value ? value : null,
-    });
-    setUsers(
-      response?.user?.map(u => ({
-        id: u?.id,
-        name: `${u?.firstName} ${u?.lastName}`,
-        photo: u?.photo,
-      })),
-    );
   };
 
   const getFollowing = async () => {
@@ -167,7 +156,6 @@ const FindFriends = () => {
   useEffect(() => {
     getFollowing();
     getContacts();
-    getYouthappContacts();
   }, []);
 
   return (
@@ -258,7 +246,7 @@ const FindFriends = () => {
               style={styles?.list}
             />
             <FlatList
-              data={items}
+              data={phoneNos}
               keyExtractor={(item, index) => index.toString()}
               ListHeaderComponent={() => (
                 <>
@@ -267,8 +255,15 @@ const FindFriends = () => {
               )}
               renderItem={({item}) => (
                 <View style={styles?.contentItem}>
-                  <Image source={item?.photo} style={styles?.itemImage} />
-                  <Text style={styles?.itemName}>{item?.name}</Text>
+                  <Image
+                    source={
+                      item?.photo
+                        ? {uri: item?.photo}
+                        : require('../../assets/images/SignupImage.jpeg')
+                    }
+                    style={styles?.itemImage}
+                  />
+                  <Text style={styles?.itemName}>{item?.fullName}</Text>
                   {/* <PrimaryButton
                     title={item?.button}
                     styles={styles?.gradientButton}
