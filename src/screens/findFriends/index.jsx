@@ -2,9 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import {
-  FlatList,
+  BackHandler,
   Image,
-  Modal,
   PermissionsAndroid,
   SafeAreaView,
   StatusBar,
@@ -13,14 +12,13 @@ import {
   View,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
-import { BackArrow, Cross } from '../../assets/images/svgs';
+import { Cross } from '../../assets/images/svgs';
 import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import CustomSearchBar from '../../components/inputs/search';
 import InviteModal from '../../components/modals/genderModal/inviteModal';
-import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
+import { width } from '../../constant';
 import { apiCall } from '../../services/apiCall';
+import ContactsList from './Contacts';
 import { styles } from './styles';
 
 const FindFriends = () => {
@@ -41,7 +39,6 @@ const FindFriends = () => {
   );
 
   const getYouthappContacts = async numbers => {
-    console.log("NUMBERS FOR API", numbers)
     const response = await apiCall?.getContactSuggestions({
       contacts: numbers,
       // name: value ? value : null,
@@ -81,7 +78,7 @@ const FindFriends = () => {
         phoneNumbers: contact.phoneNumbers.map(pn => pn.number), // Array of phone numbers
       }));
       // console.log('Formatted contacts', formattedContacts?.slice(0, 4));
-      const sanitizeNumber = (number) => {
+      const sanitizeNumber = number => {
         if (!number) return null; // Remove undefined numbers
         const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
         return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
@@ -89,7 +86,7 @@ const FindFriends = () => {
       const extractedNumbers = results
         ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
         .filter(Boolean); // Remove null/undefined/short values
-      getYouthappContacts(extractedNumbers)
+      getYouthappContacts(extractedNumbers);
       setPhoneNos(formattedContacts);
     } catch (error) {
       console.log('Error fetching contacts', error);
@@ -156,6 +153,11 @@ const FindFriends = () => {
   useEffect(() => {
     getFollowing();
     getContacts();
+    const backHandler = BackHandler?.addEventListener(
+      'hardwareBackPress',
+      handleBack,
+    );
+    return () => backHandler?.remove();
   }, []);
 
   return (
@@ -191,93 +193,16 @@ const FindFriends = () => {
         />
       </View>
       {modal && (
-        <Modal animationType="slide" visible={modal} statusBarTranslucent>
-          <View style={styles?.modalContent}>
-            <View style={styles?.header}>
-              <TouchableOpacity
-                style={styles?.backButton}
-                onPress={() => setModal(false)}>
-                <BackArrow />
-              </TouchableOpacity>
-              <Text style={styles?.headerText}>Find Friends</Text>
-              <GradientText style={styles?.gradientText}>Next</GradientText>
-            </View>
-            <CustomSearchBar
-              search={search}
-              setSearch={handleSearch}
-              func={getYouthappContacts}
-            />
-            <FlatList
-              data={users}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={() => (
-                <Text style={styles?.contentHeading}>Youthapp Contacts</Text>
-              )}
-              renderItem={({item}) => {
-                const isFollowing = following.includes(item?.id);
-                return (
-                  <View style={styles?.contentItem}>
-                    <Image
-                      source={
-                        item?.photo
-                          ? {uri: item?.photo}
-                          : require('../../assets/images/SignupImage.jpeg')
-                      }
-                      style={styles?.itemImage}
-                    />
-                    <Text style={styles?.itemName}>{item?.name}</Text>
-                    {isFollowing ? (
-                      <PrimaryButton
-                        title="Followed"
-                        styles={styles?.gradientButton}
-                        textStyle={styles?.gradientButtonText}
-                        onPress={() => toggleFollow(item?.id)}
-                      />
-                    ) : (
-                      <TouchableOpacity
-                        style={styles?.grayButton}
-                        onPress={() => toggleFollow(item?.id)}>
-                        <Text style={styles?.grayButtonText}>Follow</Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                );
-              }}
-              style={styles?.list}
-            />
-            <FlatList
-              data={phoneNos}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={() => (
-                <>
-                  <Text style={styles?.contentHeading}>Phone Contacts</Text>
-                </>
-              )}
-              renderItem={({item}) => (
-                <View style={styles?.contentItem}>
-                  <Image
-                    source={
-                      item?.photo
-                        ? {uri: item?.photo}
-                        : require('../../assets/images/SignupImage.jpeg')
-                    }
-                    style={styles?.itemImage}
-                  />
-                  <Text style={styles?.itemName}>{item?.fullName}</Text>
-                  {/* <PrimaryButton
-                    title={item?.button}
-                    styles={styles?.gradientButton}
-                    textStyle={styles?.gradientButtonText}
-                  /> */}
-                  <TouchableOpacity style={styles?.grayButton}>
-                    <Text style={styles?.grayButtonText}>Invite</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-              style={[styles?.list, {marginTop: height * 0.02}]}
-            />
-          </View>
-        </Modal>
+        <ContactsList
+        modal={modal}
+          setModal={setModal}
+          search={search}
+          handleSearch={handleSearch}
+          getYouthappContacts={getYouthappContacts}
+          users={users}
+          following={following}
+          phoneNos={phoneNos}
+        />
       )}
       {inviteModal && <InviteModal />}
     </SafeAreaView>
