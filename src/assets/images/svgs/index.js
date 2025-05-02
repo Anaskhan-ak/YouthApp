@@ -17,6 +17,7 @@ import PinkPauseAudioButton from './PinkPauseAudioButton.svg';
 import PinkPlayAudioButton from './PinkPlayAudioButton.svg';
 import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
 import PinkVolume from './PinkVolume.svg';
+import RightArrow from './RightArrow.svg';
 import SearchIcon from './SearchIcon.svg';
 import YouthIcon from './YouthIcon.svg';
 
@@ -28,6 +29,6 @@ export {
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
-  PinkVolume, SearchIcon, YouthIcon
+  PinkVolume, RightArrow, SearchIcon, YouthIcon
 };
 

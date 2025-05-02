@@ -16,6 +16,7 @@ import { BackArrow, Cross } from '../../assets/images/svgs';
 import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
+import InviteModal from '../../components/modals/genderModal/inviteModal';
 import GradientText from '../../components/text/GradientText';
 import { height, width } from '../../constant';
 import { apiCall } from '../../services/apiCall';
@@ -88,7 +89,6 @@ const FindFriends = () => {
       contacts: phoneNos,
       name: value ? value : null,
     });
-    console.log('Response', response?.user);
     setUsers(
       response?.user?.map(u => ({
         id: u?.id,
@@ -101,7 +101,6 @@ const FindFriends = () => {
   const getFollowing = async () => {
     try {
       const result = await apiCall?.getFollowing('cm60ql39f003l91r8l18bd80z');
-      console.log('Following successfully fetched', result);
       setFollowing(result);
     } catch (error) {
       console.log('error fetching following', error);
@@ -190,7 +189,7 @@ const FindFriends = () => {
         <GradientBorderButton
           title={'Skip'}
           width={width * 0.75}
-          onPress={getContacts}
+          onPress={() => setInviteModal(true)}
         />
       </View>
       {modal && (
@@ -275,11 +274,11 @@ const FindFriends = () => {
           </View>
         </Modal>
       )}
-      {/* {
+      {
         inviteModal && (
           <InviteModal/>
         )
-      } */}
+      }
     </SafeAreaView>
   );
 };
