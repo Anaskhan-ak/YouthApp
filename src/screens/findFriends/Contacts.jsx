@@ -1,4 +1,11 @@
-import { FlatList, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { BackArrow } from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
@@ -7,7 +14,7 @@ import { height } from '../../constant';
 import { styles } from './styles';
 
 const ContactsList = ({
-    modal,
+  modal,
   setModal,
   search,
   handleSearch,
@@ -15,6 +22,7 @@ const ContactsList = ({
   users,
   following,
   phoneNos,
+  toggleFollow,
 }) => {
   return (
     <Modal animationType="slide" visible={modal} statusBarTranslucent>
@@ -52,7 +60,11 @@ const ContactsList = ({
                     }
                     style={styles?.itemImage}
                   />
-                  <Text style={styles?.itemName}>{item?.name}</Text>
+                  <Text style={styles?.itemName}>
+                    {item?.fullName?.length > 15
+                      ? `${item?.fullName?.slice(0, 15)}...`
+                      : item?.fullName}
+                  </Text>
                 </View>
                 {isFollowing ? (
                   <PrimaryButton
@@ -91,7 +103,11 @@ const ContactsList = ({
                   }
                   style={styles?.itemImage}
                 />
-                <Text style={styles?.itemName}>{item?.fullName}</Text>
+                <Text style={styles?.itemName}>
+                  {item?.fullName?.length > 15
+                    ? `${item?.fullName?.slice(0, 15)}...`
+                    : item?.fullName}
+                </Text>
               </View>
               {/* <PrimaryButton
                     title={item?.button}

@@ -26,16 +26,34 @@ const FindFriends = () => {
   const [inviteModal, setInviteModal] = useState(false);
   const [search, setSearch] = useState();
   const [phoneNos, setPhoneNos] = useState([]);
+  const [filteredNos, setFilteredNos] = useState([])
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([])
   const [following, setFollowing] = useState([]);
   const navigation = useNavigation();
 
   const handleSearch = useCallback(
-    _.debounce(value => {
-      setSearch(value);
-      getYouthappContacts(value); // call your function here with debounced input
-    }, 1000),
-    [],
+    _.debounce((query) => {
+      setSearch(query);
+      if (query.trim() === '') {
+        setFilteredUsers(users);
+        // setFilteredContacts(phoneNumbers);
+      } else {
+        const lowerCaseQuery = query.toLowerCase();
+        const searchedContacts = phoneNos.filter(
+          (contact) =>
+            contact?.fullName?.toLowerCase().includes(lowerCaseQuery)
+        );
+        setFilteredNos(searchedContacts);
+  
+        const searchedUsers = users.filter(
+          (user) =>
+            user?.fullName?.toLowerCase().includes(lowerCaseQuery)
+        );
+        setFilteredUsers(searchedUsers);
+      }
+    }, 500),
+    [users, phoneNos]
   );
 
   const getYouthappContacts = async numbers => {
@@ -46,10 +64,17 @@ const FindFriends = () => {
     setUsers(
       response?.user?.map(u => ({
         id: u?.id,
-        name: `${u?.firstName} ${u?.lastName}`,
+        fullName: `${u?.firstName} ${u?.lastName}`,
         photo: u?.photo,
       })),
     );
+    setFilteredUsers(
+      response?.user?.map(u => ({
+        id: u?.id,
+        fullName: `${u?.firstName} ${u?.lastName}`,
+        photo: u?.photo,
+      })),
+    )
   };
   const getContacts = async () => {
     try {
@@ -88,6 +113,7 @@ const FindFriends = () => {
         .filter(Boolean); // Remove null/undefined/short values
       getYouthappContacts(extractedNumbers);
       setPhoneNos(formattedContacts);
+      setFilteredNos(formattedContacts)
     } catch (error) {
       console.log('Error fetching contacts', error);
     }
@@ -194,14 +220,15 @@ const FindFriends = () => {
       </View>
       {modal && (
         <ContactsList
-        modal={modal}
+          modal={modal}
           setModal={setModal}
           search={search}
           handleSearch={handleSearch}
           getYouthappContacts={getYouthappContacts}
-          users={users}
+          users={filteredUsers}
           following={following}
-          phoneNos={phoneNos}
+          phoneNos={filteredNos}
+          toggleFollow={toggleFollow}
         />
       )}
       {inviteModal && <InviteModal />}
