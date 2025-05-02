@@ -5,11 +5,12 @@ import {
   FlatList,
   Image,
   Modal,
+  PermissionsAndroid,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
 import { BackArrow, Cross } from '../../assets/images/svgs';
@@ -24,7 +25,7 @@ import { styles } from './styles';
 
 const FindFriends = () => {
   const [modal, setModal] = useState(false);
-  const [inviteModal, setInviteModal] = useState(false)
+  const [inviteModal, setInviteModal] = useState(false);
   const [search, setSearch] = useState();
   const [phoneNos, setPhoneNos] = useState(['03228214535']);
   const [users, setUsers] = useState([]);
@@ -70,18 +71,27 @@ const FindFriends = () => {
     return granted === PermissionsAndroid.RESULTS.GRANTED;
   }
   const getContacts = async () => {
-      const permission = await requestContactsPermission();
-      if (permission) {
-        console.log("anas1")
-        Contacts.getAll()
-          .then(contacts => {
-            console.log('Contacts:', contacts);
-          })
-          .catch(e => {
-            console.error('Failed to load contacts:', e);
-          });
+    try {
+      if (Platform.OS === 'android') {
+        const permission = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+          {
+            title: 'Contacts Permission',
+            message: 'This app would like to view your contacts.',
+            buttonPositive: 'Please accept bare mortal',
+          },
+        );
+        if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
+          setModal(false);
+          return;
+        }
       }
-    
+      const results = await Contacts?.getAll();
+      console.log('Contacts', results);
+    } catch (error) {
+      console.log('Error fetching contacts', error);
+    }
+    // }
   };
 
   const getYouthappContacts = async value => {
@@ -160,7 +170,6 @@ const FindFriends = () => {
     getYouthappContacts();
   }, []);
 
-
   return (
     <SafeAreaView style={styles?.container}>
       <StatusBar
@@ -189,7 +198,8 @@ const FindFriends = () => {
         <GradientBorderButton
           title={'Skip'}
           width={width * 0.75}
-          onPress={() => setInviteModal(true)}
+          // onPress={() => setInviteModal(true)}
+          onPress={getContacts}
         />
       </View>
       {modal && (
@@ -274,11 +284,7 @@ const FindFriends = () => {
           </View>
         </Modal>
       )}
-      {
-        inviteModal && (
-          <InviteModal/>
-        )
-      }
+      {inviteModal && <InviteModal />}
     </SafeAreaView>
   );
 };
