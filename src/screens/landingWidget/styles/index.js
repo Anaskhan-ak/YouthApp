@@ -28,16 +28,17 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: width * 0.15,
     fontFamily: 'Montserrat-ExtraBold',
-    // width: 320,
-    // alignSelf: 'center',
+    marginLeft: width * 0.04,
+  },
+  welcomeBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginLeft: width * 0.04,
   },
   welcomeText: {
     color: colors.black,
     fontSize: 18,
     fontFamily: fonts?.montserratExtraBold,
-    // marginTop: -height * 0.01,
-    width: width * 0.9,
     alignSelf: 'center',
     letterSpacing: 0,
   },
@@ -93,7 +94,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   notificationScroll: {
-    height: height * 0.37,
+    height: height * 0.35,
   },
   changeWidgetButton: {
     borderWidth: width * 0.002,
