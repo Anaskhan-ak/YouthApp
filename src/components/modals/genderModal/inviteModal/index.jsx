@@ -1,18 +1,24 @@
 import Clipboard from '@react-native-clipboard/clipboard';
-import { useRef } from 'react';
 import {
   Alert,
-  Animated,
+  // Animated,
   FlatList,
   Image,
+  Linking,
   Modal,
   Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 import Share from 'react-native-share';
 import {
   CopyIcon,
@@ -72,7 +78,7 @@ const InviteModal = props => {
       image: <TwitterIcon />,
     },
   ];
-  const translateY = useRef(new Animated.Value(0)).current;
+  const translateY = useSharedValue(0);
 
   const copyToClipboard = () => {
     Clipboard.setString('hello world');
@@ -101,9 +107,13 @@ const InviteModal = props => {
   };
 
   const shareToWhatsApp = contact => {
+    let cleaned = contact.replace(/\D/g, '');
+    if (cleaned.startsWith('0')) {
+      cleaned = '92' + cleaned.slice(1);
+    }
     const text = 'https://awesome.contents.com/';
     Linking.openURL(
-      `whatsapp://send?phone=${contact}&text=${encodeURIComponent(text)}`,
+      `whatsapp://send?phone=+${cleaned}&text=${encodeURIComponent(text)}`,
     );
   };
 
@@ -133,16 +143,16 @@ const InviteModal = props => {
     }
   };
 
-  const handleIconClick = (name, contact) => {
+  const handleIconClick = name => {
     switch (name) {
       case 'Whatsapp':
-        shareToWhatsApp(contact);
+        shareToWhatsApp(props?.contact);
         break;
       case 'Mail':
         shareEmailImage();
         break;
       case 'Message':
-        shareToMessage(contact);
+        shareToMessage(props?.contact);
         break;
       case 'Messenger':
         shareToMessenger();
@@ -156,30 +166,28 @@ const InviteModal = props => {
   };
 
   const handleClose = () => {
-    Animated.timing(translateY, {
-      toValue: 500,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => props?.setModal(false)); // You must pass an `onClose` prop
+    translateY.value = withSpring(500, {damping: 15}, () => {
+      runOnJS(props?.setModal)(false);
+    });
   };
 
-  const onGestureEvent = Animated.event(
-    [{nativeEvent: {translationY: translateY}}],
-    {useNativeDriver: true},
-  );
-
-  const onHandlerStateChange = event => {
-    if (event.nativeEvent.state === State.END) {
-      if (event.nativeEvent.translationY > 100) {
-        handleClose();
-      } else {
-        Animated.spring(translateY, {
-          toValue: 0,
-          useNativeDriver: true,
-        }).start();
+  const panGesture = Gesture.Pan()
+    .onUpdate(e => {
+      if (e.translationY > 0) {
+        translateY.value = e.translationY;
       }
-    }
-  };
+    })
+    .onEnd(e => {
+      if (e.translationY > height * 0.25) {
+        runOnJS(handleClose)(); // close the modal
+      } else {
+        translateY.value = withSpring(0);
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{translateY: translateY.value}],
+  }));
 
   return (
     <View style={styles?.container}>
@@ -191,14 +199,15 @@ const InviteModal = props => {
         {/* Close when clicked outside */}
         <Pressable style={styles.modalBackground} onPress={handleClose}>
           {/* Stop propagation to avoid closing when tapping inside */}
-          <PanGestureHandler
-            onGestureEvent={onGestureEvent}
-            onHandlerStateChange={onHandlerStateChange}>
+          <GestureDetector gesture={panGesture}>
             <Animated.View
-              style={[styles.modalContainer, {transform: [{translateY}]}]}
+              style={[styles.modalContainer, animatedStyle]}
               onStartShouldSetResponder={() => true}>
               <View style={styles?.content}>
-                <View style={styles?.dash} />
+                <TouchableOpacity
+                  style={styles?.dash}
+                  onPress={() => props?.setModal(false)}
+                />
                 <Text style={styles?.heading}>Share To</Text>
 
                 <FlatList
@@ -253,7 +262,7 @@ const InviteModal = props => {
                 </View>
               </View>
             </Animated.View>
-          </PanGestureHandler>
+          </GestureDetector>
         </Pressable>
       </Modal>
     </View>

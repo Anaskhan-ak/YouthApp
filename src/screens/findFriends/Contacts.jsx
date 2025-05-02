@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,6 +10,7 @@ import {
 import { BackArrow } from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
+import InviteModal from '../../components/modals/genderModal/inviteModal';
 import GradientText from '../../components/text/GradientText';
 import { height } from '../../constant';
 import { styles } from './styles';
@@ -24,6 +26,8 @@ const ContactsList = ({
   phoneNos,
   toggleFollow,
 }) => {
+  const [inviteModal, setInviteModal] = useState(false);
+  const [selectedContact, setSelectedContact] = useState();
   return (
     <Modal animationType="slide" visible={modal} statusBarTranslucent>
       <View style={styles?.modalContent}>
@@ -114,13 +118,21 @@ const ContactsList = ({
                     styles={styles?.gradientButton}
                     textStyle={styles?.gradientButtonText}
                   /> */}
-              <TouchableOpacity style={styles?.grayButton}>
+              <TouchableOpacity
+                style={styles?.grayButton}
+                onPress={() => {
+                  setSelectedContact(item?.phoneNumbers);
+                  setInviteModal(true);
+                }}>
                 <Text style={styles?.grayButtonText}>Invite</Text>
               </TouchableOpacity>
             </View>
           )}
           style={[styles?.list, {marginTop: height * 0.02}]}
         />
+        {inviteModal && (
+          <InviteModal setModal={setInviteModal} contact={selectedContact} />
+        )}
       </View>
     </Modal>
   );

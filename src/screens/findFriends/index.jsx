@@ -15,7 +15,6 @@ import Contacts from 'react-native-contacts';
 import { Cross } from '../../assets/images/svgs';
 import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import InviteModal from '../../components/modals/genderModal/inviteModal';
 import { width } from '../../constant';
 import { apiCall } from '../../services/apiCall';
 import ContactsList from './Contacts';
@@ -23,7 +22,6 @@ import { styles } from './styles';
 
 const FindFriends = () => {
   const [modal, setModal] = useState(false);
-  const [inviteModal, setInviteModal] = useState(false);
   const [search, setSearch] = useState();
   const [phoneNos, setPhoneNos] = useState([]);
   const [filteredNos, setFilteredNos] = useState([])
@@ -105,9 +103,9 @@ const FindFriends = () => {
           contact.displayName ||
           `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
         photo: contact.thumbnailPath, // Path to the contact's photo (if available)
-        phoneNumbers: contact.phoneNumbers.map(pn => pn.number), // Array of phone numbers
+        phoneNumbers: contact.phoneNumbers[0]?.number, // Array of phone numbers
       }));
-      // console.log('Formatted contacts', formattedContacts?.slice(0, 4));
+      console.log('Formatted contacts', formattedContacts?.slice(0, 4));
       const sanitizeNumber = number => {
         if (!number) return null; // Remove undefined numbers
         const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
@@ -219,7 +217,6 @@ const FindFriends = () => {
         <GradientBorderButton
           title={'Skip'}
           width={width * 0.75}
-          onPress={() => setInviteModal(true)}
         />
       </View>
       {modal && (
@@ -235,7 +232,6 @@ const FindFriends = () => {
           toggleFollow={toggleFollow}
         />
       )}
-      {inviteModal && <InviteModal setModal={setInviteModal}/>}
     </SafeAreaView>
   );
 };
