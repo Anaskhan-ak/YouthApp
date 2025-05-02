@@ -19,7 +19,7 @@ import AnalogWatch from './components/Clock';
 import Notifications from './components/Notifications';
 import { StackedNotifications } from './components/Swippable';
 // import {useDispatch, useSelector} from 'react-redux';
-import Date from './components/Date';
+import DateComponent from './components/Date';
 import Podcast from './components/Podcast';
 import { styles } from './styles/index';
 
@@ -151,7 +151,7 @@ const LandingWidget = ({navigation}) => {
             </View>
           ) : widget === 'date' ? (
             <View style={styles?.timewidget}>
-              <Date />
+              <DateComponent/>
               <Calendar />
             </View>
           ) : (

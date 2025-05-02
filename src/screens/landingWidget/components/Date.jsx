@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { styles } from '../styles';
 
-const Date = () => {
+const DateComponent = () => {
     return (
       <View style={styles?.dateContainer}>
         <Text style={styles?.day}>
@@ -27,4 +27,4 @@ const Date = () => {
     );
   };
 
-  export default Date
+  export default DateComponent
