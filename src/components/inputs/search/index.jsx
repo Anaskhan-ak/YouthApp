@@ -3,9 +3,13 @@ import { SearchIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 
-const CustomSearchBar = (props) => {
+const CustomSearchBar = props => {
   return (
-    <View style={styles.searchContainerStyle}>
+    <View
+      style={[
+        styles.searchContainerStyle,
+        {marginHorizontal: props?.marginHorizontal},
+      ]}>
       <View style={styles.inputContainerStyle}>
         <SearchIcon />
         <TextInput
@@ -23,7 +27,6 @@ const CustomSearchBar = (props) => {
 const styles = StyleSheet.create({
   searchContainerStyle: {
     marginVertical: height * 0.03,
-    marginHorizontal: width * 0.06,
     backgroundColor: 'transparent',
     borderColor: 'transparent',
     alignItems: 'center',

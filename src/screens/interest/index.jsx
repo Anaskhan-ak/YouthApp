@@ -13,6 +13,7 @@ import { GradientCross } from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
 import GradientText from '../../components/text/GradientText';
+import { width } from '../../constant';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import { styles } from './styles';
@@ -75,7 +76,7 @@ const Interests = () => {
       for (const interest of selectedInterests) {
         const payload = {intrestId: interest.id};
         console.log('Payload', payload);
-        const response = await apiCall?.addInterest(payload)
+        const response = await apiCall?.addInterest(payload);
         console.log('Interests added successfully', response);
       }
     } catch (error) {
@@ -100,7 +101,11 @@ const Interests = () => {
         <Text style={styles?.subHeading}>
           Choose 4 to 15 interestes to get better recommendation
         </Text>
-        <CustomSearchBar search={search} setSearch={onChangeSearchText} />
+        <CustomSearchBar
+          search={search}
+          setSearch={onChangeSearchText}
+          marginHorizontal={width * 0.01}
+        />
         <FlatList
           data={filteredInterests}
           renderItem={({item, index}) => {

@@ -12,7 +12,7 @@ import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
 import InviteModal from '../../components/modals/genderModal/inviteModal';
 import GradientText from '../../components/text/GradientText';
-import { height } from '../../constant';
+import { height, width } from '../../constant';
 import { styles } from './styles';
 
 const ContactsList = ({
@@ -44,6 +44,7 @@ const ContactsList = ({
           search={search}
           setSearch={handleSearch}
           func={getYouthappContacts}
+          marginHorizontal ={width * 0.06}
         />
         <FlatList
           data={users}
