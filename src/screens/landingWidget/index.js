@@ -99,15 +99,15 @@ const LandingWidget = ({navigation}) => {
   //   linkedAccounts: [],
   // };
 
-  const [widget, changeWidget] = useState('calender');
+  const [widget, changeWidget] = useState('date');
 
   const toggleWidget = () => {
-    if (widget === 'calender') {
-      changeWidget('date');
-    } else if (widget === 'date') {
+    if (widget === 'date') {
+      changeWidget('calender');
+    } else if (widget === 'calender') {
       changeWidget('podcast');
     } else {
-      changeWidget('calender');
+      changeWidget('date');
     }
   };
   
