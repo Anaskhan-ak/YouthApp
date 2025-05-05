@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   UIManager,
-  View
+  View,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -15,10 +15,9 @@ import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { styles } from '../styles/Swippable';
 
-const SwipeableItem = ({item, onSwipe, showContent}) => {
+const SwipeableItem = ({item, onSwipe, showContent, stack}) => {
   const renderLeftActions = () => <View style={{width: 200}} />;
   const renderRightActions = () => <View style={{width: 200}} />;
-// console.log('::::::::ITEM:::::::::;', item)s
   return (
     <GestureHandlerRootView>
       <ReanimatedSwipeable
@@ -28,20 +27,32 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}
         onSwipeableOpenStartDrag={() => onSwipe(item.id)}>
-        <TouchableOpacity style={styles?.swipeButton}>
+        <TouchableOpacity
+          style={[
+            styles?.swipeButton,
+            stack && {backgroundColor: 'rgba(250, 250, 250, 0.3)'},
+          ]}>
           {showContent && (
             <View style={styles?.swipeButtonContainer}>
               <Image
                 style={styles?.profileIcon}
-                source={item?.userImage ? {uri : item?.userImage} : require('../../../assets/images/onboarding/Onboarding1.png')}
+                source={
+                  item?.userImage
+                    ? {uri: item?.userImage}
+                    : require('../../../assets/images/onboarding/Onboarding1.png')
+                }
               />
               <View style={{marginLeft: width * 0.0125}}>
                 <Text style={styles?.profileName}>{item?.userName}</Text>
                 <Text style={styles?.notificationMessage}>
-                  {item?.content?.length > 15 ? `${item?.content?.slice(0,15)}...` : item?.content}
+                  {item?.content?.length > 15
+                    ? `${item?.content?.slice(0, 15)}...`
+                    : item?.content}
                 </Text>
               </View>
-              <Text style={styles?.notificationTime}>{moment(item?.createdAt)?.format('HH:mm')}</Text>
+              <Text style={styles?.notificationTime}>
+                {moment(item?.createdAt)?.format('HH:mm')}
+              </Text>
             </View>
           )}
         </TouchableOpacity>
@@ -52,7 +63,7 @@ const SwipeableItem = ({item, onSwipe, showContent}) => {
 
 const SwipeableList = ({setVisibility, notifications}) => {
   const [items, setItems] = useState(notifications);
-  console.log("::NOTIFICATIONS::::::::::", items)
+  // console.log('::NOTIFICATIONS::::::::::', items);
   // useEffect(() => {
   //   const fetchNotifications = async () => {
   //     try {
@@ -91,7 +102,12 @@ const SwipeableList = ({setVisibility, notifications}) => {
         data={items}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <SwipeableItem item={item} onSwipe={handleSwipe} showContent={true} />
+          <SwipeableItem
+            item={item}
+            onSwipe={handleSwipe}
+            showContent={true}
+            stack={true}
+          />
           // <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
         )}
       />
@@ -203,6 +219,9 @@ export const StackedNotifications = ({count, notifications}) => {
               opacity: isTop ? 1 : 0.5,
               width: width * (0.9 - index * 0.05),
               zIndex: items.length - index,
+              borderRadius: width * 0.03,
+              backgroundColor:  'rgba(250, 250, 250, 0.3)',
+              // backgroundColor: 'red',
             };
 
         return (
@@ -211,6 +230,7 @@ export const StackedNotifications = ({count, notifications}) => {
               item={item}
               onSwipe={() => handleSwipe(item.id)}
               showContent={expanded || isTop}
+              stack={true && expanded}
             />
           </View>
         );
@@ -218,7 +238,5 @@ export const StackedNotifications = ({count, notifications}) => {
     </View>
   );
 };
-
-
 
 export default SwipeableList;

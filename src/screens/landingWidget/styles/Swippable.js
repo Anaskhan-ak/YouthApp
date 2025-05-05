@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     color: colors.text,
   },
   swipeButton: {
-    backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
+    // backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
     width: width * 0.9,
     alignSelf: 'center',
     borderRadius: width * 0.03,

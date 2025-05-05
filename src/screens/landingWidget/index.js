@@ -99,7 +99,7 @@ const LandingWidget = ({navigation}) => {
   //   linkedAccounts: [],
   // };
 
-  const [widget, changeWidget] = useState('podcast');
+  const [widget, changeWidget] = useState('calender');
 
   const toggleWidget = () => {
     if (widget === 'calender') {
