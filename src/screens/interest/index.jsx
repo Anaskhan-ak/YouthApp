@@ -94,7 +94,7 @@ const Interests = () => {
       <View style={styles?.header}>
         <View style={styles?.heading}>
           <GradientText style={styles?.gradientHeading}>Interests</GradientText>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setRate(true)}>
             <GradientCross />
           </TouchableOpacity>
         </View>
