@@ -35,6 +35,12 @@ export const apiCall = {
     if (result?.status === 200) return result?.status
     else throw result
   },
+
+  addInterest : async params => {
+    let result = await post(apis?.addInterest, params)
+    if (result?.status === 200) return result?.status
+    else throw result
+  },
  
   //GET API CALL
   getNationalities: async params => {

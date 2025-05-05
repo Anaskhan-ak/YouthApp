@@ -28,6 +28,15 @@ export const styles = StyleSheet.create({
     alignItems : 'center',
     marginTop : height * 0.006
   },
+  itemGradientButton : {
+    borderRadius : width * 0.02,
+    margin : width * 0.02,
+    borderRadius : width * 0.02,
+    width : width * 0.4,
+    height : height * 0.06,
+    alignItems : 'center',
+    justifyContent : 'center'
+  },
   itemButton : {
     borderRadius : width * 0.02,
     margin : width * 0.02,
@@ -40,7 +49,6 @@ export const styles = StyleSheet.create({
     justifyContent : 'center'
   },
   itemText : {
-    color : colors?.textGray,
     fontFamily : fonts?.montserratSemiBold
   }
 });

@@ -5,6 +5,7 @@ export const apis = {
   follow : 'api/v1/follow',
   unfollow : 'api/v1/unfollow',
   getFollowing : 'api/v1/getFollower/',
+  addInterest : 'api/v1/user/intrest',
   //GET ENDPOINTS
   getNotification : `api/v1/notification`,
   getAllInterests : 'api/v1/intrest'
