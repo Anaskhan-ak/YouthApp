@@ -13,7 +13,7 @@ import LandingWidget from '../screens/landingWidget';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="LandingWidget">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}

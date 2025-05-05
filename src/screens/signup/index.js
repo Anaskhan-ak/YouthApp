@@ -68,7 +68,6 @@ const SignUp = () => {
       phoneNo: countryDetails?.dial_code + data?.phone,
       DoB: selectedDate,
     };
-    console.log(obj);
     try {
       let result = await apiCall?.SignUp(obj);
       navigation?.navigate('Otp', {
@@ -216,14 +215,11 @@ const SignUp = () => {
                 control={control}
                 rules={{
                   required: 'Password is required',
-                  minLength: {
-                    value: 8,
-                    message: 'Password must be at least 8 characters long',
-                  },
                   pattern: {
-                    value: /^(?=.*[A-Z])/,
+                    value:
+                      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
                     message:
-                      'Password must contain at least one uppercase letter',
+                      'Password must be at least 8 characters long, include one uppercase letter, and one special character',
                   },
                 }}
                 render={({field: {onChange, onBlur, value}}) => (
@@ -233,7 +229,7 @@ const SignUp = () => {
                     value={value}
                     placeholder={'Password'}
                     secureTextEntry
-                    error={errors?.password}
+                    error={errors?.password?.message}
                   />
                 )}
                 name="password"

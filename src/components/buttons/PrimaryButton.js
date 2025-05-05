@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Dimensions,
+  StyleSheet,
   Text,
   TouchableOpacity,
 } from 'react-native';

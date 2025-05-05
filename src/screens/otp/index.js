@@ -35,7 +35,7 @@ const Otp = ({route}) => {
     try {
       setLoading(true)
       let result = await apiCall?.VerifyOtp(obj);
-      console.log('result', result);
+      navigation?.navigate("EmailVerification")
     } catch (e) {
       setShowError(true);
       setErrorMessage({
@@ -101,7 +101,7 @@ const Otp = ({route}) => {
             <PrimaryButton
               width={'116%'}
               style={styles?.resendBtn}
-              isLoading={loading}
+              // isLoading={loading}
               // onPress={handleSubmit(onSubmit)}
               title="Re-send"
             />

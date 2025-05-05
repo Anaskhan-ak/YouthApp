@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "120045931409",
+    "project_id": "youthapp-6c9b5",
+    "storage_bucket": "youthapp-6c9b5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120045931409:android:3b75d1b7b25c13cac2a830",
+        "android_client_info": {
+          "package_name": "com.youthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120045931409-5isv4o8vchobus3jg4vneqp7dqecftgn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.youthapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "120045931409-b5mss0fv1sm2u5uqlpmj9lbik4094iuf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1NiIAEYYa4M-aK9W4aFks8I_PkrLOzPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120045931409-b5mss0fv1sm2u5uqlpmj9lbik4094iuf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "120045931409-0b8ttkc079615iu1h1t0v7hjfdkndpg5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.youthapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
