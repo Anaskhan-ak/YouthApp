@@ -103,11 +103,11 @@ const LandingWidget = ({navigation}) => {
 
   const toggleWidget = () => {
     if (widget === 'calender') {
-      changeWidget('podcast');
-    } else if (widget === 'date') {
-      changeWidget('calender');
-    } else {
       changeWidget('date');
+    } else if (widget === 'date') {
+      changeWidget('podcast');
+    } else {
+      changeWidget('calender');
     }
   };
   
