@@ -6,7 +6,8 @@ export const apis = {
   unfollow : 'api/v1/unfollow',
   getFollowing : 'api/v1/getFollower/',
   //GET ENDPOINTS
-  getNotification : `api/v1/notification`
+  getNotification : `api/v1/notification`,
+  getAllInterests : 'api/v1/intrest'
   // DELETE ENDPOINTS
   // PATCH ENDPOINTS
 };

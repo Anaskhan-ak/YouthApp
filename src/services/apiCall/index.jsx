@@ -50,6 +50,12 @@ export const apiCall = {
     if (result?.status) return result?.data?.data
     else throw result
   },
+
+  getAllInterests : async () => {
+    let result = await get(apis?.getAllInterests)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
   
   // PATCH API CALL
   gatePassStatus: async obj => {

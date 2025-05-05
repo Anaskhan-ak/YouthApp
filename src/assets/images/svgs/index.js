@@ -10,6 +10,7 @@ import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import Google from './google.svg';
+import GradientCross from './GradientCross.svg';
 import GreenCheckMark from './greenCheckMark.svg';
 import MailIcon from './MailIcon.svg';
 import MessageIcon from './MessageIcon.svg';
@@ -38,8 +39,7 @@ export {
   DropDownIcon,
   Error,
   ErrorWhite,
-  Google,
-  GreenCheckMark, MailIcon,
+  Google, GradientCross, GreenCheckMark, MailIcon,
   MessageIcon, MessengerIcon, PasswordHide,
   PasswordShow,
   PinkForwardAudioButton,

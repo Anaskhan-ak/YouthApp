@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 import FindFriends from '../screens/findFriends';
+import Interests from '../screens/interest';
 import LandingWidget from '../screens/landingWidget';
 import Login from '../screens/login';
 import Onboarding from '../screens/onboarding';
@@ -10,7 +11,7 @@ import Splash from '../screens/Splash';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="FindFriends">
+    <Stack.Navigator initialRouteName="Interests">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -38,6 +39,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="FindFriends"
         component={FindFriends}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Interests"
+        component={Interests}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>
