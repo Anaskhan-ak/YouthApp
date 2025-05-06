@@ -27,6 +27,7 @@ import RightArrow from './RightArrow.svg';
 import SearchIcon from './SearchIcon.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
+import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
 
 export {
@@ -49,6 +50,6 @@ export {
   PinkRewindAUdioButton,
   PinkVolume, RateUs, RightArrow,
   SearchIcon, TwitterIcon,
-  WhatsappIcon, YouthIcon
+  WhatsappIcon, WhiteLeftArrow, YouthIcon
 };
 

@@ -7,11 +7,12 @@ import Login from '../screens/login';
 import Onboarding from '../screens/onboarding';
 import SignUp from '../screens/signup';
 import Splash from '../screens/Splash';
+import CreateYudio from '../screens/Yudio/createYudio';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="LandingWidget">
+    <Stack.Navigator initialRouteName="CreateYudio">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -44,6 +45,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Interests"
         component={Interests}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateYudio"
+        component={CreateYudio}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>
