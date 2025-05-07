@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Image,
+  PermissionsAndroid,
   SafeAreaView,
   ScrollView,
   Text,
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import AudioRecord from 'react-native-audio-record';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   GradientBlueMic,
@@ -27,8 +29,66 @@ import { styles } from './styles';
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [drawer, setDrawer] = useState(false)
+  const [yudio, setYudio] = useState()
   const navigation = useNavigation();
-  console.log("Drawer",drawer)
+  const recordingTimer = useRef(null);
+
+
+  const toggleRecording = async () => {
+    if (isRecording) {
+      // Stop recording
+      try {
+        if (recordingTimer.current !== null) {
+          clearTimeout(recordingTimer.current); // Clear the timer when recording is stopped
+        }
+        setIsRecording(false);
+        const audioFile = await AudioRecord.stop();
+        setYudio(audioFile);
+        console.log('Recorded file:', audioFile);
+      } catch (error) {
+        console.error('Error stopping recording:', error);
+      }
+    } else {
+      // Start recording
+      try {
+        setIsRecording(true);
+  
+        AudioRecord.init({
+          sampleRate: 16000,
+          channels: 1,
+          bitsPerSample: 16,
+          audioSource: 6,
+          wavFile: `recording-${Date.now()}.wav`,
+        });
+        AudioRecord.start();
+  
+        // Set a timer to stop recording after 10 minutes
+        recordingTimer.current = setTimeout(() => {
+          console.log('Recording time limit reached, stopping recording...');
+          toggleRecording(); // Stop recording automatically after 10 minutes
+        }, 10 * 60 * 1000); // 10 minutes in milliseconds
+      } catch (error) {
+        console.error('Error starting recording:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    async function askPermissionForAudioRecording() {
+      if (Platform.OS === 'android') {
+        const permissions = [
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        ];
+        const granted = await PermissionsAndroid.requestMultiple(permissions);
+        const allGranted = Object.values(granted).every(
+          permission => permission === PermissionsAndroid.RESULTS.GRANTED,
+        );
+      }
+    }
+    askPermissionForAudioRecording();
+  }, []);
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
@@ -89,7 +149,7 @@ const CreateYudio = () => {
 
           <TouchableOpacity
             style={styles?.mic}
-            onPress={() => setIsRecording(!isRecording)}>
+            onPress={toggleRecording}>
             {isRecording ? <GradientRedMic /> : <GradientBlueMic />}
           </TouchableOpacity>
         </View>
