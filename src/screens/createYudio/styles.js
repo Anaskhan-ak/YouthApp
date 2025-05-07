@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     padding: width * 0.03,
-    marginBottom : height * 0.1
+    marginBottom: height * 0.1,
   },
   inputTitle: {
     backgroundColor: colors?.greyBackground,
@@ -46,6 +46,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     margin: width * 0.008,
     paddingVertical: height * 0.029,
+    overflow: 'hidden',
+  },
+  thumbnailImage: {
+    borderRadius: width * 0.02,
+    margin: width * 0.01,
+    paddingVertical: height * 0.029,
+    width : width * 0.3,
+    height : height * 0.18,
+    resizeMode : "cover",
   },
   uploadThumbnailText: {
     color: colors?.textGray,
@@ -53,72 +62,72 @@ export const styles = StyleSheet.create({
     marginTop: height * 0.03,
   },
   inputDescFooter: {
-    flexDirection : 'row',
-    justifyContent : 'space-between',
-    alignItems : 'center',
-    paddingHorizontal : width * 0.02,
-    paddingVertical : height * 0.005
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: width * 0.02,
+    paddingVertical: height * 0.005,
   },
   Ai: {},
   character: {
-    color : colors?.gray12,
-    fontFamily : fonts?.montserratMedium,
-    fontSize : width * 0.03
+    color: colors?.gray12,
+    fontFamily: fonts?.montserratMedium,
+    fontSize: width * 0.03,
   },
-  yudioContainer : {
+  yudioContainer: {
     // backgroundColor : 'red',
-    marginTop : height * 0.06,
-    alignItems : 'center',
-    justifyContent : 'center',
+    marginTop: height * 0.06,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  dottedBorder : {
-    borderStyle : 'dotted',
-    backgroundColor : 'transparent',
-    width : width * 0.44,
-    height : width * 0.44,
-    borderRadius : width * 0.44,
-     alignItems : 'center',
-    justifyContent : 'center',
-    borderWidth : width * 0.008,
-    padding : width * 0.06,
-    borderColor : colors?.gray,
+  dottedBorder: {
+    borderStyle: 'dotted',
+    backgroundColor: 'transparent',
+    width: width * 0.44,
+    height: width * 0.44,
+    borderRadius: width * 0.44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: width * 0.008,
+    padding: width * 0.06,
+    borderColor: colors?.gray,
   },
-  yudioGradientImageBorder : {
-    width : width * 0.42,
-    height : width * 0.42,
-    borderRadius : width * 0.42,
-    alignItems : 'center',
-    justifyContent : 'center'
+  yudioGradientImageBorder: {
+    width: width * 0.42,
+    height: width * 0.42,
+    borderRadius: width * 0.42,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  yudioImage : {
-    width : width * 0.4,
-    height : width * 0.4,
-    borderRadius : width * 0.4
+  yudioImage: {
+    width: width * 0.4,
+    height: width * 0.4,
+    borderRadius: width * 0.4,
   },
-  mic : {
-    marginVertical : height * 0.02
+  mic: {
+    marginVertical: height * 0.02,
   },
-  recordedPlayerContainer : {
-    marginTop : height * 0.02,
-    alignItems : "center",
-    justifyContent : 'center'
+  recordedPlayerContainer: {
+    marginTop: height * 0.02,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  recordedPlayerHeading : {
-    fontFamily : fonts?.montserratBold,
-    fontSize : width * 0.05
+  recordedPlayerHeading: {
+    fontFamily: fonts?.montserratBold,
+    fontSize: width * 0.05,
   },
   recordedPlayerName: {
-    fontFamily : fonts?.montserratRegular,
-    fontSize : width * 0.04
+    fontFamily: fonts?.montserratRegular,
+    fontSize: width * 0.04,
   },
-  recordedPlayer : {
-    marginTop : height * 0.04
+  recordedPlayer: {
+    marginTop: height * 0.04,
   },
-  crossButton : {
-    alignSelf : 'flex-end',
-    marginRight : width * 0.03,
-    marginTop : -height * 0.01,
+  crossButton: {
+    alignSelf: 'flex-end',
+    marginRight: width * 0.03,
+    marginTop: -height * 0.01,
     // backgroundColor : 'red',
-    padding : width * 0.02
-  }
+    padding: width * 0.02,
+  },
 });

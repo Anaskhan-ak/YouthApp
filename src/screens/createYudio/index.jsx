@@ -1,3 +1,4 @@
+import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -31,9 +32,32 @@ import { styles } from './styles';
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const [yudio, setYudio] = useState();
+
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
+
+  const handleForm = () => {
+    console.log('Title', title);
+    console.log('Description', description);
+    console.log('Thumbnail', thumbnail?.uri);
+    console.log("Yudio", yudio);
+  };
+
+  const uploadThumbnail = async () => {
+    try {
+      const [pickResult] = await pick();
+      setThumbnail(pickResult);
+      // console.log('Picked Result', pickResult?.uri);
+    } catch (err) {
+      // see error handling
+      console.log('Error picking document', err);
+    }
+  };
 
   const toggleRecording = async () => {
     if (isRecording) {
@@ -106,6 +130,8 @@ const CreateYudio = () => {
           style={styles?.inputTitle}
           placeholder="Your Yudio title"
           placeholderTextColor={colors?.gray}
+          value={title}
+          onChangeText={setTitle}
         />
         <View style={styles?.inputThumbContainer}>
           <View style={styles?.inputDescContainer}>
@@ -117,6 +143,8 @@ const CreateYudio = () => {
               multiline
               numberOfLines={5}
               scrollEnabled={true}
+              value={description}
+              onChangeText={setDescription}
             />
             <View style={styles?.inputDescFooter}>
               <TouchableOpacity style={styles?.Ai}>
@@ -125,17 +153,29 @@ const CreateYudio = () => {
               <Text style={styles?.character}>350/350</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles?.thumbnailButton}>
-            <UploadThumbnail />
-            <Text style={styles?.uploadThumbnailText}>
-              {`Upload your\n thumbnail`}
-            </Text>
-          </TouchableOpacity>
+          {thumbnail ? (
+            <TouchableOpacity
+              // style={styles?.thumbnailButton}
+              onPress={uploadThumbnail}>
+              <Image source={{uri: thumbnail?.uri}} style={styles?.thumbnailImage} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles?.thumbnailButton}
+              onPress={uploadThumbnail}>
+              <UploadThumbnail />
+              <Text style={styles?.uploadThumbnailText}>
+                {`Upload your\n thumbnail`}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         {yudio ? (
           <View style={styles?.recordedPlayerContainer}>
-            <TouchableOpacity style={styles?.crossButton} onPress={() => setYudio('')}>
-              <Cross/>
+            <TouchableOpacity
+              style={styles?.crossButton}
+              onPress={() => setYudio('')}>
+              <Cross />
             </TouchableOpacity>
             <Image
               style={styles?.yudioImage}
@@ -173,7 +213,7 @@ const CreateYudio = () => {
         )}
         {drawer && <Drawer />}
       </ScrollView>
-      <CreateButton title="Create New Yudio" />
+      <CreateButton title="Create New Yudio" onPress={handleForm} />
     </SafeAreaView>
   );
 };

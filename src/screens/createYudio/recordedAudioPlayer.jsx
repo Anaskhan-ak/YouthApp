@@ -10,7 +10,7 @@ import {
 import { height, width } from '../../constant';
 import { colors } from '../../utils/colors/index';
 
-const RecordedAudioPlayer = ({audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'}) => {
+const RecordedAudioPlayer = ({audioURL }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);

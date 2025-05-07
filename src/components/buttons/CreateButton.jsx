@@ -7,7 +7,7 @@ import { CreateButtonStyles as styles } from './styles'
 const CreateButton = (props) => {
   return (
     <LinearGradient colors={[colors?.RGB1, colors?.RGB2]} style={styles?.container}>
-        <TouchableOpacity style={styles?.button} onPress={() => props?.onPress}>
+        <TouchableOpacity style={styles?.button} onPress={props?.onPress}>
             <GradientText style={styles?.text}>{props?.title}</GradientText>
         </TouchableOpacity>
     </LinearGradient>
