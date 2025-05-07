@@ -7,7 +7,9 @@ import { styles } from './styles';
 const GradientHeader = props => {
   return (
     <LinearGradient
-      colors={[colors?.RGB1, colors?.RGB2]}
+      colors={[colors?.RGB2,colors?.RGB1]}
+      start={{x:1,y:1}}
+      end={{x:0,y:0}}
       style={styles?.container}>
       <StatusBar
         translucent

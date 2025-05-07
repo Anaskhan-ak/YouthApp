@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import CreateYudio from '../screens/createYudio';
 import FindFriends from '../screens/findFriends';
 import Interests from '../screens/interest';
 import LandingWidget from '../screens/landingWidget';
@@ -7,7 +8,6 @@ import Login from '../screens/login';
 import Onboarding from '../screens/onboarding';
 import SignUp from '../screens/signup';
 import Splash from '../screens/Splash';
-import CreateYudio from '../screens/Yudio/createYudio';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();

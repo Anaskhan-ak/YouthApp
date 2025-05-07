@@ -1,7 +1,9 @@
 import Apple from './apple.svg';
 import BackArrow from './BackArrow.svg';
+import BlackDropdown from './BlackDropdown.svg';
 import BlackLike from './BlackLike.svg';
 import BlackShare from './BlackShare.svg';
+import BlueTick from './BlueTick.svg';
 import Calendar from './calendar.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
@@ -10,7 +12,10 @@ import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import Google from './google.svg';
+import GradientBlueMic from './GradientBlueMic.svg';
 import GradientCross from './GradientCross.svg';
+import GradientLocationIcon from './GradientLocationIcon.svg';
+import GradientRedMic from './GradientRedMic.svg';
 import GreenCheckMark from './greenCheckMark.svg';
 import MailIcon from './MailIcon.svg';
 import MessageIcon from './MessageIcon.svg';
@@ -22,10 +27,14 @@ import PinkPauseAudioButton from './PinkPauseAudioButton.svg';
 import PinkPlayAudioButton from './PinkPlayAudioButton.svg';
 import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
 import PinkVolume from './PinkVolume.svg';
+import PublicIcon from './PublicIcon.svg';
 import RateUs from './RateUs.svg';
+import RewriteWithAi from './RewriteWithAi.svg';
 import RightArrow from './RightArrow.svg';
 import SearchIcon from './SearchIcon.svg';
+import TagFriendsIcon from './TagFriendsIcon.svg';
 import TwitterIcon from './TwitterIcon.svg';
+import UploadThumbnail from './UploadThumbnail.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
@@ -33,23 +42,40 @@ import YouthIcon from './YouthIcon.svg';
 export {
   Apple,
   BackArrow,
+  BlackDropdown,
   BlackLike,
   BlackShare,
-  Calendar, CopyIcon, Cross,
+  BlueTick,
+  Calendar,
+  CopyIcon,
+  Cross,
   DontShowLandingWidget,
   DropDown,
   DropDownIcon,
   Error,
   ErrorWhite,
-  Google, GradientCross, GreenCheckMark, MailIcon,
-  MessageIcon, MessengerIcon, PasswordHide,
+  Google, GradientBlueMic, GradientCross,
+  GradientLocationIcon, GradientRedMic, GreenCheckMark,
+  MailIcon,
+  MessageIcon,
+  MessengerIcon,
+  PasswordHide,
   PasswordShow,
   PinkForwardAudioButton,
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
-  PinkVolume, RateUs, RightArrow,
-  SearchIcon, TwitterIcon,
-  WhatsappIcon, WhiteLeftArrow, YouthIcon
+  PinkVolume,
+  PublicIcon,
+  RateUs,
+  RewriteWithAi,
+  RightArrow,
+  SearchIcon,
+  TagFriendsIcon,
+  TwitterIcon,
+  UploadThumbnail,
+  WhatsappIcon,
+  WhiteLeftArrow,
+  YouthIcon
 };
 
