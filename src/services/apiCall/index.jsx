@@ -1,5 +1,5 @@
 
-import { deleted, get, patch, post } from '../Methods';
+import { deleted, documentPost, get, patch, post } from '../Methods';
 import { apis } from '../endPoints';
 
 export const apiCall = {
@@ -38,6 +38,13 @@ export const apiCall = {
 
   addInterest : async params => {
     let result = await post(apis?.addInterest, params)
+    if (result?.status === 200) return result?.status
+    else throw result
+  },
+
+  generateWaveforms : async params => {
+    console.log("Params", params)
+    let result = await documentPost(apis?.generateWaveforms, params)
     if (result?.status === 200) return result?.status
     else throw result
   },

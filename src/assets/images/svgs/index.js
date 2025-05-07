@@ -25,11 +25,13 @@ import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
 import PasswordHide from './PasswordHide.svg';
 import PasswordShow from './PasswordShow.svg';
+import PauseIcon from './PauseIcon.svg';
 import PinkForwardAudioButton from './PinkForwardAudioButton.svg';
 import PinkPauseAudioButton from './PinkPauseAudioButton.svg';
 import PinkPlayAudioButton from './PinkPlayAudioButton.svg';
 import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
 import PinkVolume from './PinkVolume.svg';
+import PlayIcon from './PlayIcon.svg';
 import PublicIcon from './PublicIcon.svg';
 import RateUs from './RateUs.svg';
 import RewriteWithAi from './RewriteWithAi.svg';
@@ -62,13 +64,11 @@ export {
   MessageIcon,
   MessengerIcon,
   PasswordHide,
-  PasswordShow,
-  PinkForwardAudioButton,
+  PasswordShow, PauseIcon, PinkForwardAudioButton,
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
-  PinkVolume,
-  PublicIcon,
+  PinkVolume, PlayIcon, PublicIcon,
   RateUs,
   RewriteWithAi,
   RightArrow,

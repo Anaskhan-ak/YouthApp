@@ -3,14 +3,13 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
-  GradientRedTick,
   PinkPauseAudioButton,
-  PinkPlayAudioButton,
+  PinkPlayAudioButton
 } from '../../assets/images/svgs';
 import { height, width } from '../../constant';
 import { colors } from '../../utils/colors/index';
 
-const RecordedAudioPlayer = ({audioURL }) => {
+const RecordedAudioPlayer = ({audioURL}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -55,7 +54,10 @@ const RecordedAudioPlayer = ({audioURL }) => {
       setPosition(0); // reset
     };
 
-    const finishedSubscription = SoundPlayer.addEventListener('FinishedPlaying', onFinished);
+    const finishedSubscription = SoundPlayer.addEventListener(
+      'FinishedPlaying',
+      onFinished,
+    );
 
     return () => {
       finishedSubscription.remove();
@@ -98,9 +100,6 @@ const RecordedAudioPlayer = ({audioURL }) => {
         <Text style={styles?.timeText}>{formatTime(position)}</Text>
         <Text style={styles?.timeText}>{formatTime(duration)}</Text>
       </View>
-      <TouchableOpacity>
-        <GradientRedTick />
-      </TouchableOpacity>
     </View>
   );
 };

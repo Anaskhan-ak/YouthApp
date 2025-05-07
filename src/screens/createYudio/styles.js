@@ -130,4 +130,8 @@ export const styles = StyleSheet.create({
     // backgroundColor : 'red',
     padding: width * 0.02,
   },
+  redTickButton : {
+    alignSelf : 'center',
+    marginTop : -height * 0.02
+  }
 });
