@@ -24,6 +24,7 @@ import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import { colors } from '../../utils/colors';
 import AudioBars from './audioBars';
+import RecordedAudioPlayer from './recordedAudioPlayer';
 import { styles } from './styles';
 
 const CreateYudio = () => {
@@ -153,6 +154,9 @@ const CreateYudio = () => {
             {isRecording ? <GradientRedMic /> : <GradientBlueMic />}
           </TouchableOpacity>
         </View>
+        {
+          yudio && <RecordedAudioPlayer audioURL={yudio}/>
+        }
         {
           drawer && (<Drawer/>)
         }
