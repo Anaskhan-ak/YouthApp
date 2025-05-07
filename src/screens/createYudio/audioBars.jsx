@@ -10,7 +10,7 @@ import Animated, {
 import { width } from '../../constant';
 import { colors } from '../../utils/colors';
 
-const BAR_COUNT = 12;
+const BAR_COUNT = 100;
 
 const AudioBars = ({ isRecording }) => {
   const bars = Array.from({ length: BAR_COUNT }, (_, i) => ({
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     },
     bar: {
       position: 'absolute',
-      width: 4,
-      height: 16,
+      width: width * 0.004,
+      height: width * 0.03,
       borderRadius: 2,
     },
     gradientBorder: {
