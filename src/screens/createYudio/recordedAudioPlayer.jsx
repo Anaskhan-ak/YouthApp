@@ -1,19 +1,16 @@
 import Slider from '@react-native-community/slider';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import {
-    PinkForwardAudioButton,
+    GradientRedTick,
     PinkPauseAudioButton,
     PinkPlayAudioButton,
-    PinkRewindAUdioButton,
-    PinkVolume,
 } from '../../assets/images/svgs';
 import { height, width } from '../../constant';
 import { colors } from '../../utils/colors/index';
 
-const RecordedAudioPlayer = ({  audioURL }) => {
+const RecordedAudioPlayer = ({audioURL}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -28,26 +25,6 @@ const RecordedAudioPlayer = ({  audioURL }) => {
       setIsPlaying(!isPlaying);
     } catch (e) {
       console.log('Error in playPauseHandler:', e);
-    }
-  };
-
-  const forwardHandler = async () => {
-    try {
-      const info = await SoundPlayer.getInfo();
-      let newTime = Math.min(info.currentTime + 5, info.duration);
-      SoundPlayer.seek(newTime);
-    } catch (e) {
-      console.log('Error in forwardHandler:', e);
-    }
-  };
-
-  const backwardHandler = async () => {
-    try {
-      const info = await SoundPlayer.getInfo();
-      let newTime = Math.max(info.currentTime - 5, 0);
-      SoundPlayer.seek(newTime);
-    } catch (e) {
-      console.log('Error in backwardHandler:', e);
     }
   };
 
@@ -80,11 +57,15 @@ const RecordedAudioPlayer = ({  audioURL }) => {
   };
 
   return (
-    <LinearGradient
-      style={styles?.container}
-      colors={[colors.RGB1, colors.RGB2]}>
+    <View style={styles?.container}>
       <View style={styles?.sliderContainer}>
-        <Text style={styles?.timeText}>{formatTime(position)}</Text>
+        <TouchableOpacity onPress={playPauseHandler}>
+          {isPlaying ? (
+            <PinkPauseAudioButton width={width * 0.1} height={width * 0.1}/>
+          ) : (
+            <PinkPlayAudioButton width={width * 0.1} height={width * 0.1} />
+          )}
+        </TouchableOpacity>
         <Slider
           style={styles?.slider}
           value={position}
@@ -94,37 +75,21 @@ const RecordedAudioPlayer = ({  audioURL }) => {
             SoundPlayer.seek(value / 1000); // SoundPlayer expects seconds
             setPosition(value);
           }}
-          minimumTrackTintColor="white"
-          maximumTrackTintColor="rgba(255, 255, 255, 0.5)"
-          thumbTintColor="transparent"
+          minimumTrackTintColor={colors?.RGB1}
+          maximumTrackTintColor={colors?.gray}
+          thumbTintColor={colors?.RGB1}
         />
+      </View>
+      <View style={styles?.timeContainer}>
+        <Text style={styles?.timeText}>{formatTime(position)}</Text>
         <Text style={styles?.timeText}>{formatTime(duration)}</Text>
-        <View style={styles?.audioProgress}>
-          <PinkVolume width={13} height={13} />
-          <View style={styles?.audioVolume} />
-        </View>
       </View>
-
-      <View style={styles?.controls}>
-        <TouchableOpacity onPress={backwardHandler}>
-          <PinkRewindAUdioButton />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={playPauseHandler}>
-          {isPlaying ? (
-            <PinkPauseAudioButton />
-          ) : (
-            <PinkPlayAudioButton width={25} height={25} />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={forwardHandler}>
-          <PinkForwardAudioButton />
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
+      <TouchableOpacity>
+        <GradientRedTick/>
+      </TouchableOpacity>
+    </View>
   );
 };
-
-
 
 export default RecordedAudioPlayer;
 
@@ -136,51 +101,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 20,
     marginVertical: 5,
-    width: width * 0.5,
+    width: width * 0.9,
     height: height * 0.08,
   },
   sliderContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: -10,
-  },
-  controls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    columnGap: 30,
   },
   slider: {
     flex: 1,
-    height: 20,
+    // height: height * 0.1,
   },
   timeText: {
-    color: 'white',
-    fontSize: 8,
+    color: colors?.text,
+    fontSize: width * 0.03,
   },
-  controlButton: {
+  timeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    width: width * 0.75,
+    alignSelf: 'flex-end',
+    marginRight: width * 0.02,
   },
   playPauseButton: {
     backgroundColor: 'white',
-    width: 15,
-    height: 15,
+    width: width * 0.04,
+    height: width * 0.04,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 2,
-  },
-  audioProgress: {
-    marginLeft: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: 2,
-  },
-  audioVolume: {
-    height: 3,
-    backgroundColor: colors.white,
-    width: 15,
-    marginLeft: 5,
   },
 });
