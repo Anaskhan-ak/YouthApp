@@ -19,10 +19,12 @@ const RecordedAudioPlayer = ({audioURL}) => {
     try {
       if (isPlaying) {
         SoundPlayer.pause();
+        setIsPlaying(false);
       } else {
         SoundPlayer.playUrl(audioURL);
+        setIsPlaying(true);
       }
-      setIsPlaying(!isPlaying);
+      //   setIsPlaying(!isPlaying);
     } catch (e) {
       console.log('Error in playPauseHandler:', e);
     }
@@ -34,19 +36,31 @@ const RecordedAudioPlayer = ({audioURL}) => {
       interval = setInterval(async () => {
         try {
           const info = await SoundPlayer.getInfo();
-          setPosition(info.currentTime * 1000);
+          setPosition(info.currentTime * 1000); // in ms
+          setDuration(info.duration * 1000); // also in ms
         } catch (e) {
           console.log('getInfo error:', e);
         }
-      }, 1000);
-    } else if (!isPlaying && position !== 0) {
+      }, 500);
+    } else {
       clearInterval(interval);
     }
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [isPlaying]);
+
+  useEffect(() => {
+    const onFinished = () => {
+      setIsPlaying(false);
+      setPosition(0); // reset
+    };
+
+    SoundPlayer.addEventListener('FinishedPlaying', onFinished);
+
+    return () => {
+      SoundPlayer.removeEventListener('FinishedPlaying', onFinished);
+    };
+  }, []);
 
   const formatTime = milliseconds => {
     const minutes = Math.floor(milliseconds / 60000);
@@ -61,7 +75,7 @@ const RecordedAudioPlayer = ({audioURL}) => {
       <View style={styles?.sliderContainer}>
         <TouchableOpacity onPress={playPauseHandler}>
           {isPlaying ? (
-            <PinkPauseAudioButton width={width * 0.1} height={width * 0.1}/>
+            <PinkPauseAudioButton width={width * 0.1} height={width * 0.1} />
           ) : (
             <PinkPlayAudioButton width={width * 0.1} height={width * 0.1} />
           )}
@@ -72,7 +86,7 @@ const RecordedAudioPlayer = ({audioURL}) => {
           minimumValue={0}
           maximumValue={duration}
           onSlidingComplete={value => {
-            SoundPlayer.seek(value / 1000); // SoundPlayer expects seconds
+            SoundPlayer.seek(value / 1000); // convert ms to sec
             setPosition(value);
           }}
           minimumTrackTintColor={colors?.RGB1}
@@ -85,7 +99,7 @@ const RecordedAudioPlayer = ({audioURL}) => {
         <Text style={styles?.timeText}>{formatTime(duration)}</Text>
       </View>
       <TouchableOpacity>
-        <GradientRedTick/>
+        <GradientRedTick />
       </TouchableOpacity>
     </View>
   );
