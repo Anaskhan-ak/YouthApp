@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { GradientDropRightCircle } from '../../assets/images/svgs';
+import { GradientCalender, GradientDropRightCircle } from '../../assets/images/svgs';
 import Switch from '../../components/switch';
 import { styles } from './style';
 
 const Drawer = () => {
-    const [isEnabled, setEnabled] = useState(false);
+  const [isEnabled, setEnabled] = useState(false);
   const items = [
     {
       name: 'Your Audience',
@@ -26,12 +26,12 @@ const Drawer = () => {
     {
       name: 'Subscribers Only',
       value: 'subscribers',
-      image: <Switch value={isEnabled} onValueChange={setEnabled}/>,
+      image: <Switch value={isEnabled} onValueChange={setEnabled} />,
     },
     {
       name: 'Schedule Your Post',
       value: 'schedulePost',
-      image: <GradientDropRightCircle />,
+      image: <GradientCalender />,
     },
     {
       name: 'Post on Other YOUTH Accounts',

@@ -21,7 +21,7 @@ const GradientHeader = props => {
       </TouchableOpacity>
       <Text style={styles?.title}>{props?.title}</Text>
       {props?.advancedButtonPress && (
-        <TouchableOpacity style={styles?.advancedButton}>
+        <TouchableOpacity style={styles?.advancedButton} onPress={props?.advancedButtonPress}>
           <Text style={styles?.advancedButtonText}>Advanced</Text>
         </TouchableOpacity>
       )}

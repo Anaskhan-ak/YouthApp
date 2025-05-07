@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     padding: width * 0.03,
+    marginBottom : height * 0.1
   },
   inputTitle: {
     backgroundColor: colors?.greyBackground,

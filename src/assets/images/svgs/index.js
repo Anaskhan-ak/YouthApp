@@ -13,6 +13,7 @@ import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import Google from './google.svg';
 import GradientBlueMic from './GradientBlueMic.svg';
+import GradientCalender from './GradientCalender.svg';
 import GradientCross from './GradientCross.svg';
 import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
@@ -56,7 +57,7 @@ export {
   DropDownIcon,
   Error,
   ErrorWhite,
-  Google, GradientBlueMic, GradientCross, GradientDropRightCircle, GradientLocationIcon, GradientRedMic, GradientRedTick, GreenCheckMark,
+  Google, GradientBlueMic, GradientCalender, GradientCross, GradientDropRightCircle, GradientLocationIcon, GradientRedMic, GradientRedTick, GreenCheckMark,
   MailIcon,
   MessageIcon,
   MessengerIcon,

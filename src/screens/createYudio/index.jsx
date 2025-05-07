@@ -1,13 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
+  Image,
   SafeAreaView,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
+  GradientBlueMic,
+  GradientRedMic,
   RewriteWithAi,
   UploadThumbnail
 } from '../../assets/images/svgs';
@@ -16,23 +21,26 @@ import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import { colors } from '../../utils/colors';
+import AudioBars from './audioBars';
 import { styles } from './styles';
 
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
+  const [drawer, setDrawer] = useState(false)
   const navigation = useNavigation();
+  console.log("Drawer",drawer)
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
         title="New Yudio"
         backPress={() => navigation?.goBack}
-        advancedButtonPress={() => console.log('Advanced Button')}
+        advancedButtonPress={() => setDrawer(!drawer)}
       />
+      <ScrollView style={styles?.content}>
       <UserInfoHeader
         userName={'Sannya Wasim'}
         image={require('../../assets/images/SignupImage.jpeg')}
       />
-      <View style={styles?.content}>
         <TextInput
           style={styles?.inputTitle}
           placeholder="Your Yudio title"
@@ -63,7 +71,7 @@ const CreateYudio = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={styles?.yudioContainer}>
+        <View style={styles?.yudioContainer}>
           {isRecording ? (
             <AudioBars isRecording={true} />
           ) : (
@@ -84,9 +92,11 @@ const CreateYudio = () => {
             onPress={() => setIsRecording(!isRecording)}>
             {isRecording ? <GradientRedMic /> : <GradientBlueMic />}
           </TouchableOpacity>
-        </View> */}
-        <Drawer/>
-      </View>
+        </View>
+        {
+          drawer && (<Drawer/>)
+        }
+      </ScrollView>
       <CreateButton title="Create New Yudio" />
     </SafeAreaView>
   );
