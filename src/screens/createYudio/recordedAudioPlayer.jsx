@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
-    GradientRedTick,
-    PinkPauseAudioButton,
-    PinkPlayAudioButton,
+  GradientRedTick,
+  PinkPauseAudioButton,
+  PinkPlayAudioButton,
 } from '../../assets/images/svgs';
 import { height, width } from '../../constant';
 import { colors } from '../../utils/colors/index';
 
-const RecordedAudioPlayer = ({audioURL}) => {
+const RecordedAudioPlayer = ({audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -55,10 +55,10 @@ const RecordedAudioPlayer = ({audioURL}) => {
       setPosition(0); // reset
     };
 
-    SoundPlayer.addEventListener('FinishedPlaying', onFinished);
+    const finishedSubscription = SoundPlayer.addEventListener('FinishedPlaying', onFinished);
 
     return () => {
-      SoundPlayer.removeEventListener('FinishedPlaying', onFinished);
+      finishedSubscription.remove();
     };
   }, []);
 
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   },
   slider: {
     flex: 1,
-    // height: height * 0.1,
   },
   timeText: {
     color: colors?.text,

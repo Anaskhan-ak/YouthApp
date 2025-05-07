@@ -8,15 +8,16 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
 import LinearGradient from 'react-native-linear-gradient';
 import {
+  Cross,
   GradientBlueMic,
   GradientRedMic,
   RewriteWithAi,
-  UploadThumbnail
+  UploadThumbnail,
 } from '../../assets/images/svgs';
 import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
@@ -29,11 +30,10 @@ import { styles } from './styles';
 
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
-  const [drawer, setDrawer] = useState(false)
-  const [yudio, setYudio] = useState()
+  const [drawer, setDrawer] = useState(false);
+  const [yudio, setYudio] = useState();
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
-
 
   const toggleRecording = async () => {
     if (isRecording) {
@@ -53,7 +53,7 @@ const CreateYudio = () => {
       // Start recording
       try {
         setIsRecording(true);
-  
+
         AudioRecord.init({
           sampleRate: 16000,
           channels: 1,
@@ -62,7 +62,7 @@ const CreateYudio = () => {
           wavFile: `recording-${Date.now()}.wav`,
         });
         AudioRecord.start();
-  
+
         // Set a timer to stop recording after 10 minutes
         recordingTimer.current = setTimeout(() => {
           console.log('Recording time limit reached, stopping recording...');
@@ -98,10 +98,10 @@ const CreateYudio = () => {
         advancedButtonPress={() => setDrawer(!drawer)}
       />
       <ScrollView style={styles?.content}>
-      <UserInfoHeader
-        userName={'Sannya Wasim'}
-        image={require('../../assets/images/SignupImage.jpeg')}
-      />
+        <UserInfoHeader
+          userName={'Sannya Wasim'}
+          image={require('../../assets/images/SignupImage.jpeg')}
+        />
         <TextInput
           style={styles?.inputTitle}
           placeholder="Your Yudio title"
@@ -132,34 +132,46 @@ const CreateYudio = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles?.yudioContainer}>
-          {isRecording ? (
-            <AudioBars isRecording={true} />
-          ) : (
-            <View style={styles?.dottedBorder}>
-              <LinearGradient
-                colors={[colors?.RGB1, colors?.RGB2]}
-                style={styles?.yudioGradientImageBorder}>
-                <Image
-                  style={styles?.yudioImage}
-                  source={require('../../assets/images/SignupImage.jpeg')}
-                />
-              </LinearGradient>
+        {yudio ? (
+          <View style={styles?.recordedPlayerContainer}>
+            <TouchableOpacity style={styles?.crossButton} onPress={() => setYudio('')}>
+              <Cross/>
+            </TouchableOpacity>
+            <Image
+              style={styles?.yudioImage}
+              source={require('../../assets/images/SignupImage.jpeg')}
+            />
+            <Text style={styles?.recordedPlayerHeading}>
+              What’s going on with Gaza
+            </Text>
+            <Text style={styles?.recordedPlayerName}>Sannya Wasim</Text>
+            <View style={styles?.recordedPlayer}>
+              <RecordedAudioPlayer audioURL={yudio} />
             </View>
-          )}
+          </View>
+        ) : (
+          <View style={styles?.yudioContainer}>
+            {isRecording ? (
+              <AudioBars isRecording={true} />
+            ) : (
+              <View style={styles?.dottedBorder}>
+                <LinearGradient
+                  colors={[colors?.RGB1, colors?.RGB2]}
+                  style={styles?.yudioGradientImageBorder}>
+                  <Image
+                    style={styles?.yudioImage}
+                    source={require('../../assets/images/SignupImage.jpeg')}
+                  />
+                </LinearGradient>
+              </View>
+            )}
 
-          <TouchableOpacity
-            style={styles?.mic}
-            onPress={toggleRecording}>
-            {isRecording ? <GradientRedMic /> : <GradientBlueMic />}
-          </TouchableOpacity>
-        </View>
-        {
-          yudio && <RecordedAudioPlayer audioURL={yudio}/>
-        }
-        {
-          drawer && (<Drawer/>)
-        }
+            <TouchableOpacity style={styles?.mic} onPress={toggleRecording}>
+              {isRecording ? <GradientRedMic /> : <GradientBlueMic />}
+            </TouchableOpacity>
+          </View>
+        )}
+        {drawer && <Drawer />}
       </ScrollView>
       <CreateButton title="Create New Yudio" />
     </SafeAreaView>

@@ -97,5 +97,28 @@ export const styles = StyleSheet.create({
   },
   mic : {
     marginVertical : height * 0.02
+  },
+  recordedPlayerContainer : {
+    marginTop : height * 0.02,
+    alignItems : "center",
+    justifyContent : 'center'
+  },
+  recordedPlayerHeading : {
+    fontFamily : fonts?.montserratBold,
+    fontSize : width * 0.05
+  },
+  recordedPlayerName: {
+    fontFamily : fonts?.montserratRegular,
+    fontSize : width * 0.04
+  },
+  recordedPlayer : {
+    marginTop : height * 0.04
+  },
+  crossButton : {
+    alignSelf : 'flex-end',
+    marginRight : width * 0.03,
+    marginTop : -height * 0.01,
+    // backgroundColor : 'red',
+    padding : width * 0.02
   }
 });
