@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     padding: width * 0.02,
     marginTop: height * 0.01,
+    position : "absolute",
+    zIndex : 10,
+    width : width
   },
   headerIcon: {
     backgroundColor: colors?.gray,
@@ -31,22 +34,65 @@ export const styles = StyleSheet.create({
   reactions: {
     position: 'absolute',
     right: width * 0.02,
-    top: height * 0.25,
+    top: height * 0.2,
   },
   suggestedView: {
-    padding : width * 0.02
+    padding: width * 0.02,
   },
   suggestedHeading: {
-    fontFamily : fonts?.montserratBold,
-    fontSize : width * 0.04,
-    marginBottom : height * 0.004
+    fontFamily: fonts?.montserratBold,
+    fontSize: width * 0.04,
+    marginBottom: height * 0.004,
   },
   suggestedButton: {
-    margin : width * 0.004
+    margin: width * 0.004,
   },
   suggestedImage: {
-    width : width * 0.3,
-    height : height * 0.14,
-    borderRadius : width * 0.02
+    width: width * 0.26,
+    height: height * 0.11,
+    borderRadius: width * 0.02,
   },
+  blurContainer: {
+    // backgroundColor : colors?.extraLightGrey,
+    borderTopLeftRadius: width * 0.04,
+    borderTopRightRadius: width * 0.04,
+    // flexDirection: 'row',
+    padding: width * 0.03,
+    bottom: 0,
+    position: 'absolute',
+    zIndex: 10,
+    overflow: 'hidden',
+  },
+  blur: {
+    position: 'absolute',
+    bottom: 0,
+    width: width,
+    height: height * 0.1,
+    zIndex: -1,
+  },
+  blurText: {
+    fontFamily: fonts?.montserratMedium,
+    fontSize: width * 0.03,
+    color: colors?.text,
+  },
+  blurButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  seeAllText: {
+    fontFamily: fonts?.montserratMedium,
+    fontSize: width * 0.03,
+    color: colors?.RGB1,
+  },
+  tagsContainer : {
+    flexDirection : 'row',
+    alignItems : "center",
+    alignSelf : 'flex-start',
+    marginVertical : width * 0.005
+  },
+  tagText : {
+    color : colors?.RGB1,
+    fontFamily : fonts?.montserratMedium,
+    marginHorizontal : width * 0.02
+  }
 });

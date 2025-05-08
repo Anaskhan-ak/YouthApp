@@ -41,6 +41,7 @@ import PasswordHide from './PasswordHide.svg';
 import PasswordShow from './PasswordShow.svg';
 import PauseIcon from './PauseIcon.svg';
 import PinkForwardAudioButton from './PinkForwardAudioButton.svg';
+import PinkGradientPlusButton from './PinkGradientPlusButton.svg';
 import PinkPauseAudioButton from './PinkPauseAudioButton.svg';
 import PinkPlayAudioButton from './PinkPlayAudioButton.svg';
 import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
@@ -89,8 +90,7 @@ export {
   PasswordHide,
   PasswordShow,
   PauseIcon,
-  PinkForwardAudioButton,
-  PinkPauseAudioButton,
+  PinkForwardAudioButton, PinkGradientPlusButton, PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
   PinkVolume,
