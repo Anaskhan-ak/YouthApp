@@ -1,4 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import StackNavigator from './src/navigation/StackNavigator';
 import { store } from './src/redux/store';
@@ -8,13 +9,12 @@ import { useEffect } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { config } from './src/environment';
 
-
 const App = () => {
   const linking = {
     prefixes: ['https://youthapp.io'],
     config: {
       screens: {
-        Login: 'login', // matches path like /login
+        Login: 'SignUp', // matches path like /login
       },
     },
   };
@@ -38,11 +38,17 @@ GoogleSignin.configure({
   iosClientId:config?.iosClientId,
   offlineAccess: true,
 });
+useEffect(()=>{
+  Text.defaultProps = Text.defaultProps || {};
+  Text.defaultProps.allowFontScaling = false;
+},[])
   return (
     <NavigationContainer linking={linking}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
-      <StackNavigator />
+          <StackNavigator />
       </Provider>
+    </GestureHandlerRootView>
     </NavigationContainer>
   );
 };

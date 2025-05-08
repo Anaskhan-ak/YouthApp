@@ -137,7 +137,6 @@ PODS:
     - React-RCTText (= 0.79.2)
     - React-RCTVibration (= 0.79.2)
   - React-callinvoker (0.79.2)
-  - React-Codegen (0.1.0)
   - React-Core (0.79.2):
     - glog
     - hermes-engine
@@ -1423,31 +1422,8 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-contacts (8.0.4):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Codegen
+  - react-native-contacts (7.0.8):
     - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-hermes
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - react-native-date-picker (5.0.12):
     - DoubleConversion
     - glog
@@ -1943,6 +1919,30 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNCClipboard (1.16.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNCMaskedView (0.3.2):
     - DoubleConversion
     - glog
@@ -2204,6 +2204,30 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNShare (12.0.9):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNSoundPlayer (0.14.5):
     - React-Core
   - RNSVG (15.11.2):
@@ -2360,6 +2384,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
@@ -2368,6 +2393,7 @@ DEPENDENCIES:
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSoundPlayer (from `../node_modules/react-native-sound-player`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -2392,7 +2418,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - nanopb
     - PromisesObjC
-    - React-Codegen
     - RecaptchaInterop
     - SocketRocket
 
@@ -2548,6 +2573,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNFBApp:
@@ -2564,6 +2591,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSoundPlayer:
     :path: "../node_modules/react-native-sound-player"
   RNSVG:
@@ -2605,7 +2634,6 @@ SPEC CHECKSUMS:
   RCTTypeSafety: 659ae318c09de0477fd27bbc9e140071c7ea5c93
   React: c2d3aa44c49bb34e4dfd49d3ee92da5ebacc1c1c
   React-callinvoker: 1bdfb7549b5af266d85757193b5069f60659ef9d
-  React-Codegen: 4b8b4817cea7a54b83851d4c1f91f79aa73de30a
   React-Core: 7150cf9b6a5af063b37003062689f1691e79c020
   React-CoreModules: 15a85e6665d61678942da6ae485b351f4c699049
   React-cxxreact: 74f9de59259ac951923f5726aa14f0398f167af9
@@ -2631,7 +2659,7 @@ SPEC CHECKSUMS:
   React-logger: 368570a253f00879a1e4fea24ed4047e72e7bbf3
   React-Mapbuffer: f581f01e9c766bbfb7d1f57a6f6ceb86bdc310f1
   React-microtasksnativemodule: 8fc1bfccd27980ed6cfec1f52ffcd6af336f48f7
-  react-native-contacts: 9261f46f04a13a5a5646b984d769ffa8d7419a6a
+  react-native-contacts: cb4f3b823550adbce0802901b9e63bf1526ec0af
   react-native-date-picker: 152b88cc5dcf23eb0d2370cebcc35dacbc57a2d6
   react-native-safe-area-context: 6cec90ce53951d3b52dc73e873323a4a7662fc0c
   react-native-slider: 2ceb3abcc54e14ea0591aa54e8f550f2976820e8
@@ -2668,6 +2696,7 @@ SPEC CHECKSUMS:
   ReactCommon: 35a5629d7159876dd048c63751eaeb3aa3a6a53b
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RNCAsyncStorage: e25fda4679876e5204c4c502d297757ec1f17ced
+  RNCClipboard: dfcfff4ab54bba045a73273c00ab60a90940388b
   RNCMaskedView: 16e6917a83e0696d3b5edd69f940c2e1fb377a66
   RNFBApp: 302c8bdbb0c8334033738a23db1ac08512821462
   RNFBAuth: e21424838ed75e9a3c5ce157d38a3c873cd3ddcd
@@ -2676,12 +2705,13 @@ SPEC CHECKSUMS:
   RNGoogleSignin: 6a6a1768ffa4059891964c85e04c0c01109a7eb7
   RNReanimated: 7b926938d4190114e5848b5b022d83dbc2c0fe2c
   RNScreens: 4ada1709be95c3a4bf1f885378262ceadd9cc939
+  RNShare: 400708e430318cca8112328791b9c009c5f92cb3
   RNSoundPlayer: 95b72e12a6990e4fabfd71b1c7fac579f9e60e75
   RNSVG: 257f59c952e296c9c36035a8f49b61fda48e398a
   RNVectorIcons: 32cc786d5a3c2d8e20ee5c1c7c63c2609f411eb7
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 50518ade05048235d91a78b803336dbb5b159d5d
 
-PODFILE CHECKSUM: 90a42abd355519f27b55d2b37932a76413d3fb89
+PODFILE CHECKSUM: 85ad68a3914a0aee9aa7057959b3f8c11995236c
 
 COCOAPODS: 1.13.0

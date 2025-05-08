@@ -5,13 +5,15 @@ import { CountryPicker } from 'react-native-country-codes-picker'
 
 const CountryPickerDropDown = ({showCountry,setShowCountry,setCountryDetails}) => {
   return (
+    
     <CountryPicker
     lang="en"
     show={showCountry}
+    excludedCountries={["IL"]}
     searchMessage="Search country"
     style={{
       modal: {
-        marginTop: 55,
+        marginTop: 120,
       },
       textInput: {
         color: colors.black,

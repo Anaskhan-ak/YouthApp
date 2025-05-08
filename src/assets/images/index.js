@@ -12,4 +12,5 @@ export const images = {
     login:require('./loginBackground.png'),
     otp:require('./otp.png'),
     emailVerificationLogo:require('./emailVerificationLogo.png'),
+    otpVerification:require('./otpVerification.png'),
 }

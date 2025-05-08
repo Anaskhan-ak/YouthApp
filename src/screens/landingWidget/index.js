@@ -11,19 +11,17 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  BlackLike,
-  BlackShare,
-  DontShowLandingWidget,
+  DontShowLandingWidget
 } from '../../assets/images/svgs';
-import {apiCall} from '../../services/apiCall';
-import LandingWidgetAudioPlayer from './components/AudioPlayer';
+import { apiCall } from '../../services/apiCall';
 import Calendar from './components/Calender';
 import AnalogWatch from './components/Clock';
 import Notifications from './components/Notifications';
 import {StackedNotifications} from './components/Swippable';
 // import {useDispatch, useSelector} from 'react-redux';
-import {styles} from './styles/index';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import DateComponent from './components/Date';
+import Podcast from './components/Podcast';
+import { styles } from './styles/index';
 
 const {height, width} = Dimensions.get('window');
 
@@ -45,7 +43,7 @@ const LandingWidget = ({navigation}) => {
       try {
         const notifications = await apiCall?.getNotifications({
           page: 1,
-          pageSize: 5,
+          pageSize: 3,
         });
         setItems(
           notifications?.map(item => ({
@@ -78,92 +76,39 @@ const LandingWidget = ({navigation}) => {
       changeWidget('date');
     }
   };
-
-  const DateComponent = () => {
-    return (
-      <View style={styles?.dateContainer}>
-        <Text style={styles?.day}>
-          {
-            [
-              'Sunday',
-              'Monday',
-              'Tuesday',
-              'Wednesday',
-              'Thursday',
-              'Friday',
-              'Saturday',
-            ][new Date().getDay()]
-          }
-        </Text>
-        <Text style={styles?.hours}>
-          {new Date().getHours().toString().padStart(2, '0')}
-        </Text>
-        <Text style={styles?.minutes}>
-          {new Date().getMinutes().toString().padStart(2, '0')}
-        </Text>
-      </View>
-    );
-  };
-
-  const Podcast = () => {
-    return (
-      <View style={styles?.timewidget}>
-        <Image
-          style={styles?.podcastThumbnail}
-          source={require('../../assets/images/onboarding/Onboarding1.png')}
-          resizeMethod="contain"
-        />
-        <View style={styles?.podcastMediaContainer}>
-          <Text style={styles?.podcastHeading}>It shall so soon</Text>
-          <Text style={styles?.podcastSubheading}>Yudio: Youth.Podcast</Text>
-          <LandingWidgetAudioPlayer
-            audioURL={
-              'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-            }
-            pink={true}
-          />
-          <View style={styles?.reactionButtons}>
-            <BlackLike width={16} height={16} />
-            <BlackShare width={16} height={16} />
-          </View>
-        </View>
-      </View>
-    );
-  };
+  
   return (
-    <LinearGradient
-      colors={['#478FE4', '#478FE4', '#5CD3C6']}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
-      style={styles?.container}>
-      <SafeAreaView style={{flex: 1}}>
+      <LinearGradient
+        colors={['#478FE4', '#478FE4', '#5CD3C6']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        style={styles?.container}>
         <StatusBar
           barStyle={'light-content'}
           backgroundColor={'transparent'}
           translucent
         />
         <ScrollView contentContainerStyle={styles?.scrollView}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               navigation.replace('Dashboard', {screen: 'Home'});
             }}
             style={styles?.skipButton}>
             <Text style={styles?.skiptetxt}>Skip it</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Text style={styles?.GreetText}>Hi,</Text>
           <Text style={[styles?.GreetText, {marginTop: -height * 0.025}]}>
             {user.firstName}
           </Text>
-          <Text style={styles?.welcomeText}>
-            Welcome back to {''}
+          <View style={styles?.welcomeBox}>
+            <Text style={styles?.welcomeText}>Welcome back to </Text>
             <Image
               style={styles?.logo}
               resizeMode="contain"
               source={require('../../assets/images/Logo.png')}
             />
-            {/* <Vactor /> */}
-            World
-          </Text>
+            <Text style={styles?.welcomeText}> World</Text>
+          </View>
 
           {widget === 'calender' ? (
             <View style={styles?.timewidget}>
@@ -172,7 +117,7 @@ const LandingWidget = ({navigation}) => {
             </View>
           ) : widget === 'date' ? (
             <View style={styles?.timewidget}>
-              <DateComponent />
+              <DateComponent/>
               <Calendar />
             </View>
           ) : (
@@ -259,8 +204,7 @@ const LandingWidget = ({navigation}) => {
             <Text style={styles?.dontShowText}> Don’t show me this page</Text>
           </View>
         </ScrollView>
-      </SafeAreaView>
-    </LinearGradient>
+      </LinearGradient>
   );
 };
 

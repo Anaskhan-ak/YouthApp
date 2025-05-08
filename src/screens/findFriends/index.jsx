@@ -2,106 +2,130 @@ import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import {
-  FlatList,
+  BackHandler,
   Image,
-  Modal,
+  PermissionsAndroid,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
-import { BackArrow, Cross } from '../../assets/images/svgs';
+import { Cross } from '../../assets/images/svgs';
 import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import CustomSearchBar from '../../components/inputs/search';
-import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
+import { width } from '../../constant';
 import { apiCall } from '../../services/apiCall';
+import ContactsList from './Contacts';
 import { styles } from './styles';
 
 const FindFriends = () => {
   const [modal, setModal] = useState(false);
-  const [inviteModal, setInviteModal] = useState(false)
   const [search, setSearch] = useState();
-  const [phoneNos, setPhoneNos] = useState(['03228214535']);
+  const [phoneNos, setPhoneNos] = useState([]);
+  const [filteredNos, setFilteredNos] = useState([])
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([])
   const [following, setFollowing] = useState([]);
   const navigation = useNavigation();
-  const items = [
-    {
-      name: 'Sannya Wasim',
-      photo: require('../../assets/images/SignupImage.jpeg'),
-      button: 'Follow',
-    },
-    {
-      name: 'Sannya Wasim',
-      photo: require('../../assets/images/SignupImage.jpeg'),
-      button: 'Follow',
-    },
-    {
-      name: 'Sannya Wasim',
-      photo: require('../../assets/images/SignupImage.jpeg'),
-      button: 'Follow',
-    },
-  ];
 
   const handleSearch = useCallback(
-    _.debounce(value => {
-      setSearch(value);
-      getYouthappContacts(value); // call your function here with debounced input
-    }, 1000),
-    [],
-  );
-  async function requestContactsPermission() {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-      {
-        title: 'Contacts Permission',
-        message: 'This app needs access to your contacts to find friends.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
-  }
-  const getContacts = async () => {
-      const permission = await requestContactsPermission();
-      if (permission) {
-        console.log("anas1")
-        Contacts.getAll()
-          .then(contacts => {
-            console.log('Contacts:', contacts);
-          })
-          .catch(e => {
-            console.error('Failed to load contacts:', e);
-          });
+    _.debounce((query) => {
+      setSearch(query);
+      if (query.trim() === '') {
+        setFilteredUsers(users);
+        // setFilteredContacts(phoneNumbers);
+      } else {
+        const lowerCaseQuery = query.toLowerCase();
+        const searchedContacts = phoneNos.filter(
+          (contact) =>
+            contact?.fullName?.toLowerCase().includes(lowerCaseQuery)
+        );
+        setFilteredNos(searchedContacts);
+  
+        const searchedUsers = users.filter(
+          (user) =>
+            user?.fullName?.toLowerCase().includes(lowerCaseQuery)
+        );
+        setFilteredUsers(searchedUsers);
       }
-    
+    }, 500),
+    [users, phoneNos]
+  );
+
+  const onChangeSearchText = (text) => {
+    setSearch(text);           // Immediate UI update
+    handleSearch(text);        // Debounced filtering
   };
 
-  const getYouthappContacts = async value => {
+  const getYouthappContacts = async numbers => {
     const response = await apiCall?.getContactSuggestions({
-      contacts: phoneNos,
-      name: value ? value : null,
+      contacts: numbers,
+      // name: value ? value : null,
     });
-    console.log('Response', response?.user);
     setUsers(
       response?.user?.map(u => ({
         id: u?.id,
-        name: `${u?.firstName} ${u?.lastName}`,
+        fullName: `${u?.firstName} ${u?.lastName}`,
         photo: u?.photo,
       })),
     );
+    setFilteredUsers(
+      response?.user?.map(u => ({
+        id: u?.id,
+        fullName: `${u?.firstName} ${u?.lastName}`,
+        photo: u?.photo,
+      })),
+    )
+  };
+  const getContacts = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const permission = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+          {
+            title: 'Contacts Permission',
+            message: 'This app would like to view your contacts.',
+            buttonPositive: 'Please accept bare mortal',
+          },
+        );
+        if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
+          setModal(false);
+          return;
+        }
+      }
+      const results = await Contacts?.getAll();
+      // console.log('Contacts', results);
+      const formattedContacts = results.map((contact, index) => ({
+        id: index,
+        fullName:
+          contact.displayName ||
+          `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
+        photo: contact.thumbnailPath, // Path to the contact's photo (if available)
+        phoneNumbers: contact.phoneNumbers[0]?.number, // Array of phone numbers
+      }));
+      console.log('Formatted contacts', formattedContacts?.slice(0, 4));
+      const sanitizeNumber = number => {
+        if (!number) return null; // Remove undefined numbers
+        const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
+        return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
+      };
+      const extractedNumbers = results
+        ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
+        .filter(Boolean); // Remove null/undefined/short values
+      getYouthappContacts(extractedNumbers);
+      setPhoneNos(formattedContacts);
+      setFilteredNos(formattedContacts)
+    } catch (error) {
+      console.log('Error fetching contacts', error);
+    }
+    // }
   };
 
   const getFollowing = async () => {
     try {
       const result = await apiCall?.getFollowing('cm60ql39f003l91r8l18bd80z');
-      console.log('Following successfully fetched', result);
       setFollowing(result);
     } catch (error) {
       console.log('error fetching following', error);
@@ -114,28 +138,28 @@ const FindFriends = () => {
     //   [followingId]: true,
     // }));
     try {
-      const isAlreadyFollowing = following?.includes(followingId);
+      const isAlreadyFollowing = following.some(f => f.followingId === followingId);
       let response;
 
       if (!isAlreadyFollowing) {
         response = await apiCall?.follow({
           followerId: 'cm60ql39f003l91r8l18bd80z',
-          followingId: 'cm64oiovt005391r8pjysmd7b',
+          followingId: followingId,
         });
         console.log('User successfully followed', response);
 
         if (response) {
-          setFollowing(prev => [...prev, followingId]); // Add to state
+          setFollowing(prev => [...prev, response]); // Add to state
         }
       } else {
         response = await apiCall?.unfollow({
           followerId: 'cm60ql39f003l91r8l18bd80z',
-          followingId: 'cm64oiovt005391r8pjysmd7b',
+          followingId: followingId,
         });
         console.log('User successfully unfollowed', response);
 
-        if (response) {
-          setFollowing(prev => prev.filter(id => id !== followingId)); // Remove from state
+        if (response === 200) {
+          setFollowing(prev => prev.filter(f => f?.followingId !== followingId)); // Remove from state
         }
       }
     } catch (error) {
@@ -158,9 +182,12 @@ const FindFriends = () => {
   useEffect(() => {
     getFollowing();
     getContacts();
-    getYouthappContacts();
+    const backHandler = BackHandler?.addEventListener(
+      'hardwareBackPress',
+      handleBack,
+    );
+    return () => backHandler?.remove();
   }, []);
-
 
   return (
     <SafeAreaView style={styles?.container}>
@@ -190,96 +217,21 @@ const FindFriends = () => {
         <GradientBorderButton
           title={'Skip'}
           width={width * 0.75}
-          onPress={getContacts}
         />
       </View>
       {modal && (
-        <Modal animationType="slide" visible={modal} statusBarTranslucent>
-          <View style={styles?.modalContent}>
-            <View style={styles?.header}>
-              <TouchableOpacity
-                style={styles?.backButton}
-                onPress={() => setModal(false)}>
-                <BackArrow />
-              </TouchableOpacity>
-              <Text style={styles?.headerText}>Find Friends</Text>
-              <GradientText style={styles?.gradientText}>Next</GradientText>
-            </View>
-            <CustomSearchBar
-              search={search}
-              setSearch={handleSearch}
-              func={getYouthappContacts}
-            />
-            <FlatList
-              data={users}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={() => (
-                <Text style={styles?.contentHeading}>Youthapp Contacts</Text>
-              )}
-              renderItem={({item}) => {
-                const isFollowing = following.includes(item?.id);
-                return (
-                  <View style={styles?.contentItem}>
-                    <Image
-                      source={
-                        item?.photo
-                          ? {uri: item?.photo}
-                          : require('../../assets/images/SignupImage.jpeg')
-                      }
-                      style={styles?.itemImage}
-                    />
-                    <Text style={styles?.itemName}>{item?.name}</Text>
-                    {isFollowing ? (
-                      <PrimaryButton
-                        title="Followed"
-                        styles={styles?.gradientButton}
-                        textStyle={styles?.gradientButtonText}
-                        onPress={() => toggleFollow(item?.id)}
-                      />
-                    ) : (
-                      <TouchableOpacity
-                        style={styles?.grayButton}
-                        onPress={() => toggleFollow(item?.id)}>
-                        <Text style={styles?.grayButtonText}>Follow</Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                );
-              }}
-              style={styles?.list}
-            />
-            <FlatList
-              data={items}
-              keyExtractor={(item, index) => index.toString()}
-              ListHeaderComponent={() => (
-                <>
-                  <Text style={styles?.contentHeading}>Phone Contacts</Text>
-                </>
-              )}
-              renderItem={({item}) => (
-                <View style={styles?.contentItem}>
-                  <Image source={item?.photo} style={styles?.itemImage} />
-                  <Text style={styles?.itemName}>{item?.name}</Text>
-                  {/* <PrimaryButton
-                    title={item?.button}
-                    styles={styles?.gradientButton}
-                    textStyle={styles?.gradientButtonText}
-                  /> */}
-                  <TouchableOpacity style={styles?.grayButton}>
-                    <Text style={styles?.grayButtonText}>Invite</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-              style={[styles?.list, {marginTop: height * 0.02}]}
-            />
-          </View>
-        </Modal>
+        <ContactsList
+          modal={modal}
+          setModal={setModal}
+          search={search}
+          handleSearch={onChangeSearchText}
+          getYouthappContacts={getYouthappContacts}
+          users={filteredUsers}
+          following={following}
+          phoneNos={filteredNos}
+          toggleFollow={toggleFollow}
+        />
       )}
-      {/* {
-        inviteModal && (
-          <InviteModal/>
-        )
-      } */}
     </SafeAreaView>
   );
 };

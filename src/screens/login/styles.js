@@ -6,16 +6,17 @@ import {fonts} from '../../utils/fonts';
 export const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.white},
   imageView: {
-    flex: 0.65,
+    flex: 1.2,
     borderBottomLeftRadius: width * 0.1,
     borderBottomRightRadius: width * 0.1,
+    marginTop:-height*0.075
   },
   contentView: {
     flex: 1,
     backgroundColor: colors?.white,
     paddingHorizontal: width * 0.06,
   },
-  image: {height:Platform?.OS==='ios'?height*0.5:height*0.6,width:width*1},
+  image: {flex:1},
   heading: {
     fontSize: width * 0.055,
     fontFamily: fonts?.montserratExtraBold,

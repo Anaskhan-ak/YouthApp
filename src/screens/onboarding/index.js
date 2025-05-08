@@ -9,31 +9,30 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Platform,
 } from 'react-native';
-import React, {useState} from 'react';
-import GradientText from '../../components/text/GradientText';
+import React, {useRef, useState} from 'react';
 import {styles} from './styles';
-import {NextButton} from '../../components/buttons/NextButton';
-import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {images} from '../../assets/images';
-import {colors} from '../../utils/colors';
-import {fonts} from '../../utils/fonts';
 import {onboardingContent} from '../../utils/string';
-import {GradientBorderButton} from '../../components/buttons/GradientBorderButton';
-import { config } from '../../environment/index';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 const {height, width} = Dimensions.get('window');
+import AppIntroSlider from 'react-native-app-intro-slider';
+import {renderItem} from './components/Items';
 
 const Onboarding = ({navigation}) => {
-  const [page, setPage] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef(null);
 
-  const handleOnPress = () => {
-    if (page < 4) {
-      setPage(page + 1);
-    } else {
-      console.log('its exceeding');
+  const handleNext = () => {
+    if (currentIndex < onboardingContent.length - 1) {
+      flatListRef.current?.goToSlide(currentIndex + 1, true);
+      // setCurrentIndex(prev => prev + 1);
     }
   };
+const handleSkip = () =>{
+  flatListRef.current?.goToSlide(4, true);
+  // setCurrentIndex(4);
+}
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -41,105 +40,15 @@ const Onboarding = ({navigation}) => {
         barStyle={'dark-content'}
         backgroundColor={'transparent'}
       />
-      <ImageBackground source={onboardingContent[page]?.image}>
-        {page != 4 && (
-          <TouchableOpacity
-            onPress={() => {
-              setPage(4);
-            }}
-            style={styles?.skipButton}>
-            <GradientText style={styles.text}>SKIP</GradientText>
-          </TouchableOpacity>
-        )}
-        <View
-          style={[
-            styles.bottomContainer,
-            {marginTop: page === 4 ? height * 0.63 : height * 0.61},
-          ]}>
-          <GradientText style={styles.Heading}>
-            {onboardingContent[page]?.heading}
-          </GradientText>
-
-          {page === 4 ? (
-            <>
-              <PrimaryButton
-                onPress={() => {
-                 navigation.navigate('Login');
-                }}
-                title="Sign in"
-              />
-              <PrimaryButton
-                onPress={() => {
-                 navigation.navigate('SignUp');
-                }}
-                title="Sign Up"
-              />
-            </>
-          ) : (
-            <>
-              <Text
-                style={[
-                  styles.description,
-                  {
-                    fontFamily: fonts?.montserratRegular,
-                    color: colors?.lightGrey,
-                  },
-                ]}>
-                {onboardingContent[page]?.description.slice(0, 52)}
-                <Text
-                  style={[
-                    styles.description,
-                    {
-                      fontFamily: fonts?.montserratMedium,
-                      color: colors.lightGrey,
-                    },
-                  ]}>
-                  {' '}
-                  {onboardingContent[page]?.description.slice(52, 150)}{' '}
-                </Text>
-              </Text>
-              <View style={styles.slider}>
-                {onboardingContent?.map(i => {
-                  return (
-                    <>
-                      {page === i?.id ? (
-                        <Image style={styles.dots} source={images?.active} />
-                      ) : (
-                        <Image style={styles.dots} source={images?.inactive} />
-                      )}
-                    </>
-                  );
-                })}
-              </View>
-              <NextButton onPress={handleOnPress} />
-            </>
-          )}
-          {page === 4 && (
-            <>
-              <View style={styles.slider}>
-                {onboardingContent?.map(i => {
-                  return (
-                    <>
-                      {page === i?.id ? (
-                        <Image style={styles.dots} source={images?.active} />
-                      ) : (
-                        <Image style={styles.dots} source={images?.inactive} />
-                      )}
-                    </>
-                  );
-                })}
-              </View>
-              <GradientBorderButton
-                onPress={() => {
-                  Linking.openURL(config.website);
-                }}
-                title="How it works!"
-                width={width * 0.69}
-              />
-            </>
-          )}
-        </View>
-      </ImageBackground>
+      <AppIntroSlider
+        ref={flatListRef}
+        renderPagination={() => null}
+        renderItem={props =>
+          renderItem({...props, currentIndex, handleNext,navigation,handleSkip})
+        }
+        data={onboardingContent}
+        onSlideChange={index => setCurrentIndex(index)}
+      />
     </SafeAreaView>
   );
 };

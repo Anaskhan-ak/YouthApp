@@ -7,12 +7,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './styles';
 import {Cross, ErrorWhite} from '../../assets/images/svgs';
 
-const AuthError = ({setShowError,title,message}) => {
+const AuthError = ({setShowError, title, message, style}) => {
   const handlePress = () => {
     setShowError(false);
   };
   return (
-    <View style={styles?.errorContainer}>
+    <View style={[styles?.errorContainer, style]}>
       <LinearGradient
         style={styles?.iconView}
         colors={[colors?.RGB1, colors?.RGB2]}
@@ -22,11 +22,17 @@ const AuthError = ({setShowError,title,message}) => {
       </LinearGradient>
       <View style={styles?.contentContainer}>
         <Text style={styles?.heading}>{title}</Text>
-        <Text style={styles?.title}>
-         {message}
-        </Text>
+        <Text style={styles?.title}>{message}</Text>
       </View>
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity
+        style={{
+          zIndex: 999,
+          position: 'absolute',
+          paddingHorizontal: width * 0.05,
+          paddingVertical: height * 0.02,
+          right: 0,
+        }}
+        onPress={handlePress}>
         <Cross />
       </TouchableOpacity>
     </View>

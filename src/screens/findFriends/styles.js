@@ -83,6 +83,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     margin: width * 0.02,
   },
+  itemLeftContent : {
+    flexDirection : 'row',
+    alignItems : 'center'
+  },
   itemImage: {
     width: width * 0.085,
     height: width * 0.085,
@@ -91,7 +95,7 @@ export const styles = StyleSheet.create({
   itemName: {
     fontSize: width * 0.037,
     fontFamily: fonts?.montserratSemiBold,
-    marginRight: width * 0.3,
+    marginLeft: width * 0.02,
   },
   gradientButton: {
     width: width * 0.18,
