@@ -162,7 +162,6 @@ const LandingWidget = ({navigation}) => {
           <ScrollView style={styles?.notificationScroll}>
             {items?.length > 0 && (
               <View
-                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   height:
                     stackNotificationCount === -1

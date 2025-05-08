@@ -27,7 +27,7 @@ import { styles } from '../styles/Swippable';
 
 const ITEM_HEIGHT = 70;
 
-const FieldSwipe = ({item, onRemove, stack}) => {
+const SwipeableItem = ({item, onRemove, stack, showContent}) => {
   const swipeTranslateX = useSharedValue(0);
   const pressed = useSharedValue(false);
   const itemHeight = useSharedValue(ITEM_HEIGHT);
@@ -65,57 +65,47 @@ const FieldSwipe = ({item, onRemove, stack}) => {
     ],
   }));
 
-  const opacityStyle = useAnimatedStyle(() => ({
-    opacity: swipeTranslateX.value < -width * 0.7 ? 0 : 1,
-  }));
-
   const itemHeightStyle = useAnimatedStyle(() => ({
     height: itemHeight.value,
     marginVertical: marginVertical.value,
   }));
 
   return (
-    <GestureDetector gesture={pan}>
-      <Animated.View style={itemHeightStyle}>
-        <Animated.View
-          style={[
-            styles?.swipeButton,
-            transformStyle,
-            stack && {backgroundColor: 'rgba(250, 250, 250, 0.3)'},
-          ]}>
-          <View style={styles?.swipeButtonContainer}>
-            <Image
-              style={styles?.profileIcon}
-              source={
-                item?.userImage
-                  ? {uri: item?.userImage}
-                  : require('../../../assets/images/onboarding/Onboarding1.png')
-              }
-            />
-            <View style={{marginLeft: width * 0.0125}}>
-              <Text style={styles?.profileName}>{item?.userName}</Text>
-              <Text style={styles?.notificationMessage}>
-                {item?.content?.length > 15
-                  ? `${item?.content?.slice(0, 15)}...`
-                  : item?.content}
-              </Text>
-            </View>
-            <Text style={styles?.notificationTime}>
-              {moment(item?.createdAt)?.format('HH:mm')}
-            </Text>
-          </View>
-        </Animated.View>
-      </Animated.View>
-    </GestureDetector>
-  );
-};
-
-const SwipeableItem = ({item, onSwipe, showContent, stack}) => {
-  return (
     <GestureHandlerRootView>
-      {showContent && (
-        <FieldSwipe onRemove={onSwipe} item={item} stack={stack} />
-      )}
+      <GestureDetector gesture={pan}>
+        <Animated.View style={itemHeightStyle}>
+          <Animated.View
+            style={[
+              styles?.swipeButton,
+              transformStyle,
+              stack && {backgroundColor: 'rgba(250, 250, 250, 0.3)'},
+            ]}>
+            {showContent && (
+              <View style={styles?.swipeButtonContainer}>
+                <Image
+                  style={styles?.profileIcon}
+                  source={
+                    item?.userImage
+                      ? {uri: item?.userImage}
+                      : require('../../../assets/images/onboarding/Onboarding1.png')
+                  }
+                />
+                <View style={{marginLeft: width * 0.0125}}>
+                  <Text style={styles?.profileName}>{item?.userName}</Text>
+                  <Text style={styles?.notificationMessage}>
+                    {item?.content?.length > 15
+                      ? `${item?.content?.slice(0, 15)}...`
+                      : item?.content}
+                  </Text>
+                </View>
+                <Text style={styles?.notificationTime}>
+                  {moment(item?.createdAt)?.format('HH:mm')}
+                </Text>
+              </View>
+            )}
+          </Animated.View>
+        </Animated.View>
+      </GestureDetector>
     </GestureHandlerRootView>
   );
 };
@@ -163,7 +153,7 @@ const SwipeableList = ({setVisibility, notifications}) => {
         renderItem={({item}) => (
           <SwipeableItem
             item={item}
-            onSwipe={handleSwipe}
+            onRemove={handleSwipe}
             showContent={true}
             stack={true}
           />
@@ -279,15 +269,15 @@ export const StackedNotifications = ({count, notifications}) => {
               width: width * (0.9 - index * 0.05),
               zIndex: items.length - index,
               borderRadius: width * 0.03,
-              backgroundColor: 'rgba(250, 250, 250, 0.3)',
-              // backgroundColor: 'red',
+              // backgroundColor: 'rgba(250, 250, 250, 0.3)',
+              backgroundColor: 'red',
             };
 
         return (
           <View key={item.id} style={[styles?.stackItem, itemStyle]}>
             <SwipeableItem
               item={item}
-              onSwipe={() => handleSwipe(item.id)}
+              onRemove={() => handleSwipe(item.id)}
               showContent={expanded || isTop}
               stack={true && expanded}
             />

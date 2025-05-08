@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   notificationScroll: {
-    height: height * 0.35,
+    height: height * 0.39,
   },
   changeWidgetButton: {
     borderWidth: width * 0.002,
