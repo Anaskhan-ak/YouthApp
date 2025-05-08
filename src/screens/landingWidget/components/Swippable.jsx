@@ -269,8 +269,7 @@ export const StackedNotifications = ({count, notifications}) => {
               width: width * (0.9 - index * 0.05),
               zIndex: items.length - index,
               borderRadius: width * 0.03,
-              // backgroundColor: 'rgba(250, 250, 250, 0.3)',
-              backgroundColor: 'red',
+              backgroundColor: 'rgba(250, 250, 250, 0.3)',
             };
 
         return (
