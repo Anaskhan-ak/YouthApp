@@ -34,26 +34,11 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.text,
   },
-  swipeButton: {
-    // backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
-    width: width * 0.9,
-    alignSelf: 'center',
-    borderRadius: width * 0.03,
-    margin: width * 0.005,
-    height: height * 0.085,
-    justifyContent: 'space-between',
-    // alignContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    flexDirection: 'row',
-  },
   profileIcon: {
     height: width * 0.11,
     width: width * 0.11,
     borderRadius: (width * 0.11) / 2,
-  },
-  swipeButtonContainer: {flexDirection: 'row'},
+  },  
   profileName: {
     fontSize: width * 0.037,
     fontFamily: fonts?.montserratBold,
@@ -88,4 +73,27 @@ export const styles = StyleSheet.create({
     paddingHorizontal: width * 0.025,
     borderRadius: width * 0.2,
   },
+  fieldContainer: {
+    backgroundColor: 'yellow',
+    justifyContent: 'center',
+    width: width * 0.85,
+    height: 70,
+    alignItems: 'center',
+    borderRadius: 20,
+},
+swipeButton: {
+  // backgroundColor: 'rgba(250, 250, 250, 0.3)', // Keep transparency
+  width: width * 0.9,
+  alignSelf: 'center',
+  borderRadius: width * 0.03,
+  margin: width * 0.005,
+  height: height * 0.085,
+  justifyContent: 'space-between',
+  // alignContent: 'center',
+  alignItems: 'center',
+  paddingVertical: 10,
+  paddingHorizontal: 15,
+  flexDirection: 'row',
+},
+swipeButtonContainer: {flexDirection: 'row'}
 });

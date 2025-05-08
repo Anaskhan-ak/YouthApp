@@ -9,54 +9,113 @@ import {
   UIManager,
   View,
 } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 import { DropDownIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { styles } from '../styles/Swippable';
 
-const SwipeableItem = ({item, onSwipe, showContent, stack}) => {
-  const renderLeftActions = () => <View style={{width: 200}} />;
-  const renderRightActions = () => <View style={{width: 200}} />;
+const ITEM_HEIGHT = 70;
+
+const FieldSwipe = ({item, onRemove, stack}) => {
+  const swipeTranslateX = useSharedValue(0);
+  const pressed = useSharedValue(false);
+  const itemHeight = useSharedValue(ITEM_HEIGHT);
+  const marginVertical = useSharedValue(7);
+
+  const pan = Gesture.Pan()
+    .onBegin(() => {
+      pressed.value = true;
+    })
+    .onChange(event => {
+      if (event.translationX < 0) {
+        swipeTranslateX.value = event.translationX;
+      }
+    })
+    .onFinalize(() => {
+      const isShouldDismiss = swipeTranslateX.value < -width * 0.3;
+      if (isShouldDismiss) {
+        itemHeight.value = withTiming(0);
+        marginVertical.value = withTiming(0);
+        swipeTranslateX.value = withTiming(-width, undefined, isDone => {
+          if (isDone) {
+            runOnJS(onRemove)(item?.id);
+          }
+        });
+      } else {
+        swipeTranslateX.value = withSpring(0);
+      }
+      pressed.value = false;
+    });
+
+  const transformStyle = useAnimatedStyle(() => ({
+    transform: [
+      {translateX: swipeTranslateX.value},
+      {scale: withTiming(pressed.value ? 1.15 : 1)},
+    ],
+  }));
+
+  const opacityStyle = useAnimatedStyle(() => ({
+    opacity: swipeTranslateX.value < -width * 0.7 ? 0 : 1,
+  }));
+
+  const itemHeightStyle = useAnimatedStyle(() => ({
+    height: itemHeight.value,
+    marginVertical: marginVertical.value,
+  }));
+
   return (
-    <GestureHandlerRootView>
-      <ReanimatedSwipeable
-        friction={2}
-        enableTrackpadTwoFingerGesture
-        rightThreshold={40}
-        renderLeftActions={renderLeftActions}
-        renderRightActions={renderRightActions}
-        onSwipeableOpenStartDrag={() => onSwipe(item.id)}>
-        <TouchableOpacity
+    <GestureDetector gesture={pan}>
+      <Animated.View style={itemHeightStyle}>
+        <Animated.View
           style={[
             styles?.swipeButton,
+            transformStyle,
             stack && {backgroundColor: 'rgba(250, 250, 250, 0.3)'},
           ]}>
-          {showContent && (
-            <View style={styles?.swipeButtonContainer}>
-              <Image
-                style={styles?.profileIcon}
-                source={
-                  item?.userImage
-                    ? {uri: item?.userImage}
-                    : require('../../../assets/images/onboarding/Onboarding1.png')
-                }
-              />
-              <View style={{marginLeft: width * 0.0125}}>
-                <Text style={styles?.profileName}>{item?.userName}</Text>
-                <Text style={styles?.notificationMessage}>
-                  {item?.content?.length > 15
-                    ? `${item?.content?.slice(0, 15)}...`
-                    : item?.content}
-                </Text>
-              </View>
-              <Text style={styles?.notificationTime}>
-                {moment(item?.createdAt)?.format('HH:mm')}
+          <View style={styles?.swipeButtonContainer}>
+            <Image
+              style={styles?.profileIcon}
+              source={
+                item?.userImage
+                  ? {uri: item?.userImage}
+                  : require('../../../assets/images/onboarding/Onboarding1.png')
+              }
+            />
+            <View style={{marginLeft: width * 0.0125}}>
+              <Text style={styles?.profileName}>{item?.userName}</Text>
+              <Text style={styles?.notificationMessage}>
+                {item?.content?.length > 15
+                  ? `${item?.content?.slice(0, 15)}...`
+                  : item?.content}
               </Text>
             </View>
-          )}
-        </TouchableOpacity>
-      </ReanimatedSwipeable>
+            <Text style={styles?.notificationTime}>
+              {moment(item?.createdAt)?.format('HH:mm')}
+            </Text>
+          </View>
+        </Animated.View>
+      </Animated.View>
+    </GestureDetector>
+  );
+};
+
+const SwipeableItem = ({item, onSwipe, showContent, stack}) => {
+  return (
+    <GestureHandlerRootView>
+      {showContent && (
+        <FieldSwipe onRemove={onSwipe} item={item} stack={stack} />
+      )}
     </GestureHandlerRootView>
   );
 };
@@ -220,7 +279,7 @@ export const StackedNotifications = ({count, notifications}) => {
               width: width * (0.9 - index * 0.05),
               zIndex: items.length - index,
               borderRadius: width * 0.03,
-              backgroundColor:  'rgba(250, 250, 250, 0.3)',
+              backgroundColor: 'rgba(250, 250, 250, 0.3)',
               // backgroundColor: 'red',
             };
 
