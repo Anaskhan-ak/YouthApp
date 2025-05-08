@@ -1,8 +1,10 @@
 import Apple from './apple.svg';
 import BackArrow from './BackArrow.svg';
+import BlackBackArrow from './BlackBackArrow.svg';
 import BlackDropdown from './BlackDropdown.svg';
 import BlackLike from './BlackLike.svg';
 import BlackShare from './BlackShare.svg';
+import BlackYouthLogo from './BlackYouthLogo.svg';
 import BlueTick from './BlueTick.svg';
 import Calendar from './calendar.svg';
 import CopyIcon from './CopyIcon.svg';
@@ -46,11 +48,9 @@ import YouthIcon from './YouthIcon.svg';
 
 export {
   Apple,
-  BackArrow,
-  BlackDropdown,
+  BackArrow, BlackBackArrow, BlackDropdown,
   BlackLike,
-  BlackShare,
-  BlueTick,
+  BlackShare, BlackYouthLogo, BlueTick,
   Calendar,
   CopyIcon,
   Cross,
@@ -59,16 +59,28 @@ export {
   DropDownIcon,
   Error,
   ErrorWhite,
-  Google, GradientBlueMic, GradientCalender, GradientCross, GradientDropRightCircle, GradientLocationIcon, GradientRedMic, GradientRedTick, GreenCheckMark,
+  Google,
+  GradientBlueMic,
+  GradientCalender,
+  GradientCross,
+  GradientDropRightCircle,
+  GradientLocationIcon,
+  GradientRedMic,
+  GradientRedTick,
+  GreenCheckMark,
   MailIcon,
   MessageIcon,
   MessengerIcon,
   PasswordHide,
-  PasswordShow, PauseIcon, PinkForwardAudioButton,
+  PasswordShow,
+  PauseIcon,
+  PinkForwardAudioButton,
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
-  PinkVolume, PlayIcon, PublicIcon,
+  PinkVolume,
+  PlayIcon,
+  PublicIcon,
   RateUs,
   RewriteWithAi,
   RightArrow,

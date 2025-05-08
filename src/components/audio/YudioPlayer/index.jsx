@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import {
-    Dimensions,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
 import {
-    PauseIcon,
-    PlayIcon,
+  PauseIcon,
+  PlayIcon,
 } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -329,6 +329,7 @@ const waveform = [
 const YudioPlayer = ({
   audioUrl,
   //   waveform,
+  showBackground
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -382,7 +383,7 @@ const YudioPlayer = ({
   const progress = currentTime / duration;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, showBackground && {backgroundColor: colors?.extraLightGrey}]}>
       <TouchableOpacity onPress={playPause}>
         <LinearGradient
           colors={['#478FE4', '#5CD3C6']}
@@ -435,7 +436,6 @@ const styles = StyleSheet.create({
     gap: 12,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors?.extraLightGrey,
     padding: width * 0.04,
     borderRadius: width * 0.02,
   },
