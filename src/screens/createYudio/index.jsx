@@ -35,7 +35,7 @@ import { styles } from './styles';
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [drawer, setDrawer] = useState(false);
-  const [waveform, setWaveform] = useState(false);
+  const [waveform, setWaveform] = useState([]);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -50,6 +50,7 @@ const CreateYudio = () => {
     console.log('Description', description);
     console.log('Thumbnail', thumbnail?.uri);
     console.log('Yudio', yudio);
+    console.log("Waveform", waveform)
   };
 
   const uploadThumbnail = async () => {
@@ -170,7 +171,6 @@ const CreateYudio = () => {
         console.error('Invalid file URI');
         return;
       }
-      console.log("fileUri", fileUri)
       const formData = new FormData();
       formData.append('audio',{
         uri: `file://${fileUri}`, // Use the resolved file URI
@@ -181,7 +181,7 @@ const CreateYudio = () => {
      
       const audioMetaDataPayload = await apiCall?.generateWaveforms(formData)
       console.log('audioMetaDataPayload', audioMetaDataPayload)
-      setWaveform(audioMetaDataPayload.data?.yudioWaveform);
+      setWaveform(audioMetaDataPayload);
     } catch (error) {
       console.error('Error fetching audio metadata:', error);
     }
@@ -291,7 +291,7 @@ const CreateYudio = () => {
             </TouchableOpacity>
           </View>
         )}
-        {waveform && <YudioPlayer audioUrl={yudio} />}
+        {waveform?.length > 0 && <YudioPlayer audioUrl={yudio} waveform={waveform}/>}
         {drawer && <Drawer />}
       </ScrollView>
       <CreateButton title="Create New Yudio" onPress={handleForm} />
