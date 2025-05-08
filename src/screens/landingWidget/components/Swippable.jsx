@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -21,9 +21,9 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { DropDownIcon } from '../../../assets/images/svgs';
-import { height, width } from '../../../constant';
-import { styles } from '../styles/Swippable';
+import {DropDownIcon} from '../../../assets/images/svgs';
+import {height, width} from '../../../constant';
+import {styles} from '../styles/Swippable';
 
 const ITEM_HEIGHT = 70;
 
@@ -78,7 +78,7 @@ const SwipeableItem = ({item, onRemove, stack, showContent}) => {
             style={[
               styles?.swipeButton,
               transformStyle,
-              stack && {backgroundColor: 'rgba(250, 250, 250, 0.3)'},
+              stack && {backgroundColor: 'rgba(250, 250, 250, 0.4)'},
             ]}>
             {showContent && (
               <View style={styles?.swipeButtonContainer}>
@@ -267,7 +267,7 @@ export const StackedNotifications = ({count, notifications}) => {
               width: width * (0.9 - index * 0.05),
               zIndex: items.length - index,
               borderRadius: width * 0.03,
-              backgroundColor: 'rgba(250, 250, 250, 0.3)',
+              backgroundColor: 'rgba(250, 250, 250, 0.35)',
             };
 
         return (

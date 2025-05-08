@@ -1,19 +1,19 @@
-import { Platform, StyleSheet } from "react-native";
-import { fonts } from "../../utils/fonts";
-import { height, width } from "../../constant";
-import { colors } from "../../utils/colors";
+import {Platform, StyleSheet} from 'react-native';
+import {fonts} from '../../utils/fonts';
+import {height, width} from '../../constant';
+import {colors} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
-   iconView:{
-   width:width*0.1,
-   height:height*0.045,
-   borderRadius:6,
-   alignItems:"center",
-   justifyContent:"center",
-   },
-   errorContainer:{
+  iconView: {
+    width: width * 0.1,
+    height: height * 0.045,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  errorContainer: {
     width: '92%',
-    marginTop: height * 0.35,
+    marginTop: Platform?.OS === 'ios' ? height * 0.25 : height * 0.25,
     backgroundColor: colors?.white,
     alignSelf: 'center',
     paddingVertical: height * 0.01,
@@ -25,13 +25,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  heading:{
+  heading: {
     fontSize: width * 0.034,
     fontFamily: fonts?.montserratBold,
   },
-  title:{
+  title: {
     fontSize: width * 0.03,
     fontFamily: fonts?.montserratRegular,
   },
-  contentContainer:{flex:1,left:10}
-  });
+  contentContainer: {flex: 1, left: 10},
+});

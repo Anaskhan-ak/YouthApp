@@ -30,6 +30,7 @@ const AuthInput = ({
   disable,
   onPress,
   error,
+  type
 }) => {
   const [hidePass, setHidePass] = useState(true);
   const handlePress = () => {
@@ -40,7 +41,7 @@ const AuthInput = ({
       {/* <Icon name={icon} size={20} color={'#A3A3A3'} /> */}
 
       <TextInput
-        editable={disable && false}
+        editable={disable?false:true}
         placeholderTextColor={colors?.black}
         secureTextEntry={secureTextEntry && hidePass ? true : false}
         style={styles?.input}
@@ -48,6 +49,7 @@ const AuthInput = ({
         value={value}
         placeholder={placeholder}
         onBlur={onBlur}
+        dataDetectorTypes={type&&type}
       />
       {icon === 'calendar' && (
         <TouchableOpacity onPress={onPress} style={{right: 10}}>

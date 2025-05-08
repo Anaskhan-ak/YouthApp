@@ -3,9 +3,13 @@ import React from 'react';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 const DateMonthPicker = ({setSelectedDate, showDate, selectedDate,setShowDate}) => {
+  const today = new Date();
+  const maxDate = new Date(
+    today.getFullYear() - 13,
+    today.getMonth(),
+    today.getDate()
+  );
   const handleDateConfirm = date => {
-    const formattedDate = moment(date).format('yy-MM-dd');
-    console.log("formatedDate",formattedDate)
     setSelectedDate(date);
     setShowDate(false);
    };
@@ -21,6 +25,7 @@ const DateMonthPicker = ({setSelectedDate, showDate, selectedDate,setShowDate}) 
       mode="date"
       onConfirm={handleDateConfirm}
       onCancel={handleDateCancel}
+      maximumDate={maxDate}
     />
   );
 };

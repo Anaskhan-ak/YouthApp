@@ -48,6 +48,6 @@ export const gender = [
     },
     {
       id: 2,
-      name: 'Other',
+      name: 'Prefer not to say',
     },
   ];

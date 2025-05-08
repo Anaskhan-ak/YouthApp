@@ -1,3 +1,11 @@
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import { apiCall } from "services/apiCall";
+import messaging from '@react-native-firebase/messaging';
+
 export const emailValidation = value => {
     const trimmedValue = value.trim();
     return (
@@ -5,3 +13,35 @@ export const emailValidation = value => {
       'Invalid email address'
     );
   };
+export const getFirebaseToken = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    const token = await messaging().getToken();
+    return token;
+  };
+  export const googleSignIn =async()=> {
+     try {
+         await GoogleSignin.hasPlayServices();
+         const usrInfo = await GoogleSignin.signIn();
+         const googleCredential = auth.GoogleAuthProvider.credential(
+           usrInfo?.data?.idToken || '',
+         );
+         const userCredential = await auth().signInWithCredential(
+           googleCredential,
+         );
+   
+         return await userCredential.user.getIdToken();
+       } catch (error) {
+         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+           // user cancelled the login flow
+         } else if (error.code === statusCodes.IN_PROGRESS) {
+           // operation (e.g. sign in) is in progress already
+         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+           // play services not available or outdated
+         } else {
+           // some other error happened
+         }
+       }
+}

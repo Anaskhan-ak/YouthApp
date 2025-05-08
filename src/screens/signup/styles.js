@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     flex: 0.65,
     borderBottomLeftRadius: width * 0.1,
     borderBottomRightRadius: width * 0.1,
+    marginTop:Platform?.OS==='ios'?-height*0.09:-height*0.035
   },
   contentView: {
     flex: 1,
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: width * 0.06,
     paddingVertical: height * 0.015,
   },
-  image: {height:height*0.45,width:width*1},
+  image: {flex:1},
   heading: {
     fontSize: width * 0.055,
     fontFamily: fonts?.montserratExtraBold,

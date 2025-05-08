@@ -11,10 +11,8 @@ export const styles = StyleSheet.create({
     },
     headerText: {
       fontSize: width * 0.06,
-      // marginBottom: 2,
       color: 'red',
       marginLeft: -width * 0.24,
-      // fontWeight: '800',
       marginBottom : 5,
     },
     daysContainer: {

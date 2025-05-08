@@ -5,7 +5,7 @@ import {fonts} from '../../utils/fonts';
 const {height, width} = Dimensions.get('window');
 export const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.white},
-  background: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  background: {flex: 1, alignItems: 'center', justifyContent: 'center',marginTop:-100,},
   contentView: {
     position: 'absolute',
     bottom: height * 0.03,

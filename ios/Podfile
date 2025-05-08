@@ -16,7 +16,10 @@ end
 
 target 'YouthApp' do
   config = use_native_modules!
-
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+  config[:hermes_enabled] = false
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

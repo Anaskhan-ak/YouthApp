@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "3T7UVQRFXA.com.youthapp",
+        "paths": [ "/login" ]
+      }
+    ]
+  }
+}

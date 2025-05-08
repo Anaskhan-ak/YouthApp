@@ -10,4 +10,7 @@ export const images = {
     splashLogo:require('./SplashLogo.png'),
     signup:require('./SignupImage.jpeg'),
     login:require('./loginBackground.png'),
+    otp:require('./otp.png'),
+    emailVerificationLogo:require('./emailVerificationLogo.png'),
+    otpVerification:require('./otpVerification.png'),
 }

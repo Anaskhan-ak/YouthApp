@@ -11,18 +11,21 @@ export const styles = StyleSheet.create({
     },
     skipButton: {
       height: height * 0.045,
-      backgroundColor: 'white',
+      backgroundColor: colors?.white,
       width: width * 0.2,
       justifyContent: 'center',
       alignSelf: 'flex-end',
       marginRight: width * 0.05,
-      marginTop: height * 0.06,
+      marginTop: height * 0.15,
       borderRadius: 5,
+      position:"absolute",
+      zIndex:999
     },
     bottomContainer: {
       backgroundColor: colors?.white,
       borderTopEndRadius: width*0.1,
       borderTopStartRadius: width*0.1,
+      width:"100%"
     },
     Heading: {
       alignSelf: 'center',
@@ -40,7 +43,7 @@ export const styles = StyleSheet.create({
     slider: {
       flexDirection: 'row',
       alignSelf: 'center',
-      marginVertical: height * 0.02,
+      marginVertical: height * 0.015,
     },
     description:{
       fontFamily: fonts?.montserratRegular,
@@ -51,5 +54,17 @@ export const styles = StyleSheet.create({
       marginTop:10,
       lineHeight:height*0.025
     },
-    container:{flex: 1, backgroundColor: colors.white,marginTop:Platform.OS === 'ios'?-height*0.07:-height*0.04}
+    imageBg:{width: width * 1, height: '90%',marginTop:-height*0.01},
+    container:{flex: 1, backgroundColor: colors.white,
+      marginTop:Platform.OS === 'ios'?-height*0.07:-height*0.06
+    },
+    itemContainer:{
+      position: 'absolute',
+      bottom: height * 0.02,
+      alignSelf: 'center',
+      backgroundColor: colors?.white,
+      width: '100%',
+      borderTopEndRadius: width * 0.1,
+      borderTopStartRadius: width * 0.1,
+    }
   });

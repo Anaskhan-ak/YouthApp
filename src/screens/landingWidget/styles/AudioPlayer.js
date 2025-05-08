@@ -1,22 +1,21 @@
-import { StyleSheet } from 'react-native';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
+import {StyleSheet, Platform} from 'react-native';
+import {height, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 6,
     paddingHorizontal: 5,
-    paddingVertical: 20,
     marginVertical: 5,
     width: width * 0.5,
-    height: height * 0.08,
+    height: Platform?.OS === 'ios' ? height * 0.08 : height * 0.08,
   },
   sliderContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: -10,
+    paddingHorizontal: 10,
   },
   controls: {
     flexDirection: 'row',

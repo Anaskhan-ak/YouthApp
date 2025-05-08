@@ -1,0 +1,14 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.youthapp",
+        "sha256_cert_fingerprints": [
+          "37:FE:1C:04:9A:2E:E5:1D:34:57:83:CA:EA:73:58:3D:B5:4E:10:5D:A9:5D:76:D5:FB:39:42:D5:59:65:5A:BE",
+          "A2:9E:F2:93:10:37:33:D2:8F:A2:1F:89:36:09:64:C7:9F:16:42:6B:68:D7:6D:8F:73:C8:F0:83:4B:56:FE:FA"
+        ]
+      }
+    }
+  ]
+  

@@ -18,7 +18,7 @@ import Calendar from './calendar.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
-import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
+import {default as DropDown, default as DropDownIcon} from './dropdown.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import Google from './google.svg';
@@ -62,7 +62,13 @@ import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
 
 export {
-  ActiveComment, ActiveDownload, ActiveLike, ActiveRepost, ActiveSave, ActiveShare, Apple,
+  ActiveComment,
+  ActiveDownload,
+  ActiveLike,
+  ActiveRepost,
+  ActiveSave,
+  ActiveShare,
+  Apple,
   BackArrow,
   BlackBackArrow,
   BlackDropdown, BlackForwardAudioButton, BlackLike, BlackRewindAUdioButton, BlackShare,
@@ -77,6 +83,7 @@ export {
   Error,
   ErrorWhite,
   Google,
+  MailIcon,
   GradientBlueMic,
   GradientCalender,
   GradientCross,
@@ -84,7 +91,13 @@ export {
   GradientLocationIcon,
   GradientRedMic,
   GradientRedTick,
-  GreenCheckMark, InactiveComment, InactiveDownload, InactiveLike, InactiveRepost, InactiveSave, InactiveShare, MailIcon,
+  GreenCheckMark,
+  InactiveComment,
+  InactiveDownload,
+  InactiveLike,
+  InactiveRepost,
+  InactiveSave,
+  InactiveShare,
   MessageIcon,
   MessengerIcon,
   PasswordHide,
@@ -100,11 +113,10 @@ export {
   RewriteWithAi,
   RightArrow,
   SearchIcon,
-  TagFriendsIcon,
   TwitterIcon,
-  UploadThumbnail,
   WhatsappIcon,
+  TagFriendsIcon,
+  UploadThumbnail,
   WhiteLeftArrow,
-  YouthIcon
+  YouthIcon,
 };
-
