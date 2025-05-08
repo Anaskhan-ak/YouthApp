@@ -40,9 +40,12 @@ export const post = async (endPoint, data) => {
 };
 
 export const documentPost = async (endPoint, data) => {
-  console.log("Data", data)
   try {
-    const result = await apiInstance.post(endPoint, data, formDataConfig);
+    const result = await apiInstance.post(endPoint, data, {
+      headers : {
+        'Content-Type' : 'multipart/form-data'
+      }
+    });
     return result;
   } catch (e) {
     throw errorHandler(e);

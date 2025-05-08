@@ -121,7 +121,7 @@ export const styles = StyleSheet.create({
     fontSize: width * 0.04,
   },
   recordedPlayer: {
-    marginTop: height * 0.04,
+    // marginTop: height * 0.01,
   },
   crossButton: {
     alignSelf: 'flex-end',

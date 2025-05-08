@@ -12,7 +12,7 @@ import Splash from '../screens/Splash';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="CreateYudio">
+    <Stack.Navigator initialRouteName="LandingWidget">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}

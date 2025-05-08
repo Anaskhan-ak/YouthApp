@@ -172,12 +172,13 @@ const CreateYudio = () => {
       }
 
       const formData = new FormData();
-      formData.append({
+      formData.append('audio',{
         uri: fileUri, // Use the resolved file URI
         type: 'audio/mpeg',
         name: thumbnail?.name || 'audio-file.wav',
       });
 
+     
       const audioMetaDataPayload = await apiCall?.generateWaveforms(formData)
       console.log('audioMetaDataPayload', audioMetaDataPayload)
       setWaveform(audioMetaDataPayload.data?.yudioWaveform);
