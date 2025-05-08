@@ -1,3 +1,9 @@
+import ActiveComment from './ActiveComment.svg';
+import ActiveDownload from './ActiveDownload.svg';
+import ActiveLike from './ActiveLike.svg';
+import ActiveRepost from './ActiveRepost.svg';
+import ActiveSave from './ActiveSave.svg';
+import ActiveShare from './ActiveShare.svg';
 import Apple from './apple.svg';
 import BackArrow from './BackArrow.svg';
 import BlackBackArrow from './BlackBackArrow.svg';
@@ -22,6 +28,12 @@ import GradientLocationIcon from './GradientLocationIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
 import GreenCheckMark from './greenCheckMark.svg';
+import InactiveComment from './InactiveComment.svg';
+import InactiveDownload from './InactiveDownload.svg';
+import InactiveLike from './InactiveLike.svg';
+import InactiveRepost from './InactiveRepost.svg';
+import InactiveSave from './InactiveSave.svg';
+import InactiveShare from './InactiveShare.svg';
 import MailIcon from './MailIcon.svg';
 import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
@@ -47,10 +59,14 @@ import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
 
 export {
-  Apple,
-  BackArrow, BlackBackArrow, BlackDropdown,
+  ActiveComment, ActiveDownload, ActiveLike, ActiveRepost, ActiveSave, ActiveShare, Apple,
+  BackArrow,
+  BlackBackArrow,
+  BlackDropdown,
   BlackLike,
-  BlackShare, BlackYouthLogo, BlueTick,
+  BlackShare,
+  BlackYouthLogo,
+  BlueTick,
   Calendar,
   CopyIcon,
   Cross,
@@ -67,8 +83,7 @@ export {
   GradientLocationIcon,
   GradientRedMic,
   GradientRedTick,
-  GreenCheckMark,
-  MailIcon,
+  GreenCheckMark, InactiveComment, InactiveDownload, InactiveLike, InactiveRepost, InactiveSave, InactiveShare, MailIcon,
   MessageIcon,
   MessengerIcon,
   PasswordHide,
