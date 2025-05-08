@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Dimensions,
+    Text,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
 import {
-  PauseIcon,
-  PlayIcon,
+    BlackForwardAudioButton,
+    BlackRewindAUdioButton,
+    PauseIcon,
+    PlayIcon,
 } from '../../../assets/images/svgs';
-import { width } from '../../../constant';
-import { colors } from '../../../utils/colors';
+import { styles } from './yudioPlayerStyles';
 
 const waveform = [
   0.6979039026148278, 0.6471610407462582, 0.5074104947395217,
@@ -334,7 +334,6 @@ const YudioPlayer = ({
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
-  console.log("Audio URL", audioUrl)
 
   useEffect(() => {
     SoundPlayer.loadUrl(audioUrl);
@@ -403,20 +402,7 @@ const YudioPlayer = ({
   const progress = currentTime / duration;
 
   return (
-    <View style={[styles.container, {backgroundColor: colors?.extraLightGrey}]}>
-      <TouchableOpacity onPress={playPause}>
-        <LinearGradient
-          colors={['#478FE4', '#5CD3C6']}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          style={[
-            styles.playPauseButton,
-            isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
-          ]}>
-          {isPlaying ? <PauseIcon height={20} /> : <PlayIcon height={20} />}
-        </LinearGradient>
-      </TouchableOpacity>
-      <View style={styles.flex1}>
+    <View style={styles.container}>
         <View style={styles.timeRow}>
           <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
           <Text style={styles.timeText}>{formatTime(duration)}</Text>
@@ -444,50 +430,31 @@ const YudioPlayer = ({
             })}
           </Svg>
         </View>
+        {/* Controls */}
+        <View style={styles?.controlsContainer}>
+          <TouchableOpacity onPress={backwardHandler}>
+            <BlackRewindAUdioButton />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={playPause}>
+            <LinearGradient
+              colors={['#478FE4', '#5CD3C6']}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={[
+                styles.playPauseButton,
+                isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
+              ]}>
+              {isPlaying ? <PauseIcon height={20} /> : <PlayIcon height={20} />}
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={forwardHandler}>
+            <BlackForwardAudioButton />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    gap: 12,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: width * 0.04,
-    borderRadius: width * 0.02,
-  },
-  playPauseButton: {
-    marginTop: 12,
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  paddingLeft: {
-    paddingLeft: 4,
-  },
-  noPaddingLeft: {
-    paddingLeft: 0,
-  },
-  flex1: {
-    flex: 1,
-  },
-  timeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  timeText: {
-    fontSize: 12,
-    color: '#000',
-  },
-  waveformContainer: {
-    width: '100%',
-  },
-});
+
 
 export default YudioPlayer;

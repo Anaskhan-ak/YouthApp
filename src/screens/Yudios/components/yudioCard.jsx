@@ -1,9 +1,9 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import YudioPlayer from '../../../components/audio/YudioPlayer';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
+import YudioPlayer from './yudioPlayer';
 
 const YudioCard = () => {
   return (

@@ -170,12 +170,12 @@ const CreateYudio = () => {
         console.error('Invalid file URI');
         return;
       }
-
+      console.log("fileUri", fileUri)
       const formData = new FormData();
       formData.append('audio',{
-        uri: fileUri, // Use the resolved file URI
+        uri: `file://${fileUri}`, // Use the resolved file URI
         type: 'audio/mpeg',
-        name: thumbnail?.name || 'audio-file.wav',
+        name: 'audio-file.wav',
       });
 
      

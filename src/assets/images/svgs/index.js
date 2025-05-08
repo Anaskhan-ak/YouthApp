@@ -7,7 +7,9 @@ import ActiveShare from './ActiveShare.svg';
 import Apple from './apple.svg';
 import BackArrow from './BackArrow.svg';
 import BlackBackArrow from './BlackBackArrow.svg';
+import BlackForwardAudioButton from './BlackBackwardButton.svg';
 import BlackDropdown from './BlackDropdown.svg';
+import BlackRewindAUdioButton from './BlackForwardButton.svg';
 import BlackLike from './BlackLike.svg';
 import BlackShare from './BlackShare.svg';
 import BlackYouthLogo from './BlackYouthLogo.svg';
@@ -63,9 +65,7 @@ export {
   ActiveComment, ActiveDownload, ActiveLike, ActiveRepost, ActiveSave, ActiveShare, Apple,
   BackArrow,
   BlackBackArrow,
-  BlackDropdown,
-  BlackLike,
-  BlackShare,
+  BlackDropdown, BlackForwardAudioButton, BlackLike, BlackRewindAUdioButton, BlackShare,
   BlackYouthLogo,
   BlueTick,
   Calendar,

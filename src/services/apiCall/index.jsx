@@ -45,7 +45,7 @@ export const apiCall = {
   generateWaveforms : async params => {
     console.log("Params", params)
     let result = await documentPost(apis?.generateWaveforms, params)
-    if (result?.status === 200) return result?.status
+    if (result?.status === 200) return result?.data?.yudioWaveform
     else throw result
   },
  
