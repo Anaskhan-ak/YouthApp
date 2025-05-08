@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -7,52 +7,112 @@ import {
   Text,
   TouchableOpacity,
   UIManager,
-  View
+  View,
 } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-import { DropDownIcon } from '../../../assets/images/svgs';
-import { height, width } from '../../../constant';
-import { styles } from '../styles/Swippable';
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
+import {DropDownIcon} from '../../../assets/images/svgs';
+import {height, width} from '../../../constant';
+import {styles} from '../styles/Swippable';
 
-const SwipeableItem = ({item, onSwipe, showContent}) => {
-  const renderLeftActions = () => <View style={{width: 200}} />;
-  const renderRightActions = () => <View style={{width: 200}} />;
-// console.log('::::::::ITEM:::::::::;', item)s
+const ITEM_HEIGHT = 70;
+
+const SwipeableItem = ({item, onRemove, stack, showContent}) => {
+  const swipeTranslateX = useSharedValue(0);
+  const pressed = useSharedValue(false);
+  const itemHeight = useSharedValue(ITEM_HEIGHT);
+  const marginVertical = useSharedValue(7);
+
+  const pan = Gesture.Pan()
+    .onBegin(() => {
+      pressed.value = true;
+    })
+    .onChange(event => {
+      if (event.translationX < 0) {
+        swipeTranslateX.value = event.translationX;
+      }
+    })
+    .onFinalize(() => {
+      const isShouldDismiss = swipeTranslateX.value < -width * 0.3;
+      if (isShouldDismiss) {
+        itemHeight.value = withTiming(0);
+        marginVertical.value = withTiming(0);
+        swipeTranslateX.value = withTiming(-width, undefined, isDone => {
+          if (isDone) {
+            runOnJS(onRemove)(item?.id);
+          }
+        });
+      } else {
+        swipeTranslateX.value = withSpring(0);
+      }
+      pressed.value = false;
+    });
+
+  const transformStyle = useAnimatedStyle(() => ({
+    transform: [
+      {translateX: swipeTranslateX.value},
+      {scale: withTiming(pressed.value ? 1.15 : 1)},
+    ],
+  }));
+
+  const itemHeightStyle = useAnimatedStyle(() => ({
+    height: itemHeight.value,
+    marginVertical: marginVertical.value,
+  }));
+
   return (
     <GestureHandlerRootView>
-      <ReanimatedSwipeable
-        friction={2}
-        enableTrackpadTwoFingerGesture
-        rightThreshold={40}
-        renderLeftActions={renderLeftActions}
-        renderRightActions={renderRightActions}
-        onSwipeableOpenStartDrag={() => onSwipe(item.id)}>
-        <TouchableOpacity style={styles?.swipeButton}>
-          {showContent && (
-            <View style={styles?.swipeButtonContainer}>
-              <Image
-                style={styles?.profileIcon}
-                source={item?.userImage ? {uri : item?.userImage} : require('../../../assets/images/onboarding/Onboarding1.png')}
-              />
-              <View style={{marginLeft: width * 0.0125}}>
-                <Text style={styles?.profileName}>{item?.userName}</Text>
-                <Text style={styles?.notificationMessage}>
-                  {item?.content?.length > 15 ? `${item?.content?.slice(0,15)}...` : item?.content}
+      <GestureDetector gesture={pan}>
+        <Animated.View style={itemHeightStyle}>
+          <Animated.View
+            style={[
+              styles?.swipeButton,
+              transformStyle,
+              stack && {backgroundColor: 'rgba(250, 250, 250, 0.4)'},
+            ]}>
+            {showContent && (
+              <View style={styles?.swipeButtonContainer}>
+                <Image
+                  style={styles?.profileIcon}
+                  source={
+                    item?.userImage
+                      ? {uri: item?.userImage}
+                      : require('../../../assets/images/onboarding/Onboarding1.png')
+                  }
+                />
+                <View style={{marginLeft: width * 0.0125}}>
+                  <Text style={styles?.profileName}>{item?.userName}</Text>
+                  <Text style={styles?.notificationMessage}>
+                    {item?.content?.length > 15
+                      ? `${item?.content?.slice(0, 15)}...`
+                      : item?.content}
+                  </Text>
+                </View>
+                <Text style={styles?.notificationTime}>
+                  {moment(item?.createdAt)?.format('HH:mm')}
                 </Text>
               </View>
-              <Text style={styles?.notificationTime}>{moment(item?.createdAt)?.format('HH:mm')}</Text>
-            </View>
-          )}
-        </TouchableOpacity>
-      </ReanimatedSwipeable>
+            )}
+          </Animated.View>
+        </Animated.View>
+      </GestureDetector>
     </GestureHandlerRootView>
   );
 };
 
 const SwipeableList = ({setVisibility, notifications}) => {
   const [items, setItems] = useState(notifications);
-  console.log("::NOTIFICATIONS::::::::::", items)
+  // console.log('::NOTIFICATIONS::::::::::', items);
   // useEffect(() => {
   //   const fetchNotifications = async () => {
   //     try {
@@ -91,7 +151,12 @@ const SwipeableList = ({setVisibility, notifications}) => {
         data={items}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <SwipeableItem item={item} onSwipe={handleSwipe} showContent={true} />
+          <SwipeableItem
+            item={item}
+            onRemove={handleSwipe}
+            showContent={true}
+            stack={true}
+          />
           // <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
         )}
       />
@@ -203,14 +268,17 @@ export const StackedNotifications = ({count, notifications}) => {
               opacity: isTop ? 1 : 0.5,
               width: width * (0.9 - index * 0.05),
               zIndex: items.length - index,
+              borderRadius: width * 0.03,
+              backgroundColor: 'rgba(250, 250, 250, 0.35)',
             };
 
         return (
           <View key={item.id} style={[styles?.stackItem, itemStyle]}>
             <SwipeableItem
               item={item}
-              onSwipe={() => handleSwipe(item.id)}
+              onRemove={() => handleSwipe(item.id)}
               showContent={expanded || isTop}
+              stack={true && expanded}
             />
           </View>
         );
@@ -218,7 +286,5 @@ export const StackedNotifications = ({count, notifications}) => {
     </View>
   );
 };
-
-
 
 export default SwipeableList;

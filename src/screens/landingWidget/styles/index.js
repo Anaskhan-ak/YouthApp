@@ -1,12 +1,14 @@
-import { StyleSheet } from 'react-native';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {Platform, StyleSheet} from 'react-native';
+import {height, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, marginTop: -height * 0.04},
   scrollView: {
     marginTop: height * 0.02,
+    flex: 1,
+    paddingVertical: height * 0.02,
   },
   skipButton: {
     height: height * 0.04,
@@ -25,10 +27,11 @@ export const styles = StyleSheet.create({
     fontSize: width * 0.035,
   },
   GreetText: {
-    color: 'white',
+    color: colors?.white,
     fontSize: width * 0.15,
-    fontFamily: 'Montserrat-ExtraBold',
+    fontFamily: fonts?.montserratExtraBold,
     marginLeft: width * 0.04,
+    marginTop: height * 0.03,
   },
   welcomeBox: {
     flexDirection: 'row',
@@ -78,7 +81,7 @@ export const styles = StyleSheet.create({
     color: 'red',
     fontFamily: fonts?.montserratBold,
     fontSize: width * 0.03,
-    marginBottom: -height * 0.025,
+    marginBottom: Platform?.OS === 'ios' ? -height * 0.015 : -height * 0.025,
   },
   hours: {
     color: colors.text,
@@ -94,7 +97,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   notificationScroll: {
-    height: height * 0.35,
+    height: height * 0.39,
   },
   changeWidgetButton: {
     borderWidth: width * 0.002,

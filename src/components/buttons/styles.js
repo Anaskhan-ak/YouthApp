@@ -98,3 +98,26 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
   }
 });
+
+export const CreateButtonStyles = StyleSheet.create({
+  container : {
+    bottom : 0,
+    position : 'absolute',
+    width : width,
+    zIndex : 10,
+    paddingHorizontal : width * 0.15,
+    paddingVertical : width * 0.05,
+    borderTopLeftRadius : width * 0.05,
+    borderTopRightRadius : width * 0.05
+  },
+  button : {
+    backgroundColor : colors?.white,
+    borderRadius : width * 0.02,
+    alignItems : 'center',
+    padding : width * 0.02
+  },
+  text : {
+    fontFamily : fonts?.montserratExtraBold,
+    fontSize : width * 0.05
+  }
+})

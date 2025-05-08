@@ -1,21 +1,22 @@
-import {deleted, get, patch, post} from '../Methods';
-import {apis} from '../endPoints';
+
+import { deleted, documentPost, get, patch, post } from '../Methods';
+import { apis } from '../endPoints';
 
 export const apiCall = {
   //POST API CALL
   SignUp: async obj => {
     let result = await post(apis?.signUp, obj);
-    if (result?.status == 201) return result.data;
+    if (result?.status == 200) return result.data;
     else throw result;
   },
   Login: async obj => {
     let result = await post(apis?.login, obj);
-    if (result?.status == 201) return result.data;
+    if (result?.status == 200) return result.data;
     else throw result;
   },
   SignUpWithGoogle: async obj => {
     let result = await post(apis?.loginWithGoogle, obj);
-    if (result?.status == 201) return result.data;
+    if (result?.status == 200) return result.data;
     else throw result;
   },
   VerifyOtp: async obj => {
@@ -48,6 +49,19 @@ export const apiCall = {
     else throw result;
   },
 
+  addInterest : async params => {
+    let result = await post(apis?.addInterest, params)
+    if (result?.status === 200) return result?.status
+    else throw result
+  },
+
+  generateWaveforms : async params => {
+    console.log("Params", params)
+    let result = await documentPost(apis?.generateWaveforms, params)
+    if (result?.status === 200) return result?.status
+    else throw result
+  },
+ 
   //GET API CALL
   getNotification: async params => {
     let result = await get(apis?.getNotification, params);
@@ -65,6 +79,12 @@ export const apiCall = {
     else throw result;
   },
 
+  getAllInterests : async () => {
+    let result = await get(apis?.getAllInterests)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+  
   // PATCH API CALL
   gatePassStatus: async obj => {
     let result = await patch(Apis.gatePassStatus, obj);

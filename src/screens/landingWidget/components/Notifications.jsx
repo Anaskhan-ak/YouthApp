@@ -46,13 +46,13 @@ const Notifications = ({
       {/* Notification bars */}
       <View style={styles?.notificationContainer}>
         {toggle ? (
-          <TouchableOpacity
+          <View
             style={styles?.notificationButton}
             onPress={() => {
               setToggle(false);
             }}>
             <SwipeableList setVisibility={setVisibility} notifications={notifications}/>
-          </TouchableOpacity>
+          </View>
         ) : null}
       </View>
     </>
