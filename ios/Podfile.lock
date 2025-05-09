@@ -2056,7 +2056,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNGoogleSignin (13.2.0):
+  - RNGoogleSignin (13.3.1):
     - DoubleConversion
     - glog
     - GoogleSignIn (~> 7.1)
@@ -2256,7 +2256,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNShare (12.0.9):
+  - RNShare (12.0.11):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2770,10 +2770,10 @@ SPEC CHECKSUMS:
   RNFBMessaging: af1ebc16b28e175a4278b263db731703a6aecc61
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: b249b5be5a3659025aed8898aaaafd567dc2d660
-  RNGoogleSignin: 6a6a1768ffa4059891964c85e04c0c01109a7eb7
+  RNGoogleSignin: 0c866df7c910b89174fc347afb40ccb1456f9f58
   RNReanimated: 7b926938d4190114e5848b5b022d83dbc2c0fe2c
   RNScreens: 4ada1709be95c3a4bf1f885378262ceadd9cc939
-  RNShare: 400708e430318cca8112328791b9c009c5f92cb3
+  RNShare: 082dae96ef6cabef31d3e6b016d388e71ff0e0d7
   RNSoundPlayer: 95b72e12a6990e4fabfd71b1c7fac579f9e60e75
   RNSVG: 257f59c952e296c9c36035a8f49b61fda48e398a
   RNVectorIcons: 32cc786d5a3c2d8e20ee5c1c7c63c2609f411eb7

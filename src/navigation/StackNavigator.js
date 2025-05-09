@@ -17,7 +17,7 @@ import OtpVerification from '../screens/otpVerification';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="LandingWidget">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}

@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
       marginTop:10,
       lineHeight:height*0.025
     },
-    imageBg:{width: width * 1, height: '90%',marginTop:-height*0.01},
+    imageBg:{width: width * 1, height: '90%',marginTop:-height*0.02},
     container:{flex: 1, backgroundColor: colors.white,
       marginTop:Platform.OS === 'ios'?-height*0.07:-height*0.06
     },

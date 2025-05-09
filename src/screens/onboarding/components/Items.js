@@ -1,4 +1,7 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+// RenderItem.js
+import * as Animatable from 'react-native-animatable';
+import React, {useEffect, useRef, forwardRef, useImperativeHandle} from 'react';
+import {Image, Linking, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from '../styles';
 import GradientText from '../../../components/text/GradientText';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
@@ -9,101 +12,34 @@ import {fonts} from '../../../utils/fonts';
 import {onboardingContent} from '../../../utils/string';
 import {images} from '../../../assets/images';
 import {NextButton} from '../../../components/buttons/NextButton';
+import {config} from '../../../environment';
 
-export const renderItem = ({
-  item,
-  index,
-  currentIndex,
-  handleNext,
-  navigation,
-  handleSkip,
-}) => (
-  <View style={[styles.container]}>
-    {index != 4 && (
-    <TouchableOpacity onPress={handleSkip} style={styles?.skipButton}>
-      <GradientText style={styles.text}>SKIP</GradientText>
-    </TouchableOpacity>
-     )} 
-    <Image source={item.image} style={styles.imageBg} />
+const RenderItem = forwardRef(({item, index, handleSkip}, ref) => {
+  const imageRef = useRef(null);
 
-    <View style={styles?.itemContainer}>
-      <GradientText style={styles.Heading}>{item?.heading}</GradientText>
+  useImperativeHandle(ref, () => ({
+    fadeIn: () => imageRef.current?.fadeIn(1000),
+    fadeOut: () => imageRef.current?.fadeOut(1000),
+  }));
 
-      {index === 4 ? (
-        <>
-          <PrimaryButton
-            onPress={() => {
-              navigation.navigate('Login');
-            }}
-            title="Sign in"
-          />
-          <PrimaryButton
-            onPress={() => {
-              navigation.navigate('SignUp');
-            }}
-            title="Sign Up"
-          />
-
-          <View style={styles.slider}>
-            {onboardingContent?.map(i => {
-              return (
-                <>
-                  {index === i?.id ? (
-                    <Image style={styles.dots} source={images?.active} />
-                  ) : (
-                    <Image style={styles.dots} source={images?.inactive} />
-                  )}
-                </>
-              );
-            })}
-          </View>
-          <GradientBorderButton
-            onPress={() => {
-              Linking.openURL(config.website);
-            }}
-            title="How it works!"
-            width={width * 0.69}
-          />
-        </>
-      ) : (
-        <>
-          <Text
-            style={[
-              styles.description,
-              {
-                fontFamily: fonts?.montserratRegular,
-                color: colors?.lightGrey,
-              },
-            ]}>
-            {onboardingContent[index]?.description.slice(0, 52)}
-            <Text
-              style={[
-                styles.description,
-                {
-                  fontFamily: fonts?.montserratMedium,
-                  color: colors.lightGrey,
-                },
-              ]}>
-              {' '}
-              {onboardingContent[index]?.description.slice(52, 150)}{' '}
-            </Text>
-          </Text>
-          <View style={styles.slider}>
-            {onboardingContent?.map(i => {
-              return (
-                <>
-                  {index === i?.id ? (
-                    <Image style={styles.dots} source={images?.active} />
-                  ) : (
-                    <Image style={styles.dots} source={images?.inactive} />
-                  )}
-                </>
-              );
-            })}
-          </View>
-          {index !== 4 && <NextButton onPress={handleNext} />}
-        </>
+  return (
+    <View style={[styles.container]}>
+      {index !== 4 && (
+        <TouchableOpacity onPress={handleSkip} style={styles?.skipButton}>
+          <GradientText style={styles.text}>SKIP</GradientText>
+        </TouchableOpacity>
       )}
+      <Animatable.Image
+        ref={imageRef}
+        source={item.image}
+        style={styles.imageBg}
+        animation="fadeIn"
+        duration={500}
+        useNativeDriver
+      />
     </View>
-  </View>
-);
+  );
+});
+
+
+export default RenderItem;

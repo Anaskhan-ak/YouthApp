@@ -5,7 +5,6 @@ import {
   StatusBar,
   TouchableOpacity,
   Platform,
-  ScrollView,
   Keyboard,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -60,7 +59,8 @@ const SignUp = () => {
     setShowDate(!showDate);
   };
   const onSubmit = async data => {
-    setKeyboardVisible(false)
+    Keyboard.dismiss();
+    setKeyboardVisible(false);
     const obj = {
       firstName: data?.firstName,
       lastName: data?.lastName,
@@ -119,7 +119,8 @@ const SignUp = () => {
     } else {
       setShowError(false);
     }
-    setKeyboardVisible(false)
+    setKeyboardVisible(false);
+    Keyboard.dismiss();
   };
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -164,9 +165,14 @@ const SignUp = () => {
         </ImageBackground>
       </View>
       <View style={styles?.contentView}>
-        <Text style={styles?.heading}>
+        <View style={styles?.headingWithIconView}>
+          <Text style={styles?.heading}>Create a New </Text>
+          <YouthIcon width={width * 0.2} />
+          <Text style={styles?.heading}> Account</Text>
+        </View>
+        {/* <Text style={styles?.heading}>
           Create a New <YouthIcon width={width * 0.18} /> Account
-        </Text>
+        </Text> */}
         <Text style={styles?.title}>It’s quick and easy.</Text>
         <View style={styles?.textContainer}>
           <View style={styles?.textView}>

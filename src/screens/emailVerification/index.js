@@ -42,7 +42,7 @@ const EmailVerification = ({navigation}) => {
       <View style={styles.contentView}>
         <PrimaryButton
           // isLoading={loading}
-          // onPress={onSubmit}
+          onPress={handleSignIn}
           title="Continue"
         />
         <View style={styles.bottomContentView}>
