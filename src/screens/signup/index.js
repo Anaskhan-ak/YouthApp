@@ -1,31 +1,31 @@
+import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
-  View,
-  Text,
   ImageBackground,
   StatusBar,
   TouchableOpacity,
   Platform,
   Keyboard,
+  Text,
+  View
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {styles} from './styles';
-import {images} from '../../assets/images';
-import {height, width} from '../../constant';
-import {Calendar, DropDown, YouthIcon} from '../../assets/images/svgs';
-import {useForm, Controller} from 'react-hook-form';
-import {emailValidation} from '../../helper';
-import AuthInput from '../../components/inputs/authInput';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../assets/images';
+import { DropDown, YouthIcon } from '../../assets/images/svgs';
+import AuthError from '../../components/authErrorPopup';
+import { PrimaryButton } from '../../components/buttons/PrimaryButton';
+import { SocialButton } from '../../components/buttons/SocialButton';
 import CountryPickerDropDown from '../../components/dropdowns/CountryPicker';
 import DateMonthPicker from '../../components/dropdowns/DatePicker';
-import moment from 'moment';
-import {PrimaryButton} from '../../components/buttons/PrimaryButton';
-import {SocialButton} from '../../components/buttons/SocialButton';
-import GradientText from '../../components/text/GradientText';
+import AuthInput from '../../components/inputs/authInput';
 import GenderModal from '../../components/modals/genderModal';
-import AuthError from '../../components/authErrorPopup';
-import {useNavigation} from '@react-navigation/native';
-import {apiCall} from '../../services/apiCall';
+import GradientText from '../../components/text/GradientText';
+import { height, width } from '../../constant';
+import { emailValidation } from '../../helper';
+import { apiCall } from '../../services/apiCall';
+import { styles } from './styles';
 
 const SignUp = () => {
   const [countryDetails, setCountryDetails] = useState(null);

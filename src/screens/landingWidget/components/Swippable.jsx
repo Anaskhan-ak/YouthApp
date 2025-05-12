@@ -146,7 +146,6 @@ const SwipeableList = ({setVisibility, notifications}) => {
   };
 
   return (
-    <View>
       <FlatList
         data={items}
         keyExtractor={item => item.id}
@@ -160,7 +159,6 @@ const SwipeableList = ({setVisibility, notifications}) => {
           // <Text style={{color : 'black'}}>QQQQQQQQQQQQ</Text>
         )}
       />
-    </View>
   );
 };
 

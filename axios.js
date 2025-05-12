@@ -12,8 +12,9 @@ apiInstance.interceptors.request.use(
     if (token != undefined) {
       request.headers = {
         Authorization: `Bearer ${token}`,
-        'Content-Type': request.headers['Content-Type'],
+        ...(request.headers || {}), // preserve any existing headers
       };
+      
     } else {
       if (request?.Authorization) {
         request.headers = {
@@ -21,8 +22,10 @@ apiInstance.interceptors.request.use(
         };
       } else {
         request.headers = {
-          'Content-Type': request.headers['Content-Type'],
+          Authorization: `Bearer ${token}`,
+          ...(request.headers || {}), // preserve any existing headers
         };
+        
       }
     }
     return request;

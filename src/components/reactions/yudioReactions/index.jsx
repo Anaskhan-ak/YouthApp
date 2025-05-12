@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import {useState} from 'react';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
   ActiveDownload,
@@ -13,8 +14,10 @@ import {
   InactiveRepost,
   InactiveSave,
   InactiveShare,
+  PinkGradientPlusButton,
 } from '../../../assets/images/svgs';
-import { styles } from './styles';
+import {colors} from '../../../utils/colors';
+import {styles} from './styles';
 
 const YudioReactions = () => {
   const [likes, setLikes] = useState(0);
@@ -74,6 +77,24 @@ const YudioReactions = () => {
     setReactions(updatedReactions);
   };
 
+  const HeaderComponent = () => {
+    return (
+      <TouchableOpacity style={styles?.gradientProfileContainer}>
+        <LinearGradient
+          colors={[colors?.RGB1, colors?.RGB2]}
+          style={styles?.gradientProfileIcon}>
+          <Image
+            style={styles?.gradientProfileImage}
+            source={require('../../../assets/images/SignupImage.jpeg')}
+          />
+          <View style={styles?.plusButton}>
+            <PinkGradientPlusButton />
+          </View>
+        </LinearGradient>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles?.container}>
       <FlatList
@@ -92,6 +113,7 @@ const YudioReactions = () => {
             </View>
           );
         }}
+        ListHeaderComponent={<HeaderComponent />}
       />
     </View>
   );

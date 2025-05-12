@@ -27,7 +27,7 @@ import {apiCall} from '../../services/apiCall';
 import {getFirebaseToken, googleSignIn} from '../../helper';
 import OtpInput from '../../components/inputs/otp';
 
-const forgetPassword = () => {
+const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -213,4 +213,4 @@ const forgetPassword = () => {
   );
 };
 
-export default forgetPassword;
+export default ForgetPassword;

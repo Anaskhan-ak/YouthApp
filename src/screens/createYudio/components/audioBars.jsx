@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withRepeat,
-    withTiming,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
 } from 'react-native-reanimated';
-import { width } from '../../constant';
-import { colors } from '../../utils/colors';
+import { width } from '../../../constant';
+import { colors } from '../../../utils/colors';
 
 const BAR_COUNT = 100;
 
@@ -64,7 +64,7 @@ const AudioBars = ({ isRecording }) => {
         style={styles.gradientBorder}
       >
         <Image
-          source={require('../../assets/images/SignupImage.jpeg')}
+          source={require('../../../assets/images/SignupImage.jpeg')}
           style={styles.image}
         />
       </LinearGradient>

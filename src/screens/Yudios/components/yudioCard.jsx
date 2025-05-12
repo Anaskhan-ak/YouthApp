@@ -1,25 +1,32 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import YudioPlayer from '../../../components/audio/YudioPlayer';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {height, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
+import YudioPlayer from './yudioPlayer';
 
-const YudioCard = () => {
+const YudioCard = ({yudio}) => {
   return (
     <LinearGradient
       colors={['#A9F5FF', colors?.white]}
       style={styles?.container}>
-      <Text style={styles?.heading}>{`What's going on\n with Gaza`}</Text>
+      <Text style={styles?.heading}>{yudio?.title}</Text>
       <Image
         style={styles?.image}
-        source={require('../../../assets/images/SignupImage.jpeg')}
+        source={
+          yudio?.thumbnail
+            ? {uri: yudio?.thumbnail}
+            : require('../../../assets/images/SignupImage.jpeg')
+        }
       />
       <View style={styles?.player}>
         <YudioPlayer
           audioUrl={
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+            yudio?.url
+              ? yudio?.url
+              : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
           }
+          waveform={yudio?.waveform}
           showBackground={false}
         />
       </View>
@@ -31,14 +38,11 @@ export default YudioCard;
 
 const styles = StyleSheet.create({
   container: {
-    height: height * 0.6,
     width: width * 0.8,
     borderRadius: width * 0.03,
-    marginTop: height * 0.02,
     marginLeft: width * 0.03,
-    backgroundColor: 'red',
     alignItems: 'center',
-    padding: width * 0.02,
+    marginTop: height * 0.04,
   },
   heading: {
     fontFamily: fonts?.montserratBold,

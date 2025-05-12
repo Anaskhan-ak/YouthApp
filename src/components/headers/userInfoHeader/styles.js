@@ -8,8 +8,6 @@ export const styles = StyleSheet.create({
         // backgroundColor : 'red',
         flexDirection : 'row',
         alignItems : 'center',
-        padding : width * 0.025,
-        marginTop : height * 0.006
     },
     imageBorder : {
         width : width * 0.16,

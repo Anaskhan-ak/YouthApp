@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import {
-    FlatList,
-    SafeAreaView,
-    StatusBar,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { GradientCross } from '../../assets/images/svgs';
@@ -94,7 +94,7 @@ const Interests = () => {
       <View style={styles?.header}>
         <View style={styles?.heading}>
           <GradientText style={styles?.gradientHeading}>Interests</GradientText>
-          <TouchableOpacity onPress={() => setRate(true)}>
+          <TouchableOpacity>
             <GradientCross />
           </TouchableOpacity>
         </View>

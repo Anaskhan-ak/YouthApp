@@ -32,7 +32,11 @@ export const post = async (endPoint, data) => {
       Authorization: `Bearer ${token}`,
       'deviceuid': '123',
     };
-    const result = await apiInstance.post(endPoint, data);
+    const result = await apiInstance.post(endPoint, data, {
+      headers : {
+        'Content-Type': 'application/json'
+      }
+    });
     return result;
   } catch (e) {
     throw errorHandler(e);

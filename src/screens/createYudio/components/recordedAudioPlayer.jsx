@@ -1,13 +1,14 @@
 import Slider from '@react-native-community/slider';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
   PinkPauseAudioButton,
   PinkPlayAudioButton
-} from '../../assets/images/svgs';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors/index';
+} from '../../../assets/images/svgs';
+import { width } from '../../../constant';
+import { colors } from '../../../utils/colors/index';
+import { styles } from './recordedAudioPlayerStyles';
 
 const RecordedAudioPlayer = ({audioURL}) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -106,43 +107,4 @@ const RecordedAudioPlayer = ({audioURL}) => {
 
 export default RecordedAudioPlayer;
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 6,
-    paddingHorizontal: 5,
-    paddingVertical: 20,
-    marginVertical: 5,
-    width: width * 0.9,
-    height: height * 0.08,
-  },
-  sliderContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  slider: {
-    flex: 1,
-  },
-  timeText: {
-    color: colors?.text,
-    fontSize: width * 0.03,
-  },
-  timeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: width * 0.75,
-    alignSelf: 'flex-end',
-    marginRight: width * 0.02,
-  },
-  playPauseButton: {
-    backgroundColor: 'white',
-    width: width * 0.04,
-    height: width * 0.04,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 2,
-  },
-});
+

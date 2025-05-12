@@ -1,30 +1,29 @@
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
-  View,
-  Text,
   ImageBackground,
-  StatusBar,
-  TouchableOpacity,
-  Platform,
-  ScrollView,
   Keyboard,
+  Platform,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {styles} from './styles';
-import {images} from '../../assets/images';
-import {height, width} from '../../constant';
-import {YouthIcon} from '../../assets/images/svgs';
-import {useForm, Controller} from 'react-hook-form';
-import AuthInput from '../../components/inputs/authInput';
-import {colors} from '../../utils/colors';
-import {PrimaryButton} from '../../components/buttons/PrimaryButton';
-import {SocialButton} from '../../components/buttons/SocialButton';
-import GradientText from '../../components/text/GradientText';
-import AuthError from '../../components/authErrorPopup';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
-import {apiCall} from '../../services/apiCall';
-import {getFirebaseToken, googleSignIn} from '../../helper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../assets/images';
+import { YouthIcon } from '../../assets/images/svgs';
+import AuthError from '../../components/authErrorPopup';
+import { PrimaryButton } from '../../components/buttons/PrimaryButton';
+import { SocialButton } from '../../components/buttons/SocialButton';
+import AuthInput from '../../components/inputs/authInput';
+import GradientText from '../../components/text/GradientText';
+import { height, width } from '../../constant';
+import { getFirebaseToken, googleSignIn } from '../../helper';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
+import { styles } from './styles';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);

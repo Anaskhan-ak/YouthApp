@@ -8,6 +8,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors?.white,
   },
+  userInfoHeader : {
+    marginVertical  :width * 0.03
+  },
   content: {
     padding: width * 0.03,
     marginBottom: height * 0.1,
@@ -133,5 +136,8 @@ export const styles = StyleSheet.create({
   redTickButton : {
     alignSelf : 'center',
     marginTop : -height * 0.02
+  },
+  yudioPlayerContainer : {
+    marginVertical : height * 0.02
   }
 });
