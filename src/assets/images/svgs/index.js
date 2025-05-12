@@ -18,7 +18,7 @@ import Calendar from './calendar.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
-import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
+import {default as DropDown, default as DropDownIcon} from './dropdown.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import FacebookIcon from './FacebookIcon.svg';
@@ -68,6 +68,11 @@ import UploadThumbnail from './UploadThumbnail.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
+import Moment from './moment.svg';
+import Yudio from './yudio.svg';
+import LiveNow from './liveNow.svg';
+import NearBy from './nearBy.svg';
+import Home from './home.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 
 export {
@@ -94,7 +99,10 @@ export {
   DropDown,
   DropDownIcon,
   Error,
-  ErrorWhite, FacebookIcon, Google, GradientBlueMic,
+  ErrorWhite,
+  FacebookIcon,
+  Google,
+  GradientBlueMic,
   GradientCalender,
   GradientCross,
   GradientDropRightCircle,
@@ -107,7 +115,11 @@ export {
   InactiveLike,
   InactiveRepost,
   InactiveSave,
-  InactiveShare, InstagramIcon, LinkedinIcon, MailIcon, MessageIcon,
+  InactiveShare,
+  InstagramIcon,
+  LinkedinIcon,
+  MailIcon,
+  MessageIcon,
   MessengerIcon,
   PasswordHide,
   PasswordShow,
@@ -117,11 +129,28 @@ export {
   PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
-  PinkVolume, PinterestIcon, PlayIcon,
+  PinkVolume,
+  PinterestIcon,
+  PlayIcon,
   PublicIcon,
-  RateUs, RedditIcon, RewriteWithAi,
+  RateUs,
+  RedditIcon,
+  RewriteWithAi,
   RightArrow,
-  SearchIcon, SnapchatIcon, TagFriendsIcon, TiktokIcon, TwitterIcon, TwitterIconRound, UploadThumbnail, WhatsappIcon, WhiteLeftArrow,
-  YouthIcon, YoutubeIcon
+  SearchIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  TagFriendsIcon,
+  UploadThumbnail,
+  WhiteLeftArrow,
+  YouthIcon,
+  Moment,
+  Yudio,
+  LiveNow,
+  NearBy,
+  Home,
+  SnapchatIcon,
+  TiktokIcon,
+  TwitterIconRound,
+  YoutubeIcon,
 };
-

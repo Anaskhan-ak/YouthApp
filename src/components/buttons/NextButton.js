@@ -25,7 +25,7 @@ export const NextButton = props => {
       end={{x: 1, y: 0}}
       style={styles?.nextButton}>
      
-        <Text style={styles?.nextText}>Next</Text>
+        <Text allowFontScaling={false} style={styles?.nextText}>Next</Text>
      
     </LinearGradient>
     </TouchableOpacity>

@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     flex: 0.65,
     borderBottomLeftRadius: width * 0.1,
     borderBottomRightRadius: width * 0.1,
-    marginTop:Platform?.OS==='ios'?-height*0.09:-height*0.035
+    marginTop: Platform?.OS === 'ios' ? -height * 0.09 : -height * 0.05,
   },
   contentView: {
     flex: 1,
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: width * 0.06,
     paddingVertical: height * 0.015,
   },
-  image: {flex:1},
+  image: {flex: 1},
   heading: {
     fontSize: width * 0.055,
     fontFamily: fonts?.montserratExtraBold,
@@ -31,13 +31,13 @@ export const styles = StyleSheet.create({
   content: {
     fontSize: width * 0.03,
     fontFamily: fonts?.montserratRegular,
-    lineHeight:height*0.023,
+    lineHeight: height * 0.023,
   },
   textContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    marginTop:8
+    marginTop: 8,
   },
   textView: {width: '49%'},
   phoneContainer: {
@@ -59,10 +59,11 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     fontSize: width * 0.03,
   },
-  bottomContentView:{flexDirection: 'row', alignItems: 'center'},
-  scrollViewContainer:{
-    flexGrow: 1, 
+  bottomContentView: {flexDirection: 'row', alignItems: 'center'},
+  scrollViewContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    }
+  },
+  headingWithIconView: {flexDirection: 'row', alignItems: 'center'},
 });

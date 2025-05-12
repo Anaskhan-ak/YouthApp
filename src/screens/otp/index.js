@@ -13,7 +13,7 @@ import { images } from '../../assets/images';
 import { DropDown, YouthIcon } from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
 import { PrimaryButton } from '../../components/buttons/PrimaryButton';
-import AuthInput from '../../components/inputs/AuthInput';
+import AuthInput from '../../components/inputs/authInput';
 import OtpInput from '../../components/inputs/otp';
 import { height, width } from '../../constant';
 import { apiCall } from '../../services/apiCall';

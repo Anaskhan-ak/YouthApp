@@ -1,26 +1,33 @@
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import {
-  ImageBackground,
-  Keyboard,
-  Platform,
-  StatusBar,
+  View,
   Text,
-  View
+  ImageBackground,
+  StatusBar,
+  TouchableOpacity,
+  Platform,
+  ScrollView,
+  Keyboard,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
-import { YouthIcon } from '../../assets/images/svgs';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {styles} from './styles';
+import {images} from '../../assets/images';
+import {height, width} from '../../constant';
+import {YouthIcon} from '../../assets/images/svgs';
+import {useForm, Controller} from 'react-hook-form';
+import AuthInput from '../../components/inputs/authInput';
+import {colors} from '../../utils/colors';
+import {PrimaryButton} from '../../components/buttons/PrimaryButton';
+import {SocialButton} from '../../components/buttons/SocialButton';
+import GradientText from '../../components/text/GradientText';
 import AuthError from '../../components/authErrorPopup';
-import { PrimaryButton } from '../../components/buttons/PrimaryButton';
-import { SocialButton } from '../../components/buttons/SocialButton';
-import AuthInput from '../../components/inputs/AuthInput';
+import LinearGradient from 'react-native-linear-gradient';
+import {useNavigation} from '@react-navigation/native';
+import {apiCall} from '../../services/apiCall';
+import {getFirebaseToken, googleSignIn} from '../../helper';
 import OtpInput from '../../components/inputs/otp';
-import { height, width } from '../../constant';
-import { styles } from './styles';
 
-const forgetPassword = () => {
+const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -206,4 +213,4 @@ const forgetPassword = () => {
   );
 };
 
-export default forgetPassword;
+export default ForgetPassword;

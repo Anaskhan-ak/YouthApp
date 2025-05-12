@@ -23,8 +23,8 @@ const Splash = ({navigation}) => {
           resizeMode="contain"
           source={images.splashLogo}></Image>
         <View style={styles.contentView}>
-          <Text style={styles?.heading}>VOL 1.0.0</Text>
-          <Text style={styles?.subHeading}>Copyrights 2023 © YouthApp.io</Text>
+          <Text allowFontScaling={false} style={styles?.heading}>VOL 1.0.0</Text>
+          <Text allowFontScaling={false} style={styles?.subHeading}>Copyrights 2023 © YouthApp.io</Text>
         </View>
       </ImageBackground>
     </SafeAreaView>

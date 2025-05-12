@@ -17,7 +17,7 @@ import { YouthIcon } from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
 import { PrimaryButton } from '../../components/buttons/PrimaryButton';
 import { SocialButton } from '../../components/buttons/SocialButton';
-import AuthInput from '../../components/inputs/AuthInput';
+import AuthInput from '../../components/inputs/authInput';
 import GradientText from '../../components/text/GradientText';
 import { height, width } from '../../constant';
 import { getFirebaseToken, googleSignIn } from '../../helper';
@@ -140,9 +140,14 @@ const Login = () => {
         </ImageBackground>
       </View>
       <View style={styles?.contentView}>
-        <Text style={styles?.heading}>
+        <View style={styles?.headingWithIconView}>
+          <Text style={styles?.heading}> Login to your </Text>
+          <YouthIcon width={width * 0.2} />
+          <Text style={styles?.heading}> Account</Text>
+        </View>
+        {/* <Text style={styles?.heading}>
           Login to your <YouthIcon width={width * 0.2} /> Account
-        </Text>
+        </Text> */}
         <Text style={styles?.title}>Be Connected to the world now!</Text>
         <View style={{marginTop: 10}} />
         <Controller
@@ -201,11 +206,12 @@ const Login = () => {
             </LinearGradient>
             <Text style={[styles?.content, {left: 4}]}>Remember me</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigation?.navigate("ForgetPassword")}>
-          <GradientText style={styles.gradientText}>
-            {' '}
-            Forget your account details?
-          </GradientText>
+          <TouchableOpacity
+            onPress={() => navigation?.navigate('ForgetPassword')}>
+            <GradientText style={styles.gradientText}>
+              {' '}
+              Forget your account details?
+            </GradientText>
           </TouchableOpacity>
         </View>
 

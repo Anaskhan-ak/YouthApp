@@ -16,7 +16,7 @@ export const apiCall = {
   },
   SignUpWithGoogle: async obj => {
     let result = await post(apis?.loginWithGoogle, obj);
-    if (result?.status == 200) return result.data;
+    if (result?.status == 201) return result.data;
     else throw result;
   },
   VerifyOtp: async obj => {
