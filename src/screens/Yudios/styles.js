@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.02,
   },
   blurContainer: {
-    backgroundColor: colors?.extraLightGrey,
+    // backgroundColor: colors?.extraLightGrey,
     borderTopLeftRadius: width * 0.04,
     borderTopRightRadius: width * 0.04,
     // flexDirection: 'row',
