@@ -57,6 +57,11 @@ import UploadThumbnail from './UploadThumbnail.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
+import Moment from './moment.svg';
+import Yudio from './yudio.svg';
+import LiveNow from './liveNow.svg';
+import NearBy from './nearBy.svg';
+import Home from './home.svg';
 
 export {
   ActiveComment,
@@ -119,4 +124,9 @@ export {
   UploadThumbnail,
   WhiteLeftArrow,
   YouthIcon,
+  Moment,
+  Yudio,
+  LiveNow,
+  NearBy,
+  Home
 };
