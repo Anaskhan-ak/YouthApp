@@ -17,7 +17,7 @@ import Yudios from '../screens/Yudios';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="CreateYudio">
+    <Stack.Navigator initialRouteName="Yudios">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
