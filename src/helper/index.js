@@ -5,6 +5,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import { apiCall } from "services/apiCall";
 import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const emailValidation = value => {
     const trimmedValue = value.trim();
@@ -44,4 +45,12 @@ export const getFirebaseToken = async () => {
            // some other error happened
          }
        }
-}
+  };
+  export const getDataLocally = async () => {
+    try {
+      const result = await AsyncStorage.getItem('UserLocalData');
+      return result != null ? JSON.parse(result) : null;
+    } catch (e) {
+      // error reading value
+    }
+  };

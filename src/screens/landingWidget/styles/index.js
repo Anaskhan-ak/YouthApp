@@ -4,11 +4,12 @@ import {colors} from '../../../utils/colors';
 import {fonts} from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
-  container: {flex: 1, marginTop: -height * 0.04},
+  container: {flex: 1, marginTop: -height * 0.04,},
   scrollView: {
     marginTop: height * 0.02,
     flex: 1,
     paddingVertical: height * 0.02,
+ 
   },
   skipButton: {
     height: height * 0.04,

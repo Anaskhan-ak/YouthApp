@@ -23,6 +23,7 @@ import {styles} from './styles/index';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ActivityIndicator} from 'react-native';
 import {colors} from '../../utils/colors';
+import {getDataLocally} from '../../helper';
 
 const {height, width} = Dimensions.get('window');
 
@@ -37,11 +38,13 @@ const LandingWidget = ({navigation}) => {
   const [walletVisible, setWalletVisible] = useState(true);
   const [socialVisible, setSocialVisible] = useState(true);
   const [stackNotificationCount, setStackNotificationCount] = useState(-1);
+  const [userData, setUserData] = useState(null);
   const [items, setItems] = useState([]);
+  const [widget, changeWidget] = useState('date');
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const notifications = await apiCall?.getNotifications({
           page: 1,
           pageSize: 3,
@@ -58,52 +61,12 @@ const LandingWidget = ({navigation}) => {
         );
       } catch (e) {
         console.log('Error fetching notifications', e);
-      }
-      finally{
-        setLoading(false)
+      } finally {
+        setLoading(false);
       }
     };
     fetchNotifications();
   }, []);
-  const user = useSelector(state => state?.auth?.data);
-  const landingWidget = useSelector(state => state?.generic?.landingWidget);
-  const dispatch = useDispatch();
-  // const user = {
-  //   id: 'cm60ql39f003l91r8l18bd80z',
-  //   firstName: 'Sannya01',
-  //   lastName: 'Wasim',
-  //   email: 'sannya.wasim01@gmail.com',
-  //   password: '$2b$10$Cb7LzbunTQT1gdt7QaeI9ut8sa73ZVkp1fhe6S5WgPBCLm.6njWUq',
-  //   country: 'Pakistan',
-  //   phoneNo: '+923368214535',
-  //   gender: 'female',
-  //   DoB: '2001-08-04T00:00:00.000Z',
-  //   sign_in_provider: null,
-  //   UiD: null,
-  //   status: true,
-  //   photo:
-  //     'https://youthapp.s3.eu-north-1.amazonaws.com/4139875506profilePicture.jpg',
-  //   links: ['www.youthapp.io'],
-  //   fcm_token:
-  //     'cV9EFlDqS9-pYfUHx2mcik:APA91bGiU2OWD2JP1872UmMq7_tffyBN0DeBaerTgRa1j2zkvA-CIIofiSt9zPN6MOseAf8augAJYFYDmtDEEYjxPEVwFViwmxwwaM-E7e_qVLfEfZ9GFf4',
-  //   createdAt: '2025-01-17T12:29:18.148Z',
-  //   isFirstLogin: false,
-  //   coverImage:
-  //     'https://youthapp.s3.eu-north-1.amazonaws.com/319080719609coverImage.jpg',
-  //   bio: 'I am an engineer.',
-  //   isVerified: true,
-  //   friendFriends: [],
-  //   friendships: [],
-  //   LinkedAccount: [],
-  //   numPosts: 87,
-  //   numFollowers: 5,
-  //   numFollowing: 2,
-  //   favorites: [],
-  //   linkedAccounts: [],
-  // };
-
-  const [widget, changeWidget] = useState('date');
-
   const toggleWidget = () => {
     if (widget === 'date') {
       changeWidget('calender');
@@ -113,19 +76,25 @@ const LandingWidget = ({navigation}) => {
       changeWidget('date');
     }
   };
-
+  const user = async () => {
+    const userData = await getDataLocally();
+    setUserData(userData);
+  };
+  useEffect(() => {
+    user();
+  }, []);
   return (
-    <SafeAreaView style={styles?.container}>
-      <LinearGradient
-        colors={['#478FE4', '#478FE4', '#5CD3C6']}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        style={styles?.container}>
-        <StatusBar
-          barStyle={'light-content'}
-          backgroundColor={'transparent'}
-          translucent
-        />
+    <LinearGradient
+      colors={['#478FE4', '#478FE4', '#5CD3C6']}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 0}}
+      style={styles?.container}>
+      <StatusBar
+        barStyle={'light-content'}
+        backgroundColor={'transparent'}
+        translucent
+      />
+      <SafeAreaView style={styles?.container}>
         <ScrollView contentContainerStyle={styles?.scrollView}>
           {/* <TouchableOpacity
             onPress={() => {
@@ -136,7 +105,7 @@ const LandingWidget = ({navigation}) => {
           </TouchableOpacity> */}
           <Text style={styles?.GreetText}>Hi,</Text>
           <Text style={[styles?.GreetText, {marginTop: -height * 0.025}]}>
-            {'Mostafa'}
+            {userData?.firstName}
           </Text>
           <View style={styles?.welcomeBox}>
             <Text style={styles?.welcomeText}>Welcome back to </Text>
@@ -254,8 +223,8 @@ const LandingWidget = ({navigation}) => {
             <Text style={styles?.dontShowText}> Don’t show me this page</Text>
           </View>
         </ScrollView>
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 

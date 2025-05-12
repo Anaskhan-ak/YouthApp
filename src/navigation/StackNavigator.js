@@ -19,7 +19,7 @@ import Yudios from '../screens/Yudios';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Yudios">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -100,4 +100,3 @@ const StackNavigator = () => {
 };
 
 export default StackNavigator;
-

@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {
   ImageBackground,
   Keyboard,
@@ -8,22 +8,23 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
-import { YouthIcon } from '../../assets/images/svgs';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {images} from '../../assets/images';
+import {YouthIcon} from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
-import { PrimaryButton } from '../../components/buttons/PrimaryButton';
-import { SocialButton } from '../../components/buttons/SocialButton';
+import {PrimaryButton} from '../../components/buttons/PrimaryButton';
+import {SocialButton} from '../../components/buttons/SocialButton';
 import AuthInput from '../../components/inputs/authInput';
 import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
-import { getFirebaseToken, googleSignIn } from '../../helper';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
-import { styles } from './styles';
+import {height, width} from '../../constant';
+import {getFirebaseToken, googleSignIn} from '../../helper';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
+import {styles} from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -54,6 +55,9 @@ const Login = () => {
     try {
       setLoading(true);
       let result = await apiCall?.Login(obj);
+      await AsyncStorage.setItem('token', result?.access_token);
+      const jsonValue = JSON.stringify(result?.data);
+      await AsyncStorage.setItem('UserLocalData', jsonValue);
       navigation?.navigate('LandingWidget');
     } catch (e) {
       console.log('e', e);
@@ -73,11 +77,11 @@ const Login = () => {
     navigation?.navigate('SignUp');
   };
   const googleLogin = async () => {
-    const googleAuthToken = await googleSignIn();
-    const obj = {
-      firebaseToken: googleAuthToken,
-    };
     try {
+      const googleAuthToken = await googleSignIn();
+      const obj = {
+        firebaseToken: googleAuthToken,
+      };
       setGoogleLogin(true);
       let result = await apiCall?.SignUpWithGoogle(obj);
       navigation?.navigate('LandingWidget');
