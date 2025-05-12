@@ -167,7 +167,12 @@ const InviteModal = props => {
 
   const handleClose = () => {
     translateY.value = withSpring(500, {damping: 15}, () => {
-      runOnJS(props?.setModal)(false);
+      if (props?.setModal) {
+        runOnJS(props?.setModal)(false);
+      }
+      if (props?.toggleReaction) {
+        runOnJS(props?.toggleReaction)(props?.index);
+      }
     });
   };
 
@@ -206,7 +211,7 @@ const InviteModal = props => {
               <View style={styles?.content}>
                 <TouchableOpacity
                   style={styles?.dash}
-                  onPress={() => props?.setModal(false)}
+                  onPress={handleClose}
                 />
                 <Text style={styles?.heading}>Share To</Text>
 

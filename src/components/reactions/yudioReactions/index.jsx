@@ -16,6 +16,7 @@ import {
   InactiveShare,
   PinkGradientPlusButton,
 } from '../../../assets/images/svgs';
+import InviteModal from '../../../components/modals/genderModal/inviteModal';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
@@ -72,21 +73,29 @@ const YudioReactions = () => {
   ]);
 
   const toggleReaction = index => {
+    console.log('Index', index);
     const updatedReactions = [...reactions];
     updatedReactions[index].active = !updatedReactions[index]?.active;
     setReactions(updatedReactions);
   };
 
   const HeaderComponent = () => {
-    return(
+    return (
       <TouchableOpacity style={styles?.gradientProfileContainer}>
-        <LinearGradient colors={[colors?.RGB1, colors?.RGB2]} style={styles?.gradientProfileIcon}>
-        <Image style={styles?.gradientProfileImage} source={require('../../../assets/images/SignupImage.jpeg')}/>
-        <View style={styles?.plusButton}><PinkGradientPlusButton/></View>
-      </LinearGradient>
+        <LinearGradient
+          colors={[colors?.RGB1, colors?.RGB2]}
+          style={styles?.gradientProfileIcon}>
+          <Image
+            style={styles?.gradientProfileImage}
+            source={require('../../../assets/images/SignupImage.jpeg')}
+          />
+          <View style={styles?.plusButton}>
+            <PinkGradientPlusButton />
+          </View>
+        </LinearGradient>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles?.container}>
@@ -106,8 +115,15 @@ const YudioReactions = () => {
             </View>
           );
         }}
-        ListHeaderComponent={<HeaderComponent/>}
+        ListHeaderComponent={<HeaderComponent />}
       />
+      {reactions.find(item => item?.type === 'share')?.active && (
+        <InviteModal
+          index={2}
+          toggleReaction={toggleReaction}
+          modal={reactions.find(item => item?.type === 'share')?.active}
+        />
+      )}
     </View>
   );
 };
