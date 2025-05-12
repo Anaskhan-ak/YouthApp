@@ -29,8 +29,8 @@ import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
-import AudioBars from './audioBars';
-import RecordedAudioPlayer from './recordedAudioPlayer';
+import AudioBars from './components/audioBars';
+import RecordedAudioPlayer from './components/recordedAudioPlayer';
 import { styles } from './styles';
 
 const CreateYudio = () => {

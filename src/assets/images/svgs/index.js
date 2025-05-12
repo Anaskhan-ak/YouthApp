@@ -18,9 +18,10 @@ import Calendar from './calendar.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
-import {default as DropDown, default as DropDownIcon} from './dropdown.svg';
+import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
+import FacebookIcon from './FacebookIcon.svg';
 import Google from './google.svg';
 import GradientBlueMic from './GradientBlueMic.svg';
 import GradientCalender from './GradientCalender.svg';
@@ -36,6 +37,8 @@ import InactiveLike from './InactiveLike.svg';
 import InactiveRepost from './InactiveRepost.svg';
 import InactiveSave from './InactiveSave.svg';
 import InactiveShare from './InactiveShare.svg';
+import InstagramIcon from './InstagramIcon.svg';
+import LinkedinIcon from './LinkedinIcon.svg';
 import MailIcon from './MailIcon.svg';
 import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
@@ -48,18 +51,24 @@ import PinkPauseAudioButton from './PinkPauseAudioButton.svg';
 import PinkPlayAudioButton from './PinkPlayAudioButton.svg';
 import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
 import PinkVolume from './PinkVolume.svg';
+import PinterestIcon from './PinterestIcon.svg';
 import PlayIcon from './PlayIcon.svg';
 import PublicIcon from './PublicIcon.svg';
 import RateUs from './RateUs.svg';
+import RedditIcon from './RedditIcon.svg';
 import RewriteWithAi from './RewriteWithAi.svg';
 import RightArrow from './RightArrow.svg';
 import SearchIcon from './SearchIcon.svg';
+import SnapchatIcon from './SnapchatIcon.svg';
 import TagFriendsIcon from './TagFriendsIcon.svg';
+import TiktokIcon from './TiktokIcon.svg';
 import TwitterIcon from './TwitterIcon.svg';
+import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
+import YoutubeIcon from './YoutubeIcon.svg';
 
 export {
   ActiveComment,
@@ -71,7 +80,11 @@ export {
   Apple,
   BackArrow,
   BlackBackArrow,
-  BlackDropdown, BlackForwardAudioButton, BlackLike, BlackRewindAUdioButton, BlackShare,
+  BlackDropdown,
+  BlackForwardAudioButton,
+  BlackLike,
+  BlackRewindAUdioButton,
+  BlackShare,
   BlackYouthLogo,
   BlueTick,
   Calendar,
@@ -81,10 +94,7 @@ export {
   DropDown,
   DropDownIcon,
   Error,
-  ErrorWhite,
-  Google,
-  MailIcon,
-  GradientBlueMic,
+  ErrorWhite, FacebookIcon, Google, GradientBlueMic,
   GradientCalender,
   GradientCross,
   GradientDropRightCircle,
@@ -97,26 +107,21 @@ export {
   InactiveLike,
   InactiveRepost,
   InactiveSave,
-  InactiveShare,
-  MessageIcon,
+  InactiveShare, InstagramIcon, LinkedinIcon, MailIcon, MessageIcon,
   MessengerIcon,
   PasswordHide,
   PasswordShow,
   PauseIcon,
-  PinkForwardAudioButton, PinkGradientPlusButton, PinkPauseAudioButton,
+  PinkForwardAudioButton,
+  PinkGradientPlusButton,
+  PinkPauseAudioButton,
   PinkPlayAudioButton,
   PinkRewindAUdioButton,
-  PinkVolume,
-  PlayIcon,
+  PinkVolume, PinterestIcon, PlayIcon,
   PublicIcon,
-  RateUs,
-  RewriteWithAi,
+  RateUs, RedditIcon, RewriteWithAi,
   RightArrow,
-  SearchIcon,
-  TwitterIcon,
-  WhatsappIcon,
-  TagFriendsIcon,
-  UploadThumbnail,
-  WhiteLeftArrow,
-  YouthIcon,
+  SearchIcon, SnapchatIcon, TagFriendsIcon, TiktokIcon, TwitterIcon, TwitterIconRound, UploadThumbnail, WhatsappIcon, WhiteLeftArrow,
+  YouthIcon, YoutubeIcon
 };
+

@@ -19,11 +19,13 @@ import YudioCard from './components/yudioCard';
 import { styles } from './styles';
 
 const Yudios = ({route}) => {
-  const {yudio} = route?.params;
+  // const {yudio} = route?.params;
   const [yudios, setYudios] = useState([]);
   const [showFullText, setShowFullText] = useState(false);
   const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     const fetchYudios = async () => {
       const data = {
         userId: 'cm60ql39f003l91r8l18bd80z',
@@ -34,21 +36,25 @@ const Yudios = ({route}) => {
         const result = await apiCall?.getAllYudios(data);
         // console.log('Successfully fetched all yudios', result);
         setYudios(result);
+        setLoading(false);
       } catch (error) {
         console.log('Error fetching all yudios', error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
     };
     fetchYudios();
-    if (yudio) {
-      console.log("Yudio", yudio)
-      setYudios([yudio, ...yudios]);
-    }
+    // if (yudio) {
+    //   console.log("Yudio", yudio)
+    //   setYudios([yudio, ...yudios]);
+    // }
   }, []);
 
   const RenderYudios = ({yudio}) => {
     // console.log('Yudio', yudio?.yudios);
     return (
-      <View style={{flex: 1, height: height, justifyContent: 'center'}}>
+      <View style={styles?.renderItem}>
         {/* Yudio Card */}
         <YudioCard yudio={yudio?.yudios} />
         {/* Reactions */}
@@ -90,10 +96,10 @@ const Yudios = ({route}) => {
             scrollEnabled={false} // disable scroll so it expands fully
           >
             <Text style={styles?.blurText}>
-              {yudio?.yudios?.caption?.length > 200 && !showFullText
-                ? `${yudio?.yudios?.caption?.substring(0, 200)}... `
+              {yudio?.yudios?.caption?.length > 100 && !showFullText
+                ? `${yudio?.yudios?.caption?.substring(0, 100)}... `
                 : yudio?.yudios?.caption + ' '}
-              {yudio?.yudios?.caption?.length > 200 && (
+              {yudio?.yudios?.caption?.length > 100 && (
                 <Text
                   onPress={() => setShowFullText(prev => !prev)}
                   style={styles?.seeAllText}>
@@ -127,6 +133,14 @@ const Yudios = ({route}) => {
     const index = x / height;
     setPage(index);
   };
+
+  const EmptyComponent = () => {
+    return (
+      <View style={styles?.emptyComp}>
+        <Text style={styles?.emptyCompText}>Failed to load yudios</Text>
+      </View>
+    );
+  };
   return (
     <SafeAreaView style={styles?.container}>
       {/* <StatusBar barStyle='dark-content' backgroundColor={'transparent'} translucent/> */}
@@ -152,6 +166,7 @@ const Yudios = ({route}) => {
         data={yudios}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => <RenderYudios yudio={item} />}
+        ListEmptyComponent={<EmptyComponent />}
         pagingEnabled
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}

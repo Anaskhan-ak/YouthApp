@@ -96,4 +96,15 @@ export const styles = StyleSheet.create({
     fontFamily: fonts?.montserratMedium,
     marginHorizontal: width * 0.02,
   },
+  renderItem: {flex: 1, height: height, justifyContent: 'center'},
+  emptyComp: {
+    height : height,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyCompText: {
+    textAlign: 'center',
+    fontFamily: fonts?.montserratBold,
+    fontSize: width * 0.06,
+  },
 });
