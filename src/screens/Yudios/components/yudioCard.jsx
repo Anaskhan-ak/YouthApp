@@ -5,21 +5,23 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import YudioPlayer from './yudioPlayer';
 
-const YudioCard = () => {
+const YudioCard = ({yudio}) => {
+  // console.log("YUDIO", yudio)
   return (
     <LinearGradient
       colors={['#A9F5FF', colors?.white]}
       style={styles?.container}>
-      <Text style={styles?.heading}>{`What's going on\n with Gaza`}</Text>
+      <Text style={styles?.heading}>{yudio?.title}</Text>
       <Image
         style={styles?.image}
-        source={require('../../../assets/images/SignupImage.jpeg')}
+        source={yudio?.thumbnail ? {uri : yudio?.thumbnail} : require('../../../assets/images/SignupImage.jpeg')}
       />
       <View style={styles?.player}>
         <YudioPlayer
           audioUrl={
-            'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+            yudio?.url ? yudio?.url:'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
           }
+          waveform={yudio?.waveform}
           showBackground={false}
         />
       </View>

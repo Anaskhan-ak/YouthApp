@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
+import CreateYudio from '../screens/createYudio';
 import EmailVerification from '../screens/emailVerification';
 import FindFriends from '../screens/findFriends';
 import forgetPassword from '../screens/forgetPassword';
@@ -11,12 +12,12 @@ import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
 import SignUp from '../screens/signup';
 import Splash from '../screens/Splash';
-
+import Yudios from '../screens/Yudios';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="LandingWidget">
+    <Stack.Navigator initialRouteName="CreateYudio">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -68,6 +69,16 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Interests"
         component={Interests}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateYudio"
+        component={CreateYudio}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Yudios"
+        component={Yudios}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

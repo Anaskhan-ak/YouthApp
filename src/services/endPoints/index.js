@@ -4,6 +4,7 @@ export const apis = {
   login: 'api/v1/login',
   otp: 'api/v1/verifyOtp',
   loginWithGoogle: 'api/v1/firebase',
+  createPost : 'api/v1/createNewPost',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',
@@ -12,6 +13,7 @@ export const apis = {
   getFollowing : 'api/v1/getFollower/',
   addInterest : 'api/v1/user/intrest',
   generateWaveforms : 'api/v1/generateWaveForms',
+  getYudios : 'api/v1/getYudio',
   //GET ENDPOINTS
   getNotification : `api/v1/notification`,
   getAllInterests : 'api/v1/intrest'

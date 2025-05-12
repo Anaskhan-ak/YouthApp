@@ -60,6 +60,18 @@ export const apiCall = {
     if (result?.status === 200) return result?.data?.yudioWaveform
     else throw result
   },
+
+  createNewPost : async params => {
+    let result = await documentPost(apis?.createPost, params)
+    if (result?.status === 200) return result?.data?.youdio
+    else throw result
+  },  
+
+  getAllYudios : async (params) => {
+    let result = await post(apis?.getYudios, params)
+    if (result?.status) return result?.data?.data?.posts
+    else throw result
+  },
  
   //GET API CALL
   getNotification: async params => {

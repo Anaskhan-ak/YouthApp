@@ -44,7 +44,6 @@ export const post = async (endPoint, data) => {
 };
 
 export const documentPost = async (endPoint, data) => {
-  console.log("Endpoint", endPoint)
   try {
     const result = await apiInstance.post(endPoint, data, {
       headers : {

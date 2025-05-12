@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   Image,
   PermissionsAndroid,
+  Platform,
   SafeAreaView,
   ScrollView,
   Text,
@@ -45,12 +46,60 @@ const CreateYudio = () => {
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
 
-  const handleForm = () => {
-    console.log('Title', title);
-    console.log('Description', description);
-    console.log('Thumbnail', thumbnail?.uri);
-    console.log('Yudio', yudio);
-    console.log("Waveform", waveform)
+  const handleForm = async () => {
+    // console.log('Title', title);
+    // console.log('Description', description);
+    // console.log('Thumbnail', thumbnail?.uri);
+    // console.log('Yudio', yudio);
+    // console.log('Waveform', waveform);
+
+    const formData = new FormData();
+    formData.append('type', 'YUDIO');
+    // formDataParam.append('isPublic', true);
+    formData.append('caption', description);
+    formData.append('title', title);
+    formData.append('location', 'Pakistan');
+    formData.append('audience', 'PUBLIC');
+    // if (
+    //   tagFriends &&
+    //   tagFriends.filter(item => item !== undefined && item !== '').length >
+    //     0
+    // ) {
+    formData.append(
+      'Tag',
+      // JSON.stringify(
+      //   tagFriends.filter(item => item !== undefined && item !== ''),
+      // ),
+      JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
+    );
+    // }
+
+    formData.append('thumbnail', {
+      uri: thumbnail?.uri,
+      type: 'image/jpeg',
+      name: `${Date.now()}.jpg`,
+    });
+
+    // Handle audio
+    if (yudio) {
+      formData.append('audio', {
+        uri: `file://${yudio}`,
+        type: 'audio/wav',
+        name: `recording-${Date.now()}.wav`,
+      });
+    } else {
+      console.error('Audio source is missing for YUDIO');
+    }
+    // console.log('Form Data', formData);
+    try {
+      const result = await apiCall?.createNewPost(formData);
+      console.log('Successfully created Yudio', result?.yudios);
+      if (result) {
+        navigation.navigate('Yudios',{yudio : result?.yudios})
+      }
+    } catch (error) {
+      console.log('Error creating yudio', error);
+    }
   };
 
   const uploadThumbnail = async () => {
@@ -120,7 +169,7 @@ const CreateYudio = () => {
     askPermissionForAudioRecording();
   }, []);
 
-  const getRealPathFromURI = async (uri) => {
+  const getRealPathFromURI = async uri => {
     if (uri.startsWith('content://')) {
       try {
         if (Platform.OS === 'ios') {
@@ -144,49 +193,61 @@ const CreateYudio = () => {
 
   const requestStoragePermission = async () => {
     if (Platform.OS === 'android') {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        return true;
-      } else {
-        console.log('Permission denied');
+      try {
+        if (Platform.Version >= 33) {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
+          );
+          return granted === PermissionsAndroid.RESULTS.GRANTED;
+        } else {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          );
+          return granted === PermissionsAndroid.RESULTS.GRANTED;
+        }
+      } catch (err) {
+        console.warn(err);
         return false;
       }
     }
-    return true;
+    return true; // iOS doesn't require this permission
   };
-  
+
+  useEffect(() => {
+    const checkPermission = async () => {
+      const hasPermission = await requestStoragePermission();
+      if (!hasPermission) {
+        console.log('Permission denied');
+      } else {
+        console.log('Permission granted');
+        // You can call fetchAudioMetadata here if needed
+      }
+    };
+
+    checkPermission();
+  }, []);
 
   const fetchAudioMetadata = async () => {
     try {
-      // const hasPermission = await requestStoragePermission();
-      // if (!hasPermission) {
-      //   console.error('Permission denied for accessing storage');
-      //   return;
-      // }
-
       const fileUri = await getRealPathFromURI(yudio); // Resolve content URI to actual file path
       if (!fileUri) {
         console.error('Invalid file URI');
         return;
       }
       const formData = new FormData();
-      formData.append('audio',{
+      formData.append('audio', {
         uri: `file://${fileUri}`, // Use the resolved file URI
         type: 'audio/mpeg',
         name: 'audio-file.wav',
       });
 
-     
-      const audioMetaDataPayload = await apiCall?.generateWaveforms(formData)
-      console.log('audioMetaDataPayload', audioMetaDataPayload)
+      const audioMetaDataPayload = await apiCall?.generateWaveforms(formData);
+      console.log('audioMetaDataPayload', audioMetaDataPayload);
       setWaveform(audioMetaDataPayload);
     } catch (error) {
       console.error('Error fetching audio metadata:', error);
     }
   };
-
 
   return (
     <SafeAreaView style={styles?.container}>
@@ -196,10 +257,12 @@ const CreateYudio = () => {
         advancedButtonPress={() => setDrawer(!drawer)}
       />
       <ScrollView style={styles?.content}>
-        <UserInfoHeader
-          userName={'Sannya Wasim'}
-          image={require('../../assets/images/SignupImage.jpeg')}
-        />
+        <View style={styles?.userInfoHeader}>
+          <UserInfoHeader
+            userName={'Sannya Wasim'}
+            image={require('../../assets/images/SignupImage.jpeg')}
+          />
+        </View>
         <TextInput
           style={styles?.inputTitle}
           placeholder="Your Yudio title"
@@ -247,7 +310,11 @@ const CreateYudio = () => {
             </TouchableOpacity>
           )}
         </View>
-        {yudio ? (
+        {waveform?.length > 0 ? (
+          <View style={styles?.yudioPlayerContainer}>
+            <YudioPlayer audioUrl={yudio} waveform={waveform} />
+          </View>
+        ) : yudio ? (
           <View style={styles?.recordedPlayerContainer}>
             <TouchableOpacity
               style={styles?.crossButton}
@@ -264,7 +331,9 @@ const CreateYudio = () => {
             <Text style={styles?.recordedPlayerName}>Sannya Wasim</Text>
             <View style={styles?.recordedPlayer}>
               <RecordedAudioPlayer audioURL={yudio} />
-              <TouchableOpacity onPress={fetchAudioMetadata} style={styles?.redTickButton}>
+              <TouchableOpacity
+                onPress={fetchAudioMetadata}
+                style={styles?.redTickButton}>
                 <GradientRedTick />
               </TouchableOpacity>
             </View>
@@ -291,7 +360,6 @@ const CreateYudio = () => {
             </TouchableOpacity>
           </View>
         )}
-        {waveform?.length > 0 && <YudioPlayer audioUrl={yudio} waveform={waveform}/>}
         {drawer && <Drawer />}
       </ScrollView>
       <CreateButton title="Create New Yudio" onPress={handleForm} />

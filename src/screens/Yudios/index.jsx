@@ -1,10 +1,11 @@
 import { BlurView } from '@react-native-community/blur';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -12,39 +13,69 @@ import {
 import { BlackBackArrow, BlackYouthLogo } from '../../assets/images/svgs';
 import YudioReactions from '../../components/reactions/yudioReactions';
 import { height } from '../../constant';
+import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import YudioCard from './components/yudioCard';
 import { styles } from './styles';
 
-const Yudios = () => {
-  const yudios = [
-    require('../../assets/images/SignupImage.jpeg'),
-    require('../../assets/images/SignupImage.jpeg'),
-    require('../../assets/images/SignupImage.jpeg'),
-  ];
+const Yudios = ({route}) => {
+  const {yudio} = route?.params;
+  const [yudios, setYudios] = useState([]);
   const [showFullText, setShowFullText] = useState(false);
   const [page, setPage] = useState(0);
-  const caption =
-    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor....Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor....Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor....';
+  useEffect(() => {
+    const fetchYudios = async () => {
+      const data = {
+        userId: 'cm60ql39f003l91r8l18bd80z',
+        page: 1,
+        pageSize: 15,
+      };
+      try {
+        const result = await apiCall?.getAllYudios(data);
+        // console.log('Successfully fetched all yudios', result);
+        setYudios(result);
+      } catch (error) {
+        console.log('Error fetching all yudios', error);
+      }
+    };
+    fetchYudios();
+    if (yudio) {
+      console.log("Yudio", yudio)
+      setYudios([yudio, ...yudios]);
+    }
+  }, []);
 
-  const RenderYudios = () => {
+  const RenderYudios = ({yudio}) => {
+    // console.log('Yudio', yudio?.yudios);
     return (
-      <View style={{flex: 1, height : height, justifyContent : "center"}}>
+      <View style={{flex: 1, height: height, justifyContent: 'center'}}>
         {/* Yudio Card */}
-        <YudioCard />
+        <YudioCard yudio={yudio?.yudios} />
         {/* Reactions */}
         <View style={styles?.reactions}>
           <YudioReactions />
         </View>
         {/* Suggested Yudios */}
         <View style={styles?.suggestedView}>
-          <Text style={styles?.suggestedHeading}>More by Mohamed Mostafa</Text>
+          <Text style={styles?.suggestedHeading}>
+            More by {`${yudio?.user?.firstName} ${yudio?.user?.lastName}`}
+          </Text>
           <FlatList
-            data={yudios}
+            data={yudios
+              ?.filter(item => item?.userId === 'cm60ql39f003l91r8l18bd80z')
+              ?.slice(0, 3)}
             renderItem={({item}) => {
+              // console.log("Item", item)
               return (
                 <TouchableOpacity style={styles?.suggestedButton}>
-                  <Image source={item} style={styles?.suggestedImage} />
+                  <Image
+                    source={
+                      item?.yudios?.thumbnail
+                        ? {uri: item?.yudios?.thumbnail}
+                        : require('../../assets/images/SignupImage.jpeg')
+                    }
+                    style={styles?.suggestedImage}
+                  />
                 </TouchableOpacity>
               );
             }}
@@ -52,19 +83,17 @@ const Yudios = () => {
           />
         </View>
         {/* Blur Bottom View */}
-        <View
-          style={[
-            styles?.blurContainer,
-            {
-              height: showFullText ? height * 0.18 : height * 0.13,
-            },
-          ]}>
-          <ScrollView>
+        <View style={styles?.blurContainer}>
+          <ScrollView
+            style={styles?.scrollContainer}
+            contentContainerStyle={{paddingBottom: 10}} // optional padding
+            scrollEnabled={false} // disable scroll so it expands fully
+          >
             <Text style={styles?.blurText}>
-              {caption?.length > 200 && !showFullText
-                ? `${caption?.substring(0, 200)}... `
-                : caption + ' '}
-              {caption?.length > 200 && (
+              {yudio?.yudios?.caption?.length > 200 && !showFullText
+                ? `${yudio?.yudios?.caption?.substring(0, 200)}... `
+                : yudio?.yudios?.caption + ' '}
+              {yudio?.yudios?.caption?.length > 200 && (
                 <Text
                   onPress={() => setShowFullText(prev => !prev)}
                   style={styles?.seeAllText}>
@@ -73,22 +102,17 @@ const Yudios = () => {
               )}
             </Text>
           </ScrollView>
+
           <View style={styles?.tagsContainer}>
-            {['#fashion', '#holiday', '#beach'].map(item => {
-              return (
-                <TouchableOpacity>
-                  <Text style={styles?.tagText}>{item}</Text>
-                </TouchableOpacity>
-              );
-            })}
+            {['#fashion', '#holiday', '#beach'].map(item => (
+              <TouchableOpacity key={item}>
+                <Text style={styles?.tagText}>{item}</Text>
+              </TouchableOpacity>
+            ))}
           </View>
+
           <BlurView
-            style={[
-              styles.blur,
-              {
-                height: showFullText ? height * 0.18 : height * 0.13,
-              },
-            ]}
+            style={[StyleSheet.absoluteFill, styles.blur]}
             blurType="light"
             blurAmount={10}
             reducedTransparencyFallbackColor="white"
@@ -105,10 +129,11 @@ const Yudios = () => {
   };
   return (
     <SafeAreaView style={styles?.container}>
+      {/* <StatusBar barStyle='dark-content' backgroundColor={'transparent'} translucent/> */}
       {/* Header */}
       <View style={styles?.header}>
         <TouchableOpacity style={styles?.headerIcon}>
-          <BlackBackArrow/>
+          <BlackBackArrow />
         </TouchableOpacity>
         {['For You', 'Following', 'Trending', 'Live']?.map(item => {
           return (
@@ -126,7 +151,7 @@ const Yudios = () => {
       <FlatList
         data={yudios}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => <RenderYudios />}
+        renderItem={({item}) => <RenderYudios yudio={item} />}
         pagingEnabled
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}

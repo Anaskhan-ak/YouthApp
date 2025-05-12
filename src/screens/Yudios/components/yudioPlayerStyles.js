@@ -39,5 +39,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     justifyContent: 'space-between',
+    width : width * 0.5
   },
 });

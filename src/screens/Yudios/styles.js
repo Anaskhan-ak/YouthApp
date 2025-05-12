@@ -15,9 +15,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     padding: width * 0.02,
     marginTop: height * 0.01,
-    position : "absolute",
-    zIndex : 10,
-    width : width
+    position: 'absolute',
+    zIndex: 10,
+    width: width,
   },
   headerIcon: {
     backgroundColor: colors?.gray,
@@ -53,15 +53,16 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.02,
   },
   blurContainer: {
-    // backgroundColor : colors?.extraLightGrey,
+    backgroundColor: colors?.extraLightGrey,
     borderTopLeftRadius: width * 0.04,
     borderTopRightRadius: width * 0.04,
     // flexDirection: 'row',
     padding: width * 0.03,
     bottom: 0,
     position: 'absolute',
-    zIndex: 10,
+    width: width,
     overflow: 'hidden',
+    zIndex: 10,
   },
   blur: {
     position: 'absolute',
@@ -84,15 +85,15 @@ export const styles = StyleSheet.create({
     fontSize: width * 0.03,
     color: colors?.RGB1,
   },
-  tagsContainer : {
-    flexDirection : 'row',
-    alignItems : "center",
-    alignSelf : 'flex-start',
-    marginVertical : width * 0.005
+  tagsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginVertical: width * 0.005,
   },
-  tagText : {
-    color : colors?.RGB1,
-    fontFamily : fonts?.montserratMedium,
-    marginHorizontal : width * 0.02
-  }
+  tagText: {
+    color: colors?.RGB1,
+    fontFamily: fonts?.montserratMedium,
+    marginHorizontal: width * 0.02,
+  },
 });

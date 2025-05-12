@@ -334,7 +334,6 @@ const YudioPlayer = ({
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
-  console.log("Audio URL", audioUrl)
 
   useEffect(() => {
     SoundPlayer.loadUrl(audioUrl);

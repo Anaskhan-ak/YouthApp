@@ -1,23 +1,23 @@
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import {
-  View,
-  Text,
   ImageBackground,
-  StatusBar,
   ScrollView,
+  StatusBar,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {styles} from './styles';
-import {images} from '../../assets/images';
-import {height, width} from '../../constant';
-import {DropDown, YouthIcon} from '../../assets/images/svgs';
-import {PrimaryButton} from '../../components/buttons/PrimaryButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../assets/images';
+import { DropDown, YouthIcon } from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
-import {useNavigation} from '@react-navigation/native';
-import {apiCall} from '../../services/apiCall';
+import { PrimaryButton } from '../../components/buttons/PrimaryButton';
+import AuthInput from '../../components/inputs/AuthInput';
 import OtpInput from '../../components/inputs/otp';
-import AuthInput from '../../components/inputs/authInput';
+import { height, width } from '../../constant';
+import { apiCall } from '../../services/apiCall';
+import { styles } from './styles';
 
 const Otp = ({route}) => {
   const [loading, setLoading] = useState(false);
