@@ -12,7 +12,7 @@ const RenderYudios = ({yudios, yudio}) => {
     return (
       <>
         {yudios?.length === 0 ? (
-          <EmptyComponent />
+          <EmptyComponent text='Failed to load yudios'/>
         ) : (
           <View style={styles?.renderItem}>
             {/* Yudio Card */}

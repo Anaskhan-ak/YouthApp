@@ -24,6 +24,7 @@ import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import FacebookIcon from './FacebookIcon.svg';
 import FileAudio from './FileAudioIcon.svg';
+import FileIcon from './FileIcon.svg';
 import FileImport from './FileImportIcon.svg';
 import GalleryIcon from './GalleryIcon.svg';
 import Google from './google.svg';
@@ -96,15 +97,19 @@ export {
   BlackShare,
   BlackYouthLogo,
   BlueTick,
-  Calendar, CameraIcon, CopyIcon,
+  Calendar,
+  CameraIcon,
+  CopyIcon,
   Cross,
   DontShowLandingWidget,
   DropDown,
   DropDownIcon,
   Error,
   ErrorWhite,
-  FacebookIcon, FileAudio,
-  FileImport, GalleryIcon, Google,
+  FacebookIcon,
+  FileAudio, FileIcon, FileImport,
+  GalleryIcon,
+  Google,
   GradientBlueMic,
   GradientCalender,
   GradientCross,
@@ -112,16 +117,23 @@ export {
   GradientLocationIcon,
   GradientRedMic,
   GradientRedTick,
-  GreenCheckMark, Home, InactiveComment,
+  GreenCheckMark,
+  Home,
+  InactiveComment,
   InactiveDownload,
   InactiveLike,
   InactiveRepost,
   InactiveSave,
   InactiveShare,
   InstagramIcon,
-  LinkedinIcon, LiveNow, MailIcon,
+  LinkedinIcon,
+  LiveNow,
+  MailIcon,
   MessageIcon,
-  MessengerIcon, Moment, NearBy, PasswordHide,
+  MessengerIcon,
+  Moment,
+  NearBy,
+  PasswordHide,
   PasswordShow,
   PauseIcon,
   PinkForwardAudioButton,
@@ -136,7 +148,18 @@ export {
   RateUs,
   RedditIcon,
   RightArrow,
-  SearchIcon, SnapchatIcon, Sparkles, TagFriendsIcon, TiktokIcon, TwitterIcon, TwitterIconRound, UploadThumbnail, WhatsappIcon, WhiteLeftArrow,
-  YouthIcon, YoutubeIcon, Yudio
+  SearchIcon,
+  SnapchatIcon,
+  Sparkles,
+  TagFriendsIcon,
+  TiktokIcon,
+  TwitterIcon,
+  TwitterIconRound,
+  UploadThumbnail,
+  WhatsappIcon,
+  WhiteLeftArrow,
+  YouthIcon,
+  YoutubeIcon,
+  Yudio
 };
 

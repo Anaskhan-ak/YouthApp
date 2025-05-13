@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { width } from '../../../constant';
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   row: {
@@ -9,11 +9,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   animatedContainer: {
-  position: 'absolute',
-  bottom: 0,
-  width: width,
-  alignSelf: 'center',
-},
+    // position: 'absolute',
+    // bottom: 0,
+    width: width,
+    alignSelf: 'center',
+    // backgroundColor : "red"
+  },
 
   gradientBar: {
     borderTopLeftRadius: width * 0.04,

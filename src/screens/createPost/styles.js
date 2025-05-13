@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../constant';
+import { width } from '../../constant';
 import { colors } from '../../utils/colors';
 
 export const styles = StyleSheet.create({
@@ -12,11 +12,18 @@ export const styles = StyleSheet.create({
   },
   content: {
     padding: width * 0.03,
-    marginBottom: height * 0.1,
+    // marginBottom: height * 0.1,
   },
-  modal : {
-    alignItems : "center",
-    justifyContent : "flex-end",
-    paddingBottom : height * 0.4  // remove this
+  mediaImageContainer : {
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'center',
+    backgroundColor : "red"
+  },
+  mediaImage : {
+    width : width * 0.2,
+    height : width * 0.2,
+    borderRadius : width * 0.01,
+    margin : width * 0.01
   }
 });

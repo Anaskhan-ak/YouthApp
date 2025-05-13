@@ -1,12 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { FlatList, Image, SafeAreaView, ScrollView, View } from 'react-native';
 import {
-    CameraIcon,
-    FileAudio,
-    FileImport,
-    GalleryIcon,
+  CameraIcon,
+  FileAudio,
+  FileImport,
+  GalleryIcon,
 } from '../../assets/images/svgs';
+import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
@@ -14,6 +15,7 @@ import MultilineInput from '../../components/inputs/multilineInput';
 import PostModal from '../../components/modals/postModal';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
+import Gallery from './components/gallery';
 import { styles } from './styles';
 
 const CreatePost = () => {
@@ -80,24 +82,28 @@ const CreatePost = () => {
     }
   };
 
-  const options = [
+  const [options, setOptions] = useState([
     {
       type: 'gallery',
       icon: <GalleryIcon />,
+      active: true,
     },
     {
       type: 'audios',
       icon: <FileAudio />,
+      active: false,
     },
     {
       type: 'files',
       icon: <FileImport />,
+      active: false,
     },
     {
       type: 'camera',
       icon: <CameraIcon />,
+      active: false,
     },
-  ];
+  ]);
 
   return (
     <SafeAreaView style={styles?.container}>
@@ -126,12 +132,33 @@ const CreatePost = () => {
           maxChars={maxChars}
           postType={'post'}
         />
+        {media &&
+          (media?.some(m => m?.type === 'video/mp4') ||
+            media?.some(m => m.type === 'image/jpeg')) && (
+            <FlatList
+              data={media}
+              renderItem={({item}) => (
+                <Image source={{uri: item?.uri}} style={styles.mediaImage} />
+              )}
+              numColumns={4}
+              keyExtractor={(item, index) => index.toString()}
+              // contentContainerStyle={{alignItems: 'center'}}
+            />
+          )}
         {drawer && <Drawer />}
       </ScrollView>
-      {/* <View style={styles?.modal}> */}
-        <PostModal options={options} />
-      {/* </View> */}
-      {/* <CreateButton title="Create New Post" onPress={handleForm} /> */}
+      {!drawer && (
+        <PostModal
+          options={options}
+          setOptions={setOptions}
+          content={
+            options?.find(opt => opt?.type === 'gallery').active && (
+              <Gallery media={media} setMedia={setMedia} />
+            )
+          }
+        />
+      )}
+      <CreateButton title="Create New Post" onPress={handleForm} />
     </SafeAreaView>
   );
 };

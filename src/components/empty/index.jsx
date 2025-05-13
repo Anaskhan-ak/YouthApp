@@ -1,13 +1,13 @@
 import { height, width } from '../../constant';
 import { fonts } from '../../utils/fonts';
 
-const {StyleSheet} = require('react-native');
+const {StyleSheet, Text} = require('react-native');
 const {View} = require('react-native');
 
-const EmptyComponent = () => {
+const EmptyComponent = ({text}) => {
   return (
     <View style={styles?.container}>
-      <Text style={styles?.text}>Failed to load yudios</Text>
+      <Text style={styles?.text}>{text}</Text>
     </View>
   );
 };
