@@ -51,6 +51,7 @@
     "react-native-svg": "^15.11.2",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
+    "react-native-vision-camera": "^4.6.4",
     "react-redux": "^9.2.0",
     "react-scripts": "^5.0.1",
     "redux-persist": "^6.0.0"

@@ -71,6 +71,7 @@ import SnapchatIcon from './SnapchatIcon.svg';
 import Sparkles from './Sparkles.svg';
 import TagFriendsIcon from './TagFriendsIcon.svg';
 import TiktokIcon from './TiktokIcon.svg';
+import ToggleCameraIcon from './ToggleCameraIcon.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
@@ -152,8 +153,7 @@ export {
   SnapchatIcon,
   Sparkles,
   TagFriendsIcon,
-  TiktokIcon,
-  TwitterIcon,
+  TiktokIcon, ToggleCameraIcon, TwitterIcon,
   TwitterIconRound,
   UploadThumbnail,
   WhatsappIcon,

@@ -1,8 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { FlatList, Image, SafeAreaView, ScrollView, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   CameraIcon,
+  Cross,
   FileAudio,
   FileImport,
   GalleryIcon,
@@ -13,8 +21,9 @@ import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import MultilineInput from '../../components/inputs/multilineInput';
 import PostModal from '../../components/modals/postModal';
-import { apiCall } from '../../services/apiCall';
+import { width } from '../../constant';
 import { colors } from '../../utils/colors';
+import CameraComponent from './components/camera';
 import Gallery from './components/gallery';
 import { styles } from './styles';
 
@@ -27,17 +36,12 @@ const CreatePost = () => {
   const navigation = useNavigation();
 
   const handleForm = async () => {
-    // console.log('Title', title);
     // console.log('Description', description);
-    // console.log('Thumbnail', thumbnail?.uri);
-    // console.log('Yudio', yudio);
-    // console.log('Waveform', waveform);
+    // console.log("Media", media)
 
     const formData = new FormData();
-    formData.append('type', 'YUDIO');
-    // formDataParam.append('isPublic', true);
+    formData.append('type', 'MEDIA');
     formData.append('caption', description);
-    formData.append('title', title);
     formData.append('location', 'Pakistan');
     formData.append('audience', 'PUBLIC');
     // if (
@@ -54,32 +58,26 @@ const CreatePost = () => {
     );
     // }
 
-    formData.append('thumbnail', {
-      uri: thumbnail?.uri,
-      type: 'image/jpeg',
-      name: `${Date.now()}.jpg`,
-    });
+    if (media) {
+      media?.forEach((m)=>
+        formData.append('media',{
+          uri : m?.uri,
+          type : m?.type,
+          name : m?.type === 'image/jpeg' ? `${Date.now()}.jpeg` : `${Date.now()}.mp4`
+        })
+      )
+    }
 
-    // Handle audio
-    if (yudio) {
-      formData.append('audio', {
-        uri: `file://${yudio}`,
-        type: 'audio/wav',
-        name: `recording-${Date.now()}.wav`,
-      });
-    } else {
-      console.error('Audio source is missing for YUDIO');
-    }
-    // console.log('Form Data', formData);
-    try {
-      const result = await apiCall?.createNewPost(formData);
-      console.log('Successfully created Yudio', result?.yudios);
-      if (result) {
-        navigation.navigate('Yudios', {yudio: result?.yudios});
-      }
-    } catch (error) {
-      console.log('Error creating yudio', error);
-    }
+    console.log('Form Data', formData);
+    // try {
+    //   const result = await apiCall?.createNewPost(formData);
+    //   console.log('Successfully created Post', result?.data);
+    //   // if (result) {
+    //   //   navigation.navigate('Yudios', {yudio: result?.yudios});
+    //   // }
+    // } catch (error) {
+    //   console.log('Error creating post', error);
+    // }
   };
 
   const [options, setOptions] = useState([
@@ -105,6 +103,8 @@ const CreatePost = () => {
     },
   ]);
 
+  console.log("Media", media)
+
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
@@ -129,6 +129,7 @@ const CreatePost = () => {
           value={description}
           onChangeText={setDescription}
           chars={chars}
+          setChars={setChars}
           maxChars={maxChars}
           postType={'post'}
         />
@@ -138,11 +139,21 @@ const CreatePost = () => {
             <FlatList
               data={media}
               renderItem={({item}) => (
-                <Image source={{uri: item?.uri}} style={styles.mediaImage} />
+                <View style={{position: 'relative'}}>
+                  <TouchableOpacity
+                    style={styles.cancelImage}
+                    onPress={() =>
+                      setMedia(prev =>
+                        prev.filter(media => media.uri !== item.uri),
+                      )
+                    }>
+                    <Cross width={width * 0.02} height={width * 0.02} />
+                  </TouchableOpacity>
+                  <Image source={{uri: item?.uri}} style={styles.mediaImage} />
+                </View>
               )}
               numColumns={4}
               keyExtractor={(item, index) => index.toString()}
-              // contentContainerStyle={{alignItems: 'center'}}
             />
           )}
         {drawer && <Drawer />}
@@ -152,8 +163,10 @@ const CreatePost = () => {
           options={options}
           setOptions={setOptions}
           content={
-            options?.find(opt => opt?.type === 'gallery').active && (
+            options?.find(opt => opt?.type === 'gallery').active ? (
               <Gallery media={media} setMedia={setMedia} />
+            )  : options?.find(opt => opt?.type === 'camera').active && (
+              <CameraComponent media={media} setMedia={setMedia}/>
             )
           }
         />

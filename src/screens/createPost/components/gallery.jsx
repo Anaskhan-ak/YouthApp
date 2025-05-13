@@ -66,24 +66,30 @@ const Gallery = ({media, setMedia}) => {
   }, []);
 
   const openImagePicker = () => {
-    const options = {
-      mediaType: 'mixed',
-      includeBase64: false,
-      maxHeight: 2000,
-      maxWidth: 2000,
-    };
-
-    launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('Image picker error: ', response.error);
-      } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        setMedia(imageUri);
-      }
-    });
+  const options = {
+    mediaType: 'mixed',
+    includeBase64: false,
+    selectionLimit: 0, // Enables multi-select
+    maxHeight: 2000,
+    maxWidth: 2000,
   };
+
+  launchImageLibrary(options, response => {
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.errorCode) {
+      console.log('Image picker error: ', response.errorMessage);
+    } else if (response.assets?.length) {
+      const newMedia = response?.assets?.map(asset => ({
+        uri: asset.uri,
+        type: asset.type,
+        isSelected: true,
+      }));
+      setMedia(prev => [...prev, ...newMedia]);
+    }
+  });
+};
+
 
   const toggleSelectPhoto = (id, type) => {
     setGalleryImages(prevState =>
@@ -110,38 +116,42 @@ const Gallery = ({media, setMedia}) => {
     );
   };
 
-  const renderItem = ({item, index}) => {
-    const selectedIndex = media.findIndex((arrItem, i) => {
-      return arrItem?.uri === item?.node?.image?.uri;
-    });
-    return (
-      <View style={styles.imageContainer}>
-        {item.node.type.includes('video') && (
-          <LinearGradient
-            colors={[colors?.RGB1, colors?.RGB2]}
-            style={[styles?.icon, {left: width * 0.02}]}>
-            <PlayIcon width={width * 0.02} height={width * 0.02} />
-          </LinearGradient>
+  const renderItem = ({ item, index }) => {
+  const selectedIndex = media
+    .filter(m => m.isSelected)
+    .findIndex(m => m.uri === item.node.image.uri);
+
+  return (
+    <View style={styles.imageContainer}>
+      {item.node.type.includes('video') && (
+        <LinearGradient
+          colors={[colors?.RGB1, colors?.RGB2]}
+          style={[styles?.icon, { left: width * 0.02 }]}>
+          <PlayIcon width={width * 0.02} height={width * 0.02} />
+        </LinearGradient>
+      )}
+
+      <TouchableOpacity
+        onPress={() => toggleSelectPhoto(item.node.id, item.node.type)}>
+        {selectedIndex !== -1 && (
+          <View
+            style={[
+              styles?.icon,
+              { backgroundColor: colors?.red, right: width * 0.02 },
+            ]}>
+            <Text style={styles?.selectedText}>{selectedIndex + 1}</Text>
+          </View>
         )}
-        <TouchableOpacity
-          onPress={() => toggleSelectPhoto(item.node.id, item.node.type)}>
-          {item?.isSelected && (
-            <View
-              style={[
-                styles?.icon,
-                {backgroundColor: colors?.red, right: width * 0.02},
-              ]}>
-              <Text style={styles?.selectedText}>{selectedIndex + 1}</Text>
-            </View>
-          )}
-          <Image
-            source={{uri: item.node.image.uri}}
-            style={styles.image} // You already have this style defined
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  };
+
+        <Image
+          source={{ uri: item.node.image.uri }}
+          style={styles.image}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 
   const FooterComponent = () => (
     <TouchableOpacity style={styles.footerButton} onPress={openImagePicker}>

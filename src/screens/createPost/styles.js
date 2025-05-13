@@ -25,5 +25,16 @@ export const styles = StyleSheet.create({
     height : width * 0.2,
     borderRadius : width * 0.01,
     margin : width * 0.01
+  },
+  cancelImage : {
+    backgroundColor : colors?.white,
+    justifyContent : "center",
+    alignItems : 'center',
+    position : 'absolute',
+    top : width * 0.02,
+    right : width * 0.02,
+    padding : width * 0.008,
+    borderRadius : width * 0.03,
+    zIndex : 10
   }
 });

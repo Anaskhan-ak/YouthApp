@@ -5,6 +5,7 @@ import { styles } from './styles';
 const MultilineInput = ({
   postType,
   chars,
+  setChars,
   maxChars,
   placeholder,
   placeholderTextColor,
@@ -15,6 +16,11 @@ const MultilineInput = ({
   value,
   onChangeText,
 }) => {
+
+  const handleInput = (text) => {
+    onChangeText(text)
+    setChars(text?.length)
+  }
   return (
     <View style={styles?.container}>
       <TextInput
@@ -26,7 +32,8 @@ const MultilineInput = ({
         numberOfLines={numberOfLines}
         scrollEnabled={scrollEnabled}
         value={value}
-        onChangeText={onChangeText}
+        onChangeText={handleInput}
+        maxLength={maxChars}
       />
       {postType === 'post' && (
         <View style={styles?.footer}>
