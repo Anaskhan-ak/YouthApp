@@ -35,6 +35,7 @@
     "react-native-animatable": "^1.4.0",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-audio-record": "^0.2.2",
+    "react-native-blob-util": "^0.21.2",
     "react-native-contacts": "7.0.8",
     "react-native-country-codes-picker": "^2.3.5",
     "react-native-date-picker": "^5.0.12",

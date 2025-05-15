@@ -26,6 +26,7 @@ import FacebookIcon from './FacebookIcon.svg';
 import FileAudio from './FileAudioIcon.svg';
 import FileIcon from './FileIcon.svg';
 import FileImport from './FileImportIcon.svg';
+import FileMicIcon from './FileMicIcon.svg';
 import GalleryIcon from './GalleryIcon.svg';
 import Google from './google.svg';
 import GradientBlueMic from './GradientBlueMic.svg';
@@ -108,8 +109,7 @@ export {
   Error,
   ErrorWhite,
   FacebookIcon,
-  FileAudio, FileIcon, FileImport,
-  GalleryIcon,
+  FileAudio, FileIcon, FileImport, FileMicIcon, GalleryIcon,
   Google,
   GradientBlueMic,
   GradientCalender,

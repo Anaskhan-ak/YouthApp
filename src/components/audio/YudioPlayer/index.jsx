@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   StyleSheet,
   Text,
@@ -14,6 +15,7 @@ import {
   PlayIcon,
 } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
+import { generateAudioWaveforms } from '../../../helper';
 import { colors } from '../../../utils/colors';
 
 // const waveform = [
@@ -327,16 +329,28 @@ import { colors } from '../../../utils/colors';
 // ];
 
 const YudioPlayer = ({
-  audioUrl,
-    waveform,
+    audio
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [waveform, setWaveform] = useState([])
   const fixedBarsCount = 35;
 
+  useEffect(()=>{
+    const loadWaveform = async () => {
+      if (audio) {
+        const result = await generateAudioWaveforms(audio);
+        // console.log("Waveforms", result)
+        setWaveform(result);
+      }
+    };
+
+    loadWaveform();
+  },[audio])
+
   useEffect(() => {
-    SoundPlayer.loadUrl(audioUrl);
+    SoundPlayer.loadUrl(audio?.uri);
     const interval = setInterval(() => {
       SoundPlayer.getInfo()
         .then(info => {
@@ -347,7 +361,7 @@ const YudioPlayer = ({
     }, 500);
 
     return () => clearInterval(interval);
-  }, [audioUrl]);
+  }, [audio?.uri]);
 
   const playPause = () => {
     if (isPlaying) {
@@ -420,7 +434,9 @@ const YudioPlayer = ({
           <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
           <Text style={styles.timeText}>{formatTime(duration)}</Text>
         </View>
-        <View style={styles.waveformContainer}>
+        {
+          waveform?.length >0 ?
+          <View style={styles.waveformContainer}>
           <Svg
             height={barHeightScale - 30}
             width="100%"
@@ -442,7 +458,9 @@ const YudioPlayer = ({
               );
             })}
           </Svg>
-        </View>
+        </View> :
+        <ActivityIndicator size={'small'} color={colors?.RGB1}/>
+        }
       </View>
     </View>
   );
