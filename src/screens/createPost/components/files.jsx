@@ -68,6 +68,17 @@ const FilesComponent = ({media, setMedia}) => {
       </TouchableOpacity>
     );
   };
+
+  const HeaderComponent = () => {
+    return (
+      <View style={styles?.header}>
+          <Text style={styles?.headerText}>Recently Uploaded</Text>
+        <TouchableOpacity>
+          <Text style={styles?.headerText}>View all</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
   return (
     <>
       {documents?.length > 0 ? (
@@ -75,6 +86,7 @@ const FilesComponent = ({media, setMedia}) => {
           data={documents}
           renderItem={renderItem}
           ListEmptyComponent={<EmptyComponent text="No documents to show" />}
+          ListHeaderComponent={<HeaderComponent/>}
         />
       ) : (
         <View style={styles?.loader}>
@@ -133,4 +145,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header : {
+    flexDirection : 'row',
+    justifyContent : 'space-between',
+    alignItems : "center",
+    padding : width * 0.02
+  },
+  headerText : {
+    fontFamily : fonts?.montserratBold,
+    fontSize : width * 0.04
+  }
 });

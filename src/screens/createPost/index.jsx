@@ -23,6 +23,7 @@ import {
   GalleryIcon,
 } from '../../assets/images/svgs';
 import YudioPlayer from '../../components/audio/YudioPlayer';
+import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
@@ -449,7 +450,7 @@ const CreatePost = () => {
           }
         />
       )}
-      {/* <CreateButton title="Create New Post" onPress={handleForm} /> */}
+      <CreateButton title="Create New Post" onPress={handleForm} />
     </SafeAreaView>
   );
 };

@@ -40,35 +40,39 @@ const PostModal = ({ options, setOptions, content }) => {
   }));
 
   return (
+  <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+    {/* Draggable Bar Only */}
     <GestureDetector gesture={panGesture}>
-      <Animated.View style={[styles.animatedContainer, animatedStyle]}>
-        <LinearGradient
-          colors={[colors?.RGB1, colors?.RGB2]}
-          style={[styles.row, styles.gradientBar]}>
-          {options?.map((opt, index) => (
-            <TouchableOpacity
-              key={index}
-              simultaneousHandlers={gestureRef}
-              activeOpacity={0.7}
-              style={{
-                opacity: opt?.active ? 1 : 0.5,
-              }}
-              onPress={() => {
-                setOptions(prev =>
-                  prev.map((item, i) => ({
-                    ...item,
-                    active: i === index,
-                  }))
-                );
-              }}>
-              {opt.icon}
-            </TouchableOpacity>
-          ))}
-        </LinearGradient>
-        {content}
-      </Animated.View>
+      <LinearGradient
+        colors={[colors?.RGB1, colors?.RGB2]}
+        style={[styles.row, styles.gradientBar]}>
+        {options?.map((opt, index) => (
+          <TouchableOpacity
+            key={index}
+            simultaneousHandlers={gestureRef}
+            activeOpacity={0.7}
+            style={{ opacity: opt?.active ? 1 : 0.5 }}
+            onPress={() => {
+              setOptions(prev =>
+                prev.map((item, i) => ({
+                  ...item,
+                  active: i === index,
+                }))
+              );
+            }}>
+            {opt.icon}
+          </TouchableOpacity>
+        ))}
+      </LinearGradient>
     </GestureDetector>
-  );
+
+    {/* Scrollable Content */}
+    <Animated.View style={{ flex: 1 }}>
+      {content}
+    </Animated.View>
+  </Animated.View>
+);
+
 };
 
 export default PostModal;
