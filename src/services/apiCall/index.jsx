@@ -73,6 +73,12 @@ export const apiCall = {
     if (result?.status) return result?.data?.data?.posts
     else throw result
   },
+
+  getAllDocuments : async (params) => {
+    let result = await post(apis?.getDocuments, params)
+    if (result?.status) return result?.data?.posts
+    else throw result
+  },
  
   //GET API CALL
   getNotification: async params => {

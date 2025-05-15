@@ -39,22 +39,63 @@ export const styles = StyleSheet.create({
     zIndex: 10,
   },
   selectFileContainer: {
-    marginVertical : height * 0.005
+    marginVertical: height * 0.005,
   },
   selectFileButton: {
-    backgroundColor : colors?.greyBackground,
-    flexDirection : 'row',
-    alignItems : "center",
-    justifyContent : 'flex-start',
-    padding : width * 0.025,
-    marginVertical : height * 0.003,
-    borderRadius : width * 0.02
+    backgroundColor: colors?.greyBackground,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: width * 0.025,
+    marginVertical: height * 0.003,
+    borderRadius: width * 0.02,
   },
   selectFileText: {
-    marginLeft : width * 0.02,
-    fontFamily : fonts?.montserratSemiBold
+    marginLeft: width * 0.02,
+    fontFamily: fonts?.montserratSemiBold,
   },
-  audioPlayerContainer : {
-    marginVertical : height * 0.01
-  }
+  audioPlayerContainer: {
+    marginVertical: height * 0.01,
+  },
+  documentContainer: {
+    flexDirection : "row",
+    alignItems : 'center',
+    justifyContent : 'flex-start',
+    marginBottom : height * 0.1,
+    width : width * 0.935
+  },
+  thumbnailBackground: {
+    width : width * 0.4,
+    height : height * 0.15,
+    borderRadius : width * 0.03,
+    overflow : 'hidden',
+    alignItems : 'center',
+    justifyContent : 'center',
+  },
+  blur: {
+    position : "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
+  thumbnailImage: {
+    width : width * 0.2,
+    height : height * 0.15,
+    overflow : 'hidden',
+    resizeMode : "stretch"
+  },
+  documentText : {
+    marginLeft : width * 0.02
+  },
+  documentName: {
+    fontSize : width * 0.038,
+    fontFamily : fonts?.montserratSemiBold,
+    color : colors?.text
+  },
+  documentType: {
+    fontSize : width * 0.035,
+    fontFamily : fonts?.montserratRegular,
+    color : colors?.textGray
+  },
 });

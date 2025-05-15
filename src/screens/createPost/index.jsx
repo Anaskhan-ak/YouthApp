@@ -1,9 +1,11 @@
+import { BlurView } from '@react-native-community/blur';
 import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
   FlatList,
   Image,
+  ImageBackground,
   SafeAreaView,
   ScrollView,
   Text,
@@ -46,9 +48,8 @@ const CreatePost = () => {
   const navigation = useNavigation();
 
   const handleForm = async () => {
-    // console.log('Description', description);
-    // console.log("Media", media)
-
+    console.log(':::::::', thumbnail);
+     
     const formData = new FormData();
     if (
       media?.some(m => m?.type === 'video/mp4') ||
@@ -151,6 +152,39 @@ const CreatePost = () => {
         type: media[0]?.type,
         name: media[0]?.name,
       });
+    } else {
+      formData.append('type', 'DOCUMENT');
+      formData.append('location', 'Paksitan');
+      formData.append('audience', 'PUBLIC');
+      formData.append('caption', description);
+      // if (
+      //   tagFriends &&
+      //   tagFriends.filter(item => item !== undefined && item !== '').length >
+      //     0
+      // ) {
+      formData.append(
+        'Tag',
+        // JSON.stringify(
+        //   tagFriends.filter(item => item !== undefined && item !== ''),
+        // ),
+        JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
+      );
+      // }
+
+      const thumbnailStat = await RNBlobUtil.fs.stat(
+        thumbnail?.uri ? thumbnail?.uri : media[0]?.thumbnail,
+      );
+      formData.append('thumbnail', {
+        uri: 'file://' + thumbnailStat.path,
+        type: thumbnail?.type,
+        name: thumbnail?.name,
+      });
+
+      formData.append('document', {
+        uri: media[0].uri,
+        type: media[0]?.type,
+        name: media[0]?.name,
+      });
     }
 
     console.log('Form Data', formData);
@@ -160,7 +194,8 @@ const CreatePost = () => {
     } catch (error) {
       console.log('Error creating post', error);
     }
-  };
+  }
+  
 
   const [options, setOptions] = useState([
     {
@@ -211,10 +246,32 @@ const CreatePost = () => {
         type: res?.type,
         name: res?.name,
       });
+    } else if (type === 'file') {
+      const [res] = await pick({
+        type: [
+          'application/pdf',
+          'application/msword', // .doc
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+          'application/vnd.ms-excel', // .xls
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+          'application/vnd.ms-powerpoint', // .ppt
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+          'text/plain', // .txt
+          'application/zip', // .zip
+        ],
+        allowMultiSelection: false,
+      });
+      // console.log('Res', res);
+      setMedia(prev => [
+        ...prev,
+        {
+          uri: res?.uri,
+          type: res?.type,
+          name: res?.name,
+        },
+      ]);
     }
   };
-
-  console.log('Media.uri', media);
 
   return (
     <SafeAreaView style={styles?.container}>
@@ -264,6 +321,27 @@ const CreatePost = () => {
               </TouchableOpacity>
             </View>
           )}
+        {options?.find(opt => opt?.type === 'files').active &&
+          media?.length === 0 && (
+            <View style={styles?.selectFileContainer}>
+              <TouchableOpacity
+                style={styles?.selectFileButton}
+                onPress={() => pickFiles('file')}>
+                <FileIcon />
+                <Text style={styles?.selectFileText}>Select from Files</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        {options?.find(opt => opt?.type === 'files').active && (
+          <View style={styles?.selectFileContainer}>
+            <TouchableOpacity
+              style={styles?.selectFileButton}
+              onPress={() => pickFiles('thumbnail')}>
+              <FileIcon />
+              <Text style={styles?.selectFileText}>Select Thumbnail</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         {media &&
         (media?.some(m => m?.type === 'video/mp4') ||
           media?.some(m => m.type === 'image/jpeg')) ? (
@@ -286,24 +364,67 @@ const CreatePost = () => {
             numColumns={4}
             keyExtractor={(item, index) => index.toString()}
           />
+        ) : media?.some(m => m?.type === 'audio/mpeg') ? (
+          <View style={styles?.audioPlayerContainer}>
+            <YudioPlayer
+              audio={{
+                uri: media[0]?.uri,
+                type: media[0]?.type,
+                name: media[0]?.name,
+              }}
+            />
+            <TouchableOpacity
+              style={styles?.selectFileButton}
+              onPress={() => pickFiles('thumbnail')}>
+              <FileIcon />
+              <Text style={styles?.selectFileText}>Select Thumbnail</Text>
+            </TouchableOpacity>
+          </View>
         ) : (
-          media?.some(m => m?.type === 'audio/mpeg') && (
-            <View style={styles?.audioPlayerContainer}>
-              <YudioPlayer
-                audio={{
-                  uri: media[0]?.uri,
-                  type: media[0]?.type,
-                  name: media[0]?.name,
-                }}
-              />
-              <TouchableOpacity
-                style={styles?.selectFileButton}
-                onPress={() => pickFiles('thumbnail')}>
-                <FileIcon />
-                <Text style={styles?.selectFileText}>Select Thumbnail</Text>
-              </TouchableOpacity>
-            </View>
-          )
+          <>
+            {media?.length > 0 && (
+              <View style={styles?.documentContainer}>
+                <ImageBackground
+                  style={styles?.thumbnailBackground}
+                  source={
+                    thumbnail
+                      ? {uri: thumbnail?.uri}
+                      : {uri: media[0]?.thumbnail}
+                  }>
+                  <BlurView
+                    style={styles?.blur}
+                    blurType="light"
+                    blurAmount={1}
+                    reducedTransparencyFallbackColor="white"
+                  />
+                  <TouchableOpacity
+                    style={styles.cancelImage}
+                    onPress={() => {
+                      setMedia([]);
+                      setThumbnail(null);
+                    }}>
+                    <Cross width={width * 0.02} height={width * 0.02} />
+                  </TouchableOpacity>
+                  <Image
+                    source={
+                      thumbnail
+                        ? {uri: thumbnail?.uri}
+                        : {uri: media[0]?.thumbnail}
+                    }
+                    style={styles?.thumbnailImage}
+                  />
+                </ImageBackground>
+                <View style={styles?.documentText}>
+                  <Text style={styles?.documentName}>
+                    {media[0]?.name.slice(0, 15).split('.')}
+                  </Text>
+                  <Text style={styles?.documentType}>
+                    {media[0]?.type?.split('/').pop().toUpperCase()}
+                  </Text>
+                </View>
+              </View>
+            )}
+          </>
         )}
         {drawer && <Drawer />}
       </ScrollView>
