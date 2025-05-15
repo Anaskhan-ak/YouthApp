@@ -11,34 +11,32 @@ import { height } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
-const MAX_TRANSLATE_Y = 0; // Fully expanded (height * 0.5)
-const MIN_TRANSLATE_Y = height * 0.2; // Minimized (height * 0.3)
+const MAX_HEIGHT = height * 0.5; // fully expanded
+const MIN_HEIGHT = height * 0.3; // minimized
 
-const PostModal = ({options, setOptions, content}) => {
-  const translateY = useSharedValue(MAX_TRANSLATE_Y); // Starts fully expanded
+const PostModal = ({ options, setOptions, content }) => {
   const gestureRef = useRef();
+  const modalHeight = useSharedValue(MAX_HEIGHT); // Start expanded
 
   const panGesture = Gesture.Pan()
     .onUpdate(event => {
-      const newY = translateY.value + event.translationY;
-      // Clamp between MIN_TRANSLATE_Y (minimized) and MAX_TRANSLATE_Y (expanded)
-      translateY.value = Math.max(
-        Math.min(newY, MAX_TRANSLATE_Y),
-        MIN_TRANSLATE_Y,
+      const newHeight = modalHeight.value - event.translationY;
+
+      // Clamp height between MIN and MAX
+      modalHeight.value = Math.max(
+        Math.min(newHeight, MAX_HEIGHT),
+        MIN_HEIGHT
       );
     })
     .onEnd(() => {
-      // Snap to either MIN or MAX based on position
-      const shouldMinimize =
-        translateY.value > (MAX_TRANSLATE_Y + MIN_TRANSLATE_Y) / 2;
-      translateY.value = shouldMinimize
-        ? withSpring(MIN_TRANSLATE_Y)
-        : withSpring(MAX_TRANSLATE_Y);
-    });
+      const shouldCollapse = modalHeight.value < (MIN_HEIGHT + MAX_HEIGHT) / 2;
+
+      modalHeight.value = withSpring(shouldCollapse ? MIN_HEIGHT : MAX_HEIGHT);
+    })
+    .withRef(gestureRef);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: translateY.value}],
-    height: height * 0.5 - translateY.value, // Adjust height dynamically
+    height: modalHeight.value,
   }));
 
   return (
@@ -53,17 +51,17 @@ const PostModal = ({options, setOptions, content}) => {
               simultaneousHandlers={gestureRef}
               activeOpacity={0.7}
               style={{
-                opacity : opt?.active ? 1 : 0.5
+                opacity: opt?.active ? 1 : 0.5,
               }}
               onPress={() => {
                 setOptions(prev =>
                   prev.map((item, i) => ({
                     ...item,
                     active: i === index,
-                  })),
+                  }))
                 );
               }}>
-                {opt.icon}
+              {opt.icon}
             </TouchableOpacity>
           ))}
         </LinearGradient>

@@ -23,7 +23,6 @@ import {
   GalleryIcon,
 } from '../../assets/images/svgs';
 import YudioPlayer from '../../components/audio/YudioPlayer';
-import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
@@ -48,8 +47,8 @@ const CreatePost = () => {
   const navigation = useNavigation();
 
   const handleForm = async () => {
-    console.log(':::::::', thumbnail);
-     
+    console.log(':::::::', media);
+
     const formData = new FormData();
     if (
       media?.some(m => m?.type === 'video/mp4') ||
@@ -171,14 +170,20 @@ const CreatePost = () => {
       );
       // }
 
-      const thumbnailStat = await RNBlobUtil.fs.stat(
-        thumbnail?.uri ? thumbnail?.uri : media[0]?.thumbnail,
-      );
-      formData.append('thumbnail', {
-        uri: 'file://' + thumbnailStat.path,
-        type: thumbnail?.type,
-        name: thumbnail?.name,
-      });
+      if (thumbnail) {
+        const thumbnailStat = await RNBlobUtil.fs.stat(thumbnail?.uri);
+        formData.append('thumbnail', {
+          uri: 'file://' + thumbnailStat.path,
+          type: thumbnail?.type,
+          name: thumbnail?.name,
+        });
+      } else {
+        formData.append('thumbnail', {
+          uri: media[0]?.thumbnail,
+          type: 'image/jpeg',
+          name: 'thumbnail.jpeg',
+        });
+      }
 
       formData.append('document', {
         uri: media[0].uri,
@@ -194,8 +199,7 @@ const CreatePost = () => {
     } catch (error) {
       console.log('Error creating post', error);
     }
-  }
-  
+  };
 
   const [options, setOptions] = useState([
     {
@@ -445,7 +449,7 @@ const CreatePost = () => {
           }
         />
       )}
-      <CreateButton title="Create New Post" onPress={handleForm} />
+      {/* <CreateButton title="Create New Post" onPress={handleForm} /> */}
     </SafeAreaView>
   );
 };
