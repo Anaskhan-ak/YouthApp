@@ -18,7 +18,7 @@ const RenderItem = forwardRef(({item, index, handleSkip}, ref) => {
   const imageRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
-    fadeIn: () => imageRef.current?.fadeIn(1000),
+    fadeIn: () => imageRef.current?.fadeIzn(1000),
     fadeOut: () => imageRef.current?.fadeOut(1000),
   }));
 
@@ -31,7 +31,8 @@ const RenderItem = forwardRef(({item, index, handleSkip}, ref) => {
       )}
       <Animatable.Image
         ref={imageRef}
-        source={item.image}
+        source={{uri: item?.imageUrl}}
+        // source={item.image}
         style={styles.imageBg}
         animation="fadeIn"
         duration={500}
@@ -40,6 +41,5 @@ const RenderItem = forwardRef(({item, index, handleSkip}, ref) => {
     </View>
   );
 });
-
 
 export default RenderItem;

@@ -21,7 +21,7 @@ export const PrimaryButton = props => {
         style={StyleSheet.flatten([
           {
             width: props?.width || width * 0.69,
-            borderRadius: props?.borderRadius || width * 0.02,
+            borderRadius: props?.borderRadius ||  5,
           },
           styles.primaryButton,
           props?.style, 

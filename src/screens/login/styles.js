@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
   content: {
-    fontSize: width * 0.03,
+    fontSize: width * 0.028,
     fontFamily: fonts?.montserratRegular,
     lineHeight: height * 0.023,
   },
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
   },
   gradientText: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: width * 0.03,
+    fontSize: width * 0.028,
   },
   bottomContentView: {
     flexDirection: 'row',
@@ -90,5 +90,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
+  },
+  unSelect: {
+    width: 16,
+    height: 16,
+    borderRadius: 16,
+    backgroundColor: 'rgba(178, 178, 178, 0.6)',
+    borderWidth: 1,
+    borderColor: 'rgba(178, 178, 178, 1)',
   },
 });

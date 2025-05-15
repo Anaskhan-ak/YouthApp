@@ -74,6 +74,13 @@ import LiveNow from './liveNow.svg';
 import NearBy from './nearBy.svg';
 import Home from './home.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
+import HomeHeaderLogo from './homeHeaderLogo.svg';
+import Menu from './menu.svg';
+import Search from './search.svg';
+import Notification from './notification.svg';
+import Chat from './chat.svg';
+import Plus from './plus.svg';
+import Trending from './trending.svg';
 
 export {
   ActiveComment,
@@ -153,4 +160,11 @@ export {
   TiktokIcon,
   TwitterIconRound,
   YoutubeIcon,
+  HomeHeaderLogo,
+  Menu,
+  Search,
+  Notification,
+  Chat,
+  Plus,
+  Trending
 };

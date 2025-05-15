@@ -1,5 +1,5 @@
 import {images} from '../assets/images';
-import {Moment, Yudio, LiveNow, NearBy, Home} from '../assets/images/svgs';
+import {Moment, Yudio, LiveNow, NearBy, Plus,Notification,Chat,Search, Trending} from '../assets/images/svgs';
 
 export const onboardingContent = [
   {
@@ -72,5 +72,44 @@ export const bottomTabs = [
     screen: 'nearby',
     route: 'NearBy',
     icon: <NearBy width={24} height={24} />,
+  },
+];
+export const sideBarOptions = [
+    {
+      screen: 'openSheet',
+      func: 'openSheet',
+      icon: <Plus width={18} height={18} />,
+    },
+    {
+      screen: 'notification',
+      route: 'Notification',
+      icon: <Notification width={24} height={24} />,
+    },
+    {
+      screen: 'chat',
+      route: 'Chat',
+      icon: <Chat width={24} height={24} />,
+    },
+    {
+      screen: 'search',
+      route: 'Search',
+      icon: <Search width={18} height={18} />,
+    },
+];
+export const homeCategoryOptions = [
+  {
+    id: 1,
+    name: 'Trending Now',
+    icon: <Trending width={18} height={18} />,
+  },
+  {
+    id: 2,
+    name: 'For You',
+    icon: null,
+  },
+  {
+    id: 3,
+    name: 'Following',
+    icon: null,
   },
 ];

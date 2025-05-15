@@ -8,6 +8,7 @@ import { Linking } from 'react-native';
 import { useEffect } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { config } from './src/environment';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
   const linking = {
@@ -47,6 +48,7 @@ useEffect(()=>{
     <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
           <StackNavigator />
+          <Toast />
       </Provider>
     </GestureHandlerRootView>
     </NavigationContainer>

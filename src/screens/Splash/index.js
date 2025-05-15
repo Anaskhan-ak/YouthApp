@@ -1,15 +1,45 @@
 import {View, Text, StatusBar, ImageBackground, Image} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {styles} from './styles';
 import {images} from '../../assets/images';
+import {apiCall} from '../../services/apiCall';
+import DeviceInfo from 'react-native-device-info';
+import {toast, hideToast} from '../../components/toast';
+import NetInfo from '@react-native-community/netinfo';
 
 const Splash = ({navigation}) => {
+  const hasShownToast = useRef(false);
+  const version = DeviceInfo.getVersion();
   useEffect(() => {
-    setTimeout(() => {
-      navigation?.navigate('Onboarding');
-    }, 2000);
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (!state.isConnected && !hasShownToast.current) {
+        toast('error', 'No Internet', 'Please check your network connection');
+        hasShownToast.current = true;
+      }
+      if (state.isConnected) {
+        hideToast();
+        hasShownToast.current = false;
+        getOnboardingContent();
+      }
+    });
+
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getOnboardingContent = async () => {
+    try {
+      const response = await apiCall?.getOnboardingContent();
+      setTimeout(() => {
+        navigation?.navigate('Onboarding', {details: response});
+      }, 2000);
+    } catch (error) {
+      toast('error', 'Something went wrong', error);
+      console.error('Error fetching interests:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -23,8 +53,12 @@ const Splash = ({navigation}) => {
           resizeMode="contain"
           source={images.splashLogo}></Image>
         <View style={styles.contentView}>
-          <Text allowFontScaling={false} style={styles?.heading}>VOL 1.0.0</Text>
-          <Text allowFontScaling={false} style={styles?.subHeading}>Copyrights 2023 © YouthApp.io</Text>
+          <Text allowFontScaling={false} style={styles?.heading}>
+            VOL {version}
+          </Text>
+          <Text allowFontScaling={false} style={styles?.subHeading}>
+            Copyrights {new Date()?.getFullYear()} © YouthApp.io
+          </Text>
         </View>
       </ImageBackground>
     </SafeAreaView>

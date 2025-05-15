@@ -21,6 +21,7 @@ import AuthInput from '../../components/inputs/authInput';
 import GradientText from '../../components/text/GradientText';
 import {height, width} from '../../constant';
 import {getFirebaseToken, googleSignIn} from '../../helper';
+import {GreenCheckMark} from '../../assets/images/svgs';
 import {apiCall} from '../../services/apiCall';
 import {colors} from '../../utils/colors';
 import {styles} from './styles';
@@ -145,7 +146,7 @@ const Login = () => {
       </View>
       <View style={styles?.contentView}>
         <View style={styles?.headingWithIconView}>
-          <Text style={styles?.heading}> Login to your </Text>
+          <Text style={styles?.heading}>Login to your </Text>
           <YouthIcon width={width * 0.2} />
           <Text style={styles?.heading}> Account</Text>
         </View>
@@ -201,13 +202,23 @@ const Login = () => {
           <TouchableOpacity
             onPress={handleRememberMe}
             style={styles?.rememberMeContainer}>
-            <LinearGradient
+            {/* <LinearGradient
               style={styles?.rememberMe}
               colors={[colors?.RGB1, colors?.RGB2]}
               start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}>
-              {rememberMe && <View style={styles?.checkRememberMe} />}
-            </LinearGradient>
+              end={{x: 1, y: 0}}> */}
+            {/* {!rememberMe && (
+                // <View style={styles?.checkRememberMe} />
+                <GreenCheckMark />
+              )} */}
+            {!rememberMe ? (
+              <GreenCheckMark width={18} height={18}/>
+            ) : (
+              <View
+                style={styles?.unSelect}
+              />
+            )}
+            {/* </LinearGradient> */}
             <Text style={[styles?.content, {left: 4}]}>Remember me</Text>
           </TouchableOpacity>
           <TouchableOpacity

@@ -9,7 +9,8 @@ import {
   Platform,
   Keyboard,
   Text,
-  View
+  View,
+  Linking
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../assets/images';
@@ -26,6 +27,7 @@ import { height, width } from '../../constant';
 import { emailValidation } from '../../helper';
 import { apiCall } from '../../services/apiCall';
 import { styles } from './styles';
+import { config } from '../../environment';
 
 const SignUp = () => {
   const [countryDetails, setCountryDetails] = useState(null);
@@ -141,7 +143,9 @@ const SignUp = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
-
+ const handleWebpage = () =>{
+Linking.openURL(config?.website)
+ }
   return (
     <SafeAreaView style={styles?.container}>
       <StatusBar
@@ -366,16 +370,19 @@ const SignUp = () => {
           <Text style={styles?.content}>
             By clicking Sign Up, you agree to our
           </Text>
+          <TouchableOpacity onPress={handleWebpage}>
           <GradientText style={styles.gradientText}>
             {' '}
             Terms, Data Policy
           </GradientText>
-          .
+          </TouchableOpacity>
         </View>
         <View style={styles.bottomContentView}>
+        <TouchableOpacity onPress={handleWebpage}>
           <GradientText style={styles.gradientText}>
             and Cookies Policy.
           </GradientText>
+          </TouchableOpacity>
           <Text style={styles?.content}>
             {' '}
             You may receive SMS Notifications
