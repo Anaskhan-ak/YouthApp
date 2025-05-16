@@ -14,12 +14,7 @@ import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const MediaUploader = ({
-  media,
-  thumbnail,
-  setMedia,
-  setThumbnail,
-}) => {
+const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
   if (media) {
     if (
       media?.some(m => m?.type === 'video/mp4') ||
@@ -47,6 +42,15 @@ const MediaUploader = ({
     } else if (media?.some(m => m?.type === 'audio/mpeg') && thumbnail) {
       return (
         <View style={styles?.audioPlayerContainer}>
+          <TouchableOpacity
+            style={styles.cancelImage}
+            onPress={() =>{
+              setMedia([])
+              setThumbnail(null)
+            }
+            }>
+            <Cross width={width * 0.02} height={width * 0.02} />
+          </TouchableOpacity>
           <YudioPlayer
             audio={{
               uri: media[0]?.uri,

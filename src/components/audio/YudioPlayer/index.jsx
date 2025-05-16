@@ -339,9 +339,10 @@ const YudioPlayer = ({
 
   useEffect(() => {
   const loadWaveform = async () => {
-    if (!audio || !audio.uri) return; // Guard against undefined/incomplete audio
+    if (!audio || !audio.uri) return;
 
     try {
+      await new Promise(resolve => setTimeout(resolve, 50)); // wait 50ms
       const result = await generateAudioWaveforms(audio);
       setWaveform(result);
     } catch (err) {
@@ -351,6 +352,7 @@ const YudioPlayer = ({
 
   loadWaveform();
 }, [audio]);
+
 
 
   useEffect(() => {
