@@ -14,7 +14,7 @@ import { styles } from './styles';
 const MAX_HEIGHT = height * 0.5; // fully expanded
 const MIN_HEIGHT = height * 0.3; // minimized
 
-const PostModal = ({ options, setOptions, content }) => {
+const PostModal = ({ options, setOptions, content, setMedia }) => {
   const gestureRef = useRef();
   const modalHeight = useSharedValue(MAX_HEIGHT); // Start expanded
 
@@ -53,6 +53,7 @@ const PostModal = ({ options, setOptions, content }) => {
             activeOpacity={0.7}
             style={{ opacity: opt?.active ? 1 : 0.5 }}
             onPress={() => {
+              setMedia([])
               setOptions(prev =>
                 prev.map((item, i) => ({
                   ...item,

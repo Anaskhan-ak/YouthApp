@@ -1,4 +1,4 @@
-import { pick } from '@react-native-documents/picker';
+// import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -37,12 +37,10 @@ const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [waveform, setWaveform] = useState([]);
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [yudio, setYudio] = useState();
-
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
 
@@ -95,7 +93,7 @@ const CreateYudio = () => {
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Yudio', result?.yudios);
       if (result) {
-        navigation.navigate('Yudios',{yudio : result?.yudios})
+        navigation.navigate('Yudios', {yudio: result?.yudios});
       }
     } catch (error) {
       console.log('Error creating yudio', error);

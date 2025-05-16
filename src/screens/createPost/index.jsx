@@ -46,162 +46,6 @@ const CreatePost = () => {
   const [chars, setChars] = useState(0);
   const maxChars = 4000;
   const navigation = useNavigation();
-
-  const handleForm = async () => {
-    console.log(':::::::', media);
-
-    const formData = new FormData();
-    if (
-      media?.some(m => m?.type === 'video/mp4') ||
-      media?.some(m => m.type === 'image/jpeg')
-    ) {
-      formData.append('type', 'MEDIA');
-      formData.append('caption', description);
-      formData.append('location', 'Pakistan');
-      formData.append('audience', 'PUBLIC');
-      // if (
-      //   tagFriends &&
-      //   tagFriends.filter(item => item !== undefined && item !== '').length >
-      //     0
-      // ) {
-      formData.append(
-        'Tag',
-        // JSON.stringify(
-        //   tagFriends.filter(item => item !== undefined && item !== ''),
-        // ),
-        JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
-      );
-      // }
-
-      if (media) {
-        media?.forEach(m =>
-          formData.append('media', {
-            uri: m?.uri,
-            type: m?.type,
-            name:
-              m?.type === 'image/jpeg'
-                ? `${Date.now()}.jpeg`
-                : `${Date.now()}.mp4`,
-          }),
-        );
-      }
-    } else if (media?.some(m => m?.type === 'audio/wav')) {
-      formData.append('type', 'YUDIO');
-      // formDataParam.append('isPublic', true);
-      formData.append('caption', media[0]?.description);
-      formData.append('title', media[0]?.title);
-      formData.append('location', 'Pakistan');
-      formData.append('audience', 'PUBLIC');
-      // if (
-      //   tagFriends &&
-      //   tagFriends.filter(item => item !== undefined && item !== '').length >
-      //     0
-      // ) {
-      formData.append(
-        'Tag',
-        // JSON.stringify(
-        //   tagFriends.filter(item => item !== undefined && item !== ''),
-        // ),
-        JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
-      );
-      // }
-
-      formData.append('thumbnail', {
-        uri: media[0]?.thumbnail,
-        type: 'image/jpeg',
-        name: `${Date.now()}.jpg`,
-      });
-
-      // Handle audio
-      formData.append('audio', {
-        uri: media[0]?.uri,
-        type: 'audio/wav',
-        name: `recording-${Date.now()}.wav`,
-      });
-    } else if (media?.some(m => m?.type === 'audio/mpeg')) {
-      formData.append('userId', 'cm60ql39f003l91r8l18bd80z');
-      formData.append('type', 'MUSIC');
-      formData.append('location', 'Paksitan');
-      formData.append('audience', 'PUBLIC');
-      formData.append('caption', description);
-      // if (
-      //   tagFriends &&
-      //   tagFriends.filter(item => item !== undefined && item !== '').length >
-      //     0
-      // ) {
-      formData.append(
-        'Tag',
-        // JSON.stringify(
-        //   tagFriends.filter(item => item !== undefined && item !== ''),
-        // ),
-        JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
-      );
-      // }
-
-      const thumbnailStat = await RNBlobUtil.fs.stat(thumbnail?.uri);
-      formData.append('thumbnail', {
-        uri: 'file://' + thumbnailStat.path,
-        type: thumbnail?.type,
-        name: thumbnail?.name,
-      });
-
-      // Convert audio URI
-      const audioStat = await RNBlobUtil.fs.stat(media[0]?.uri);
-      formData.append('audio', {
-        uri: 'file://' + audioStat.path,
-        type: media[0]?.type,
-        name: media[0]?.name,
-      });
-    } else {
-      formData.append('type', 'DOCUMENT');
-      formData.append('location', 'Paksitan');
-      formData.append('audience', 'PUBLIC');
-      formData.append('caption', description);
-      // if (
-      //   tagFriends &&
-      //   tagFriends.filter(item => item !== undefined && item !== '').length >
-      //     0
-      // ) {
-      formData.append(
-        'Tag',
-        // JSON.stringify(
-        //   tagFriends.filter(item => item !== undefined && item !== ''),
-        // ),
-        JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
-      );
-      // }
-
-      if (thumbnail) {
-        const thumbnailStat = await RNBlobUtil.fs.stat(thumbnail?.uri);
-        formData.append('thumbnail', {
-          uri: 'file://' + thumbnailStat.path,
-          type: thumbnail?.type,
-          name: thumbnail?.name,
-        });
-      } else {
-        formData.append('thumbnail', {
-          uri: media[0]?.thumbnail,
-          type: 'image/jpeg',
-          name: 'thumbnail.jpeg',
-        });
-      }
-
-      formData.append('document', {
-        uri: media[0].uri,
-        type: media[0]?.type,
-        name: media[0]?.name,
-      });
-    }
-
-    console.log('Form Data', formData);
-    try {
-      const result = await apiCall?.createNewPost(formData);
-      console.log('Successfully created Post', result?.data);
-    } catch (error) {
-      console.log('Error creating post', error);
-    }
-  };
-
   const [options, setOptions] = useState([
     {
       type: 'gallery',
@@ -224,6 +68,121 @@ const CreatePost = () => {
       active: false,
     },
   ]);
+
+  const handleForm = async () => {
+    const formData = new FormData();
+    formData.append('location', 'Pakistan');
+    formData.append('audience', 'PUBLIC');
+    // if (
+    //   tagFriends &&
+    //   tagFriends.filter(item => item !== undefined && item !== '').length >
+    //     0
+    // ) {
+    formData.append(
+      'Tag',
+      // JSON.stringify(
+      //   tagFriends.filter(item => item !== undefined && item !== ''),
+      // ),
+      JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
+    );
+    // }
+    if (
+      media?.some(m => m?.type === 'video/mp4') ||
+      media?.some(m => m.type === 'image/jpeg')
+    ) {
+      formData.append('type', 'MEDIA');
+      formData.append('caption', description);
+      if (media) {
+        media?.forEach(m =>
+          formData.append('media', {
+            uri: m?.uri,
+            type: m?.type,
+            name:
+              m?.type === 'image/jpeg'
+                ? `${Date.now()}.jpeg`
+                : `${Date.now()}.mp4`,
+          }),
+        );
+      }
+    } else if (media?.some(m => m?.type === 'audio/wav')) {
+      formData.append('type', 'YUDIO');
+      // formDataParam.append('isPublic', true);
+      formData.append('caption', media[0]?.description);
+      formData.append('title', media[0]?.title);
+
+      formData.append('thumbnail', {
+        uri: media[0]?.thumbnail,
+        type: 'image/jpeg',
+        name: `${Date.now()}.jpg`,
+      });
+
+      // Handle audio
+      formData.append('audio', {
+        uri: media[0]?.uri,
+        type: 'audio/wav',
+        name: `recording-${Date.now()}.wav`,
+      });
+    } else if (media?.some(m => m?.type === 'audio/mpeg')) {
+      formData.append('userId', 'cm60ql39f003l91r8l18bd80z');
+      formData.append('type', 'MUSIC');
+      formData.append('caption', description);
+
+      const thumbnailStat = await RNBlobUtil.fs.stat(thumbnail?.uri);
+      formData.append('thumbnail', {
+        uri: 'file://' + thumbnailStat.path,
+        type: thumbnail?.type,
+        name: thumbnail?.name,
+      });
+
+      // Convert audio URI
+      const audioStat = await RNBlobUtil.fs.stat(media[0]?.uri);
+      formData.append('audio', {
+        uri: 'file://' + audioStat.path,
+        type: media[0]?.type,
+        name: media[0]?.name,
+      });
+    } else {
+      formData.append('type', 'DOCUMENT');
+      formData.append('caption', description);
+
+      if (thumbnail) {
+        const thumbnailStat = await RNBlobUtil.fs.stat(thumbnail?.uri);
+        formData.append('thumbnail', {
+          uri: 'file://' + thumbnailStat.path,
+          type: thumbnail?.type,
+          name: thumbnail?.name,
+        });
+      } else {
+        formData.append('thumbnail', {
+          uri: media[0]?.thumbnail,
+          type: 'image/jpeg',
+          name: 'thumbnail.jpeg',
+        });
+      }
+
+      if (media[0]?.uri?.startsWith('content://')) {    //selecting from mobile
+        formData.append('document', {
+          uri: media[0].uri,
+          type: media[0]?.type,
+          name: media[0]?.name,
+        });
+      } else {
+        formData.append('document', {
+          uri: media[0].uri,
+          type: `application/${media[0]?.type}`,
+          name: media[0]?.name,
+        });
+      }
+    }
+
+    console.log('Form Data', formData);
+    try {
+      const result = await apiCall?.createNewPost(formData);
+      console.log('Successfully created Post', result?.data);
+    } catch (error) {
+      console.log('Error creating post', error);
+    }
+  };
 
   const pickFiles = async type => {
     if (type === 'audio') {
@@ -277,6 +236,8 @@ const CreatePost = () => {
       ]);
     }
   };
+
+  console.log("Media", media)
 
   return (
     <SafeAreaView style={styles?.container}>
@@ -437,6 +398,7 @@ const CreatePost = () => {
         <PostModal
           options={options}
           setOptions={setOptions}
+          setMedia={setMedia}
           content={
             options?.find(opt => opt?.type === 'gallery').active ? (
               <Gallery media={media} setMedia={setMedia} />
