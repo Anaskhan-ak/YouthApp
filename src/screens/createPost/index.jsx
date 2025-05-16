@@ -1,41 +1,28 @@
-import { BlurView } from '@react-native-community/blur';
 import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
-  FlatList,
-  Image,
-  ImageBackground,
   SafeAreaView,
   ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
 import {
   CameraIcon,
-  Cross,
   FileAudio,
-  FileIcon,
   FileImport,
-  FileMicIcon,
-  GalleryIcon,
+  GalleryIcon
 } from '../../assets/images/svgs';
-import YudioPlayer from '../../components/audio/YudioPlayer';
 import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import MultilineInput from '../../components/inputs/multilineInput';
-import PostModal from '../../components/modals/postModal';
-import { width } from '../../constant';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
-import AudioComponent from './components/audios';
-import CameraComponent from './components/camera';
-import FilesComponent from './components/files';
-import Gallery from './components/gallery';
+import FileSelectorButtons from './components/fileSelectors';
+import MediaUploader from './components/mediaUpload';
+import PostContentModal from './components/postContentModal';
 import { styles } from './styles';
 
 const CreatePost = () => {
@@ -160,7 +147,8 @@ const CreatePost = () => {
         });
       }
 
-      if (media[0]?.uri?.startsWith('content://')) {    //selecting from mobile
+      if (media[0]?.uri?.startsWith('content://')) {
+        //selecting from mobile
         formData.append('document', {
           uri: media[0].uri,
           type: media[0]?.type,
@@ -237,8 +225,6 @@ const CreatePost = () => {
     }
   };
 
-  console.log("Media", media)
-
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
@@ -267,149 +253,27 @@ const CreatePost = () => {
           maxChars={maxChars}
           postType={'post'}
         />
-        {options?.find(opt => opt?.type === 'audios').active &&
-          media?.length === 0 && (
-            <View style={styles?.selectFileContainer}>
-              <TouchableOpacity
-                style={styles?.selectFileButton}
-                onPress={() => pickFiles('audio')}>
-                <FileIcon />
-                <Text style={styles?.selectFileText}>Select from Files</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles?.selectFileButton}
-                onPress={() => {
-                  navigation.navigate('CreateYudio');
-                }}>
-                <FileMicIcon width={width * 0.05} height={width * 0.05} />
-                <Text style={styles?.selectFileText}>Record new Yudio</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        {options?.find(opt => opt?.type === 'files').active &&
-          media?.length === 0 && (
-            <View style={styles?.selectFileContainer}>
-              <TouchableOpacity
-                style={styles?.selectFileButton}
-                onPress={() => pickFiles('file')}>
-                <FileIcon />
-                <Text style={styles?.selectFileText}>Select from Files</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        {options?.find(opt => opt?.type === 'files').active && (
-          <View style={styles?.selectFileContainer}>
-            <TouchableOpacity
-              style={styles?.selectFileButton}
-              onPress={() => pickFiles('thumbnail')}>
-              <FileIcon />
-              <Text style={styles?.selectFileText}>Select Thumbnail</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        {media &&
-        (media?.some(m => m?.type === 'video/mp4') ||
-          media?.some(m => m.type === 'image/jpeg')) ? (
-          <FlatList
-            data={media}
-            renderItem={({item}) => (
-              <View style={{position: 'relative'}}>
-                <TouchableOpacity
-                  style={styles.cancelImage}
-                  onPress={() =>
-                    setMedia(prev =>
-                      prev.filter(media => media.uri !== item.uri),
-                    )
-                  }>
-                  <Cross width={width * 0.02} height={width * 0.02} />
-                </TouchableOpacity>
-                <Image source={{uri: item?.uri}} style={styles.mediaImage} />
-              </View>
-            )}
-            numColumns={4}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        ) : media?.some(m => m?.type === 'audio/mpeg') ? (
-          <View style={styles?.audioPlayerContainer}>
-            <YudioPlayer
-              audio={{
-                uri: media[0]?.uri,
-                type: media[0]?.type,
-                name: media[0]?.name,
-              }}
-            />
-            <TouchableOpacity
-              style={styles?.selectFileButton}
-              onPress={() => pickFiles('thumbnail')}>
-              <FileIcon />
-              <Text style={styles?.selectFileText}>Select Thumbnail</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <>
-            {media?.length > 0 && (
-              <View style={styles?.documentContainer}>
-                <ImageBackground
-                  style={styles?.thumbnailBackground}
-                  source={
-                    thumbnail
-                      ? {uri: thumbnail?.uri}
-                      : {uri: media[0]?.thumbnail}
-                  }>
-                  <BlurView
-                    style={styles?.blur}
-                    blurType="light"
-                    blurAmount={1}
-                    reducedTransparencyFallbackColor="white"
-                  />
-                  <TouchableOpacity
-                    style={styles.cancelImage}
-                    onPress={() => {
-                      setMedia([]);
-                      setThumbnail(null);
-                    }}>
-                    <Cross width={width * 0.02} height={width * 0.02} />
-                  </TouchableOpacity>
-                  <Image
-                    source={
-                      thumbnail
-                        ? {uri: thumbnail?.uri}
-                        : {uri: media[0]?.thumbnail}
-                    }
-                    style={styles?.thumbnailImage}
-                  />
-                </ImageBackground>
-                <View style={styles?.documentText}>
-                  <Text style={styles?.documentName}>
-                    {media[0]?.name.slice(0, 15).split('.')}
-                  </Text>
-                  <Text style={styles?.documentType}>
-                    {media[0]?.type?.split('/').pop().toUpperCase()}
-                  </Text>
-                </View>
-              </View>
-            )}
-          </>
-        )}
+        <FileSelectorButtons
+          type={options.find(opt => opt.active)?.type}
+          onPickFile={pickFiles}
+          media={media}
+          thumbnail={thumbnail}
+          pickFiles={pickFiles}
+        />
+        <MediaUploader
+          media={media}
+          thumbnail={thumbnail}
+          setMedia={setMedia}
+          setThumbnail={setThumbnail}
+        />
         {drawer && <Drawer />}
       </ScrollView>
       {!drawer && (
-        <PostModal
+        <PostContentModal
           options={options}
           setOptions={setOptions}
           setMedia={setMedia}
-          content={
-            options?.find(opt => opt?.type === 'gallery').active ? (
-              <Gallery media={media} setMedia={setMedia} />
-            ) : options?.find(opt => opt?.type === 'camera').active ? (
-              <CameraComponent media={media} setMedia={setMedia} />
-            ) : options?.find(opt => opt?.type === 'audios').active ? (
-              <AudioComponent media={media} setMedia={setMedia} />
-            ) : (
-              <FilesComponent media={media} setMedia={setMedia} />
-            )
-          }
+          media={media}
         />
       )}
       <CreateButton title="Create New Post" onPress={handleForm} />
