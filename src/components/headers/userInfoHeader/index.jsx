@@ -1,5 +1,6 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { images } from '../../../assets/images';
 import { BlackDropdown, BlueTick, GradientLocationIcon, PublicIcon, TagFriendsIcon } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -13,7 +14,7 @@ const UserInfoHeader = props => {
         source={
           props?.image
             ? props?.image
-            : require('../../../assets/images/SignupImage.jpeg')
+            : images?.defaultProfilePicture
         }
         style={styles?.image}
       />

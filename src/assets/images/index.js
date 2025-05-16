@@ -13,4 +13,6 @@ export const images = {
     otp:require('./otp.png'),
     emailVerificationLogo:require('./emailVerificationLogo.png'),
     otpVerification:require('./otpVerification.png'),
+    defaultProfilePicture : require('../images/DefaultProfilePicture.png'),
+    defaultPicture : require('../images/DefaultPicture.png'),
 }

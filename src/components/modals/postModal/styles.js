@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
   gradientBar: {
     borderTopLeftRadius: width * 0.04,
     borderTopRightRadius: width * 0.04,
-    padding: width * 0.04,
+    paddingVertical: width * 0.04,
+    paddingHorizontal: width * 0.07,
   },
 });

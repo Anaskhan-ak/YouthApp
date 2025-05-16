@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors?.white,
   },
   userInfoHeader: {
-    marginVertical: width * 0.03,
+    marginBottom: width * 0.03,
   },
   content: {
     padding: width * 0.03,

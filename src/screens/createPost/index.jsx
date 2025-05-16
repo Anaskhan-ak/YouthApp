@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
+import { images } from '../../assets/images';
 import {
   CameraIcon,
   FileAudio,
@@ -238,7 +239,7 @@ const CreatePost = () => {
         <View style={styles?.userInfoHeader}>
           <UserInfoHeader
             userName={'Sannya Wasim'}
-            image={require('../../assets/images/SignupImage.jpeg')}
+            image={images?.defaultProfilePicture}
           />
         </View>
         <MultilineInput
