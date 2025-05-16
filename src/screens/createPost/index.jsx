@@ -214,16 +214,18 @@ const CreatePost = () => {
         allowMultiSelection: false,
       });
       // console.log('Res', res);
-      setMedia(prev => [
-        ...prev,
+      setMedia( [
         {
           uri: res?.uri,
           type: res?.type,
           name: res?.name,
-        },
+          mediaType : 'FILE'
+        }
       ]);
     }
   };
+
+  // console.log("Media", media)
 
   return (
     <SafeAreaView style={styles?.container}>

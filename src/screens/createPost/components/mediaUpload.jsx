@@ -1,12 +1,12 @@
 import { BlurView } from '@react-native-community/blur';
 import {
-    FlatList,
-    Image,
-    ImageBackground,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { Cross } from '../../../assets/images/svgs';
 import YudioPlayer from '../../../components/audio/YudioPlayer';
@@ -39,29 +39,34 @@ const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
           keyExtractor={(item, index) => index.toString()}
         />
       );
-    } else if (media?.some(m => m?.type === 'audio/mpeg') && thumbnail) {
+    } else if (
+      (media?.some(m => m?.type === 'audio/mpeg') && thumbnail) || // music file selected
+      media?.some(m => m?.type === 'audio/wav') //yudio file selected
+    ) {
       return (
         <View style={styles?.audioPlayerContainer}>
           <TouchableOpacity
             style={styles.cancelImage}
-            onPress={() =>{
-              setMedia([])
-              setThumbnail(null)
-            }
-            }>
+            onPress={() => {
+              setMedia([]);
+              setThumbnail(null);
+            }}>
             <Cross width={width * 0.02} height={width * 0.02} />
           </TouchableOpacity>
           <YudioPlayer
             audio={{
               uri: media[0]?.uri,
               type: media[0]?.type,
-              name: media[0]?.name,
+              name: media[0]?.name ? media[0]?.name : 'audio.wav',
             }}
           />
         </View>
       );
     } else {
-      if (media?.type?.startsWith('application/') && thumbnail) {
+      if (
+        (media?.some(m => m?.mediaType === 'FILE') && thumbnail) ||
+        media?.some(m => m.postType === 'DOCUMENT')
+      ) {
         return (
           <View style={styles?.documentContainer}>
             <ImageBackground
@@ -143,8 +148,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginBottom: height * 0.1,
     width: width * 0.935,
+    marginTop : height * 0.02
   },
   thumbnailBackground: {
     width: width * 0.4,

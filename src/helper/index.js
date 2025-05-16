@@ -45,13 +45,20 @@ export const googleSignIn = async () => {
 };
 
 export const generateAudioWaveforms = async (audio) => {
-    try {
-      const formData = new FormData();
-      formData.append('audio', audio);
-      const audioMetaDataPayload = await apiCall?.generateWaveforms(formData);
-      // console.log('audioMetaDataPayload', audioMetaDataPayload);
-      return audioMetaDataPayload;
-    } catch (error) {
-      console.error('Error fetching audio metadata:', error);
+  try {
+    if (!audio || !audio.uri) {
+      console.warn('Invalid audio passed to generateAudioWaveforms');
+      return;
     }
-  };
+
+    await new Promise(resolve => setTimeout(resolve, 50)); // prevent premature API call
+
+    const formData = new FormData();
+    formData.append('audio', audio);
+
+    const audioMetaDataPayload = await apiCall?.generateWaveforms(formData);
+    return audioMetaDataPayload;
+  } catch (error) {
+    console.error('Error fetching audio metadata:', error);
+  }
+};

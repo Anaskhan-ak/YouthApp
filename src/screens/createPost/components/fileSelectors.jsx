@@ -14,7 +14,11 @@ const FileSelectorButtons = ({
 }) => {
   const navigation = useNavigation();
   // console.log("Thumbnail", thumbnail)
-  if (type === 'audios' && !(media?.some(m => m?.type === 'audio/mpeg') && thumbnail)) {
+  if (
+    type === 'audios' &&
+    !(media?.some(m => m?.type === 'audio/mpeg') && thumbnail) && // no music file selected
+    !media?.some(m => m?.type === 'audio/wav') // no yudio file selected
+  ) {
     return (
       <View style={styles?.container}>
         <TouchableOpacity
@@ -51,14 +55,24 @@ const FileSelectorButtons = ({
     );
   }
 
-  if (type === 'files') {
+  if (type === 'files' && 
+    !(media?.some(m => m?.type?.startsWith('application/')) && thumbnail) // no file from mobile selected
+    && !media?.some(m => m?.postType === 'DOCUMENT')  // no file from api
+  ) {
     return (
       <View style={styles?.container}>
         <TouchableOpacity
           style={styles?.button}
           onPress={() => onPickFile('file')}>
           <FileIcon />
-          <Text style={styles?.text}>Select from Files</Text>
+          <Text style={styles?.text}>
+            {' '}
+            {media?.length === 0
+              ? 'Select from Files'
+              : media[0]?.name?.length > 40
+              ? `${media[0]?.name?.slice(0, 40)}...`
+              : `${media[0]?.name}`}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles?.button}

@@ -10,10 +10,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
-import {
-  PauseIcon,
-  PlayIcon,
-} from '../../../assets/images/svgs';
+import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
 import { generateAudioWaveforms } from '../../../helper';
 import { colors } from '../../../utils/colors';
@@ -328,21 +325,22 @@ import { colors } from '../../../utils/colors';
 //   0.3578941834568762, 0.3554285135458403, 0.6979039026148278,
 // ];
 
-const YudioPlayer = ({
-    audio
-}) => {
+const YudioPlayer = ({audio}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [waveform, setWaveform] = useState([])
+  const [waveform, setWaveform] = useState([]);
   const fixedBarsCount = 35;
 
   useEffect(() => {
+    console.log("Audio", audio)
   const loadWaveform = async () => {
     if (!audio || !audio.uri) return;
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 50)); // wait 50ms
+      // Optional: add small delay to let state fully update
+      await new Promise(resolve => setTimeout(resolve, 50));
+
       const result = await generateAudioWaveforms(audio);
       setWaveform(result);
     } catch (err) {
@@ -350,9 +348,8 @@ const YudioPlayer = ({
     }
   };
 
-  loadWaveform();
+  loadWaveform()
 }, [audio]);
-
 
 
   useEffect(() => {
@@ -440,33 +437,33 @@ const YudioPlayer = ({
           <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
           <Text style={styles.timeText}>{formatTime(duration)}</Text>
         </View>
-        {
-          waveform?.length >0 ?
+        {waveform?.length > 0 ? (
           <View style={styles.waveformContainer}>
-          <Svg
-            height={barHeightScale - 30}
-            width="100%"
-            viewBox={`0 0 ${waveformWidth} ${barHeightScale}`}>
-            {mappedWaveform.map((value, index) => {
-              const barHeight = Math.max(value * barHeightScale, 3);
-              const isFilled = index / fixedBarsCount <= progress;
-              return (
-                <Rect
-                  key={index}
-                  x={index * (barWidth + 2)}
-                  y={(barHeightScale - barHeight) / 2}
-                  width={barWidth}
-                  height={barHeight}
-                  fill={isFilled ? '#36AFD6' : '#D3D3D3'}
-                  rx={barWidth / 2}
-                  ry={barWidth / 2}
-                />
-              );
-            })}
-          </Svg>
-        </View> :
-        <ActivityIndicator size={'small'} color={colors?.RGB1}/>
-        }
+            <Svg
+              height={barHeightScale - 30}
+              width="100%"
+              viewBox={`0 0 ${waveformWidth} ${barHeightScale}`}>
+              {mappedWaveform.map((value, index) => {
+                const barHeight = Math.max(value * barHeightScale, 3);
+                const isFilled = index / fixedBarsCount <= progress;
+                return (
+                  <Rect
+                    key={index}
+                    x={index * (barWidth + 2)}
+                    y={(barHeightScale - barHeight) / 2}
+                    width={barWidth}
+                    height={barHeight}
+                    fill={isFilled ? '#36AFD6' : '#D3D3D3'}
+                    rx={barWidth / 2}
+                    ry={barWidth / 2}
+                  />
+                );
+              })}
+            </Svg>
+          </View>
+        ) : (
+          <ActivityIndicator size={'small'} color={colors?.RGB1} />
+        )}
       </View>
     </View>
   );

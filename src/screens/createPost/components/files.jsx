@@ -22,12 +22,13 @@ const FilesComponent = ({media, setMedia}) => {
         userId: 'cm60ql39f003l91r8l18bd80z',
         type: 'DOCUMENT',
       });
-      // console.log("Result", result)
+      // console.log("Result", result[0])
       setDocuments(result?.map(doc => ({
         thumbnail : doc?.documents?.thumbnail,
         name : doc?.documents?.caption,
         type : doc?.documents?.url?.split('.')?.pop().toUpperCase(),
-        document : doc?.documents?.url
+        document : doc?.documents?.url,
+        postType : doc?.type
       })));
     };
     fetchDocuments();
@@ -38,14 +39,14 @@ const FilesComponent = ({media, setMedia}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          setMedia(prev => [
-            ...prev,
+          setMedia([
             {
               uri: item?.document,
               type: item?.type?.toLowerCase(),
               name: item?.name,
               thumbnail: item?.thumbnail,
-            },
+              postType : item?.postType
+            }
           ]);
         }}
         style={styles?.itemContainer}>
