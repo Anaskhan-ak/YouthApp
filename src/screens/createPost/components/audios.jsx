@@ -139,6 +139,18 @@ const AudioComponent = ({media, setMedia}) => {
       </TouchableOpacity>
     );
   };
+
+  const HeaderComponent = () => {
+      return (
+        <View style={styles?.header}>
+            <Text style={styles?.headerText}>Recently Uploaded</Text>
+          <TouchableOpacity>
+            <Text style={styles?.headerText}>View all</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+
   return (
     <>
       {yudios?.length > 0 ? (
@@ -146,6 +158,7 @@ const AudioComponent = ({media, setMedia}) => {
           data={yudios}
           renderItem={renderItem}
           ListEmptyComponent={<EmptyComponent text="No yudios to show" />}
+          ListHeaderComponent={<HeaderComponent/>}
         />
       ) : (
         <View style={styles?.loader}>
@@ -203,5 +216,15 @@ const styles = StyleSheet.create({
     flex : 1,
     alignItems : 'center',
     justifyContent : "center"
+  },
+   header : {
+    flexDirection : 'row',
+    justifyContent : 'space-between',
+    alignItems : "center",
+    padding : width * 0.02
+  },
+  headerText : {
+    fontFamily : fonts?.montserratBold,
+    fontSize : width * 0.04
   }
 });

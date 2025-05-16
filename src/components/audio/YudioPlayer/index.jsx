@@ -333,24 +333,23 @@ const YudioPlayer = ({audio}) => {
   const fixedBarsCount = 35;
 
   useEffect(() => {
-    console.log("Audio", audio)
-  const loadWaveform = async () => {
-    if (!audio || !audio.uri) return;
+    console.log('Audio', audio);
+    const loadWaveform = async () => {
+      if (!audio || !audio.uri) return;
 
-    try {
-      // Optional: add small delay to let state fully update
-      await new Promise(resolve => setTimeout(resolve, 50));
+      try {
+        // Optional: add small delay to let state fully update
+        await new Promise(resolve => setTimeout(resolve, 50));
 
-      const result = await generateAudioWaveforms(audio);
-      setWaveform(result);
-    } catch (err) {
-      console.error('Waveform generation error:', err);
-    }
-  };
+        const result = await generateAudioWaveforms(audio);
+        setWaveform(result);
+      } catch (err) {
+        console.error('Waveform generation error:', err);
+      }
+    };
 
-  loadWaveform()
-}, [audio]);
-
+    loadWaveform();
+  }, [audio]);
 
   useEffect(() => {
     SoundPlayer.loadUrl(audio?.uri);
