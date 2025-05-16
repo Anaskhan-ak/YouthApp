@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors?.white,
   },
-  userInfoHeader : {
-    marginVertical  :width * 0.03
+  userInfoHeader: {
+    marginVertical: width * 0.03,
   },
   content: {
     padding: width * 0.03,
@@ -55,9 +55,9 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.02,
     margin: width * 0.01,
     paddingVertical: height * 0.029,
-    width : width * 0.3,
-    height : height * 0.18,
-    resizeMode : "cover",
+    width: width * 0.3,
+    height: height * 0.18,
+    resizeMode: 'cover',
   },
   uploadThumbnailText: {
     color: colors?.textGray,
@@ -71,7 +71,23 @@ export const styles = StyleSheet.create({
     paddingHorizontal: width * 0.02,
     paddingVertical: height * 0.005,
   },
-  Ai: {},
+  Ai: {
+    borderColor: colors?.gray,
+    borderWidth: width * 0.005,
+    padding: width * 0.01,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: width * 0.04,
+    borderWidth: width * 0.002,
+    marginHorizontal: width * 0.01,
+  },
+  AiText: {
+    fontSize: width * 0.015,
+    fontFamily: fonts?.montserratBold,
+    marginLeft: width * 0.01,
+    color: colors?.textGray,
+  },
   character: {
     color: colors?.gray12,
     fontFamily: fonts?.montserratMedium,
@@ -133,11 +149,11 @@ export const styles = StyleSheet.create({
     // backgroundColor : 'red',
     padding: width * 0.02,
   },
-  redTickButton : {
-    alignSelf : 'center',
-    marginTop : -height * 0.02
+  redTickButton: {
+    alignSelf: 'center',
+    marginTop: -height * 0.02,
   },
-  yudioPlayerContainer : {
-    marginVertical : height * 0.02
-  }
+  yudioPlayerContainer: {
+    marginVertical: height * 0.02,
+  },
 });

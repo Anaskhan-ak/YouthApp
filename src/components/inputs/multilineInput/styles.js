@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
   button : {
     borderColor : colors?.gray,
     borderWidth : width * 0.005,
-    padding : width * 0.01,
+    // padding : width * 0.01,
     flexDirection : "row",
     justifyContent : "space-between",
     alignItems : 'center',

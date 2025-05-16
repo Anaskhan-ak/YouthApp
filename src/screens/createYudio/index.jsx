@@ -19,7 +19,7 @@ import {
   GradientBlueMic,
   GradientRedMic,
   GradientRedTick,
-  RewriteWithAi,
+  Sparkles,
   UploadThumbnail,
 } from '../../assets/images/svgs';
 import YudioPlayer from '../../components/audio/YudioPlayer';
@@ -283,7 +283,8 @@ const CreateYudio = () => {
             />
             <View style={styles?.inputDescFooter}>
               <TouchableOpacity style={styles?.Ai}>
-                <RewriteWithAi />
+                <Sparkles width={10} height={10}/>
+                <Text style={styles?.AiText}>Rewrite with AI</Text>
               </TouchableOpacity>
               <Text style={styles?.character}>350/350</Text>
             </View>
