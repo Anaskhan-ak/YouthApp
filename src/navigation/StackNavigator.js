@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CreateEvent from '../screens/createEvent';
 import CreatePost from '../screens/createPost';
 import CreateYudio from '../screens/createYudio';
 import EmailVerification from '../screens/emailVerification';
@@ -19,7 +20,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="CreatePost">
+    <Stack.Navigator initialRouteName="CreateEvent">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -98,6 +99,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="CreatePost"
         component={CreatePost}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateEvent"
+        component={CreateEvent}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

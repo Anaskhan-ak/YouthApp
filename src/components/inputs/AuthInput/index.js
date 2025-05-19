@@ -1,24 +1,19 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import React from 'react';
-
-const Width = Dimensions.get('window').width;
-import {useState} from 'react';
+import { useState } from 'react';
+import { Dimensions, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import {
   Calendar,
   Error,
+  GrayLocationIcon,
+  GrayTimeIcon,
+  GrayWalletIcon,
   PasswordHide,
   PasswordShow,
 } from '../../../assets/images/svgs';
-import {height, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {styles} from './styles';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { styles } from './styles';
+
+const Width = Dimensions.get('window').width;
 
 const AuthInput = ({
   icon,
@@ -30,18 +25,22 @@ const AuthInput = ({
   disable,
   onPress,
   error,
-  type
+  type,
+  inputStyle,
+  keyboardType,
 }) => {
   const [hidePass, setHidePass] = useState(true);
   const handlePress = () => {
     setHidePass(!hidePass);
   };
   return (
-    <View style={styles?.container}>
+    <View style={[styles?.container, inputStyle]}>
       {/* <Icon name={icon} size={20} color={'#A3A3A3'} /> */}
-
+      {icon === 'location' && <GrayLocationIcon />}
+      {(icon === 'wallet' || icon === 'cost') && <GrayWalletIcon />}
+      {icon === 'time' && <GrayTimeIcon />}
       <TextInput
-        editable={disable?false:true}
+        editable={disable ? false : true}
         placeholderTextColor={colors?.black}
         secureTextEntry={secureTextEntry && hidePass ? true : false}
         style={styles?.input}
@@ -49,11 +48,17 @@ const AuthInput = ({
         value={value}
         placeholder={placeholder}
         onBlur={onBlur}
-        dataDetectorTypes={type&&type}
+        dataDetectorTypes={type && type}
+        keyboardType={keyboardType && keyboardType}
       />
-      {icon === 'calendar' && (
+      {(icon === 'calendar' || icon === 'time') && (
         <TouchableOpacity onPress={onPress} style={{right: 10}}>
           <Calendar />
+        </TouchableOpacity>
+      )}
+      {icon === 'cost' && (
+        <TouchableOpacity onPress={onPress} style={{right: 10}}>
+          <Text>Youth Coin</Text>
         </TouchableOpacity>
       )}
       {error && (

@@ -1,7 +1,7 @@
-import {Platform, StyleSheet} from 'react-native';
-import {height, width} from '../../../constant';
-import {fonts} from '../../../utils/fonts/index';
-import {colors} from '../../../utils/colors';
+import { Platform, StyleSheet } from 'react-native';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts/index';
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,4 +20,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts?.montserratRegular,
     alignItems: 'center',
   },
+  text : {
+    fontSize: width * 0.03,
+    color: colors.black,
+    fontFamily: fonts?.montserratRegular,
+  }
 });

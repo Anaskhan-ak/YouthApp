@@ -20,6 +20,7 @@ import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
 import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
+import EditEventThumbnail from './EditEventThumbnail.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import FacebookIcon from './FacebookIcon.svg';
@@ -36,6 +37,9 @@ import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
+import GrayLocationIcon from './GrayLocationIcon.svg';
+import GrayTimeIcon from './GrayTimeIcon.svg';
+import GrayWalletIcon from './GrayWalletIcon.svg';
 import GreenCheckMark from './greenCheckMark.svg';
 import Home from './home.svg';
 import InactiveComment from './InactiveComment.svg';
@@ -106,10 +110,15 @@ export {
   DontShowLandingWidget,
   DropDown,
   DropDownIcon,
+  EditEventThumbnail,
   Error,
   ErrorWhite,
   FacebookIcon,
-  FileAudio, FileIcon, FileImport, FileMicIcon, GalleryIcon,
+  FileAudio,
+  FileIcon,
+  FileImport,
+  FileMicIcon,
+  GalleryIcon,
   Google,
   GradientBlueMic,
   GradientCalender,
@@ -117,8 +126,9 @@ export {
   GradientDropRightCircle,
   GradientLocationIcon,
   GradientRedMic,
-  GradientRedTick,
-  GreenCheckMark,
+  GradientRedTick, GrayLocationIcon,
+  GrayTimeIcon,
+  GrayWalletIcon, GreenCheckMark,
   Home,
   InactiveComment,
   InactiveDownload,
@@ -153,7 +163,9 @@ export {
   SnapchatIcon,
   Sparkles,
   TagFriendsIcon,
-  TiktokIcon, ToggleCameraIcon, TwitterIcon,
+  TiktokIcon,
+  ToggleCameraIcon,
+  TwitterIcon,
   TwitterIconRound,
   UploadThumbnail,
   WhatsappIcon,

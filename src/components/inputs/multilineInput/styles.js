@@ -6,12 +6,12 @@ import { fonts } from '../../../utils/fonts';
 export const styles = StyleSheet.create({
   container: {
     height: height * 0.18,
-    backgroundColor: colors?.greyBackground,
+    backgroundColor: colors?.extraLightGrey,
     borderRadius: width * 0.02,
     flex: 2,
   },
   input: {
-    backgroundColor: colors?.greyBackground,
+    backgroundColor: colors?.extraLightGrey,
     color: colors?.gray12,
     borderRadius: width * 0.02,
     padding: width * 0.03,
