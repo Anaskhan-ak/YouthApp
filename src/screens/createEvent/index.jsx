@@ -3,10 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { useState } from 'react';
 import {
-    Image,
-    ScrollView,
-    TouchableOpacity,
-    View
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { images } from '../../assets/images';
 import { EditEventThumbnail } from '../../assets/images/svgs';
@@ -16,6 +16,7 @@ import GradientHeader from '../../components/headers/gradientHeader';
 import AuthInput from '../../components/inputs/authInput';
 import MultilineInput from '../../components/inputs/multilineInput';
 import { width } from '../../constant';
+import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import { styles } from './styles';
 
@@ -58,8 +59,38 @@ const CreateEvent = () => {
     }
   };
 
-  const handleForm = () => {
-    console.log('Event Details', details);
+  const handleForm = async () => {
+    // console.log('Event Details', details);
+    const formData = new FormData();
+      formData.append('type', 'EVENT');
+      formData.append('isPublic', 'PUBLIC');
+      formData.append('caption', details?.description);
+      formData.append('eventTitle', details?.name);
+      // formData.append('cost', parseFloat(`${eventCost}.12`));
+      formData.append('eventLocation', details?.location);
+      formData.append('location', details?.location);
+      formData.append('eventDescription', details?.description);
+      formData.append('eventDay', moment(details?.time)?.format('dddd'));
+      formData.append('eventTime', details?.time);
+      formData.append('eventType', 'EVENT');
+      formData.append('walletAddress', details?.walletAdress);
+      formData.append('media', {
+        uri: details?.thumbnail?.uri,
+        type: details?.thumbnail?.type,
+        name: details?.thumbnail?.name,
+      });
+      formData.append('thumbnail', {
+        uri: details?.thumbnail?.uri,
+        type: details?.thumbnail?.type,
+        name: details?.thumbnail?.name,
+      });
+      console.log("Form data", formData)
+    try {
+       const response = await apiCall?.createNewPost(formData)
+      console.log("Successfully created event post", response)
+    } catch (error) {
+      console.log("Error creating event post", error)
+    }
   };
   return (
     <View style={styles?.container}>

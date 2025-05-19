@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CreateEvent from '../screens/createEvent';
 import CreatePost from '../screens/createPost';
+import CreateStory from '../screens/createStory';
 import CreateYudio from '../screens/createYudio';
 import EmailVerification from '../screens/emailVerification';
 import FindFriends from '../screens/findFriends';
@@ -104,6 +105,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="CreateEvent"
         component={CreateEvent}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateStory"
+        component={CreateStory}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>
