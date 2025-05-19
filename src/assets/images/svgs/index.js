@@ -11,6 +11,7 @@ import BlackForwardAudioButton from './BlackBackwardButton.svg';
 import BlackDropdown from './BlackDropdown.svg';
 import BlackRewindAUdioButton from './BlackForwardButton.svg';
 import BlackLike from './BlackLike.svg';
+import BlackMultipleSelection from './BlackMultipleSelection.svg';
 import BlackShare from './BlackShare.svg';
 import BlackYouthLogo from './BlackYouthLogo.svg';
 import BlueTick from './BlueTick.svg';
@@ -81,6 +82,7 @@ import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
+import WhiteCameraIcon from './WhiteCameraIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import YouthIcon from './YouthIcon.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
@@ -98,8 +100,7 @@ export {
   BlackBackArrow,
   BlackDropdown,
   BlackForwardAudioButton,
-  BlackLike,
-  BlackRewindAUdioButton,
+  BlackLike, BlackMultipleSelection, BlackRewindAUdioButton,
   BlackShare,
   BlackYouthLogo,
   BlueTick,
@@ -168,8 +169,7 @@ export {
   TwitterIcon,
   TwitterIconRound,
   UploadThumbnail,
-  WhatsappIcon,
-  WhiteLeftArrow,
+  WhatsappIcon, WhiteCameraIcon, WhiteLeftArrow,
   YouthIcon,
   YoutubeIcon,
   Yudio
