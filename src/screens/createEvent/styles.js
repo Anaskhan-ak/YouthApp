@@ -34,4 +34,8 @@ export const styles = StyleSheet.create({
     right: width * 0.01,
     top: width * 0.01,
   },
+  errorText: {color: 'red', 
+    fontSize: width * 0.03,
+    marginLeft : width * 0.01
+  },
 });

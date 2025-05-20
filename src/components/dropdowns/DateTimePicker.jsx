@@ -6,8 +6,10 @@ const DateTimePicker = ({
   setShowDate,
 }) => {
   const handleDateConfirm = datetime => {
-    console.log('Date Time', new Date(datetime).toISOString());
-    setSelectedDate(new Date(datetime).toISOString());
+    // console.log('Date Time', new Date(datetime).toISOString());
+    setSelectedDate('time', new Date(datetime).toISOString(), {
+      shouldValidate: true,
+    });
     setShowDate(false);
   };
 
