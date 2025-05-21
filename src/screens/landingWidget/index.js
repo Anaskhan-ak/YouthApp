@@ -96,13 +96,13 @@ const LandingWidget = ({navigation}) => {
       />
       <SafeAreaView style={styles?.container}>
         <ScrollView contentContainerStyle={styles?.scrollView}>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
-              navigation.replace('Dashboard', {screen: 'Home'});
+              navigation.replace('Home');
             }}
             style={styles?.skipButton}>
             <Text style={styles?.skiptetxt}>Skip it</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <Text style={styles?.GreetText}>Hi,</Text>
           <Text style={[styles?.GreetText, {marginTop: -height * 0.025}]}>
             {userData?.firstName}

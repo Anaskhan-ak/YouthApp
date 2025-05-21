@@ -113,3 +113,35 @@ export const homeCategoryOptions = [
     icon: null,
   },
 ];
+export const sideBottomSheetOptions = [
+  {
+    id: 'post',
+    title: 'Post',
+    desc: 'To make sure your post reaches the right people...',
+  },
+  {
+    id: 'moments',
+    title: 'Moments',
+    desc: 'To make sure your Moments reach the right people...',
+  },
+  {
+    id: 'yudio',
+    title: 'Yudio',
+    desc: 'To make sure your Yudio reaches the right people...',
+  },
+  {
+    id: 'story',
+    title: 'Story',
+    desc: 'Share your Daily best moments with the friends...',
+  },
+  {
+    id: 'live',
+    title: 'Live',
+    desc: 'Go live and share more moments and values...',
+  },
+  {
+    id: 'event',
+    title: 'Event',
+    desc: 'Arrange an event with friends in your city...',
+  },
+];

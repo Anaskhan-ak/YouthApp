@@ -81,6 +81,7 @@ import Notification from './notification.svg';
 import Chat from './chat.svg';
 import Plus from './plus.svg';
 import Trending from './trending.svg';
+import Gallery from './gallery.svg';
 
 export {
   ActiveComment,
@@ -166,5 +167,6 @@ export {
   Notification,
   Chat,
   Plus,
-  Trending
+  Trending,
+  Gallery
 };

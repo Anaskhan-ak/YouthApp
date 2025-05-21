@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.01,
     justifyContent: 'center',
     alignSelf: 'flex-end',
-    marginTop: height * 0.0225,
+    marginTop: Platform?.OS==='ios'?height * 0.045:height * 0.0225,
     marginRight: width * 0.045,
   },
   skiptetxt: {
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     fontSize: width * 0.15,
     fontFamily: fonts?.montserratExtraBold,
     marginLeft: width * 0.04,
-    marginTop: height * 0.03,
+    marginTop: height * 0.01,
   },
   welcomeBox: {
     flexDirection: 'row',

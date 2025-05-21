@@ -19,6 +19,7 @@ import YudioCard from './components/yudioCard';
 import {styles} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StatusBar} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const Yudios = ({route}) => {
   // const {yudio} = route?.params;
@@ -26,6 +27,7 @@ const Yudios = ({route}) => {
   const [showFullText, setShowFullText] = useState(false);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
   useEffect(() => {
     setLoading(true);
     const fetchYudios = async () => {
@@ -160,7 +162,9 @@ const Yudios = ({route}) => {
       />
       {/* Header */}
       <View style={styles?.header}>
-        <TouchableOpacity style={styles?.headerIcon}>
+        <TouchableOpacity
+          onPress={() => navigation?.goBack()}
+          style={styles?.headerIcon}>
           <BlackBackArrow />
         </TouchableOpacity>
         {['For You', 'Following', 'Trending', 'Live']?.map(item => {

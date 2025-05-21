@@ -1,19 +1,20 @@
-import {View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {View, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors} from '../../../../utils/colors';
-import {height, width} from '../../../../constant';
 import {sideBarOptions} from '../../../../utils/string';
 import {styles} from './styles';
 
-const SideBar = ({}) => {
-const handlePress=()=>{
-
-    } 
+const SideBar = ({refRBSheet}) => {
+  const handlePress = item => {
+    console.log("Ref:", refRBSheet?.current);
+    // if (item?.func === 'openSheet') {
+      refRBSheet?.current?.snapToIndex(0);
+    // }
+  };
   return (
     <View style={styles?.container}>
       {sideBarOptions?.map(item => (
-        <TouchableOpacity onPress={handlePress}>
+        <TouchableOpacity onPress={() => handlePress(item)}>
           <LinearGradient
             colors={[colors?.RGB2, colors?.RGB1]}
             style={styles?.imageBorder}>

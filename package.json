@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^5",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-clipboard/clipboard": "^1.16.2",
     "@react-native-community/blur": "^4.4.1",
@@ -35,7 +36,7 @@
     "react-native-animatable": "^1.4.0",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-audio-record": "^0.2.2",
-    "react-native-contacts": "7.0.8",
+    "react-native-contacts": "8.0.0",
     "react-native-country-codes-picker": "^2.3.5",
     "react-native-date-picker": "^5.0.12",
     "react-native-device-info": "^14.0.4",
