@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     position: 'absolute',
-    bottom: height * 0.04,
+    bottom: height * 0.025,
     marginHorizontal: width * 0.02,
   },
   homeView: {

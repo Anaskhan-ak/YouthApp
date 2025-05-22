@@ -1,5 +1,5 @@
 import {height, width} from '../../../../constant';
-import {StyleSheet} from 'react-native';
+import {ImageBackground, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,9 +9,9 @@ export const styles = StyleSheet.create({
     gap: 10,
     marginHorizontal: width * 0.06,
   },
-  imageBorder: {
-    width: width * 0.1,
-    height: width * 0.1,
+  btn: {
+    width: width * 0.09,
+    height: width * 0.09,
     borderRadius: width * 0.12,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from '../../../../utils/colors';
@@ -14,7 +14,7 @@ const CategorySelector = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {homeCategoryOptions?.map(item => {
         const isActive = category === item?.id;
         return (
@@ -45,8 +45,7 @@ const CategorySelector = () => {
           </TouchableOpacity>
         );
       })}
-    </SafeAreaView>
-  );
+    </View> );
 };
 
 export default CategorySelector;

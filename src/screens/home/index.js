@@ -1,4 +1,4 @@
-import {View, Text, Platform} from 'react-native';
+import {View, Text, Platform, StatusBar} from 'react-native';
 import React, {useRef} from 'react';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import HomeHeader from '../../components/headers/homeHeader';
@@ -15,13 +15,15 @@ const Home = () => {
   const refRBSheet = useRef(null);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors?.white}}>
+      <StatusBar translucent backgroundColor={'transparent'}></StatusBar>
       <LinearGradient
         colors={[colors?.RGB3, colors?.RGB4]}
-        style={{marginTop: Platform?.OS === 'ios' && -height * 0.08}}>
+        style={{marginTop: Platform?.OS === 'ios' && -height * 0.08}}
+        >
         <HomeHeader />
         <CategorySelector />
       </LinearGradient>
-      <BlurView
+      {/* <BlurView
         style={{
           position: 'absolute',
           top: height * 0.19,
@@ -32,7 +34,7 @@ const Home = () => {
         blurType="light"
         blurAmount={10}
         reducedTransparencyFallbackColor="white"
-      />
+      /> */}
       <SideBar refRBSheet={refRBSheet} />
       <RNBottomSheet sheetRef={refRBSheet} />
       <BottomTabNavigator />

@@ -8,10 +8,11 @@ export const styles = StyleSheet.create({
       justifyContent: 'space-between',
       paddingHorizontal: 10,
       height: Platform?.OS === 'ios' && height * 0.15,
+       paddingVertical:Platform?.OS==='android'&&height*0.014
     },
     buttonWrapper: {
       width: '32%',
-      marginTop: Platform?.OS === 'ios' && height * 0.035,
+      marginTop: Platform?.OS === 'ios' && height * 0.1,
     },
     button: {
       alignItems: 'center',
