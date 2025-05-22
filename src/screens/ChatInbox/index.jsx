@@ -19,7 +19,7 @@ const ChatInbox = () => {
     <View style={styles?.container}>
       <InboxHeader
         title="Chat"
-        groupIcon={true}
+        onGroupIconPress={() => navigation.navigate('NewChatGroup')}
         backPress={() => navigation?.goBack()}
         onNewChatIconPress={() => navigation.navigate('NewChat')}
       />

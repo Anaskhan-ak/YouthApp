@@ -18,8 +18,8 @@ export const styles = StyleSheet.create({
     title : {
         fontFamily : fonts?.montserratExtraBold,
         color : colors?.text,
-        fontSize : width * 0.055,
-        flex : 0.4,
+        fontSize : width * 0.05,
+        flex : 0.6,
         textAlign : "center"
     },
     backButton : {
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     },
     buttonContainer : {
         flexDirection : "row",
-        alignItems : "center",
+        alignItems : "flex-end",
         justifyContent : "center",
     },
     button : {
@@ -41,6 +41,5 @@ export const styles = StyleSheet.create({
         padding : width * 0.01,
         alignItems : 'center',
         justifyContent : "flex-end",
-        marginHorizontal : width * 0.01
     },
 })

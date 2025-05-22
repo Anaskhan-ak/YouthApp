@@ -8,7 +8,13 @@ import {
 import { height } from '../../../../constant';
 import { styles } from './styles';
 
-const InboxHeader = props => {
+const InboxHeader = ({
+  backPress,
+  title,
+  onGroupIconPress,
+  onNewChatIconPress,
+  onCancelIconPress,
+}) => {
   return (
     <View style={styles?.container}>
       <StatusBar
@@ -16,35 +22,33 @@ const InboxHeader = props => {
         barStyle="dark-content"
         backgroundColor={'transparent'}
       />
-      <TouchableOpacity style={styles?.backButton} onPress={props?.backPress}>
+      <TouchableOpacity style={styles?.backButton} onPress={backPress}>
         <BackArrow />
       </TouchableOpacity>
-      <Text style={styles?.title}>{props?.title}</Text>
-      {props?.groupIcon && props?.onNewChatIconPress && (
-        <View style={[styles?.buttonContainer, {flex : 0.2}]}>
-          <TouchableOpacity style={styles?.button}>
+      <Text style={styles?.title}>{title}</Text>
+      <View style={[styles?.buttonContainer, {flex: 0.2}]}>
+        {onGroupIconPress && (
+          <TouchableOpacity
+            style={styles?.button}
+            onPress={onGroupIconPress}>
             <InactiveGroupChatIcon />
           </TouchableOpacity>
+        )}
+        {onNewChatIconPress && (
           <TouchableOpacity
-            onPress={props?.onNewChatIconPress}
+            onPress={onNewChatIconPress}
             style={styles?.button}>
             <InactiveNewChatIcon />
           </TouchableOpacity>
-        </View>
-      )}
-      {props?.onCancelIconPress && (
-        <View style={[styles?.buttonContainer, {flex : 0.1}]}>
+        )}
+        {onCancelIconPress && (
           <TouchableOpacity
-            style={[
-              styles?.button
-              ,{ top: height * 0.01},
-            ]}
-            onPress={props?.onCancelIconPress}>
-            <ActiveNewChatIcon 
-            />
+            style={[styles?.button, {bottom: -height * 0.01}]}
+            onPress={onCancelIconPress}>
+            <ActiveNewChatIcon />
           </TouchableOpacity>
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 };

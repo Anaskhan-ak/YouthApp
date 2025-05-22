@@ -9,7 +9,7 @@ import CustomSearchBar from '../../components/inputs/search';
 import { colors } from '../../utils/colors';
 import { styles } from './styles';
 
-const NewChat = () => {
+const NewChatGroup = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const data = Array.from({length: 20}, () => ({
@@ -34,9 +34,9 @@ const NewChat = () => {
   return (
     <View style={styles?.container}>
       <InboxHeader
-        title="New Chat"
+        title="Group Chat"
         onCancelIconPress={() => navigation?.goBack()}
-        backPress={() => navigation?.goBack()}
+        onGroupIconPress={() => navigation?.goBack()}
       />
       <View style={styles?.search}>
         <CustomSearchBar search={search} setSearch={setSearch} />
@@ -62,4 +62,4 @@ const NewChat = () => {
   );
 };
 
-export default NewChat;
+export default NewChatGroup;

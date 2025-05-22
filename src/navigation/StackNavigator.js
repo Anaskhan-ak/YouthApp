@@ -13,6 +13,7 @@ import Interests from '../screens/interest';
 import LandingWidget from '../screens/landingWidget';
 import Login from '../screens/login';
 import NewChat from '../screens/newChat';
+import NewChatGroup from '../screens/newChatGroup';
 import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
@@ -24,7 +25,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="NewChat">
+    <Stack.Navigator initialRouteName="ChatInbox">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -128,6 +129,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="NewChat"
         component={NewChat}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="NewChatGroup"
+        component={NewChatGroup}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>
