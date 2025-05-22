@@ -27,16 +27,16 @@ export const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
   },
   imageBorder: {
-    width: width * 0.1,
-    height: width * 0.1,
-    borderRadius: width * 0.12,
+    width: width * 0.11,
+    height: width * 0.11,
+    borderRadius: width * 0.11,
     alignItems: 'center',
     justifyContent: 'center',
     left: 10,
   },
   image: {
-    width: width * 0.08,
-    height: width * 0.08,
-    borderRadius: width * 0.08,
+    width: width * 0.1,
+    height: width * 0.1,
+    borderRadius: width * 0.1,
   },
 });

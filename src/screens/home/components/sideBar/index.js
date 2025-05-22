@@ -6,7 +6,6 @@ import {styles} from './styles';
 
 const SideBar = ({refRBSheet}) => {
   const handlePress = item => {
-    console.log("Ref:", refRBSheet?.current);
     // if (item?.func === 'openSheet') {
       refRBSheet?.current?.snapToIndex(0);
     // }
@@ -17,7 +16,7 @@ const SideBar = ({refRBSheet}) => {
         <TouchableOpacity onPress={() => handlePress(item)}>
           <LinearGradient
             colors={[colors?.RGB2, colors?.RGB1]}
-            style={styles?.imageBorder}>
+            style={styles?.btn}>
             <View>{item?.icon}</View>
           </LinearGradient>
         </TouchableOpacity>
