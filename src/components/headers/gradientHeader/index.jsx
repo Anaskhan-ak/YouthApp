@@ -1,10 +1,20 @@
+import { useEffect } from 'react';
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { WhiteLeftArrow } from '../../../assets/images/svgs';
+import { getDataLocally } from '../../../helper';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
 const GradientHeader = props => {
+  const getUserDetails = async () => {
+    const getUser = await getDataLocally()
+    console.log("getUser", getUser)
+  }
+
+  useEffect(()=>{
+    // getUserDetails()
+  },[])
   return (
     <LinearGradient
       colors={[colors?.RGB2, colors?.RGB1]}

@@ -1,6 +1,5 @@
-import { StyleSheet, Platform} from 'react-native';
-import {colors} from '../../../utils/colors';
-import {height, width} from '../../../constant';
+import { Platform, StyleSheet } from 'react-native';
+import { height, width } from '../../../constant';
 export const styles = StyleSheet.create({
   gradient: {
     height: Platform?.OS === 'ios' ? height * 0.14 : height * 0.16,

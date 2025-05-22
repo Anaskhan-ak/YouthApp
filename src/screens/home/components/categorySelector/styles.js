@@ -1,6 +1,6 @@
-import {StyleSheet, Platform} from 'react-native';
-import {height, width} from '../../../../constant';
-import {fonts} from '../../../../utils/fonts';
+import { Platform, StyleSheet } from 'react-native';
+import { height, width } from '../../../../constant';
+import { fonts } from '../../../../utils/fonts';
 
 export const styles = StyleSheet.create({
     container: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     button: {
       alignItems: 'center',
       justifyContent: 'center',
-      height: height * 0.036,
+      height: height * 0.05,
       borderRadius: 10,
       flexDirection: 'row',
     },
