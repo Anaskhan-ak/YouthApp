@@ -30,21 +30,22 @@ import {
   fadeInUpBig,
   fadeInRight,
 } from '../../../node_modules/react-native-animatable/definitions/fading-entrances';
-const Onboarding = ({navigation}) => {
+import {config} from '../../environment';
+const Onboarding = ({navigation, route}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {details} = route?.params || '';
   const flatListRef = useRef(null);
-  const imageRef = useRef(null);
   const headingRef = useRef(null);
   const descRef = useRef(null);
   const buttonRef = useRef(null);
-  const itemRefs = useRef(onboardingContent.map(() => React.createRef()));
   useEffect(() => {
-    headingRef.current?.fadeInRight(1000);
-    descRef.current?.fadeInUp(1000);
-    buttonRef.current?.fadeInUp(1000);
+    headingRef.current?.zoomIn(1000);
+    descRef.current?.zoomIn(1000);
+    buttonRef.current?.zoomIn(1000);
   }, [currentIndex]);
+
   const handleNext = () => {
-    if (currentIndex < onboardingContent.length - 1) {
+    if (currentIndex < details?.length - 1) {
       flatListRef.current?.goToSlide(currentIndex + 1, true);
     }
   };
@@ -70,13 +71,13 @@ const Onboarding = ({navigation}) => {
             navigation={navigation}
           />
         )}
-        data={onboardingContent}
+        data={details}
         onSlideChange={index => setCurrentIndex(index)}
       />
       <View style={styles?.itemContainer}>
         <Animatable.View ref={headingRef} useNativeDriver>
           <GradientText style={styles.Heading}>
-            {onboardingContent[currentIndex]?.heading}
+            {`${details[currentIndex]?.title}`}
           </GradientText>
         </Animatable.View>
 
@@ -93,12 +94,12 @@ const Onboarding = ({navigation}) => {
               />
             </Animatable.View>
             <View style={styles.slider}>
-              {onboardingContent?.map(i => (
+              {details?.map((i, index) => (
                 <Image
                   key={i?.id}
                   style={styles.dots}
                   source={
-                    currentIndex === i?.id ? images?.active : images?.inactive
+                    currentIndex === index ? images?.active : images?.inactive
                   }
                 />
               ))}
@@ -122,7 +123,7 @@ const Onboarding = ({navigation}) => {
                     color: colors?.lightGrey,
                   },
                 ]}>
-                {onboardingContent[currentIndex]?.description?.slice(0, 52)}
+                {details[currentIndex]?.description?.slice(0, 52)}
                 <Text
                   allowFontScaling={false}
                   style={[
@@ -133,21 +134,18 @@ const Onboarding = ({navigation}) => {
                     },
                   ]}>
                   {' '}
-                  {onboardingContent[currentIndex]?.description?.slice(
-                    52,
-                    150,
-                  )}{' '}
+                  {details[currentIndex]?.description?.slice(52, 150)}{' '}
                 </Text>
               </Text>
             </Animatable.View>
 
             <View style={styles.slider}>
-              {onboardingContent?.map(i => (
+              {details?.map((i, index) => (
                 <Image
                   key={i?.id}
                   style={styles.dots}
                   source={
-                    currentIndex === i?.id ? images?.active : images?.inactive
+                    currentIndex === index ? images?.active : images?.inactive
                   }
                 />
               ))}

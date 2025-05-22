@@ -20,6 +20,7 @@ import BlackYouthLogo from './BlackYouthLogo.svg';
 import BlueTick from './BlueTick.svg';
 import Calendar from './calendar.svg';
 import CameraIcon from './CameraIcon.svg';
+import Chat from './chat.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
@@ -34,6 +35,7 @@ import FileAudio from './FileAudioIcon.svg';
 import FileIcon from './FileIcon.svg';
 import FileImport from './FileImportIcon.svg';
 import FileMicIcon from './FileMicIcon.svg';
+import Gallery from './gallery.svg';
 import GalleryIcon from './GalleryIcon.svg';
 import Google from './google.svg';
 import GradientBlueMic from './GradientBlueMic.svg';
@@ -49,6 +51,7 @@ import GrayTimeIcon from './GrayTimeIcon.svg';
 import GrayWalletIcon from './GrayWalletIcon.svg';
 import GreenCheckMark from './greenCheckMark.svg';
 import Home from './home.svg';
+import HomeHeaderLogo from './homeHeaderLogo.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
 import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
@@ -61,10 +64,12 @@ import InstagramIcon from './InstagramIcon.svg';
 import LinkedinIcon from './LinkedinIcon.svg';
 import LiveNow from './liveNow.svg';
 import MailIcon from './MailIcon.svg';
+import Menu from './menu.svg';
 import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
 import Moment from './moment.svg';
 import NearBy from './nearBy.svg';
+import Notification from './notification.svg';
 import PasswordHide from './PasswordHide.svg';
 import PasswordShow from './PasswordShow.svg';
 import PauseIcon from './PauseIcon.svg';
@@ -76,16 +81,19 @@ import PinkRewindAUdioButton from './PinkRewindAudioButton.svg';
 import PinkVolume from './PinkVolume.svg';
 import PinterestIcon from './PinterestIcon.svg';
 import PlayIcon from './PlayIcon.svg';
+import Plus from './plus.svg';
 import PublicIcon from './PublicIcon.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
 import RightArrow from './RightArrow.svg';
+import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
 import Sparkles from './Sparkles.svg';
 import TagFriendsIcon from './TagFriendsIcon.svg';
 import TiktokIcon from './TiktokIcon.svg';
 import ToggleCameraIcon from './ToggleCameraIcon.svg';
+import Trending from './trending.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
@@ -116,8 +124,7 @@ export {
   BlackYouthLogo,
   BlueTick,
   Calendar,
-  CameraIcon,
-  CopyIcon,
+  CameraIcon, Chat, CopyIcon,
   Cross,
   DontShowLandingWidget,
   DropDown,
@@ -128,8 +135,7 @@ export {
   FileAudio,
   FileIcon,
   FileImport,
-  FileMicIcon,
-  GalleryIcon,
+  FileMicIcon, Gallery, GalleryIcon,
   Google,
   GradientBlueMic,
   GradientCalender,
@@ -141,8 +147,7 @@ export {
   GrayTimeIcon,
   GrayWalletIcon,
   GreenCheckMark,
-  Home,
-  InactiveComment,
+  Home, HomeHeaderLogo, InactiveComment,
   InactiveDownload,
   InactiveGroupChatIcon,
   InactiveLike, InactiveNewChatIcon, InactiveRepost,
@@ -151,12 +156,10 @@ export {
   InstagramIcon,
   LinkedinIcon,
   LiveNow,
-  MailIcon,
-  MessageIcon,
+  MailIcon, Menu, MessageIcon,
   MessengerIcon,
   Moment,
-  NearBy,
-  PasswordHide,
+  NearBy, Notification, PasswordHide,
   PasswordShow,
   PauseIcon,
   PinkForwardAudioButton,
@@ -166,18 +169,15 @@ export {
   PinkRewindAUdioButton,
   PinkVolume,
   PinterestIcon,
-  PlayIcon,
-  PublicIcon,
+  PlayIcon, Plus, PublicIcon,
   RateUs,
   RedditIcon,
-  RightArrow,
-  SearchIcon,
+  RightArrow, Search, SearchIcon,
   SnapchatIcon,
   Sparkles,
   TagFriendsIcon,
   TiktokIcon,
-  ToggleCameraIcon,
-  TwitterIcon,
+  ToggleCameraIcon, Trending, TwitterIcon,
   TwitterIconRound,
   UploadThumbnail, VideoCallIcon, VoiceCallIcon, WhatsappIcon,
   WhiteCameraIcon,

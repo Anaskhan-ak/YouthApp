@@ -19,15 +19,15 @@ const colors = {white: '#FFFFFF'};
 export const NextButton = props => {
   return (
     <TouchableOpacity onPress={props.onPress}>
-    <LinearGradient
-      colors={[darkThemeColors?.RGB1, darkThemeColors?.RGB2]}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
-      style={styles?.nextButton}>
-     
-        <Text allowFontScaling={false} style={styles?.nextText}>Next</Text>
-     
-    </LinearGradient>
+      <LinearGradient
+        colors={[darkThemeColors?.RGB1, darkThemeColors?.RGB2]}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        style={[styles?.nextButton,{width:props?.width?props?.width:width * 0.3}]}>
+        <Text allowFontScaling={false} style={styles?.nextText}>
+          {props?.title ? props?.title : 'Next'}
+        </Text>
+      </LinearGradient>
     </TouchableOpacity>
   );
 };

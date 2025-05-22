@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {
   ImageBackground,
   Keyboard,
@@ -8,22 +8,24 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
-import { YouthIcon } from '../../assets/images/svgs';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {images} from '../../assets/images';
+import {YouthIcon} from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
-import { PrimaryButton } from '../../components/buttons/PrimaryButton';
-import { SocialButton } from '../../components/buttons/SocialButton';
+import {PrimaryButton} from '../../components/buttons/PrimaryButton';
+import {SocialButton} from '../../components/buttons/SocialButton';
 import AuthInput from '../../components/inputs/authInput';
 import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
-import { getFirebaseToken, googleSignIn } from '../../helper';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
-import { styles } from './styles';
+import {height, width} from '../../constant';
+import {getFirebaseToken, googleSignIn} from '../../helper';
+import {GreenCheckMark} from '../../assets/images/svgs';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
+import {styles} from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -54,6 +56,9 @@ const Login = () => {
     try {
       setLoading(true);
       let result = await apiCall?.Login(obj);
+      await AsyncStorage.setItem('token', result?.access_token);
+      const jsonValue = JSON.stringify(result?.data);
+      await AsyncStorage.setItem('UserLocalData', jsonValue);
       navigation?.navigate('LandingWidget');
     } catch (e) {
       console.log('e', e);
@@ -73,11 +78,11 @@ const Login = () => {
     navigation?.navigate('SignUp');
   };
   const googleLogin = async () => {
-    const googleAuthToken = await googleSignIn();
-    const obj = {
-      firebaseToken: googleAuthToken,
-    };
     try {
+      const googleAuthToken = await googleSignIn();
+      const obj = {
+        firebaseToken: googleAuthToken,
+      };
       setGoogleLogin(true);
       let result = await apiCall?.SignUpWithGoogle(obj);
       navigation?.navigate('LandingWidget');
@@ -141,7 +146,7 @@ const Login = () => {
       </View>
       <View style={styles?.contentView}>
         <View style={styles?.headingWithIconView}>
-          <Text style={styles?.heading}> Login to your </Text>
+          <Text style={styles?.heading}>Login to your </Text>
           <YouthIcon width={width * 0.2} />
           <Text style={styles?.heading}> Account</Text>
         </View>
@@ -197,13 +202,23 @@ const Login = () => {
           <TouchableOpacity
             onPress={handleRememberMe}
             style={styles?.rememberMeContainer}>
-            <LinearGradient
+            {/* <LinearGradient
               style={styles?.rememberMe}
               colors={[colors?.RGB1, colors?.RGB2]}
               start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}>
-              {rememberMe && <View style={styles?.checkRememberMe} />}
-            </LinearGradient>
+              end={{x: 1, y: 0}}> */}
+            {/* {!rememberMe && (
+                // <View style={styles?.checkRememberMe} />
+                <GreenCheckMark />
+              )} */}
+            {!rememberMe ? (
+              <GreenCheckMark width={18} height={18}/>
+            ) : (
+              <View
+                style={styles?.unSelect}
+              />
+            )}
+            {/* </LinearGradient> */}
             <Text style={[styles?.content, {left: 4}]}>Remember me</Text>
           </TouchableOpacity>
           <TouchableOpacity

@@ -1,12 +1,13 @@
-import { StyleSheet } from 'react-native';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
+import {Platform, StyleSheet} from 'react-native';
+import {height, width} from '../../constant';
+import {colors} from '../../utils/colors';
+import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors?.white,
+    marginTop: Platform?.OS === 'android' ? -width * 0.08 : -width * 0.2,
   },
   userInfoHeader: {
     marginVertical: width * 0.03,
@@ -28,7 +29,6 @@ export const styles = StyleSheet.create({
     marginTop: height * 0.003,
   },
   inputDescContainer: {
-    height: height * 0.18,
     backgroundColor: colors?.greyBackground,
     borderRadius: width * 0.02,
     flex: 2,
@@ -44,7 +44,6 @@ export const styles = StyleSheet.create({
   thumbnailButton: {
     backgroundColor: colors?.greyBackground,
     borderRadius: width * 0.02,
-    padding: width * 0.03,
     alignItems: 'center',
     flex: 1,
     margin: width * 0.008,

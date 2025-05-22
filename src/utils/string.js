@@ -1,5 +1,5 @@
 import { images } from '../assets/images';
-import { LiveNow, Moment, NearBy, Yudio } from '../assets/images/svgs';
+import { Chat, LiveNow, Moment, NearBy, Notification, Plus, Search, Trending, Yudio } from '../assets/images/svgs';
 
 export const onboardingContent = [
   {
@@ -74,5 +74,80 @@ export const bottomTabs = [
     icon: <NearBy width={24} height={24} />,
   },
 ];
-
-export const topScrollArray = ['For You', 'Following', 'Trending', 'Live']
+export const sideBarOptions = [
+    {
+      screen: 'openSheet',
+      func: 'openSheet',
+      icon: <Plus width={18} height={18} />,
+    },
+    {
+      screen: 'notification',
+      route: 'Notification',
+      icon: <Notification width={24} height={24} />,
+    },
+    {
+      screen: 'chat',
+      route: 'Chat',
+      icon: <Chat width={24} height={24} />,
+    },
+    {
+      screen: 'search',
+      route: 'Search',
+      icon: <Search width={18} height={18} />,
+    },
+];
+export const homeCategoryOptions = [
+  {
+    id: 1,
+    name: 'Trending Now',
+    icon: <Trending width={18} height={18} />,
+  },
+  {
+    id: 2,
+    name: 'For You',
+    icon: null,
+  },
+  {
+    id: 3,
+    name: 'Following',
+    icon: null,
+  },
+];
+export const sideBottomSheetOptions = [
+  {
+    id: 'post',
+    title: 'Post',
+    desc: 'To make sure your post reaches the right people...',
+    route:''
+  },
+  {
+    id: 'moments',
+    title: 'Moments',
+    desc: 'To make sure your Moments reach the right people...',
+    route:''
+  },
+  {
+    id: 'yudio',
+    title: 'Yudio',
+    desc: 'To make sure your Yudio reaches the right people...',
+    route:'CreateYudio'
+  },
+  {
+    id: 'story',
+    title: 'Story',
+    desc: 'Share your Daily best moments with the friends...',
+    route:''
+  },
+  {
+    id: 'live',
+    title: 'Live',
+    desc: 'Go live and share more moments and values...',
+    route:''
+  },
+  {
+    id: 'event',
+    title: 'Event',
+    desc: 'Arrange an event with friends in your city...',
+    route:''
+  },
+];

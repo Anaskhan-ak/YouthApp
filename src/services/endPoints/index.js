@@ -7,6 +7,9 @@ export const apis = {
   createPost : 'api/v1/createNewPost',
   getYudios : 'api/v1/getYudio',
   getDocuments : 'api/v1/getUserPost',
+  forgotPassword : 'api/v1/forgotPassword',
+  verifyForgetPassword : 'api/v1/verifyPasswordToken',
+  resetPassword : 'api/v1/resetPassword',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',
@@ -19,7 +22,8 @@ export const apis = {
   getMessages : 'api/v1/messages',
   //GET ENDPOINTS
   getNotification : `api/v1/notification`,
-  getAllInterests : 'api/v1/intrest'
+  getAllInterests : 'api/v1/intrest',
+  getOnBoardingContent : 'api/v1/onboarding',
   // DELETE ENDPOINTS
   // PATCH ENDPOINTS
 };

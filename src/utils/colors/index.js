@@ -8,6 +8,8 @@ export const colors = {
   yellow: '#FFFF00',
   RGB1: '#478FE4',
   RGB2: '#5CD3C6',
+  RGB3: '#478FE444',
+  RGB4: '#36AFD688',
   blackTransparent: 'rgba(0, 0, 0, 0.21)',
   grayTransparent: 'rgba(108, 122, 137, 0.5)',
   greyBackground: 'rgba(231, 232, 239, 1)',

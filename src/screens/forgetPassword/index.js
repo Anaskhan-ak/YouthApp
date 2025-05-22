@@ -3,9 +3,7 @@ import {
   Text,
   ImageBackground,
   StatusBar,
-  TouchableOpacity,
   Platform,
-  ScrollView,
   Keyboard,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -16,16 +14,12 @@ import {height, width} from '../../constant';
 import {YouthIcon} from '../../assets/images/svgs';
 import {useForm, Controller} from 'react-hook-form';
 import AuthInput from '../../components/inputs/authInput';
-import {colors} from '../../utils/colors';
 import {PrimaryButton} from '../../components/buttons/PrimaryButton';
 import {SocialButton} from '../../components/buttons/SocialButton';
-import GradientText from '../../components/text/GradientText';
 import AuthError from '../../components/authErrorPopup';
-import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
-import {apiCall} from '../../services/apiCall';
-import {getFirebaseToken, googleSignIn} from '../../helper';
 import OtpInput from '../../components/inputs/otp';
+import {apiCall} from '../../services/apiCall';
 
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -33,6 +27,7 @@ const ForgetPassword = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [step, setStep] = useState(0);
   const [otp, setOtp] = useState(null);
+  const [token, setToken] = useState(null);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const navigation = useNavigation();
   const {
@@ -48,33 +43,51 @@ const ForgetPassword = () => {
   });
 
   const onSubmit = async data => {
-    if(step==0){
-    setStep(1)
-    }else if(step==1){
-      setStep(2)
-    }else{
-      navigation?.navigate('OtpVerification')
-    }
-    // const fb_token = await getFirebaseToken();
-    // const obj = {
-    //   login_user: data?.email,
-    //   password: data?.password,
-    //   fcm_token: fb_token,
-    // };
-    // try {
-    //   setLoading(true);
-    //   let result = await apiCall?.Login(obj);
-    //   navigation?.navigate('LandingWidget');
-    // } catch (e) {
-    //   console.log('e', e);
-    //   setShowError(true);
-    //   setErrorMessage({
-    //     title: 'Sign Up Error',
-    //     message: Array.isArray(e) ? e[0]?.message : e,
-    //   });
-    // } finally {
-    //   setLoading(false);
+    console.log({token: token, otp: otp});
+    // if(step==0){
+    // setStep(1)
+    // }else if(step==1){
+    //   setStep(2)
+    // }else{
+    //   navigation?.navigate('OtpVerification')
     // }
+    const obj = {
+      login_user: data?.email,
+    };
+    try {
+      if (!token && !otp && step == 0) {
+        setLoading(true);
+        let result = await apiCall?.forgotPassword(obj);
+        setToken(result?.token?.accessToken);
+        setStep(1);
+      } else if (step == 1) {
+        setLoading(true);
+        let result = await apiCall?.verifyForgotPassword({
+          token: token,
+          otp: otp,
+        });
+        setStep(2);
+      } else {
+        let result = await apiCall?.resetPassword({
+          token: token,
+          newPassword: data?.password,
+          confirmPassword: data?.confirmPassword,
+        });
+        navigation?.navigate('Login');
+        console.log(result);
+      }
+
+      // navigation?.navigate('LandingWidget');
+    } catch (e) {
+      console.log('e', e);
+      setShowError(true);
+      setErrorMessage({
+        title: 'Sign Up Error',
+        message: Array.isArray(e) ? e[0]?.message : e,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
   const handleLogin = () => {
     navigation?.navigate('Login');
@@ -119,7 +132,7 @@ const ForgetPassword = () => {
                 setShowError={setShowError}
                 style={{
                   marginTop:
-                    Platform?.OS === 'ios' ? height * 0.38 : height * 0.32,
+                    Platform?.OS === 'ios' ? height * 0.35 : height * 0.25,
                 }}
               />
             </View>
@@ -146,7 +159,7 @@ const ForgetPassword = () => {
                 onBlur={onBlur}
                 value={value}
                 error={errors?.email}
-                disable={step === 1 ? false : true}
+                disable={step === 1 ? true : false}
                 placeholder={'Email or Phone number'}
               />
             )}
@@ -204,7 +217,7 @@ const ForgetPassword = () => {
           <PrimaryButton
             isLoading={loading}
             onPress={handleSubmit(onSubmit)}
-            title="Send a one time code"
+            title={step == 0 ? 'Send a one time code' : 'Continue'}
           />
           {step == 0 && <SocialButton onPress={handleLogin} title="Sign In" />}
         </View>

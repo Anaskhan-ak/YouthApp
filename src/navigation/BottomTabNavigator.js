@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     bottom: height * 0.04,
-    marginHorizontal: width * 0.04,
+    marginHorizontal: width * 0.02,
   },
   homeView: {
     width: Platform?.OS === 'ios' ? height * 0.07 : height * 0.08,

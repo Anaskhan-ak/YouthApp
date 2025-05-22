@@ -5,7 +5,6 @@ import {
   Image,
   PermissionsAndroid,
   Platform,
-  SafeAreaView,
   ScrollView,
   Text,
   TextInput,
@@ -32,6 +31,7 @@ import { colors } from '../../utils/colors';
 import AudioBars from './components/audioBars';
 import RecordedAudioPlayer from './components/recordedAudioPlayer';
 import { styles } from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);

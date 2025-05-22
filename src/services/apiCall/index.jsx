@@ -60,14 +60,29 @@ export const apiCall = {
     if (result?.status === 200) return result?.data?.yudioWaveform
     else throw result
   },
-
   createNewPost : async params => {
     let result = await documentPost(apis?.createPost, params)
     if (result?.status === 200) return result?.data?.youdio
     // if (result?.status === 200) return result?.data
     else throw result
   },  
-
+  forgotPassword : async params => {
+    let result = await post(apis?.forgotPassword, params)
+    if (result?.status === 200) return result?.data
+    else throw result
+  },  
+  verifyForgotPassword : async params => {
+    let result = await post(apis?.verifyForgetPassword, params)
+    if (result?.status === 200) return result?.data
+    else throw result
+  },
+  resetPassword : async params => {
+    let result = await post(apis?.resetPassword, params)
+    if (result?.status === 200) return result?.data
+    else throw result
+  },
+ 
+  //GET API CALL
   getAllYudios : async (params) => {
     let result = await post(apis?.getYudios, params)
     if (result?.status) return result?.data?.data?.posts
@@ -81,22 +96,13 @@ export const apiCall = {
   },
  
   //GET API CALL
-  getNotification: async params => {
-    let result = await get(apis?.getNotification, params);
-    if (result.status === 200) return result.data;
-  },
-
   getNotifications: async params => {
     let result = await get(
       `${apis?.getNotification}/${params?.page}/${params?.pageSize}`,
     );
-    // let result = await get(
-    //   'http://51.20.253.189:3000/api/v1/notification/1/10'
-    // )
     if (result?.status) return result?.data?.data;
     else throw result;
   },
-
   getAllInterests : async () => {
     let result = await get(apis?.getAllInterests)
     if (result?.status) return result?.data?.data
@@ -124,7 +130,6 @@ export const apiCall = {
     let result = await patch(Apis.gatePassStatus, obj);
     if (result.status === 200) return result.data;
   },
-
   // DELETE API CALL
   deleteNotification: async params => {
     let result = await deleted(Apis.deleteNotification, params);

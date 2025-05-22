@@ -1,18 +1,26 @@
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StatusBar, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ScrollHeader from '../../components/headers/scrollHeader';
+import { BlackBackArrow, BlackYouthLogo } from '../../assets/images/svgs';
 import { height } from '../../constant';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
-import RenderYudios from './components/renderYudios';
 import { styles } from './styles';
 
 const Yudios = () => {
   const [yudios, setYudios] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(15);
-
+  const [showFullText, setShowFullText] = useState(false);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
   useEffect(() => {
     const fetchYudios = async () => {
       const data = {
@@ -52,7 +60,25 @@ const Yudios = () => {
         translucent
       />
       {/* Header */}
-      <ScrollHeader />
+      <View style={styles?.header}>
+        <TouchableOpacity
+          onPress={() => navigation?.goBack()}
+          style={styles?.headerIcon}>
+          <BlackBackArrow />
+        </TouchableOpacity>
+        {['For You', 'Following', 'Trending', 'Live']?.map(item => {
+          return (
+            <TouchableOpacity>
+              <Text style={[styles?.headerText, {color: colors?.gray}]}>
+                {item}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+        <TouchableOpacity style={styles?.headerIcon}>
+          <BlackYouthLogo />
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={yudios}
         keyExtractor={(item, index) => index.toString()}

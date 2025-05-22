@@ -4,11 +4,12 @@ import {colors} from '../../../utils/colors';
 import {fonts} from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
-  container: {flex: 1, marginTop: -height * 0.04},
+  container: {flex: 1, marginTop: -height * 0.04,},
   scrollView: {
     marginTop: height * 0.02,
     flex: 1,
     paddingVertical: height * 0.02,
+ 
   },
   skipButton: {
     height: height * 0.04,
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.01,
     justifyContent: 'center',
     alignSelf: 'flex-end',
-    marginTop: height * 0.0225,
+    marginTop: Platform?.OS==='ios'?height * 0.045:height * 0.0225,
     marginRight: width * 0.045,
   },
   skiptetxt: {
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     fontSize: width * 0.15,
     fontFamily: fonts?.montserratExtraBold,
     marginLeft: width * 0.04,
-    marginTop: height * 0.03,
+    marginTop: height * 0.01,
   },
   welcomeBox: {
     flexDirection: 'row',

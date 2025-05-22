@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   primaryButton: {
-    height: height * 0.055,
+    height: height * 0.05,
     alignSelf: 'center',
     marginTop: height * 0.012,
     alignItems: 'center',
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
   primaryText: {
     color: 'white',
     fontSize: width * 0.04,
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: fonts?.montserratBold,
   },
   BoldButton: {
     height: height * 0.05,
@@ -46,8 +46,11 @@ export const styles = StyleSheet.create({
     fontSize: width * 0.04,
     fontFamily: fonts?.montserratExtraBold,
     alignSelf: 'center',
-    marginTop: Platform.OS === 'ios' && height * 0.015,
+    alignItems: 'center',
+    textAlign: 'center',
+    // marginTop: Platform.OS === 'ios' ? height * 0.012 : undefined,
   },
+
   socialButton: {
     height: height * 0.05,
     backgroundColor: 'black',
@@ -90,33 +93,39 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
   },
-  gbb2 : {
+  gbb2: {
     height: height * 0.046,
     borderRadius: 3,
     justifyContent: 'center',
     backgroundColor: colors.white,
-  }
+    alignItems: 'center',
+  },
 });
 
 export const CreateButtonStyles = StyleSheet.create({
-  container : {
-    bottom : 0,
-    position : 'absolute',
-    width : width,
-    zIndex : 10,
-    paddingHorizontal : width * 0.15,
-    paddingVertical : width * 0.05,
-    borderTopLeftRadius : width * 0.05,
-    borderTopRightRadius : width * 0.05
+  container: {
+    bottom: 0,
+    position: 'absolute',
+    width: width,
+    zIndex: 10,
+    paddingHorizontal: width * 0.0,
+    paddingVertical: width * 0.05,
+    borderTopLeftRadius: width * 0.05,
+    borderTopRightRadius: width * 0.05,
+    height: Platform?.OS === 'ios' && height * 0.15,
+    marginBottom: Platform?.OS === 'ios' && -height * 0.03,
   },
-  button : {
-    backgroundColor : colors?.white,
-    borderRadius : width * 0.02,
-    alignItems : 'center',
-    padding : width * 0.02
+  button: {
+    backgroundColor: colors?.white,
+    borderRadius: width * 0.02,
+    alignItems: 'center',
+    width: '70%',
+    alignSelf: 'center',
+    height: height * 0.05,
+    justifyContent: 'center',
   },
-  text : {
-    fontFamily : fonts?.montserratExtraBold,
-    fontSize : width * 0.05
-  }
-})
+  text: {
+    fontFamily: fonts?.montserratExtraBold,
+    fontSize: width * 0.05,
+  },
+});
