@@ -1,6 +1,8 @@
 import ActiveComment from './ActiveComment.svg';
 import ActiveDownload from './ActiveDownload.svg';
+import ActiveGroupChatIcon from './ActiveGroupChatIcon.svg';
 import ActiveLike from './ActiveLike.svg';
+import ActiveNewChatIcon from './ActiveNewChatIcon.svg';
 import ActiveRepost from './ActiveRepost.svg';
 import ActiveSave from './ActiveSave.svg';
 import ActiveShare from './ActiveShare.svg';
@@ -8,6 +10,7 @@ import Apple from './apple.svg';
 import BackArrow from './BackArrow.svg';
 import BlackBackArrow from './BlackBackArrow.svg';
 import BlackForwardAudioButton from './BlackBackwardButton.svg';
+import BlackCameraIcon from './BlackCameraIcon.svg';
 import BlackDropdown from './BlackDropdown.svg';
 import BlackRewindAUdioButton from './BlackForwardButton.svg';
 import BlackLike from './BlackLike.svg';
@@ -22,6 +25,8 @@ import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
 import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
 import EditEventThumbnail from './EditEventThumbnail.svg';
+import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
+import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
 import FacebookIcon from './FacebookIcon.svg';
@@ -36,6 +41,7 @@ import GradientCalender from './GradientCalender.svg';
 import GradientCross from './GradientCross.svg';
 import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
+import GradientMessageSendIcon from './GradientMessageSendIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
 import GrayLocationIcon from './GrayLocationIcon.svg';
@@ -45,7 +51,9 @@ import GreenCheckMark from './greenCheckMark.svg';
 import Home from './home.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
+import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
 import InactiveLike from './InactiveLike.svg';
+import InactiveNewChatIcon from './InactiveNewChatIcon.svg';
 import InactiveRepost from './InactiveRepost.svg';
 import InactiveSave from './InactiveSave.svg';
 import InactiveShare from './InactiveShare.svg';
@@ -81,6 +89,8 @@ import ToggleCameraIcon from './ToggleCameraIcon.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
+import VideoCallIcon from './VideoCallIcon.svg';
+import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
@@ -91,16 +101,17 @@ import Yudio from './yudio.svg';
 export {
   ActiveComment,
   ActiveDownload,
-  ActiveLike,
-  ActiveRepost,
+  ActiveGroupChatIcon,
+  ActiveLike, ActiveNewChatIcon, ActiveRepost,
   ActiveSave,
   ActiveShare,
   Apple,
   BackArrow,
-  BlackBackArrow,
-  BlackDropdown,
+  BlackBackArrow, BlackCameraIcon, BlackDropdown,
   BlackForwardAudioButton,
-  BlackLike, BlackMultipleSelection, BlackRewindAUdioButton,
+  BlackLike,
+  BlackMultipleSelection,
+  BlackRewindAUdioButton,
   BlackShare,
   BlackYouthLogo,
   BlueTick,
@@ -111,8 +122,7 @@ export {
   DontShowLandingWidget,
   DropDown,
   DropDownIcon,
-  EditEventThumbnail,
-  Error,
+  EditEventThumbnail, EmptyCallsInboxIcon, EmptyChatInboxIcon, Error,
   ErrorWhite,
   FacebookIcon,
   FileAudio,
@@ -125,16 +135,17 @@ export {
   GradientCalender,
   GradientCross,
   GradientDropRightCircle,
-  GradientLocationIcon,
-  GradientRedMic,
-  GradientRedTick, GrayLocationIcon,
+  GradientLocationIcon, GradientMessageSendIcon, GradientRedMic,
+  GradientRedTick,
+  GrayLocationIcon,
   GrayTimeIcon,
-  GrayWalletIcon, GreenCheckMark,
+  GrayWalletIcon,
+  GreenCheckMark,
   Home,
   InactiveComment,
   InactiveDownload,
-  InactiveLike,
-  InactiveRepost,
+  InactiveGroupChatIcon,
+  InactiveLike, InactiveNewChatIcon, InactiveRepost,
   InactiveSave,
   InactiveShare,
   InstagramIcon,
@@ -168,8 +179,9 @@ export {
   ToggleCameraIcon,
   TwitterIcon,
   TwitterIconRound,
-  UploadThumbnail,
-  WhatsappIcon, WhiteCameraIcon, WhiteLeftArrow,
+  UploadThumbnail, VideoCallIcon, VoiceCallIcon, WhatsappIcon,
+  WhiteCameraIcon,
+  WhiteLeftArrow,
   YouthIcon,
   YoutubeIcon,
   Yudio

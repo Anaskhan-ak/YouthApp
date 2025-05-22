@@ -1,13 +1,12 @@
-import {Text, View, Dimensions, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
-import {styles} from './styles';
-import {Apple, Google} from '../../assets/images/svgs';
-import {ActivityIndicator} from 'react-native';
-import {colors} from '../../utils/colors';
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { Apple, Google } from '../../assets/images/svgs';
+import { width } from '../../constant';
+import { colors } from '../../utils/colors';
+import { styles } from './styles';
 
 export const SocialButton = props => {
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.socialButton}>
+    <TouchableOpacity onPress={props.onPress} style={[styles.socialButton, {width : props?.width ? props?.width : width * 0.7,}]}>
       {/* <Image style={styles.socialButtonImage} source={props.source} /> */}
       {props?.type === 'google' ? (
         <Google />

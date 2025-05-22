@@ -15,4 +15,5 @@ export const images = {
     otpVerification:require('./otpVerification.png'),
     defaultProfilePicture : require('../images/DefaultProfilePicture.png'),
     defaultPicture : require('../images/DefaultPicture.png'),
+    chatBackground : require('./ChatBackground.png')
 }

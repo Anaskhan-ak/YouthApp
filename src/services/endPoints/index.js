@@ -15,6 +15,8 @@ export const apis = {
   getFollowing : 'api/v1/getFollower/',
   addInterest : 'api/v1/user/intrest',
   generateWaveforms : 'api/v1/generateWaveForms',
+  getChats : 'api/v1/chats',
+  getMessages : 'api/v1/messages',
   //GET ENDPOINTS
   getNotification : `api/v1/notification`,
   getAllInterests : 'api/v1/intrest'

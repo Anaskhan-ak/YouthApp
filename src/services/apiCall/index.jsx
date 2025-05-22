@@ -102,7 +102,23 @@ export const apiCall = {
     if (result?.status) return result?.data?.data
     else throw result
   },
-  
+
+  getChats: async ({userId}) => {
+    let result = await get(
+      `${apis?.getChats}/${userId}`,
+    );
+    if (result?.status) return result?.data?.chats
+    else throw result;
+  },
+
+  getChatMessages: async ({chatId}) => {
+    console.log("chatId", chatId)
+    let result = await get(
+      `${apis?.getMessages}/${chatId}`,
+    );
+    if (result?.status) return result?.data?.messages
+    else throw result;
+  },
   // PATCH API CALL
   gatePassStatus: async obj => {
     let result = await patch(Apis.gatePassStatus, obj);

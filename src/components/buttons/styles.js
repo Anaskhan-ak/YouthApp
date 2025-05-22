@@ -51,7 +51,6 @@ export const styles = StyleSheet.create({
   socialButton: {
     height: height * 0.05,
     backgroundColor: 'black',
-    width: width * 0.7,
     alignSelf: 'center',
     borderRadius: 5,
     justifyContent: 'space-evenly',

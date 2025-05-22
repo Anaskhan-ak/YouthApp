@@ -1,4 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Chat from '../screens/Chat';
+import ChatInbox from '../screens/ChatInbox';
 import CreateEvent from '../screens/createEvent';
 import CreatePost from '../screens/createPost';
 import CreateStory from '../screens/createStory';
@@ -10,6 +12,7 @@ import Home from '../screens/home';
 import Interests from '../screens/interest';
 import LandingWidget from '../screens/landingWidget';
 import Login from '../screens/login';
+import NewChat from '../screens/newChat';
 import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
@@ -21,7 +24,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="CreateEvent">
+    <Stack.Navigator initialRouteName="NewChat">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -110,6 +113,21 @@ const StackNavigator = () => {
       <Stack.Screen
         name="CreateStory"
         component={CreateStory}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="ChatInbox"
+        component={ChatInbox}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Chat"
+        component={Chat}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="NewChat"
+        component={NewChat}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

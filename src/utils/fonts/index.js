@@ -7,4 +7,5 @@ export const fonts = {
   montserratBlack: 'Montserrat-Black',
   plusJakartaSansRegular: 'PlusJakartaSans-Regular',
   plusJakartaSansBold: 'PlusJakartaSans-Bold',
+  plusJakartaSansSemiBold : 'PlusJakartaSans-SemiBold'
 };
