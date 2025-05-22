@@ -1,15 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
+import {Platform, StyleSheet} from 'react-native';
+import {height, width} from '../../constant';
+import {colors} from '../../utils/colors';
+import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors?.white,
+    marginTop: Platform?.OS === 'android' ? -width * 0.08 : -width * 0.2,
   },
-  userInfoHeader : {
-    marginVertical  :width * 0.03
+  userInfoHeader: {
+    marginVertical: width * 0.03,
   },
   content: {
     padding: width * 0.03,
@@ -28,7 +29,6 @@ export const styles = StyleSheet.create({
     marginTop: height * 0.003,
   },
   inputDescContainer: {
-    height: height * 0.18,
     backgroundColor: colors?.greyBackground,
     borderRadius: width * 0.02,
     flex: 2,
@@ -44,7 +44,6 @@ export const styles = StyleSheet.create({
   thumbnailButton: {
     backgroundColor: colors?.greyBackground,
     borderRadius: width * 0.02,
-    padding: width * 0.03,
     alignItems: 'center',
     flex: 1,
     margin: width * 0.008,
@@ -55,9 +54,9 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.02,
     margin: width * 0.01,
     paddingVertical: height * 0.029,
-    width : width * 0.3,
-    height : height * 0.18,
-    resizeMode : "cover",
+    width: width * 0.3,
+    height: height * 0.18,
+    resizeMode: 'cover',
   },
   uploadThumbnailText: {
     color: colors?.textGray,
@@ -133,11 +132,11 @@ export const styles = StyleSheet.create({
     // backgroundColor : 'red',
     padding: width * 0.02,
   },
-  redTickButton : {
-    alignSelf : 'center',
-    marginTop : -height * 0.02
+  redTickButton: {
+    alignSelf: 'center',
+    marginTop: -height * 0.02,
   },
-  yudioPlayerContainer : {
-    marginVertical : height * 0.02
-  }
+  yudioPlayerContainer: {
+    marginVertical: height * 0.02,
+  },
 });

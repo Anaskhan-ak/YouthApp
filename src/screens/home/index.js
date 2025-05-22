@@ -34,7 +34,7 @@ const Home = () => {
         reducedTransparencyFallbackColor="white"
       />
       <SideBar refRBSheet={refRBSheet} />
-      {/* <RNBottomSheet sheetRef={refRBSheet} /> */}
+      <RNBottomSheet sheetRef={refRBSheet} />
       <BottomTabNavigator />
     </SafeAreaView>
   );

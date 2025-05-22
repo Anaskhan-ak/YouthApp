@@ -118,30 +118,36 @@ export const sideBottomSheetOptions = [
     id: 'post',
     title: 'Post',
     desc: 'To make sure your post reaches the right people...',
+    route:''
   },
   {
     id: 'moments',
     title: 'Moments',
     desc: 'To make sure your Moments reach the right people...',
+    route:''
   },
   {
     id: 'yudio',
     title: 'Yudio',
     desc: 'To make sure your Yudio reaches the right people...',
+    route:'CreateYudio'
   },
   {
     id: 'story',
     title: 'Story',
     desc: 'Share your Daily best moments with the friends...',
+    route:''
   },
   {
     id: 'live',
     title: 'Live',
     desc: 'Go live and share more moments and values...',
+    route:''
   },
   {
     id: 'event',
     title: 'Event',
     desc: 'Arrange an event with friends in your city...',
+    route:''
   },
 ];

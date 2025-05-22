@@ -23,7 +23,7 @@ export const NextButton = props => {
         colors={[darkThemeColors?.RGB1, darkThemeColors?.RGB2]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        style={styles?.nextButton}>
+        style={[styles?.nextButton,{width:props?.width?props?.width:width * 0.3}]}>
         <Text allowFontScaling={false} style={styles?.nextText}>
           {props?.title ? props?.title : 'Next'}
         </Text>

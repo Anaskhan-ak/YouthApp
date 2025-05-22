@@ -1,15 +1,15 @@
-import { StatusBar, Text, TouchableOpacity } from 'react-native';
+import {StatusBar, Text, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { WhiteLeftArrow } from '../../../assets/images/svgs';
-import { colors } from '../../../utils/colors';
-import { styles } from './styles';
+import {WhiteLeftArrow} from '../../../assets/images/svgs';
+import {colors} from '../../../utils/colors';
+import {styles} from './styles';
 
 const GradientHeader = props => {
   return (
     <LinearGradient
-      colors={[colors?.RGB2,colors?.RGB1]}
-      start={{x:1,y:1}}
-      end={{x:0,y:0}}
+      colors={[colors?.RGB2, colors?.RGB1]}
+      start={{x: 1, y: 1}}
+      end={{x: 0, y: 0}}
       style={styles?.container}>
       <StatusBar
         translucent
@@ -21,7 +21,9 @@ const GradientHeader = props => {
       </TouchableOpacity>
       <Text style={styles?.title}>{props?.title}</Text>
       {props?.advancedButtonPress && (
-        <TouchableOpacity style={styles?.advancedButton} onPress={props?.advancedButtonPress}>
+        <TouchableOpacity
+          style={styles?.advancedButton}
+          onPress={props?.advancedButtonPress}>
           <Text style={styles?.advancedButtonText}>Advanced</Text>
         </TouchableOpacity>
       )}
