@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
 import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Cross,
   GradientBlueMic,
@@ -31,7 +32,6 @@ import { colors } from '../../utils/colors';
 import AudioBars from './components/audioBars';
 import RecordedAudioPlayer from './components/recordedAudioPlayer';
 import { styles } from './styles';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -251,7 +251,7 @@ const CreateYudio = () => {
     <SafeAreaView style={styles?.container}>
       <GradientHeader
         title="New Yudio"
-        backPress={() => navigation?.goBack}
+        backPress={() => navigation?.goBack()}
         advancedButtonPress={() => setDrawer(!drawer)}
       />
       <ScrollView style={styles?.content}>
