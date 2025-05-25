@@ -1,24 +1,21 @@
 import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View
-} from 'react-native';
+import { useRef, useState } from 'react';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
 import { images } from '../../assets/images';
 import {
   CameraIcon,
   FileAudio,
   FileImport,
-  GalleryIcon
+  GalleryIcon,
 } from '../../assets/images/svgs';
 import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import MultilineInput from '../../components/inputs/multilineInput';
+import Audience from '../../components/sheets/audience';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
@@ -31,6 +28,15 @@ const CreatePost = () => {
   const [description, setDescription] = useState('');
   const [media, setMedia] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
+  const [metaData, setMetaData] = useState({
+    audience: {
+      active: false,
+      value: 'PUBLIC',
+      ref: useRef(),
+    },
+    location: 'Pakistan',
+    tagFriends: [],
+  });
   const [chars, setChars] = useState(0);
   const maxChars = 4000;
   const navigation = useNavigation();
@@ -215,13 +221,13 @@ const CreatePost = () => {
         allowMultiSelection: false,
       });
       // console.log('Res', res);
-      setMedia( [
+      setMedia([
         {
           uri: res?.uri,
           type: res?.type,
           name: res?.name,
-          mediaType : 'FILE'
-        }
+          mediaType: 'FILE',
+        },
       ]);
     }
   };
@@ -240,6 +246,8 @@ const CreatePost = () => {
           <UserInfoHeader
             userName={'Sannya Wasim'}
             image={images?.defaultProfilePicture}
+            data={metaData}
+            setData={setMetaData}
           />
         </View>
         <MultilineInput
@@ -280,6 +288,13 @@ const CreatePost = () => {
         />
       )}
       <CreateButton title="Create New Post" onPress={handleForm} />
+      {metaData?.audience?.active && (
+        <Audience
+          sheetRef={metaData?.audience?.ref}
+          audience={metaData}
+          setAudience={setMetaData}
+        />
+      )}
     </SafeAreaView>
   );
 };

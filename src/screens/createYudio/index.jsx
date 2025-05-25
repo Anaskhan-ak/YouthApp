@@ -27,6 +27,7 @@ import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
+import Audience from '../../components/sheets/audience';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import AudioBars from './components/audioBars';
@@ -43,17 +44,19 @@ const CreateYudio = () => {
   const [yudio, setYudio] = useState();
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
+  const [metaData, setMetaData] = useState({
+    audience : {
+      active: false, 
+      value : 'PUBLIC',
+      ref: useRef()
+    }, 
+    location : 'Pakistan',
+    tagFriends : []
+  })
 
   const handleForm = async () => {
-    // console.log('Title', title);
-    // console.log('Description', description);
-    // console.log('Thumbnail', thumbnail?.uri);
-    // console.log('Yudio', yudio);
-    // console.log('Waveform', waveform);
-
     const formData = new FormData();
     formData.append('type', 'YUDIO');
-    // formDataParam.append('isPublic', true);
     formData.append('caption', description);
     formData.append('title', title);
     formData.append('location', 'Pakistan');
@@ -259,6 +262,8 @@ const CreateYudio = () => {
           <UserInfoHeader
             userName={'Sannya Wasim'}
             image={require('../../assets/images/SignupImage.jpeg')}
+            data={metaData}
+            setData={setMetaData}
           />
         </View>
         <TextInput
@@ -362,6 +367,13 @@ const CreateYudio = () => {
         {drawer && <Drawer />}
       </ScrollView>
       <CreateButton title="Create New Yudio" onPress={handleForm} />
+      {metaData?.audience?.active && (
+        <Audience
+          sheetRef={metaData?.audience?.ref}
+          audience={metaData}
+          setAudience={setMetaData}
+        />
+      )}
     </SafeAreaView>
   );
 };
