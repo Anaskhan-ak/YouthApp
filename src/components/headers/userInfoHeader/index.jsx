@@ -31,14 +31,13 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
         <View style={styles?.buttons}>
           <TouchableOpacity
             style={styles?.button}
-            onPress={() =>
-              {setData(prev => ({
+            onPress={() => {
+              setData(prev => ({
                 ...prev,
                 audience: {...prev?.audience, active: true},
-              }))
+              }));
               data?.audience?.ref?.current?.snapToIndex(0);
-            }
-            }>
+            }}>
             <View style={styles?.buttonIcon}>
               <PublicIcon />
             </View>
@@ -49,12 +48,13 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles?.button}
-            onPress={() =>
-              setModal(prev => ({
+            onPress={() => {
+              setData(prev => ({
                 ...prev,
                 location: {...prev?.location, active: true},
-              }))
-            }>
+              }));
+              data?.location?.ref?.current?.snapToIndex(0);
+            }}>
             <View style={styles?.buttonIcon}>
               <GradientLocationIcon />
             </View>

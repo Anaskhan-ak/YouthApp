@@ -28,6 +28,7 @@ import Drawer from '../../components/drawer';
 import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import Audience from '../../components/sheets/audience';
+import Location from '../../components/sheets/location';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import AudioBars from './components/audioBars';
@@ -45,14 +46,18 @@ const CreateYudio = () => {
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
   const [metaData, setMetaData] = useState({
-    audience : {
-      active: false, 
-      value : 'PUBLIC',
-      ref: useRef()
-    }, 
-    location : 'Pakistan',
-    tagFriends : []
-  })
+    audience: {
+      active: false,
+      value: 'PUBLIC',
+      ref: useRef(),
+    },
+    location: {
+      active: false,
+      value: 'Pakistan',
+      ref: useRef(),
+    },
+    tagFriends: [],
+  });
 
   const handleForm = async () => {
     const formData = new FormData();
@@ -288,7 +293,7 @@ const CreateYudio = () => {
             />
             <View style={styles?.inputDescFooter}>
               <TouchableOpacity style={styles?.Ai}>
-                <Sparkles width={10} height={10}/>
+                <Sparkles width={10} height={10} />
                 <Text style={styles?.AiText}>Rewrite with AI</Text>
               </TouchableOpacity>
               <Text style={styles?.character}>350/350</Text>
@@ -372,6 +377,13 @@ const CreateYudio = () => {
           sheetRef={metaData?.audience?.ref}
           audience={metaData}
           setAudience={setMetaData}
+        />
+      )}
+      {metaData?.location?.active && (
+        <Location
+          sheetRef={metaData?.location?.ref}
+          location={metaData}
+          setLocation={setMetaData}
         />
       )}
     </SafeAreaView>

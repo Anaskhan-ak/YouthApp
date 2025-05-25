@@ -16,6 +16,7 @@ import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import MultilineInput from '../../components/inputs/multilineInput';
 import Audience from '../../components/sheets/audience';
+import Location from '../../components/sheets/location';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
@@ -34,7 +35,11 @@ const CreatePost = () => {
       value: 'PUBLIC',
       ref: useRef(),
     },
-    location: 'Pakistan',
+    location: {
+      active: false,
+      value: 'Pakistan',
+      ref: useRef(),
+    },
     tagFriends: [],
   });
   const [chars, setChars] = useState(0);
@@ -232,8 +237,6 @@ const CreatePost = () => {
     }
   };
 
-  // console.log("Media", media)
-
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
@@ -293,6 +296,13 @@ const CreatePost = () => {
           sheetRef={metaData?.audience?.ref}
           audience={metaData}
           setAudience={setMetaData}
+        />
+      )}
+      {metaData?.location?.active && (
+        <Location
+          sheetRef={metaData?.location?.ref}
+          location={metaData}
+          setLocation={setMetaData}
         />
       )}
     </SafeAreaView>
