@@ -25,7 +25,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="CreatePost">
+    <Stack.Navigator initialRouteName="CreateYudio">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}

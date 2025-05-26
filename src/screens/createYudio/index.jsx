@@ -29,6 +29,7 @@ import GradientHeader from '../../components/headers/gradientHeader';
 import UserInfoHeader from '../../components/headers/userInfoHeader';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
+import TagFriends from '../../components/sheets/tagFriends';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import AudioBars from './components/audioBars';
@@ -56,7 +57,11 @@ const CreateYudio = () => {
       value: 'Pakistan',
       ref: useRef(),
     },
-    tagFriends: [],
+    tagFriends: {
+      active: false,
+      value: [],
+      ref: useRef(),
+    },
   });
 
   const handleForm = async () => {
@@ -386,6 +391,13 @@ const CreateYudio = () => {
           setLocation={setMetaData}
         />
       )}
+      {metaData?.tagFriends?.active && (
+              <TagFriends
+                sheetRef={metaData?.tagFriends?.ref}
+                tagFriends={metaData}
+                setTagFriends={setMetaData}
+              />
+            )}
     </SafeAreaView>
   );
 };

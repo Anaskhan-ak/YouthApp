@@ -17,6 +17,7 @@ import UserInfoHeader from '../../components/headers/userInfoHeader';
 import MultilineInput from '../../components/inputs/multilineInput';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
+import TagFriends from '../../components/sheets/tagFriends';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
@@ -40,7 +41,11 @@ const CreatePost = () => {
       value: 'Pakistan',
       ref: useRef(),
     },
-    tagFriends: [],
+    tagFriends: {
+      active: false,
+      value: [],
+      ref: useRef(),
+    },
   });
   const [chars, setChars] = useState(0);
   const maxChars = 4000;
@@ -303,6 +308,13 @@ const CreatePost = () => {
           sheetRef={metaData?.location?.ref}
           location={metaData}
           setLocation={setMetaData}
+        />
+      )}
+      {metaData?.tagFriends?.active && (
+        <TagFriends
+          sheetRef={metaData?.tagFriends?.ref}
+          tagFriends={metaData}
+          setTagFriends={setMetaData}
         />
       )}
     </SafeAreaView>

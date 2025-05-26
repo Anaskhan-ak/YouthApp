@@ -65,12 +65,13 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles?.button}
-            onPress={() =>
-              setModal(prev => ({
+             onPress={() => {
+              setData(prev => ({
                 ...prev,
                 tagFriends: {...prev?.tagFriends, active: true},
-              }))
-            }>
+              }));
+              data?.location?.ref?.current?.snapToIndex(0);
+            }}>
             <TagFriendsIcon />
             <Text style={styles?.buttonText}>Tag Friends</Text>
           </TouchableOpacity>
