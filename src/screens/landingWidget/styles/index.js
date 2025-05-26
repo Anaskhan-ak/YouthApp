@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.01,
     justifyContent: 'center',
     alignSelf: 'flex-end',
-    marginTop: Platform?.OS==='ios'?height * 0.045:height * 0.0225,
+    marginTop: Platform?.OS==='ios'?height * 0.045:height * 0.05,
     marginRight: width * 0.045,
   },
   skiptetxt: {

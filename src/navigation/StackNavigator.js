@@ -18,7 +18,7 @@ import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
 import SignUp from '../screens/signup';
-import Splash from '../screens/Splash';
+import Splash from '../screens/splash';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
 

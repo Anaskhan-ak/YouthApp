@@ -179,8 +179,6 @@ const CreatePost = () => {
         });
       }
     }
-
-    console.log('Form Data', formData);
     try {
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);

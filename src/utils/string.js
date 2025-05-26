@@ -118,7 +118,7 @@ export const sideBottomSheetOptions = [
     id: 'post',
     title: 'Post',
     desc: 'To make sure your post reaches the right people...',
-    route:''
+    route:'CreatePost'
   },
   {
     id: 'moments',

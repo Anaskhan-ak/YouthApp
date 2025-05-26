@@ -97,8 +97,6 @@ export default function TagFriends({sheetRef, tagFriends, setTagFriends}) {
     };
   });
 };
-
-
   const renderItem = ({item, index}) => {
     return (
       <View key={item?.id} style={styles?.itemContainer}>
@@ -119,7 +117,6 @@ export default function TagFriends({sheetRef, tagFriends, setTagFriends}) {
       </View>
     );
   };
-
   return (
     <BottomSheet index={0} enablePanDownToClose={true} ref={sheetRef}>
       <BottomSheetView style={styles.contentContainer}>
