@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { images } from '../../assets/images';
 import ChatHeader from '../../components/headers/chat/chat';
+import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import ChatFooter from './components/footer';
 import ReceivedMessage from './components/receivedMessage';
@@ -19,19 +20,19 @@ const Chat = ({route}) => {
   const [messages, setMessages] = useState([]);
   const navigation = useNavigation();
   const userID = 'cm60ql39f003l91r8l18bd80z';
-  // useEffect(() => {
-  //   const getAllChatMessages = async () => {
-  //     try {
-  //       const response = await apiCall?.getChatMessages({chatId: chatID});
-  //       console.log('Successfully fetched messages');
-  //       // console.log('Response', response);
-  //       setMessages(response);
-  //     } catch (error) {
-  //       console.log('Error fetching messages');
-  //     }
-  //   };
-  //   getAllChatMessages();
-  // }, []);
+  useEffect(() => {
+    const getAllChatMessages = async () => {
+      try {
+        const response = await apiCall?.getChatMessages({chatId: chatID});
+        console.log('Successfully fetched messages');
+        // console.log('Response', response);
+        setMessages(response);
+      } catch (error) {
+        console.log('Error fetching messages');
+      }
+    };
+    getAllChatMessages();
+  }, []);
   return (
     <SafeAreaView style={{flex : 1, backgroundColor : colors?.white}}>
     <KeyboardAvoidingView
