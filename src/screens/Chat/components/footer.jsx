@@ -23,10 +23,13 @@ import {
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
+import CameraComponent from './camera';
 
 const ChatFooter = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [add, setAdd] = useState(false);
+  const [camera, setCamera] = useState(false)
+  const [media, setMedia]=useState({})
   const icons = [
     {
       name: 'documents',
@@ -71,6 +74,14 @@ const ChatFooter = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  useEffect(()=>{
+    if (media?.uri !== null){
+      setCamera(false)
+    }
+  },[media])
+
+  // console.log("Media", media)
   return (
     <View style={styles?.container}>
       <View style={styles?.content}>
@@ -96,7 +107,7 @@ const ChatFooter = () => {
             </TouchableOpacity>
           ) : (
             <>
-              <TouchableOpacity style={styles?.button}>
+              <TouchableOpacity style={styles?.button} onPress={() => setCamera(!camera)}>
                 <BlackCameraIcon />
               </TouchableOpacity>
               <TouchableOpacity style={styles?.button}>
@@ -122,6 +133,11 @@ const ChatFooter = () => {
           contentContainerStyle={styles?.listContent}
         />
       )}
+      {
+        camera && (
+          <CameraComponent media={media} setMedia={setMedia}/>
+        )
+      }
     </View>
   );
 };

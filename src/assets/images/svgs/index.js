@@ -107,6 +107,7 @@ import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
+import WhiteTick from './WhiteTick.svg';
 import YouthIcon from './YouthIcon.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 import Yudio from './yudio.svg';
@@ -217,8 +218,7 @@ export {
   VoiceCallIcon,
   WhatsappIcon,
   WhiteCameraIcon,
-  WhiteLeftArrow,
-  YouthIcon,
+  WhiteLeftArrow, WhiteTick, YouthIcon,
   YoutubeIcon,
   Yudio
 };
