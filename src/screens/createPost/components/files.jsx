@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import EmptyComponent from '../../../components/empty';
 import { width } from '../../../constant';
@@ -16,20 +16,31 @@ import { fonts } from '../../../utils/fonts';
 
 const FilesComponent = ({media, setMedia}) => {
   const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchDocuments = async () => {
-      const result = await apiCall?.getAllDocuments({
-        userId: 'cm60ql39f003l91r8l18bd80z',
-        type: 'DOCUMENT',
-      });
-      // console.log("Result", result[0])
-      setDocuments(result?.map(doc => ({
-        thumbnail : doc?.documents?.thumbnail,
-        name : doc?.documents?.caption,
-        type : doc?.documents?.url?.split('.')?.pop().toUpperCase(),
-        document : doc?.documents?.url,
-        postType : doc?.type
-      })));
+      try {
+        setLoading(true);
+        const result = await apiCall?.getAllDocuments({
+          userId: 'cm60ql39f003l91r8l18bd80z',
+          type: 'DOCUMENT',
+        });
+        // console.log("Result", result[0])
+        setDocuments(
+          result?.map(doc => ({
+            thumbnail: doc?.documents?.thumbnail,
+            name: doc?.documents?.caption,
+            type: doc?.documents?.url?.split('.')?.pop().toUpperCase(),
+            document: doc?.documents?.url,
+            postType: doc?.type,
+          })),
+        );
+      } catch (error) {
+        console.log('Error fetching documents', error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchDocuments();
   }, []);
@@ -45,8 +56,8 @@ const FilesComponent = ({media, setMedia}) => {
               type: item?.type?.toLowerCase(),
               name: item?.name,
               thumbnail: item?.thumbnail,
-              postType : item?.postType
-            }
+              postType: item?.postType,
+            },
           ]);
         }}
         style={styles?.itemContainer}>
@@ -61,9 +72,7 @@ const FilesComponent = ({media, setMedia}) => {
           />
           <View style={styles?.itemContent}>
             <Text style={styles?.title}>{item?.name}</Text>
-            <Text style={styles?.caption}>
-              {item?.type}
-            </Text>
+            <Text style={styles?.caption}>{item?.type}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -73,26 +82,26 @@ const FilesComponent = ({media, setMedia}) => {
   const HeaderComponent = () => {
     return (
       <View style={styles?.header}>
-          <Text style={styles?.headerText}>Recently Uploaded</Text>
+        <Text style={styles?.headerText}>Recently Uploaded</Text>
         <TouchableOpacity>
           <Text style={styles?.headerText}>View all</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
   return (
     <>
-      {documents?.length > 0 ? (
+      {loading ? (
+        <View style={styles?.loader}>
+          <ActivityIndicator size={'small'} color={colors?.RGB1} />
+        </View>
+      ) : (
         <FlatList
           data={documents}
           renderItem={renderItem}
           ListEmptyComponent={<EmptyComponent text="No documents to show" />}
-          ListHeaderComponent={<HeaderComponent/>}
+          ListHeaderComponent={<HeaderComponent />}
         />
-      ) : (
-        <View style={styles?.loader}>
-          <ActivityIndicator size={'small'} color={colors?.RGB1} />
-        </View>
       )}
     </>
   );
@@ -144,16 +153,17 @@ const styles = StyleSheet.create({
   loader: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    marginVertical: height * 0.15,
   },
-  header : {
-    flexDirection : 'row',
-    justifyContent : 'space-between',
-    alignItems : "center",
-    padding : width * 0.02
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: width * 0.02,
   },
-  headerText : {
-    fontFamily : fonts?.montserratBold,
-    fontSize : width * 0.04
-  }
+  headerText: {
+    fontFamily: fonts?.montserratBold,
+    fontSize: width * 0.04,
+  },
 });
