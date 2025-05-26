@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { FlatList, Image, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../assets/images';
-import CreateButton from '../../components/buttons/CreateButton';
 import InboxHeader from '../../components/headers/chat/inbox';
-import CustomSearchBar from '../../components/inputs/search';
 import { colors } from '../../utils/colors';
+import AddMembers from './components/addMembers';
 import { styles } from './styles';
 
 const NewChatGroup = () => {
@@ -15,6 +14,7 @@ const NewChatGroup = () => {
   const data = Array.from({length: 20}, () => ({
     photo: images?.defaultProfilePicture,
     name: 'Keneth Alleen',
+    active : false
   }));
   const renderItem = ({item}) => {
     return (
@@ -26,7 +26,7 @@ const NewChatGroup = () => {
         <LinearGradient
           colors={[colors?.RGB1, colors?.RGB2]}
           style={styles?.gradientButton}>
-          <Text style={styles?.gradientText}>Chat</Text>
+          <Text style={styles?.gradientText}>Add</Text>
         </LinearGradient>
       </View>
     );
@@ -38,26 +38,7 @@ const NewChatGroup = () => {
         onCancelIconPress={() => navigation?.goBack()}
         onGroupIconPress={() => navigation?.goBack()}
       />
-      <View style={styles?.search}>
-        <CustomSearchBar search={search} setSearch={setSearch} />
-      </View>
-      <View style={styles?.listContainer}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          style={styles?.list}
-          ListHeaderComponent={<Text style={styles?.header}>Youthapp Contacts</Text>}
-        />
-      </View>
-      <View style={styles?.listContainer}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          style={styles?.list}
-          ListHeaderComponent={<Text style={styles?.header}>Phone Contacts</Text>}
-        />
-      </View>
-      <CreateButton title='Next'/>
+      <AddMembers/>
     </View>
   );
 };
