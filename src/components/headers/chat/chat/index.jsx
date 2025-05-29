@@ -1,12 +1,12 @@
 import { Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import {
-    BackArrow,
-    VideoCallIcon,
-    VoiceCallIcon
+  BackArrow,
+  VideoCallIcon,
+  VoiceCallIcon
 } from '../../../../assets/images/svgs';
 import { styles } from './styles';
 
-const ChatHeader = ({user, backPress}) => {
+const ChatHeader = ({user, backPress, onChatDetailsPress}) => {
   return (
     <View style={styles?.container}>
       <StatusBar
@@ -17,7 +17,7 @@ const ChatHeader = ({user, backPress}) => {
       <TouchableOpacity style={styles?.backButton} onPress={backPress}>
         <BackArrow />
       </TouchableOpacity>
-      <TouchableOpacity style={styles?.details}>
+      <TouchableOpacity style={styles?.details} onPress={onChatDetailsPress}>
         <Image source={user?.image} style={styles?.image} />
         <View style={styles?.textContainer}>
           <Text style={styles?.title}>{user?.title}</Text>

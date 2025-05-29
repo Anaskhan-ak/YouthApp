@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import EmptyComponent from '../../../components/empty';
-import { width } from '../../../constant';
+import { height, width } from '../../../constant';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
