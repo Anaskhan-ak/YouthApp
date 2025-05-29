@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { images } from '../../../../assets/images';
 import {
   EditEventThumbnail,
@@ -12,11 +19,12 @@ import CreateButton from '../../../../components/buttons/CreateButton';
 import { GradientBorderButton } from '../../../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
 import InboxHeader from '../../../../components/headers/chat/inbox';
-import { width } from '../../../../constant';
+import { height, width } from '../../../../constant';
 import { styles } from './styles';
 
 const ChatDetails = ({backPress, title}) => {
   const [edit, setEdit] = useState(false);
+  const [viewAll, setViewAll] = useState(false);
   const options = [
     {
       title: 'Media, links and documents',
@@ -105,7 +113,7 @@ const ChatDetails = ({backPress, title}) => {
   return (
     <View style={styles?.container}>
       <InboxHeader backPress={backPress} title={title} />
-      <View style={styles?.content}>
+      <ScrollView contentContainerStyle={styles?.content}>
         <View style={styles?.editImageContainer}>
           <Image source={images?.defaultProfilePicture} style={styles?.image} />
           {edit && (
@@ -124,33 +132,41 @@ const ChatDetails = ({backPress, title}) => {
           )}
         </View>
         {!edit && (
-          <View style={{alignItems : 'center', justifyContent : 'center'}}>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Text style={styles?.subText}>25 participants</Text>
             <View style={styles?.icons}>
-              <TouchableOpacity style={styles?.videocallButton}><VideoCallIcon /></TouchableOpacity>
-              <TouchableOpacity style={styles?.voicecallButton}><VoiceCallIcon /></TouchableOpacity>
-              <TouchableOpacity style={styles?.searchButton}><SearchIcon/></TouchableOpacity>
+              <TouchableOpacity style={styles?.videocallButton}>
+                <VideoCallIcon />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles?.voicecallButton}>
+                <VoiceCallIcon />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles?.searchButton}>
+                <SearchIcon />
+              </TouchableOpacity>
             </View>
-            <FlatList
-              data={options}
-              renderItem={({item}) => (
-                <View style={styles?.itemContainer}>
-                  <Text style={styles?.itemTitle}>{item?.title}</Text>
-                  <View style={styles?.itemRight}>
-                    <Text style={styles?.itemText}>{item?.text}</Text>
-                    <TouchableOpacity style={styles?.rightArrowButton}>
-                      <RightArrow width={width * 0.03} height={width * 0.03} />
-                    </TouchableOpacity>
+            {options?.map(item => (
+              <TouchableOpacity style={styles?.itemContainer}>
+                <Text style={styles?.itemTitle}>{item?.title}</Text>
+                <View style={styles?.itemRight}>
+                  <Text style={styles?.itemText}>{item?.text}</Text>
+                  <View style={styles?.rightArrowButton}>
+                    <RightArrow width={width * 0.03} height={width * 0.03} />
                   </View>
                 </View>
-              )}
-              style={styles?.optionsList}
-            />
+              </TouchableOpacity>
+            ))}
           </View>
         )}
-        <Text style={styles?.participantHeading}>GROUP PARTICIPANTS</Text>
+        <Text
+          style={[
+            styles?.participantHeading,
+            {marginTop: edit ? height * 0.04 : height * 0.04},
+          ]}>
+          GROUP PARTICIPANTS
+        </Text>
         <FlatList
-          data={contacts}
+          data={viewAll ? contacts : contacts?.slice(0, 5)}
           renderItem={({item}) => (
             <View style={styles?.contactContainer}>
               <View style={styles?.contactLeft}>
@@ -158,14 +174,21 @@ const ChatDetails = ({backPress, title}) => {
                 <Text style={styles?.contactName}>{item?.name}</Text>
               </View>
               {item?.admin ? (
-                <GradientBorderButton width={width * 0.4} title={'Admin'} />
+                <GradientBorderButton width={width * 0.23} title={'Admin'} />
               ) : (
-                <PrimaryButton width={width * 0.4} title={'Remove'} />
+                <PrimaryButton width={width * 0.23} title={'Remove'} />
               )}
             </View>
           )}
+          style={styles?.listContainer}
+          contentContainerStyle={styles?.list}
+          ListFooterComponent={
+            <TouchableOpacity onPress={() => setViewAll(!viewAll)}>
+              <Text>{viewAll ? 'View less' : 'View more'}</Text>
+            </TouchableOpacity>
+          }
         />
-      </View>
+      </ScrollView>
       <CreateButton
         title={edit ? 'Save' : 'Edit Group'}
         onPress={() => setEdit(!edit)}

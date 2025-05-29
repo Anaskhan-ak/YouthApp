@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   content: {
     justifyContent: 'center',
     alignItems: 'center',
-    // padding: width * 0.1,
+    marginTop : height * 0.03
   },
   image: {
     width: width * 0.3,
@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginVertical: height * 0.01,
     marginHorizontal: width * 0.3,
+    width : width * 0.33
   },
   searchButton : {
     backgroundColor : colors?.gray,
@@ -57,12 +58,14 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: height * 0.01,
-    borderRadius: width * 0.04,
+    marginVertical: height * 0.005,
+    borderRadius: width * 0.02,
+    padding : width * 0.02,
+    width : width * 0.9
   },
   itemTitle: {
     fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.05,
+    fontSize: width * 0.04,
     color: colors?.text,
   },
   itemRight: {
@@ -84,17 +87,22 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: width * 0.01,
   },
-  optionsList: {},
+  optionsList: {
+    marginVertical : height * 0.01
+  },
   participantHeading: {
     fontFamily: fonts?.montserratRegular,
-    fontSize: width * 0.05,
+    fontSize: width * 0.04,
     color: colors?.textGray,
+    textAlign : 'left',
+    marginBottom : height * 0.01
   },
   contactContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: height * 0.01,
+    width : width * 0.9
   },
   contactLeft: {
     flexDirection: 'row',
@@ -112,6 +120,13 @@ export const styles = StyleSheet.create({
     color: colors?.text,
     marginLeft: width * 0.02,
   },
+  listContainer : {
+    // height : height * 0.38,
+    marginBottom : height * 0.05,
+  },
+  list : {
+    marginBottom : height * 0.1
+  },
   editTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -125,7 +140,7 @@ export const styles = StyleSheet.create({
     justifyContent : 'center',
   },
 editImage : {
-    left : width * 0.2,
-    top : height * 0.03
+    left : width * 0.1,
+    top : -height * 0.03
 }
 });
