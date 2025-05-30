@@ -21,11 +21,12 @@ import SignUp from '../screens/signup';
 import Splash from '../screens/splash';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
+import Profile from '../screens/Profile';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="CreatePost">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -59,6 +60,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Otp"
         component={Otp}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
