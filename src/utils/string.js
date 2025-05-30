@@ -82,12 +82,12 @@ export const sideBarOptions = [
     },
     {
       screen: 'notification',
-      route: 'Notification',
+      route: 'Notifications',
       icon: <Notification width={24} height={24} />,
     },
     {
       screen: 'chat',
-      route: 'Chat',
+      route: 'ChatInbox',
       icon: <Chat width={24} height={24} />,
     },
     {

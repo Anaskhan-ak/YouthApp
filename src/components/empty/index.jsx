@@ -5,10 +5,11 @@ import { fonts } from '../../utils/fonts';
 const {StyleSheet, Text} = require('react-native');
 const {View} = require('react-native');
 
-const EmptyComponent = ({icon, text, subtext}) => {
+const EmptyComponent = ({Icon, text, subtext}) => {
   return (
     <View style={styles?.container}>
-      {icon && icon}
+      <View style={{backgroundColor : 'red'}}>{Icon}</View>
+      
       <Text style={styles?.text}>{text}</Text>
       <Text style={styles?.subText}>{subtext}</Text>
     </View>
