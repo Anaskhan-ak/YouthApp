@@ -18,9 +18,10 @@ import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
 import SignUp from '../screens/signup';
-import Splash from '../screens/Splash';
+import Splash from '../screens/splash';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
+import Profile from '../screens/Profile';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -59,6 +60,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Otp"
         component={Otp}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="Profile"
+        component={Profile}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen

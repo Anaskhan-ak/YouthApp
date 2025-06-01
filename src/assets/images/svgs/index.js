@@ -111,8 +111,17 @@ import WhiteTick from './WhiteTick.svg';
 import YouthIcon from './YouthIcon.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 import Yudio from './yudio.svg';
+import UserFollow from './user_follow.svg';
+import QR from './qr.svg';
+import Eye from './eye.svg';
+import YouthCoin from './youthCoin.svg';
+import SwitchAcc from './switchAcc.svg';
 
 export {
+  QR,
+  Eye,
+  YouthCoin,
+  SwitchAcc,
   ActiveComment,
   ActiveDownload,
   ActiveGroupChatIcon,
@@ -220,6 +229,7 @@ export {
   WhiteCameraIcon,
   WhiteLeftArrow, WhiteTick, YouthIcon,
   YoutubeIcon,
-  Yudio
+  Yudio,
+  UserFollow
 };
 

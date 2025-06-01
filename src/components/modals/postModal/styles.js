@@ -1,5 +1,5 @@
-import { Dimensions, StyleSheet } from 'react-native';
-import { width } from '../../../constant';
+import {Dimensions, Platform, StyleSheet} from 'react-native';
+import {width} from '../../../constant';
 const {height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
@@ -9,17 +9,18 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   animatedContainer: {
-    // position: 'absolute',
-    // bottom: 0,
     width: width,
     alignSelf: 'center',
     // backgroundColor : "red"
   },
 
   gradientBar: {
+    width: Platform?.OS == 'ios' && width,
+    height: Platform?.OS == 'ios' && height * 0.06,
+    justifyContent: Platform?.OS === 'ios' ? 'space-around' : 'space-between',
     borderTopLeftRadius: width * 0.04,
     borderTopRightRadius: width * 0.04,
-    paddingVertical: width * 0.04,
-    paddingHorizontal: width * 0.07,
+    paddingVertical: Platform?.OS === 'android' && width * 0.04,
+    paddingHorizontal: Platform?.OS === 'android' && width * 0.07,
   },
 });

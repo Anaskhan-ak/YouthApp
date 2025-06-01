@@ -1,0 +1,26 @@
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx
+index 66de125..952b820 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx
+@@ -60,7 +60,7 @@ const StoryAvatar: FC<StoryAvatarProps> = ( {
+   }
+ 
+   return (
+-    <View style={AvatarStyles.name}>
++    <View style={[AvatarStyles.name,{marginLeft:5}]}>
+       <View style={AvatarStyles.container}>
+         <TouchableOpacity activeOpacity={0.6} onPress={onPress} testID={`${id}StoryAvatar${stories.length}Story`}>
+           <Loader loading={isLoading} color={loaderColor} size={size + AVATAR_OFFSET * 2} />
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx
+index b1154e0..87767c7 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx
+@@ -49,7 +49,7 @@ const StoryAvatarList: FC<StoryAvatarListProps> = ( {
+         data={stories}
+         renderItem={( { item } : { item: InstagramStoryProps } ) => renderItem( item )}
+         keyExtractor={( item: InstagramStoryProps ) => item.id}
+-        contentContainerStyle={avatarListContainerStyle}
++        contentContainerStyle={[avatarListContainerStyle]}
+         testID="storiesList"
+       />
+     );

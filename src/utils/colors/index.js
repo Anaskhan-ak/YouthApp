@@ -24,7 +24,8 @@ export const colors = {
   linkBlue: '#64CFFF',
   lightGrey:'#424242',
   extraLightGrey:'rgba(234, 234, 234, 1)',
-  red:'rgba(255, 9, 9, 1)'
+  red:'rgba(255, 9, 9, 1)',
+  ashGrey:'#D9D9D9'
 };
 
 // Dark theme colors

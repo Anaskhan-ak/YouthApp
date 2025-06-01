@@ -1,5 +1,5 @@
 import { images } from '../assets/images';
-import { Chat, LiveNow, Moment, NearBy, Notification, Plus, Search, Trending, Yudio } from '../assets/images/svgs';
+import {SwitchAcc, Chat, Eye, LiveNow, Moment, NearBy, Notification, Plus, QR, Search, Trending, UserFollow, YouthCoin, Yudio } from '../assets/images/svgs';
 
 export const onboardingContent = [
   {
@@ -118,7 +118,7 @@ export const sideBottomSheetOptions = [
     id: 'post',
     title: 'Post',
     desc: 'To make sure your post reaches the right people...',
-    route:''
+    route:'CreatePost'
   },
   {
     id: 'moments',
@@ -148,6 +148,38 @@ export const sideBottomSheetOptions = [
     id: 'event',
     title: 'Event',
     desc: 'Arrange an event with friends in your city...',
+    route:''
+  },
+];
+export const profileOptions = [
+  {
+    id: 'follow',
+    icon:<UserFollow/>,
+    route:''
+  },
+  {
+    id: 'qr',
+    icon:<QR/>,
+    route:''
+  },
+  {
+    id: 'eye',
+    icon:<Eye/>,
+    route:''
+  },
+  {
+    id: 'youth',
+    icon:<YouthCoin/>,
+    route:''
+  },
+  {
+    id: 'changeAcc',
+    icon:<SwitchAcc/>,
+    route:''
+  },
+  {
+   id: 'editProfile',
+    icon:'Edit Profile',
     route:''
   },
 ];

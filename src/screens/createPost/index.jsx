@@ -1,7 +1,7 @@
 import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
 import { images } from '../../assets/images';
 import {
@@ -24,6 +24,7 @@ import FileSelectorButtons from './components/fileSelectors';
 import MediaUploader from './components/mediaUpload';
 import PostContentModal from './components/postContentModal';
 import { styles } from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CreatePost = () => {
   const [drawer, setDrawer] = useState(false);
@@ -179,8 +180,6 @@ const CreatePost = () => {
         });
       }
     }
-
-    console.log('Form Data', formData);
     try {
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
