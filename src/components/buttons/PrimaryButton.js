@@ -22,6 +22,7 @@ export const PrimaryButton = props => {
           {
             width: props?.width || width * 0.69,
             borderRadius: props?.borderRadius ||  5,
+            height : props?.height || height * 0.05
           },
           styles.primaryButton,
           props?.style, 

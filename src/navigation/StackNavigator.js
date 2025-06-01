@@ -17,11 +17,11 @@ import NewChatGroup from '../screens/newChatGroup';
 import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
+import Profile from '../screens/Profile';
 import SignUp from '../screens/signup';
-import Splash from '../screens/splash';
+import Splash from '../screens/Splash';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
-import Profile from '../screens/Profile';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();

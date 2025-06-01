@@ -35,6 +35,7 @@ import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
 import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
+import Eye from './eye.svg';
 import FacebookIcon from './FacebookIcon.svg';
 import FileAudio from './FileAudioIcon.svg';
 import FileIcon from './FileIcon.svg';
@@ -88,6 +89,7 @@ import PinterestIcon from './PinterestIcon.svg';
 import PlayIcon from './PlayIcon.svg';
 import Plus from './plus.svg';
 import PublicIcon from './PublicIcon.svg';
+import QR from './qr.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
 import RightArrow from './RightArrow.svg';
@@ -95,6 +97,8 @@ import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
 import Sparkles from './Sparkles.svg';
+import SwitchAcc from './switchAcc.svg';
+import TagFriends from './TagFriends.svg';
 import TagFriendsIcon from './TagFriendsIcon.svg';
 import TiktokIcon from './TiktokIcon.svg';
 import ToggleCameraIcon from './ToggleCameraIcon.svg';
@@ -102,26 +106,19 @@ import Trending from './trending.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
+import UserFollow from './user_follow.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
 import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import WhiteTick from './WhiteTick.svg';
+import YouthCoin from './youthCoin.svg';
 import YouthIcon from './YouthIcon.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 import Yudio from './yudio.svg';
-import UserFollow from './user_follow.svg';
-import QR from './qr.svg';
-import Eye from './eye.svg';
-import YouthCoin from './youthCoin.svg';
-import SwitchAcc from './switchAcc.svg';
 
 export {
-  QR,
-  Eye,
-  YouthCoin,
-  SwitchAcc,
   ActiveComment,
   ActiveDownload,
   ActiveGroupChatIcon,
@@ -155,8 +152,7 @@ export {
   EmptyCallsInboxIcon,
   EmptyChatInboxIcon,
   Error,
-  ErrorWhite,
-  FacebookIcon,
+  ErrorWhite, Eye, FacebookIcon,
   FileAudio,
   FileIcon,
   FileImport,
@@ -208,28 +204,24 @@ export {
   PinterestIcon,
   PlayIcon,
   Plus,
-  PublicIcon,
-  RateUs,
+  PublicIcon, QR, RateUs,
   RedditIcon,
   RightArrow,
   Search,
   SearchIcon,
   SnapchatIcon,
-  Sparkles,
-  TagFriendsIcon,
+  Sparkles, SwitchAcc, TagFriends, TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
   Trending,
   TwitterIcon,
   TwitterIconRound,
-  UploadThumbnail,
-  VideoCallIcon,
+  UploadThumbnail, UserFollow, VideoCallIcon,
   VoiceCallIcon,
   WhatsappIcon,
   WhiteCameraIcon,
-  WhiteLeftArrow, WhiteTick, YouthIcon,
+  WhiteLeftArrow, WhiteTick, YouthCoin, YouthIcon,
   YoutubeIcon,
-  Yudio,
-  UserFollow
+  Yudio
 };
 
