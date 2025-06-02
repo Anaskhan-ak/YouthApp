@@ -1,32 +1,54 @@
-import { StyleSheet, View } from 'react-native';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
-import Comments from './subComponents/comments';
-import EventPost from './subComponents/eventPost';
-import Likes from './subComponents/likes';
-import MediaPost from './subComponents/mediaPost';
-import UserPostHeader from './subComponents/userPostHeader';
+import {
+    Image,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
+import Attendees from '../subComponents/Attendees';
+import PostBottomTab from '../subComponents/postBottomTab';
 
-const Post = ({post}) => {
+const EventPost = ({post}) => {
   return (
-    <View style={styles?.container}>
-      <UserPostHeader user={post?.user} post={post} />
-      <View style={styles?.content}>
-        {post?.type === 'MEDIA' && <MediaPost post={post} />}
-        {post?.type === 'EVENT' && <EventPost post={post}/>}
+    <View>
+      <View>
+        <View style={styles.mediaContainer}>
+          <Image
+            source={post?.event?.thumbnail}
+            style={styles.mediaImage}
+            resizeMode="contain"
+          />
+        </View>
       </View>
-      <View style={styles?.likes}>
-        <Likes post={post} />
-      </View>
-      <View style={styles?.comments}>
-        <Comments post={post} />
+      <View style={styles?.reactionsTab}>
+        <View style={styles?.bottomTab}>
+          <View style={styles?.eventTextConatiner}>
+            <Text style={styles?.eventLocation}>{post?.event?.location}</Text>
+            <Text style={styles?.eventCaption}>{post?.event?.caption}</Text>
+          </View>
+          <View style={styles?.eventElements}>
+            <View style={styles?.attendees}>
+              <Attendees post={post} />
+            </View>
+            <View style={styles?.eventHost}>
+              <Image source={post?.user?.photo} style={styles?.hostImage} />
+              <Text
+                style={
+                  styles?.hostName
+                }>{`${post?.user?.firstName} ${post?.user?.lastName} (Host)`}</Text>
+            </View>
+          </View>
+        </View>
+
+        <PostBottomTab post={post} />
       </View>
     </View>
   );
 };
 
-export default Post;
+export default EventPost;
 
 const styles = StyleSheet.create({
   container: {

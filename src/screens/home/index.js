@@ -14,100 +14,232 @@ import SideBar from './components/sideBar';
 
 const Home = () => {
   const refRBSheet = useRef(null);
-  const data = [
-    {
-      user: {
+  const data = {
+    user: {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    type: 'MEDIA',
+    media: [images?.onboarding1, images?.onboarding1, images?.onboarding1],
+    likes: [
+      {
         firstName: 'Sannya',
         lastName: 'Wasim',
         photo: images?.onboarding1,
       },
-      type: 'MEDIA',
-      media: [images?.onboarding1, images?.onboarding1, images?.onboarding1],
-      likes: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-      ],
-      comments: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-      ],
-      share: 10,
-      repost: 10,
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+    ],
+    comments: [
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+    ],
+    share: 10,
+    repost: 10,
+  };
+  const eventData = {
+    user: {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
     },
-  ];
+    type: 'EVENT',
+    event: {
+      thumbnail: images?.onboarding1,
+      caption: 'Coffee Meetup',
+      location: 'Today at 16:00 @KAVA',
+      type: 'PDF',
+    },
+    likes: [
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+    ],
+    comments: [
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+        text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+      },
+    ],
+    attendees: [
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+      {
+        firstName: 'Sannya',
+        lastName: 'Wasim',
+        photo: images?.onboarding1,
+      },
+    ],
+    share: 10,
+    repost: 10,
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar translucent backgroundColor={'transparent'}></StatusBar>
@@ -119,7 +251,7 @@ const Home = () => {
       </LinearGradient>
       <FlatList
         ListHeaderComponent={<Stories />}
-        data={data}
+        data={[data, eventData]}
         renderItem={({item}) => <Post post={item} />}
       />
       {/* <BlurView
