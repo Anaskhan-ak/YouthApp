@@ -36,7 +36,7 @@ const UserPostHeader = ({post, user}) => {
               height : height * 0.024,
             }}
             textStyle={{
-                fontFamily : fonts?.montserratMedium,
+                fontFamily : fonts?.montserratSemiBold,
                 fontSize : width * 0.03,
                 color : colors?.white,                
             }}
@@ -52,7 +52,7 @@ const UserPostHeader = ({post, user}) => {
               marginLeft : width * 0.01
             }}
             textStyle={{
-                fontFamily : fonts?.montserratMedium,
+                fontFamily : fonts?.montserratSemiBold,
                 fontSize : width * 0.03,
                 color : colors?.white,                
             }}

@@ -7,10 +7,11 @@ import Post from '../../components/post';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
+import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { colors } from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
-import { data, eventData, yudioData } from './constants';
+import { data, eventData, musicData, yudioData } from './constants';
 
 const Home = () => {
   const refRBSheet = useRef(null);
@@ -25,7 +26,7 @@ const Home = () => {
       </LinearGradient>
       <FlatList
         ListHeaderComponent={<Stories />}
-        data={[data, eventData, yudioData]}
+        data={[data, eventData, yudioData, musicData]}
         renderItem={({item}) => <Post post={item} />}
       />
       {/* <BlurView
@@ -42,7 +43,7 @@ const Home = () => {
       /> */}
       <SideBar refRBSheet={refRBSheet} />
       <RNBottomSheet sheetRef={refRBSheet} />
-      {/* <BottomTabNavigator /> */}
+      <BottomTabNavigator />
     </SafeAreaView>
   );
 };

@@ -52,6 +52,7 @@ import GradientDownloadIcon from './GradientDownloadIcon.svg';
 import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
 import GradientMessageSendIcon from './GradientMessageSendIcon.svg';
+import GradientPauseIcon from './GradientPauseIcon.svg';
 import GradientPlayIcon from './GradientPlayIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
@@ -114,7 +115,9 @@ import UserFollow from './user_follow.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
 import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
+import WhiteBackwardAudioIcon from './WhiteBackwardAudioIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
+import WhiteForwardAudioIcon from './WhiteForwardAudioIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import WhiteTick from './WhiteTick.svg';
 import YouthCoin from './youthCoin.svg';
@@ -173,7 +176,7 @@ export {
   GradientCalender,
   GradientCross, GradientDownloadIcon, GradientDropRightCircle,
   GradientLocationIcon,
-  GradientMessageSendIcon, GradientPlayIcon, GradientRedMic,
+  GradientMessageSendIcon, GradientPauseIcon, GradientPlayIcon, GradientRedMic,
   GradientRedTick,
   GrayLocationIcon,
   GrayTimeIcon,
@@ -233,9 +236,7 @@ export {
   UserFollow,
   VideoCallIcon,
   VoiceCallIcon,
-  WhatsappIcon,
-  WhiteCameraIcon,
-  WhiteLeftArrow,
+  WhatsappIcon, WhiteBackwardAudioIcon, WhiteCameraIcon, WhiteForwardAudioIcon, WhiteLeftArrow,
   WhiteTick,
   YouthCoin,
   YouthIcon,

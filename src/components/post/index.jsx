@@ -6,6 +6,7 @@ import Comments from './subComponents/comments';
 import EventPost from './subComponents/eventPost';
 import Likes from './subComponents/likes';
 import MediaPost from './subComponents/mediaPost';
+import MusicPost from './subComponents/MusicPost';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
 
@@ -15,8 +16,9 @@ const Post = ({post}) => {
       <UserPostHeader user={post?.user} post={post} />
       <View style={styles?.content}>
         {post?.type === 'MEDIA' && <MediaPost post={post} />}
-        {post?.type === 'EVENT' && <EventPost post={post}/>}
-        {post?.type === 'YUDIO' && <YudioPost post={post}/>}
+        {post?.type === 'EVENT' && <EventPost post={post} />}
+        {post?.type === 'YUDIO' && <YudioPost post={post} />}
+        {post?.type === 'MUSIC' && <MusicPost post={post} />}
       </View>
       <View style={styles?.likes}>
         <Likes post={post} />

@@ -63,7 +63,7 @@ const PostBottomTab = ({post}) => {
             </View>
           );
         })}
-        {post?.type === 'MEDIA' && (
+        {(post?.type === 'MEDIA' || post?.type === 'MUSIC') && (
           <TouchableOpacity style={styles?.pinkButton}>
             <Text style={styles?.pinkButtonText}>Follow</Text>
           </TouchableOpacity>

@@ -1,41 +1,21 @@
 import Slider from '@react-native-community/slider';
 import { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
-  PinkForwardAudioButton,
-  PinkPauseAudioButton,
-  PinkPlayAudioButton,
-  PinkRewindAUdioButton,
-  PinkVolume,
+    GradientPauseIcon,
+    GradientPlayIcon,
+    WhiteBackwardAudioIcon,
+    WhiteForwardAudioIcon
 } from '../../../assets/images/svgs';
+import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors/index';
-import { styles } from '../styles/AudioPlayer';
 
-const LandingWidgetAudioPlayer = ({  pink }) => {
+const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-  // useEffect(() => {
-  //   console.log("********* AUDIO URL **********", audioURL);
-  //   console.log("SOUND", SoundPlayer)
-  //   try {
-  //     SoundPlayer.loadUrl(audioURL);
-  //     const checkDuration = setTimeout(async () => {
-  //       const info = await SoundPlayer.getInfo();
-  //       setDuration(info.duration * 1000); // convert to ms
-  //     }, 1000);
-
-  //     return () => {
-  //       clearTimeout(checkDuration);
-  //       SoundPlayer.stop();
-  //     };
-  //   } catch (e) {
-  //     console.log('Cannot load sound file', e);
-  //   }
-  // }, [audioURL]);
 
   const playPauseHandler = () => {
     try {
@@ -99,9 +79,8 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
   };
 
   return (
-    <LinearGradient
-      style={styles?.container}
-      colors={[colors.RGB1, colors.RGB2]}>
+    <View
+      style={styles?.container}>
       <View style={styles?.sliderContainer}>
         <Text style={styles?.timeText}>{formatTime(position)}</Text>
         <Slider
@@ -118,32 +97,74 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
           thumbTintColor="transparent"
         />
         <Text style={styles?.timeText}>{formatTime(duration)}</Text>
-        <View style={styles?.audioProgress}>
-          <PinkVolume width={13} height={13} />
-          <View style={styles?.audioVolume} />
-        </View>
+        
       </View>
 
       <View style={styles?.controls}>
         <TouchableOpacity onPress={backwardHandler}>
-          <PinkRewindAUdioButton />
+          <WhiteBackwardAudioIcon />
         </TouchableOpacity>
-        <TouchableOpacity onPress={playPauseHandler}>
+        <TouchableOpacity style={styles?.playPauseButton} onPress={playPauseHandler}>
           {isPlaying ? (
-            <PinkPauseAudioButton />
+            <GradientPauseIcon />
           ) : (
-            <PinkPlayAudioButton width={25} height={25} />
+            <GradientPlayIcon width={width * 0.03} height={width * 0.03} />
           )}
         </TouchableOpacity>
         <TouchableOpacity onPress={forwardHandler}>
-          <PinkForwardAudioButton />
+          <WhiteForwardAudioIcon />
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </View>
   );
 };
 
 
 
-export default LandingWidgetAudioPlayer;
+export default MusicPlayer;
+
+export const styles = StyleSheet.create({
+  container: {
+    // justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 6,
+    paddingHorizontal: 5,
+    marginVertical: 5,
+    width: width * 0.5,
+    height: Platform?.OS === 'ios' ? height * 0.08 : height * 0.06,
+    backgroundColor : colors?.blackTransparent
+  },
+  sliderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  controls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: 30,
+  },
+  slider: {
+    flex: 1,
+    height: 20,
+  },
+  timeText: {
+    color: 'white',
+    fontSize: 8,
+  },
+  controlButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  playPauseButton: {
+    backgroundColor: 'white',
+    width: width * 0.05,
+    height: width * 0.05,
+    borderRadius: width * 0.05,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 2,
+  },
+  
+});
 
