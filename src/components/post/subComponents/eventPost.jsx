@@ -1,8 +1,8 @@
 import {
-    Image,
-    StyleSheet,
-    Text,
-    View
+  Image,
+  StyleSheet,
+  Text,
+  View
 } from 'react-native';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     marginHorizontal: height * 0.01,
     borderRadius: width * 0.04,
     marginTop: height * 0.015,
+    width : width * 0.89
   },
   mediaImage: {
     width: width * 0.89,

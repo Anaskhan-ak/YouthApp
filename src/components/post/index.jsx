@@ -3,6 +3,7 @@ import { height, width } from '../../constant';
 import { colors } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
 import Comments from './subComponents/comments';
+import DocumentPost from './subComponents/documentPost';
 import EventPost from './subComponents/eventPost';
 import Likes from './subComponents/likes';
 import MediaPost from './subComponents/mediaPost';
@@ -19,6 +20,7 @@ const Post = ({post}) => {
         {post?.type === 'EVENT' && <EventPost post={post} />}
         {post?.type === 'YUDIO' && <YudioPost post={post} />}
         {post?.type === 'MUSIC' && <MusicPost post={post} />}
+        {post?.type === 'DOCUMENT' && <DocumentPost post={post} />}
       </View>
       <View style={styles?.likes}>
         <Likes post={post} />
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.04,
   },
   content: {
-    // backgroundColor : 'yellow'
+    // backgroundColor : 'yellow',
   },
   mediaContainer: {
     backgroundColor: colors?.black,

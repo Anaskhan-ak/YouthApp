@@ -11,7 +11,7 @@ import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { colors } from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
-import { data, eventData, musicData, yudioData } from './constants';
+import { data, documentData, eventData, musicData, yudioData } from './constants';
 
 const Home = () => {
   const refRBSheet = useRef(null);
@@ -26,8 +26,9 @@ const Home = () => {
       </LinearGradient>
       <FlatList
         ListHeaderComponent={<Stories />}
-        data={[data, eventData, yudioData, musicData]}
+        data={[data, eventData, yudioData, musicData, documentData]}
         renderItem={({item}) => <Post post={item} />}
+        contentContainerStyle={{paddingBottom : height * 0.1}}
       />
       {/* <BlurView
         style={{

@@ -754,3 +754,100 @@ export const musicData = {
     url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   },
 };
+
+
+export const documentData = {
+  user: {
+    firstName: 'Sannya',
+    lastName: 'Wasim',
+    photo: images?.onboarding1,
+  },
+  type: 'DOCUMENT',
+  thumbnail: images?.onboarding1,
+  likes: [
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+    },
+  ],
+  comments: [
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+    {
+      firstName: 'Sannya',
+      lastName: 'Wasim',
+      photo: images?.onboarding1,
+      text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
+    },
+  ],
+  share: 10,
+  repost: 10,
+  document: {
+    // url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  },
+};

@@ -1,5 +1,5 @@
 import { images } from '../assets/images';
-import {SwitchAcc, Chat, Eye, LiveNow, Moment, NearBy, Notification, Plus, QR, Search, Trending, UserFollow, YouthCoin, Yudio } from '../assets/images/svgs';
+import { Chat, Eye, LiveNow, Moment, NearBy, Notification, Plus, QR, Search, SwitchAcc, Trending, UserFollow, YouthCoin, Yudio } from '../assets/images/svgs';
 
 export const onboardingContent = [
   {
