@@ -16,7 +16,6 @@ import PostBottomTab from './subComponents/postBottomTab';
 import UserPostHeader from './subComponents/userPostHeader';
 
 const Post = ({post}) => {
-  console.log('Likes array length', post?.likes);
   const [activeIndex, setActiveIndex] = useState(0);
   const viewabilityConfig = useRef({
     viewAreaCoveragePercentThreshold: 50,
@@ -29,7 +28,7 @@ const Post = ({post}) => {
   }).current;
   return (
     <View style={styles?.container}>
-      <UserPostHeader user={post?.user} />
+      <UserPostHeader user={post?.user} post={post}/>
       <View style={styles?.content}>
         {post?.type === 'MEDIA' && (
           <View>
@@ -101,7 +100,7 @@ export default Post;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors?.white,
     padding: width * 0.02,
     margin: width * 0.02,

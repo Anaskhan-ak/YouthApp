@@ -1,6 +1,7 @@
 import { BlurView } from '@react-native-community/blur';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { ActiveComment, ActiveLike, ActiveRepost, ActiveSave, ActiveShare, InactiveComment, InactiveLike, InactiveRepost, InactiveSave, InactiveShare } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -46,12 +47,11 @@ const PostBottomTab = ({post}) => {
   ]);
   return (
     <View style={styles?.container}>
-      <View style={styles?.wrapper}>
+      <LinearGradient colors={[colors?.RGB3, colors?.RGB4]} style={styles?.wrapper}>
         <BlurView
           style={styles.absolute}
           blurType="light"
           blurAmount={20}
-          // reducedTransparencyFallbackColor="white"
         />
         {icons?.map((icon, index) => {
           return (
@@ -68,7 +68,7 @@ const PostBottomTab = ({post}) => {
             <Text style={styles?.pinkButtonText}>Follow</Text>
           </TouchableOpacity>
         )}
-      </View>
+      </LinearGradient>
     </View>
   );
 };

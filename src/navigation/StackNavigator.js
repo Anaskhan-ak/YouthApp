@@ -17,6 +17,7 @@ import NewChatGroup from '../screens/newChatGroup';
 import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
+import PostDetails from '../screens/postDetails';
 import Profile from '../screens/Profile';
 import SignUp from '../screens/signup';
 import Splash from '../screens/Splash';
@@ -140,6 +141,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="NewChatGroup"
         component={NewChatGroup}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="PostDetails"
+        component={PostDetails}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

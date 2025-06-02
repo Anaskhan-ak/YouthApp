@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
 import {
-    ActiveLike,
-    FileMicIcon,
-    GradientMessageSendIcon,
-    InactiveComment,
+  ActiveLike,
+  FileMicIcon,
+  GradientMessageSendIcon,
+  InactiveComment,
 } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -85,7 +85,7 @@ export default Comments;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   showAllText: {
     fontFamily: fonts?.montserratMedium,

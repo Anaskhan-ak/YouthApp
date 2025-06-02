@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
@@ -7,9 +8,10 @@ import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const UserPostHeader = ({user}) => {
+const UserPostHeader = ({post, user}) => {
+  const navigation = useNavigation()
   return (
-    <TouchableOpacity style={styles?.container}>
+    <TouchableOpacity onPress={() => navigation?.navigate("PostDetails", {post:post})} style={styles?.container}>
       <LinearGradient
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
@@ -66,7 +68,7 @@ export default UserPostHeader;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'start',

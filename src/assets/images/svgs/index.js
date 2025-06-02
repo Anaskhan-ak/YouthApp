@@ -35,6 +35,7 @@ import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
 import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
+import EventsIcon from './EventsIcon.svg';
 import Eye from './eye.svg';
 import FacebookIcon from './FacebookIcon.svg';
 import FileAudio from './FileAudioIcon.svg';
@@ -47,9 +48,11 @@ import Google from './google.svg';
 import GradientBlueMic from './GradientBlueMic.svg';
 import GradientCalender from './GradientCalender.svg';
 import GradientCross from './GradientCross.svg';
+import GradientDownloadIcon from './GradientDownloadIcon.svg';
 import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
 import GradientMessageSendIcon from './GradientMessageSendIcon.svg';
+import GradientPlayIcon from './GradientPlayIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
 import GrayLocationIcon from './GrayLocationIcon.svg';
@@ -74,6 +77,7 @@ import Menu from './menu.svg';
 import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
 import Moment from './moment.svg';
+import MomentsIcon from './MomentsIcon.svg';
 import NearBy from './nearBy.svg';
 import Notification from './notification.svg';
 import PasswordHide from './PasswordHide.svg';
@@ -141,9 +145,13 @@ export {
   BlueTick,
   Calendar,
   CameraIcon,
-  Chat, ChatContactIcon, ChatDocumentIcon,
+  Chat,
+  ChatContactIcon,
+  ChatDocumentIcon,
   ChatGalleryIcon,
-  ChatLocationIcon, ChatYouthIcon, CopyIcon,
+  ChatLocationIcon,
+  ChatYouthIcon,
+  CopyIcon,
   Cross,
   DontShowLandingWidget,
   DropDown,
@@ -152,7 +160,8 @@ export {
   EmptyCallsInboxIcon,
   EmptyChatInboxIcon,
   Error,
-  ErrorWhite, Eye, FacebookIcon,
+  ErrorWhite, EventsIcon, Eye,
+  FacebookIcon,
   FileAudio,
   FileIcon,
   FileImport,
@@ -162,11 +171,9 @@ export {
   Google,
   GradientBlueMic,
   GradientCalender,
-  GradientCross,
-  GradientDropRightCircle,
+  GradientCross, GradientDownloadIcon, GradientDropRightCircle,
   GradientLocationIcon,
-  GradientMessageSendIcon,
-  GradientRedMic,
+  GradientMessageSendIcon, GradientPlayIcon, GradientRedMic,
   GradientRedTick,
   GrayLocationIcon,
   GrayTimeIcon,
@@ -190,6 +197,7 @@ export {
   MessageIcon,
   MessengerIcon,
   Moment,
+  MomentsIcon,
   NearBy,
   Notification,
   PasswordHide,
@@ -204,23 +212,33 @@ export {
   PinterestIcon,
   PlayIcon,
   Plus,
-  PublicIcon, QR, RateUs,
+  PublicIcon,
+  QR,
+  RateUs,
   RedditIcon,
   RightArrow,
   Search,
   SearchIcon,
   SnapchatIcon,
-  Sparkles, SwitchAcc, TagFriends, TagFriendsIcon,
+  Sparkles,
+  SwitchAcc,
+  TagFriends,
+  TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
   Trending,
   TwitterIcon,
   TwitterIconRound,
-  UploadThumbnail, UserFollow, VideoCallIcon,
+  UploadThumbnail,
+  UserFollow,
+  VideoCallIcon,
   VoiceCallIcon,
   WhatsappIcon,
   WhiteCameraIcon,
-  WhiteLeftArrow, WhiteTick, YouthCoin, YouthIcon,
+  WhiteLeftArrow,
+  WhiteTick,
+  YouthCoin,
+  YouthIcon,
   YoutubeIcon,
   Yudio
 };

@@ -1,13 +1,14 @@
-import {View, StyleSheet, Image, Platform} from 'react-native';
-import React from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors} from '../../../utils/colors';
-import {height, width} from '../../../constant';
-import {HomeHeaderLogo, Menu} from '../../../assets/images/svgs';
-import {styles} from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { HomeHeaderLogo, Menu } from '../../../assets/images/svgs';
+import { width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { styles } from './styles';
 
 const HomeHeader = ({img}) => {
+  const navigation = useNavigation()
   return (
     <LinearGradient
       colors={[colors?.RGB1, colors?.RGB2]}
@@ -18,7 +19,8 @@ const HomeHeader = ({img}) => {
         <HomeHeaderLogo />
         <View style={styles.rightContainer}>
           <Menu width={width * 0.08} height={width * 0.08} />
-          <LinearGradient
+          <TouchableOpacity onPress={() => navigation?.navigate('Profile')}>
+            <LinearGradient
             colors={[colors?.RGB2, colors?.RGB1]}
             style={styles.imageBorder}>
             <Image
@@ -28,6 +30,7 @@ const HomeHeader = ({img}) => {
               style={styles.image}
             />
           </LinearGradient>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </LinearGradient>
