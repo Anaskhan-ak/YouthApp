@@ -68,6 +68,11 @@ const PostBottomTab = ({post}) => {
             <Text style={styles?.pinkButtonText}>Follow</Text>
           </TouchableOpacity>
         )}
+        {post?.type === 'EVENT' && (
+          <TouchableOpacity style={styles?.pinkButton}>
+            <Text style={styles?.pinkButtonText}>Attend</Text>
+          </TouchableOpacity>
+        )}
       </LinearGradient>
     </View>
   );
