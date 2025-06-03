@@ -1,26 +1,58 @@
-import { StyleSheet, View } from 'react-native';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
+import { useState } from 'react';
+import {
+  Modal,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import { HorizontalDots } from '../../assets/images/svgs';
+import { styles } from './styles';
 import Comments from './subComponents/comments';
 import DocumentPost from './subComponents/documentPost';
 import EventPost from './subComponents/eventPost';
 import Likes from './subComponents/likes';
 import MediaPost from './subComponents/mediaPost';
+import PostModal from './subComponents/Modal';
 import MusicPost from './subComponents/MusicPost';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
 
 const Post = ({post}) => {
+  const [modal, setModal] = useState({
+    isPost: false,
+    visible: false,
+  });
+
+  const renderPostContent = (post, modalProps) => {
+    switch (post?.type) {
+      case 'MEDIA':
+        return <MediaPost post={post} modal={modalProps} />;
+      case 'EVENT':
+        return <EventPost post={post} modal={modalProps} />;
+      case 'YUDIO':
+        return <YudioPost post={post} modal={modalProps} />;
+      case 'MUSIC':
+        return <MusicPost post={post} modal={modalProps} />;
+      case 'DOCUMENT':
+        return <DocumentPost post={post} modal={modalProps} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <View style={styles?.container}>
-      <UserPostHeader user={post?.user} post={post} />
+      <View style={styles?.header}>
+        <UserPostHeader user={post?.user} post={post} />
+        <TouchableOpacity
+          style={styles?.dots}
+          onPress={() => setModal(prev => ({...prev, visible: true}))}>
+          <HorizontalDots />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles?.content}>
-        {post?.type === 'MEDIA' && <MediaPost post={post} />}
-        {post?.type === 'EVENT' && <EventPost post={post} />}
-        {post?.type === 'YUDIO' && <YudioPost post={post} />}
-        {post?.type === 'MUSIC' && <MusicPost post={post} />}
-        {post?.type === 'DOCUMENT' && <DocumentPost post={post} />}
+        {renderPostContent(post, {modal, setModal})}
       </View>
       <View style={styles?.likes}>
         <Likes post={post} />
@@ -28,97 +60,30 @@ const Post = ({post}) => {
       <View style={styles?.comments}>
         <Comments post={post} />
       </View>
+      {(modal?.visible || modal?.isPost) && (
+        <Modal animationType="slide" transparent statusBarTranslucent>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              setModal({
+                isPost: false,
+                visible: false,
+              })
+            }>
+            <View style={styles?.modalBg}>
+              {modal?.isPost && (
+                <View style={styles?.content}>
+                  {renderPostContent(post, {modal, setModal})}
+                </View>
+              )}
+              <View style={styles?.modal}>
+                <PostModal />
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      )}
     </View>
   );
 };
 
 export default Post;
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    backgroundColor: colors?.white,
-    padding: width * 0.02,
-    margin: width * 0.02,
-    borderRadius: width * 0.04,
-  },
-  content: {
-    // backgroundColor : 'yellow',
-  },
-  mediaContainer: {
-    backgroundColor: colors?.black,
-    marginHorizontal: height * 0.01,
-    borderRadius: width * 0.04,
-    marginTop: height * 0.015,
-  },
-  mediaImage: {
-    width: width * 0.89,
-    height: height * 0.38,
-    resizeMode: 'contain',
-  },
-  bottomTab: {
-    backgroundColor: colors?.gray11,
-    height: height * 0.08,
-    width: width * 0.88,
-    borderTopLeftRadius: width * 0.03,
-    borderTopRightRadius: width * 0.03,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  reactionsTab: {
-    position: 'absolute',
-    zIndex: 100,
-    bottom: 0,
-    // width: width * 0.89,
-    right: height * 0.0045,
-    left: height * 0.01,
-    alignSelf: 'center',
-  },
-  likes: {
-    margin: height * 0.01,
-  },
-  comments: {
-    // backgroundColor : 'red'
-  },
-  eventTextConatiner: {
-    marginLeft: width * 0.02,
-  },
-  eventLocation: {
-    fontFamily: fonts?.montserratSemiBold,
-    fontSize: width * 0.03,
-    color: colors?.text,
-  },
-  eventCaption: {
-    fontFamily: fonts?.montserratExtraBold,
-    fontSize: width * 0.03,
-    color: colors?.text,
-  },
-  eventHost: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginHorizontal: width * 0.01,
-  },
-  hostImage: {
-    width: width * 0.08,
-    height: width * 0.08,
-    borderRadius: width * 0.08,
-    borderWidth: width * 0.005,
-    borderColor: colors?.RGB2,
-  },
-  hostName: {
-    fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.026,
-    color: colors?.text,
-    marginLeft: width * 0.01,
-  },
-  eventElements: {
-    bottom: height * 0.03,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  attendees: {
-    marginBottom: -height * 0.01,
-  },
-});

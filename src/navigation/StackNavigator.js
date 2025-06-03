@@ -21,6 +21,7 @@ import PostDetails from '../screens/postDetails';
 import Profile from '../screens/Profile';
 import SignUp from '../screens/signup';
 import Splash from '../screens/Splash';
+import SuggestedContent from '../screens/suggestions';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -146,6 +147,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="PostDetails"
         component={PostDetails}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="SuggestedContent"
+        component={SuggestedContent}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

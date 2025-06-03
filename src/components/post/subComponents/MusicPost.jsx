@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // import YudioPlayer from '../../../components/audio/YudioPlayer';
 import LinearGradient from 'react-native-linear-gradient';
 import { height, width } from '../../../constant';
@@ -7,24 +7,30 @@ import { fonts } from '../../../utils/fonts';
 import PostBottomTab from '../subComponents/postBottomTab';
 import MusicPlayer from './musicPlayer';
 
-const MusicPost = ({post}) => {
+const MusicPost = ({post, modal}) => {
   return (
     <View>
-      <LinearGradient
-        colors={[colors?.RGB4, colors?.RGB3]}
-        style={styles?.player}>
-        <Image source={post?.thumbnail} style={styles?.thumbnail} />
-        <View style={styles?.content}>
-          <Text style={styles?.heading}>Don't You Worry</Text>
-          <Text style={styles?.subHeading}>ELEVATION.2022</Text>
-          <View>
-            <MusicPlayer/>
+      <TouchableOpacity
+        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        <LinearGradient
+          colors={[colors?.RGB4, colors?.RGB3]}
+          style={styles?.player}>
+          <Image source={post?.thumbnail} style={styles?.thumbnail} />
+          <View style={styles?.content}>
+            <Text style={styles?.heading}>Don't You Worry</Text>
+            <Text style={styles?.subHeading}>ELEVATION.2022</Text>
+            <View>
+              <MusicPlayer />
+            </View>
           </View>
+        </LinearGradient>
+      </TouchableOpacity>
+      {
+      !modal?.modal?.isPost && (
+        <View style={styles?.reactionsTab}>
+          <PostBottomTab post={post} />
         </View>
-      </LinearGradient>
-      <View style={styles?.reactionsTab}>
-        <PostBottomTab post={post} />
-      </View>
+      )}
     </View>
   );
 };
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
     height: height * 0.2,
     margin: width * 0.02,
     borderRadius: width * 0.04,
-    width : width * 0.89
+    width: width * 0.89,
   },
   reactionsTab: {
     position: 'absolute',
@@ -82,9 +88,9 @@ const styles = StyleSheet.create({
     fontSize: width * 0.037,
     color: colors?.text,
   },
-  subHeading : {
+  subHeading: {
     fontFamily: fonts?.montserratRegular,
     fontSize: width * 0.03,
     color: colors?.text,
-  }
+  },
 });

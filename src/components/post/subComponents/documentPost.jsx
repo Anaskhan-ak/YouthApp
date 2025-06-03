@@ -1,25 +1,34 @@
-import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
-// import YudioPlayer from '../../../components/audio/YudioPlayer';
 import { BlurView } from '@react-native-community/blur';
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { InactiveDownload } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import PostBottomTab from './postBottomTab';
 
-const DocumentPost = ({post}) => {
+const DocumentPost = ({post, modal}) => {
   return (
     <View>
-      <ImageBackground source={post?.thumbnail} style={styles?.player}>
-        <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
-        <TouchableOpacity style={styles?.downloadIcon}>
-            <InactiveDownload/>
-        </TouchableOpacity>
-        <Image source={post?.thumbnail} style={styles?.thumbnail} />
-      </ImageBackground>
-      <View style={styles?.reactionsTab}>
-        <PostBottomTab post={post} />
-      </View>
+      <TouchableOpacity onLongPress={() => modal?.setModal(prev => ({...prev, isPost : true}))}>
+        <ImageBackground source={post?.thumbnail} style={styles?.player}>
+          <BlurView style={styles.absolute} blurType="light" blurAmount={10} />
+          <TouchableOpacity style={styles?.downloadIcon}>
+            <InactiveDownload />
+          </TouchableOpacity>
+          <Image source={post?.thumbnail} style={styles?.thumbnail} />
+        </ImageBackground>
+      </TouchableOpacity>
+      {!modal?.modal?.isPost && (
+        <View style={styles?.reactionsTab}>
+          <PostBottomTab post={post} />
+        </View>
+      )}
     </View>
   );
 };
@@ -73,10 +82,10 @@ const styles = StyleSheet.create({
   absolute: {
     ...StyleSheet.absoluteFillObject,
   },
-  downloadIcon : {
-    position : 'absolute',
-    zIndex : 100,
-    right : width * 0.03,
-    top : height * 0.012
-  }
+  downloadIcon: {
+    position: 'absolute',
+    zIndex: 100,
+    right: width * 0.03,
+    top: height * 0.012,
+  },
 });

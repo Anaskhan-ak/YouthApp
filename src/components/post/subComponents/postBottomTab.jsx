@@ -81,7 +81,9 @@ const PostBottomTab = ({post}) => {
 export default PostBottomTab;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    // backgroundColor : 'red'
+  },
   wrapper: {
     flex: 1,
     flexDirection: 'row',

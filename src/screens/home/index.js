@@ -4,6 +4,7 @@ import { LinearGradient } from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeHeader from '../../components/headers/homeHeader';
 import Post from '../../components/post';
+import SuggestedUsers from '../../components/post/subComponents/suggestedUsers';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
@@ -11,7 +12,7 @@ import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { colors } from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
-import { data, documentData, eventData, musicData, yudioData } from './constants';
+import { data, documentData, eventData, musicData, users, yudioData } from './constants';
 
 const Home = () => {
   const refRBSheet = useRef(null);
@@ -26,10 +27,12 @@ const Home = () => {
       </LinearGradient>
       <FlatList
         ListHeaderComponent={<Stories />}
-        data={[data, eventData, yudioData, musicData, documentData]}
+        data={[data, eventData, users, yudioData, musicData, documentData]}
         renderItem={({item}) => <Post post={item} />}
         contentContainerStyle={{paddingBottom : height * 0.1}}
+        ListFooterComponent={<SuggestedUsers/>}
       />
+      
       {/* <BlurView
         style={{
           position: 'absolute',

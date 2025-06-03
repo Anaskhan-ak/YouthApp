@@ -1,19 +1,14 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import Attendees from '../subComponents/Attendees';
 import PostBottomTab from '../subComponents/postBottomTab';
 
-const EventPost = ({post}) => {
+const EventPost = ({post, modal}) => {
   return (
     <View>
-      <View>
+      <TouchableOpacity onLongPress={() => modal?.setModal(prev => ({...prev, isPost : true}))}>
         <View style={styles.mediaContainer}>
           <Image
             source={post?.event?.thumbnail}
@@ -21,7 +16,8 @@ const EventPost = ({post}) => {
             resizeMode="contain"
           />
         </View>
-      </View>
+      </TouchableOpacity>
+
       <View style={styles?.reactionsTab}>
         <View style={styles?.bottomTab}>
           <View style={styles?.eventTextConatiner}>
@@ -41,8 +37,7 @@ const EventPost = ({post}) => {
             </View>
           </View>
         </View>
-
-        <PostBottomTab post={post} />
+        {!modal?.modal?.isPost && <PostBottomTab post={post} />}
       </View>
     </View>
   );
@@ -66,7 +61,7 @@ const styles = StyleSheet.create({
     marginHorizontal: height * 0.01,
     borderRadius: width * 0.04,
     marginTop: height * 0.015,
-    width : width * 0.89
+    width: width * 0.89,
   },
   mediaImage: {
     width: width * 0.89,

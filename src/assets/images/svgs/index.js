@@ -62,6 +62,7 @@ import GrayWalletIcon from './GrayWalletIcon.svg';
 import GreenCheckMark from './greenCheckMark.svg';
 import Home from './home.svg';
 import HomeHeaderLogo from './homeHeaderLogo.svg';
+import HorizontalDots from './HorizontalDots.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
 import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
@@ -81,6 +82,11 @@ import Moment from './moment.svg';
 import MomentsIcon from './MomentsIcon.svg';
 import NearBy from './nearBy.svg';
 import Notification from './notification.svg';
+import OutlineBlockIcon from './OutlineBlockIcon.svg';
+import OutlineCloudDOwnloadIcon from './OutlineCloudDownloadIcon.svg';
+import OutlineFollowIcon from './OutlineFollowIcon.svg';
+import OutlineHeartbreakIcon from './OutlineHeartbreakIcon.svg';
+import OutlineHeartIcon from './OutlineHeartIcon.svg';
 import PasswordHide from './PasswordHide.svg';
 import PasswordShow from './PasswordShow.svg';
 import PauseIcon from './PauseIcon.svg';
@@ -163,7 +169,9 @@ export {
   EmptyCallsInboxIcon,
   EmptyChatInboxIcon,
   Error,
-  ErrorWhite, EventsIcon, Eye,
+  ErrorWhite,
+  EventsIcon,
+  Eye,
   FacebookIcon,
   FileAudio,
   FileIcon,
@@ -174,9 +182,14 @@ export {
   Google,
   GradientBlueMic,
   GradientCalender,
-  GradientCross, GradientDownloadIcon, GradientDropRightCircle,
+  GradientCross,
+  GradientDownloadIcon,
+  GradientDropRightCircle,
   GradientLocationIcon,
-  GradientMessageSendIcon, GradientPauseIcon, GradientPlayIcon, GradientRedMic,
+  GradientMessageSendIcon,
+  GradientPauseIcon,
+  GradientPlayIcon,
+  GradientRedMic,
   GradientRedTick,
   GrayLocationIcon,
   GrayTimeIcon,
@@ -184,6 +197,7 @@ export {
   GreenCheckMark,
   Home,
   HomeHeaderLogo,
+  HorizontalDots,
   InactiveComment,
   InactiveDownload,
   InactiveGroupChatIcon,
@@ -202,8 +216,7 @@ export {
   Moment,
   MomentsIcon,
   NearBy,
-  Notification,
-  PasswordHide,
+  Notification, OutlineBlockIcon, OutlineCloudDOwnloadIcon, OutlineFollowIcon, OutlineHeartbreakIcon, OutlineHeartIcon, PasswordHide,
   PasswordShow,
   PauseIcon,
   PinkForwardAudioButton,
@@ -236,7 +249,11 @@ export {
   UserFollow,
   VideoCallIcon,
   VoiceCallIcon,
-  WhatsappIcon, WhiteBackwardAudioIcon, WhiteCameraIcon, WhiteForwardAudioIcon, WhiteLeftArrow,
+  WhatsappIcon,
+  WhiteBackwardAudioIcon,
+  WhiteCameraIcon,
+  WhiteForwardAudioIcon,
+  WhiteLeftArrow,
   WhiteTick,
   YouthCoin,
   YouthIcon,

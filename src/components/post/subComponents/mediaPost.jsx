@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
@@ -12,8 +12,15 @@ import { colors } from '../../../utils/colors';
 import CircleCounter from '../subComponents/CircleCounter';
 import PostBottomTab from '../subComponents/postBottomTab';
 
-const MediaPost = ({post}) => {
-    const [activeIndex, setActiveIndex] = useState(0);
+const MediaPost = ({post, modal}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [mediaWidth, setMediaWidth] = useState(null);
+
+  const handleMediaLayout = event => {
+    const {width} = event.nativeEvent.layout;
+    setMediaWidth(width);
+  };
+
   const viewabilityConfig = useRef({
     viewAreaCoveragePercentThreshold: 50,
   }).current;
@@ -32,26 +39,35 @@ const MediaPost = ({post}) => {
         showsHorizontalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({item, index}) => (
-          <View style={styles.mediaContainer}>
-            <View style={styles.mediaElements}>
-              <TouchableOpacity>
-                <TagFriends />
-              </TouchableOpacity>
-              <CircleCounter
-                segments={post?.media?.length}
-                filled={index + 1}
-                centerText={index + 1}
-                activeColor={colors?.white}
-                inactiveColor={colors?.gray}
-                centerTextColor={colors?.white}
+          <TouchableOpacity onLongPress={() => modal?.setModal(prev => ({...prev, isPost : true}))}>
+            <View
+              onLayout={handleMediaLayout}
+              style={[
+                styles.mediaContainer,
+                // , modal === true && {
+                //   position : "absolute",
+                //   zIndex : 100            }
+              ]}>
+              <View style={styles.mediaElements}>
+                <TouchableOpacity>
+                  <TagFriends />
+                </TouchableOpacity>
+                <CircleCounter
+                  segments={post?.media?.length}
+                  filled={index + 1}
+                  centerText={index + 1}
+                  activeColor={colors?.white}
+                  inactiveColor={colors?.gray}
+                  centerTextColor={colors?.white}
+                />
+              </View>
+              <Image
+                source={item}
+                style={styles.mediaImage}
+                resizeMode="contain"
               />
             </View>
-            <Image
-              source={item}
-              style={styles.mediaImage}
-              resizeMode="contain"
-            />
-          </View>
+          </TouchableOpacity>
         )}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
@@ -72,9 +88,11 @@ const MediaPost = ({post}) => {
           />
         ))}
       </View>
-      <View style={styles?.reactionsTab}>
-        <PostBottomTab post={post} />
-      </View>
+      {!modal?.modal?.isPost && (
+        <View style={[styles.reactionsTab, {width: mediaWidth}]}>
+          <PostBottomTab post={post} />
+        </View>
+      )}
     </View>
   );
 };
@@ -123,7 +141,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 100,
     bottom: 0,
-    // width: width * 0.89,
     right: height * 0.0045,
     left: height * 0.01,
     alignSelf: 'center',
