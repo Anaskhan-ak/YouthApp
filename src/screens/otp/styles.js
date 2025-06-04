@@ -38,6 +38,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginTop: 8,
+    alignItems: 'center',
   },
   textView: {width: '49%'},
   phoneContainer: {
@@ -47,6 +48,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.extraLightGrey,
+    height: height * 0.045,
     paddingVertical: Platform.OS === 'ios' ? height * 0.01 : height * 0.014,
   },
   phoneText: {
@@ -85,12 +87,24 @@ export const styles = StyleSheet.create({
     backgroundColor: colors?.white,
   },
   authView: {marginTop: height * 0.16},
-  resendBtn:{marginTop: 0, height: height * 0.048},
-  titleContainer:{
-    marginVertical:20
+  resendBtn: {
+    marginTop: 0,
+    height: Platform?.OS === 'android' ? height * 0.045 : height * 0.0325,
+  },
+  titleContainer: {
+    marginVertical: 20,
   },
   gradientText: {
     fontFamily: 'Montserrat-Bold',
     fontSize: width * 0.03,
+  },
+  btnText: {
+    color: 'white',
+    fontSize: width * 0.03,
+    fontFamily: fonts?.montserratMedium,
+  },
+  headingWithIconView: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

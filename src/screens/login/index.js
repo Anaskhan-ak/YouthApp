@@ -150,9 +150,6 @@ const Login = () => {
           <YouthIcon width={width * 0.2} />
           <Text style={styles?.heading}> Account</Text>
         </View>
-        {/* <Text style={styles?.heading}>
-          Login to your <YouthIcon width={width * 0.2} /> Account
-        </Text> */}
         <Text style={styles?.title}>Be Connected to the world now!</Text>
         <View style={{marginTop: 10}} />
         <Controller

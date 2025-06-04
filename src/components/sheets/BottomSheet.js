@@ -7,23 +7,29 @@ import LinearGradient from 'react-native-linear-gradient';
 import {sideBottomSheetOptions} from '../../utils/string';
 import {NextButton} from '../../components/buttons/NextButton';
 import {useNavigation} from '@react-navigation/native';
-import { styles } from './styles';
+import {styles} from './styles';
 import {colors} from '../../utils/colors';
-import { height, width } from '../../constant';
+import {height, width} from '../../constant';
 
-export default function RNBottomSheet({sheetRef}) {
+export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
   const [selected, setSelected] = useState({
     id: 'post',
     title: 'Post',
     desc: 'To make sure your post reaches the right people...',
-    route: '',
+    route: 'CreatePost',
   });
   const navigation = useNavigation();
   const handlePress = () => {
     navigation?.navigate(selected?.route);
   };
   return (
-    <BottomSheet index={-1} enablePanDownToClose={true} ref={sheetRef}>
+    <BottomSheet
+      onChange={index => {
+        setIsSheetOpen(index >= 0);
+      }}
+      index={-1}
+      enablePanDownToClose={true}
+      ref={sheetRef}>
       <BottomSheetView style={styles.contentContainer}>
         <GradientText style={styles.heading}>
           What do you want to create?

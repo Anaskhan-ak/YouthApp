@@ -6,7 +6,7 @@ export const apiCall = {
   //POST API CALL
   SignUp: async obj => {
     let result = await post(apis?.signUp, obj);
-    if (result?.status == 200) return result.data;
+    if (result?.status >= 200 && result?.status < 400) return result.data;
     else throw result;
   },
   Login: async obj => {
@@ -21,7 +21,7 @@ export const apiCall = {
   },
   VerifyOtp: async obj => {
     let result = await post(apis?.otp, obj);
-    if (result?.status == 200) return result.data;
+    if (result?.status >= 200 && result?.status < 400) return result.data;
     else throw result;
   },
 
@@ -62,7 +62,7 @@ export const apiCall = {
   },
   createNewPost : async params => {
     let result = await documentPost(apis?.createPost, params)
-    if (result?.status === 200) return result?.data?.youdio
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.youdio
     // if (result?.status === 200) return result?.data
     else throw result
   },  
@@ -108,7 +108,11 @@ export const apiCall = {
     if (result?.status) return result?.data?.data
     else throw result
   },
-
+ getOnboardingContent : async () => {
+    let result = await get(apis?.getOnBoardingContent)
+    if (result?.status) return result?.data
+    else throw result
+  },
   getChats: async ({userId}) => {
     let result = await get(
       `${apis?.getChats}/${userId}`,
@@ -118,7 +122,6 @@ export const apiCall = {
   },
 
   getChatMessages: async ({chatId}) => {
-    console.log("chatId", chatId)
     let result = await get(
       `${apis?.getMessages}/${chatId}`,
     );

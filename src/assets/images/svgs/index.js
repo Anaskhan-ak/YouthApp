@@ -115,8 +115,10 @@ import QR from './qr.svg';
 import Eye from './eye.svg';
 import YouthCoin from './youthCoin.svg';
 import SwitchAcc from './switchAcc.svg';
+import YouthIconWhite from './YouthIconWhite.svg';
 
 export {
+  YouthIconWhite,
   QR,
   Eye,
   YouthCoin,

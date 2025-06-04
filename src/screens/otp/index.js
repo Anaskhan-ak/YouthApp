@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useState} from 'react';
 import {
   ImageBackground,
   ScrollView,
@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
-import { DropDown, YouthIcon } from '../../assets/images/svgs';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {images} from '../../assets/images';
+import {DropDown, YouthIcon} from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
-import { PrimaryButton } from '../../components/buttons/PrimaryButton';
+import {PrimaryButton} from '../../components/buttons/PrimaryButton';
 import AuthInput from '../../components/inputs/authInput';
 import OtpInput from '../../components/inputs/otp';
-import { height, width } from '../../constant';
-import { apiCall } from '../../services/apiCall';
-import { styles } from './styles';
+import {height, width} from '../../constant';
+import {apiCall} from '../../services/apiCall';
+import {styles} from './styles';
 
 const Otp = ({route}) => {
   const [loading, setLoading] = useState(false);
@@ -33,9 +33,9 @@ const Otp = ({route}) => {
       otp: otp,
     };
     try {
-      setLoading(true)
+      setLoading(true);
       let result = await apiCall?.VerifyOtp(obj);
-      navigation?.navigate("EmailVerification")
+      navigation?.navigate('EmailVerification');
     } catch (e) {
       setShowError(true);
       setErrorMessage({
@@ -43,7 +43,7 @@ const Otp = ({route}) => {
         message: Array.isArray(e) ? e[0]?.message : e,
       });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
   return (
@@ -62,21 +62,27 @@ const Otp = ({route}) => {
             borderBottomRightRadius={width * 0.1}
             style={styles.image}
             source={images?.otp}>
-            {showError && 
-            <View style={styles?.authView}>
-            <AuthError    
-            title={errorMessage?.title}
-            message={errorMessage?.message}
-            setShowError={setShowError} />
-            </View>
-            }
-            </ImageBackground>
+            {showError && (
+              <View style={styles?.authView}>
+                <AuthError
+                  title={errorMessage?.title}
+                  message={errorMessage?.message}
+                  setShowError={setShowError}
+                />
+              </View>
+            )}
+          </ImageBackground>
         </View>
         <View style={styles?.contentView}>
           <View style={styles?.titleContainer}>
-            <Text style={styles?.heading}>
-              Allow <YouthIcon width={width * 0.2} /> to verify you!
-            </Text>
+
+
+
+ <View style={styles?.headingWithIconView}>
+          <Text style={styles?.heading}>Allow </Text>
+          <YouthIcon width={width * 0.2} />
+          <Text style={styles?.heading}> to verify you!</Text>
+        </View>
             <Text style={styles?.title}>
               We've sent a 4 digit code to your phone number. Please enter the
               verification code.
@@ -104,6 +110,7 @@ const Otp = ({route}) => {
               // isLoading={loading}
               // onPress={handleSubmit(onSubmit)}
               title="Re-send"
+              textStyle={styles?.btnText}
             />
           </View>
           <OtpInput setOtp={setOtp} />

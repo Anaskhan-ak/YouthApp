@@ -60,7 +60,7 @@ const Stories = () => {
       <InstagramStories
         ref={ref}
         stories={stories}
-        avatarSize={width * 0.15}
+        avatarSize={width * 0.125}
         avatarTextStyle={styles.avatarText}
         textStyle={styles.storyText}
         closeIconColor={colors?.white}

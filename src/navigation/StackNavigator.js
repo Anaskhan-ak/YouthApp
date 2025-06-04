@@ -22,11 +22,13 @@ import Splash from '../screens/splash';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
 import Profile from '../screens/Profile';
+import Wallet from '../screens/wallet';
+import CreateWallet from '../screens/createWallet';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -65,6 +67,11 @@ const StackNavigator = () => {
        <Stack.Screen
         name="Profile"
         component={Profile}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="CreateWallet"
+        component={CreateWallet}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
@@ -140,6 +147,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="NewChatGroup"
         component={NewChatGroup}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="Wallet"
+        component={Wallet}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

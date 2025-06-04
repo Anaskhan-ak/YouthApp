@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Animated, Pressable, StyleSheet, View } from 'react-native';
+import {useEffect, useState} from 'react';
+import {Animated, Pressable, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { width } from '../../constant';
-import { colors } from '../../utils/colors';
+import {width} from '../../constant';
+import {colors} from '../../utils/colors';
 
 const Switch = props => {
   const {value, onValueChange} = props;
@@ -31,7 +31,12 @@ const Switch = props => {
     <Pressable onPress={toggleSwitch} style={styles.pressable}>
       <LinearGradient
         colors={
-          value ? [colors?.RGB1, colors?.RGB2] : [colors?.gray, colors?.gray]
+          value
+            ? [
+                props?.color1 ? props?.color1 : colors?.RGB1,
+                props?.color2 ? props?.color2 : colors?.RGB2,
+              ]
+            : [colors?.gray, colors?.gray]
         }
         style={styles.innerContainer}>
         <Animated.View

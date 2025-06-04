@@ -36,7 +36,7 @@ const Splash = ({navigation}) => {
       }, 2000);
     } catch (error) {
       toast('error', 'Something went wrong', error);
-      console.error('Error fetching interests:', error);
+      console.error('Error fetching:', error);
     }
   };
 

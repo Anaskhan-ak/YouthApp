@@ -1,4 +1,4 @@
-// import { pick } from '@react-native-documents/picker';
+import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import {
