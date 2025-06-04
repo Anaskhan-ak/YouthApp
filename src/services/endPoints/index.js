@@ -10,6 +10,7 @@ export const apis = {
   forgotPassword : 'api/v1/forgotPassword',
   verifyForgetPassword : 'api/v1/verifyPasswordToken',
   resetPassword : 'api/v1/resetPassword',
+  getPosts : 'api/v1/getPost',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

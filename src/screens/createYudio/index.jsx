@@ -1,7 +1,8 @@
-// import { pick } from '@react-native-documents/picker';
+import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   PermissionsAndroid,
   Platform,
@@ -30,6 +31,8 @@ import UserInfoHeader from '../../components/headers/userInfoHeader';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
+import { toast } from '../../components/toast';
+import useUser from '../../hooks/user';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import AudioBars from './components/audioBars';
@@ -44,6 +47,7 @@ const CreateYudio = () => {
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [yudio, setYudio] = useState();
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
   const [metaData, setMetaData] = useState({
@@ -63,14 +67,22 @@ const CreateYudio = () => {
       ref: useRef(),
     },
   });
+  const user=useUser()
 
   const handleForm = async () => {
+    if (!user?.id) {
+    toast('error', 'User not found. Please log in again.');
+    return;
+  }
+    setLoading(true);
     const formData = new FormData();
     formData.append('type', 'YUDIO');
     formData.append('caption', description);
     formData.append('title', title);
     formData.append('location', 'Pakistan');
     formData.append('audience', 'PUBLIC');
+    formData.append('isPublic', 'true');
+    formData.append('userId', user?.id);
     // if (
     //   tagFriends &&
     //   tagFriends.filter(item => item !== undefined && item !== '').length >
@@ -81,7 +93,7 @@ const CreateYudio = () => {
       // JSON.stringify(
       //   tagFriends.filter(item => item !== undefined && item !== ''),
       // ),
-      JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
+      JSON?.stringify(['cmbeywh9v0000yrc1vcoycrlm']),
     );
     // }
 
@@ -106,10 +118,15 @@ const CreateYudio = () => {
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Yudio', result?.yudios);
       if (result) {
+        setLoading(false);
         navigation.navigate('Yudios', {yudio: result?.yudios});
       }
     } catch (error) {
       console.log('Error creating yudio', error);
+      setLoading(false);
+      toast('error', 'Error creating yudio');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -326,7 +343,12 @@ const CreateYudio = () => {
         </View>
         {waveform?.length > 0 ? (
           <View style={styles?.yudioPlayerContainer}>
-            <YudioPlayer audioUrl={yudio} waveform={waveform} />
+            <YudioPlayer
+              audio={{
+                uri: yudio,
+                waveform: waveform,
+              }}
+            />
           </View>
         ) : yudio ? (
           <View style={styles?.recordedPlayerContainer}>
@@ -376,7 +398,15 @@ const CreateYudio = () => {
         )}
         {drawer && <Drawer />}
       </ScrollView>
-      <CreateButton title="Create New Yudio" onPress={handleForm} />
+      <CreateButton
+        title="Create New Yudio"
+        loader={
+          loading ? (
+            <ActivityIndicator size={'small'} color={colors?.RGB1} />
+          ) : null
+        }
+        onPress={handleForm}
+      />
       {metaData?.audience?.active && (
         <Audience
           sheetRef={metaData?.audience?.ref}
@@ -392,12 +422,12 @@ const CreateYudio = () => {
         />
       )}
       {metaData?.tagFriends?.active && (
-              <TagFriends
-                sheetRef={metaData?.tagFriends?.ref}
-                tagFriends={metaData}
-                setTagFriends={setMetaData}
-              />
-            )}
+        <TagFriends
+          sheetRef={metaData?.tagFriends?.ref}
+          tagFriends={metaData}
+          setTagFriends={setMetaData}
+        />
+      )}
     </SafeAreaView>
   );
 };

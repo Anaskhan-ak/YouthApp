@@ -6,7 +6,7 @@ export const apiCall = {
   //POST API CALL
   SignUp: async obj => {
     let result = await post(apis?.signUp, obj);
-    if (result?.status == 200) return result.data;
+    if (result?.status >= 200 && result?.status < 400) return result.data;
     else throw result;
   },
   Login: async obj => {
@@ -19,9 +19,9 @@ export const apiCall = {
     if (result?.status == 201) return result.data;
     else throw result;
   },
-  VerifyOtp: async obj => {
+ VerifyOtp: async obj => {
     let result = await post(apis?.otp, obj);
-    if (result?.status == 200) return result.data;
+    if (result?.status >= 200 && result?.status < 400) return result.data;
     else throw result;
   },
 
@@ -78,6 +78,11 @@ export const apiCall = {
   },
   resetPassword : async params => {
     let result = await post(apis?.resetPassword, params)
+    if (result?.status === 200) return result?.data
+    else throw result
+  },
+  getAllPosts : async params => {
+    let result = await post(apis?.getPosts, params)
     if (result?.status === 200) return result?.data
     else throw result
   },

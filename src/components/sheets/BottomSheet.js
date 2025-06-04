@@ -16,7 +16,7 @@ export default function RNBottomSheet({sheetRef}) {
     id: 'post',
     title: 'Post',
     desc: 'To make sure your post reaches the right people...',
-    route: '',
+    route: 'CreatePost',
   });
   const navigation = useNavigation();
   const handlePress = () => {
@@ -31,7 +31,7 @@ export default function RNBottomSheet({sheetRef}) {
         {sideBottomSheetOptions?.map(item => {
           return (
             <TouchableOpacity key={item.id} onPress={() => {
-              // console.log('Item', item);
+              // console.log('Item', item?.route);
               setSelected(item)
               }}>
               <LinearGradient

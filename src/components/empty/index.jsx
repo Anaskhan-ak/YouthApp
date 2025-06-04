@@ -1,4 +1,4 @@
-import { height, width } from '../../constant';
+import { width } from '../../constant';
 import { colors } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
 
@@ -20,7 +20,8 @@ export default EmptyComponent
 
 const styles = StyleSheet.create({
   container: {
-    height: height,
+    // height: height,
+    flex : 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   subText: {
     textAlign: 'center',
     fontFamily: fonts?.montserratSemiBold,
-    fontSize: width * 0.04,
+    fontSize: width * 0.03,
     color : colors?.textGray
   },
 });

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import VideoPlayer from 'react-native-video-player';
 import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -30,64 +31,81 @@ const MediaPost = ({post, modal}) => {
       setActiveIndex(viewableItems[0].index);
     }
   }).current;
+
+  console.log('post', post?.media?.url);
   return (
     <View>
       <FlatList
-        data={post?.media}
+        data={post?.media?.url}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({item, index}) => (
-          <TouchableOpacity onLongPress={() => modal?.setModal(prev => ({...prev, isPost : true}))}>
-            <View
-              onLayout={handleMediaLayout}
-              style={[
-                styles.mediaContainer,
-                // , modal === true && {
-                //   position : "absolute",
-                //   zIndex : 100            }
-              ]}>
-              <View style={styles.mediaElements}>
-                <TouchableOpacity>
-                  <TagFriends />
-                </TouchableOpacity>
-                <CircleCounter
-                  segments={post?.media?.length}
-                  filled={index + 1}
-                  centerText={index + 1}
-                  activeColor={colors?.white}
-                  inactiveColor={colors?.gray}
-                  centerTextColor={colors?.white}
-                />
+        renderItem={({item, index}) => {
+          console.log("Item", item);
+          return (
+            <TouchableOpacity
+              onLongPress={() =>
+                modal?.setModal(prev => ({...prev, isPost: true}))
+              }>
+              <View
+                onLayout={handleMediaLayout}
+                style={[
+                  styles.mediaContainer,
+                  // , modal === true && {
+                  //   position : "absolute",
+                  //   zIndex : 100            }
+                ]}>
+                <View style={styles.mediaElements}>
+                  <TouchableOpacity>
+                    <TagFriends />
+                  </TouchableOpacity>
+                  {post?.media?.url?.length > 1 && (
+                    <CircleCounter
+                      segments={post?.media?.length}
+                      filled={index + 1}
+                      centerText={index + 1}
+                      activeColor={colors?.white}
+                      inactiveColor={colors?.gray}
+                      centerTextColor={colors?.white}
+                    />
+                  )}
+                </View>
+                {item?.split('.')?.pop() === 'MOV' ||
+                item?.split('.')?.pop() === 'mp4' ? (
+                  <VideoPlayer source={{uri: item}} style={styles.mediaImage} />
+                ) : (
+                  <Image
+                    source={{uri : item}}
+                    style={styles.mediaImage}
+                    resizeMode="contain"
+                  />
+                )}
               </View>
-              <Image
-                source={item}
-                style={styles.mediaImage}
-                resizeMode="contain"
-              />
-            </View>
-          </TouchableOpacity>
-        )}
+            </TouchableOpacity>
+          );
+        }}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
         scrollEventThrottle={16}
       />
-      <View style={styles.pagination}>
-        {post?.media?.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.dot,
-              {
-                backgroundColor:
-                  activeIndex === index ? colors.RGB2 : colors.white,
-                width: activeIndex === index ? width * 0.06 : width * 0.027,
-              },
-            ]}
-          />
-        ))}
-      </View>
+      {post?.media?.url?.length > 1 && (
+        <View style={styles.pagination}>
+          {post?.media?.url?.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                {
+                  backgroundColor:
+                    activeIndex === index ? colors.RGB2 : colors.white,
+                  width: activeIndex === index ? width * 0.06 : width * 0.027,
+                },
+              ]}
+            />
+          ))}
+        </View>
+      )}
       {!modal?.modal?.isPost && (
         <View style={[styles.reactionsTab, {width: mediaWidth}]}>
           <PostBottomTab post={post} />
@@ -105,6 +123,7 @@ const styles = StyleSheet.create({
     marginHorizontal: height * 0.01,
     borderRadius: width * 0.04,
     marginTop: height * 0.015,
+    overflow: 'hidden',
   },
   mediaElements: {
     flexDirection: 'row',

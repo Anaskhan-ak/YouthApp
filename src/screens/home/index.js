@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlatList, Platform, StatusBar } from 'react-native';
 import { LinearGradient } from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,13 +9,31 @@ import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
+import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
-import { data, documentData, eventData, musicData, users, yudioData } from './constants';
 
 const Home = () => {
   const refRBSheet = useRef(null);
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const body = {
+        userId: 'cm60ql39f003l91r8l18bd80z',
+        page: 1,
+        pageSize: 20,
+      };
+      try {
+        const response = await apiCall?.getAllPosts(body);
+        // console.log('Get All Posts', response?.data?.posts);
+        setPosts(response?.data?.posts)
+      } catch (error) {
+        throw error
+      }
+    };
+    fetchPosts()
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar translucent backgroundColor={'transparent'}></StatusBar>
@@ -27,7 +45,7 @@ const Home = () => {
       </LinearGradient>
       <FlatList
         ListHeaderComponent={<Stories />}
-        data={[data, eventData, users, yudioData, musicData, documentData]}
+        data={posts}
         renderItem={({item}) => <Post post={item} />}
         contentContainerStyle={{paddingBottom : height * 0.1}}
         ListFooterComponent={<SuggestedUsers/>}
