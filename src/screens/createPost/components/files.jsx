@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import EmptyComponent from '../../../components/empty';
 import { height, width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
@@ -19,10 +20,11 @@ const FilesComponent = ({media, setMedia}) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchDocuments = async () => {
+      const userDetails = await getDataLocally()
       try {
         setLoading(true);
         const result = await apiCall?.getAllDocuments({
-          userId: 'cm60ql39f003l91r8l18bd80z',
+          userId: userDetails?.id,
           type: 'DOCUMENT',
         });
         // console.log("Result", result[0])
@@ -99,8 +101,9 @@ const FilesComponent = ({media, setMedia}) => {
         <FlatList
           data={documents}
           renderItem={renderItem}
-          ListEmptyComponent={<EmptyComponent text="No documents to show" />}
-          ListHeaderComponent={<HeaderComponent />}
+          ListEmptyComponent={ <EmptyComponent text="No documents to show" />}
+          ListHeaderComponent={documents?.length !== 0 &&<HeaderComponent />}
+          contentContainerStyle={documents?.length === 0 && {alignItems :"center", justifyContent : 'center', flex : 1}}
         />
       )}
     </>

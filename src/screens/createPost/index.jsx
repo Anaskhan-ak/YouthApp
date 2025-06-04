@@ -100,7 +100,8 @@ const CreatePost = () => {
     // }
     if (
       media?.some(m => m?.type === 'video/mp4') ||
-      media?.some(m => m.type === 'image/jpeg')
+      media?.some(m => m.type === 'image/jpeg') ||
+      media?.some(m => m?.type === 'image/png')
     ) {
       formData.append('type', 'MEDIA');
       formData.append('caption', description);
@@ -188,9 +189,12 @@ const CreatePost = () => {
       }
     }
     try {
+      console.log("media", media)
+      console.log("Form data", formData)
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
       setLoading(false);
+      // navigation?.navigate('Home')
     } catch (error) {
       console.log('Error creating post', error);
       toast('error', 'Error creating post');
