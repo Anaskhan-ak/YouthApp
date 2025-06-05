@@ -19,7 +19,7 @@ import PostBottomTab from '../subComponents/postBottomTab';
 const MediaPost = ({post, modal}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
-  const [play, setPlay] = useState(false); //play=false --> pause  play=true --> play
+  const [pause, setPause] = useState(false); 
   const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const formatTime = seconds => {
@@ -43,15 +43,107 @@ const MediaPost = ({post, modal}) => {
     }
   }).current;
 
+  const renderItem = ({item, index}) => {
+    const isVideo =
+      item?.split('.')?.pop() === 'MOV' ||
+      item?.split('.')?.pop() === 'mp4' ||
+      item?.split('.')?.pop() === 'm3u8';
+    return (
+      <TouchableOpacity
+        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
+          <View style={styles.mediaElements}>
+            <TouchableOpacity>
+              <TagFriends />
+            </TouchableOpacity>
+            {post?.media?.url?.length > 1 && (
+              <CircleCounter
+                segments={post?.media?.length}
+                filled={index + 1}
+                centerText={index + 1}
+                activeColor={colors?.white}
+                inactiveColor={colors?.gray}
+                centerTextColor={colors?.white}
+              />
+            )}
+            {isVideo && (
+              <View style={styles?.duration}>
+                <BlurView
+                  style={StyleSheet.absoluteFill}
+                  blurType="light"
+                  blurAmount={1}
+                />
+                <Text style={styles?.durationText}>{formatTime(duration)}</Text>
+              </View>
+            )}
+          </View>
+          {isVideo ? (
+            <View style={{position: 'relative'}}>
+              <VideoPlayer
+                ref={videoRef}
+                source={{uri: item}}
+                style={styles.mediaImage}
+                paused={pause}
+                resizeMode="contain"
+                hideControlsOnStart={true}
+                // autoplay={true}
+                onLoad={data => {
+                  setPause(true)
+                  setDuration(data.duration)
+                }}
+                bufferConfig={{
+                  minBufferMs: 15000,
+                  maxBufferMs: 50000,
+                  bufferForPlaybackMs: 2500,
+                  bufferForPlaybackAfterRebufferMs: 5000,
+                  backBufferDurationMs: 120000,
+                  cacheSizeMB: 0,
+                  live: {targetOffsetMs: 500},
+                }}
+              />
+
+              {/* Transparent Touchable area over the whole video */}
+              <TouchableOpacity
+                onPress={() => setPause(!pause)}
+                activeOpacity={1}
+                style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
+                {/* Show Play button only when paused */}
+                {pause && (
+                  <View style={styles.playButton}>
+                    <BlurView
+                      style={[
+                        StyleSheet.absoluteFill,
+                        {borderRadius: width * 0.2},
+                      ]}
+                      blurType="light"
+                      blurAmount={10}
+                    />
+                    <PlayIcon />
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Image
+              source={{uri: item}}
+              style={styles.mediaImage}
+              resizeMode="contain"
+            />
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   useEffect(() => {
     if (videoRef?.current) {
-      if (play) {
+      if (pause) {
         videoRef?.current?.pause();
       } else {
         videoRef?.current?.resume();
       }
     }
-  }, [play]);
+  }, [pause]);
   return (
     <View>
       <FlatList
@@ -60,99 +152,7 @@ const MediaPost = ({post, modal}) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableOpacity
-              onLongPress={() =>
-                modal?.setModal(prev => ({...prev, isPost: true}))
-              }>
-              <View
-                onLayout={handleMediaLayout}
-                style={[
-                  styles.mediaContainer,
-                  // , modal === true && {
-                  //   position : "absolute",
-                  //   zIndex : 100            }
-                ]}>
-                <View style={styles.mediaElements}>
-                  <TouchableOpacity>
-                    <TagFriends />
-                  </TouchableOpacity>
-                  {post?.media?.url?.length > 1 && (
-                    <CircleCounter
-                      segments={post?.media?.length}
-                      filled={index + 1}
-                      centerText={index + 1}
-                      activeColor={colors?.white}
-                      inactiveColor={colors?.gray}
-                      centerTextColor={colors?.white}
-                    />
-                  )}
-                  {(item?.split('.')?.pop() === 'MOV' || //m3u8
-                    item?.split('.')?.pop() === 'mp4' ||
-                    item?.split('.')?.pop() === 'm3u8') && (
-                    <View style={styles?.duration}>
-                      <BlurView
-                        style={StyleSheet.absoluteFill}
-                        blurType="light"
-                        blurAmount={1}
-                      />
-                      <Text style={styles?.durationText}>
-                        {formatTime(duration)}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-                {item?.split('.')?.pop() === 'MOV' || //m3u8
-                item?.split('.')?.pop() === 'mp4' ||
-                item?.split('.')?.pop() === 'm3u8' ? (
-                  <TouchableOpacity
-                    onPress={() => setPlay(prev => !prev)}
-                    style={{backgroundColor: 'red'}}>
-                    <VideoPlayer
-                      ref={videoRef}
-                      source={{uri: item}}
-                      style={styles.mediaImage}
-                      paused={!play}
-                      resizeMode="contain"
-                      hideControlsOnStart={true}
-                      autoplay={true}
-                      onLoad={data => setDuration(data.duration)}
-                      bufferConfig={{
-                        minBufferMs: 15000,
-                        maxBufferMs: 50000,
-                        bufferForPlaybackMs: 2500,
-                        bufferForPlaybackAfterRebufferMs: 5000,
-                        backBufferDurationMs: 120000,
-                        cacheSizeMB: 0,
-                        live: {targetOffsetMs: 500},
-                      }}
-                    />
-                    {play && (
-                      <View style={styles.playButton} activeOpacity={0.7}>
-                        <BlurView
-                          style={[
-                            StyleSheet.absoluteFill,
-                            {borderRadius: width * 0.2},
-                          ]}
-                          blurType="light"
-                          blurAmount={10}
-                        />
-                        <PlayIcon />
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                ) : (
-                  <Image
-                    source={{uri: item}}
-                    style={styles.mediaImage}
-                    resizeMode="contain"
-                  />
-                )}
-              </View>
-            </TouchableOpacity>
-          );
-        }}
+        renderItem={renderItem}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
         scrollEventThrottle={16}
@@ -233,18 +233,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   playButton: {
-    backgroundColor: colors?.black,
+    // backgroundColor: 'rgba(0,0,0,0.3)',
     borderRadius: width * 0.2,
     position: 'absolute',
-    zIndex: 100,
+    zIndex: 11,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    left: width * 0.4,
-    top: height * 0.165,
-    padding: width * 0.02,
-    width: width * 0.1,
-    height: width * 0.1,
+    left: width * 0.37,
+    top: height * 0.16,
+    alignSelf: 'center',
+    width: width * 0.15,
+    height: width * 0.15,
   },
   duration: {
     backgroundColor: colors?.black,
