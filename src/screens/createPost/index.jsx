@@ -194,7 +194,7 @@ const CreatePost = () => {
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
       setLoading(false);
-      // navigation?.navigate('Home')
+      navigation?.navigate('Home')
     } catch (error) {
       console.log('Error creating post', error);
       toast('error', 'Error creating post');
