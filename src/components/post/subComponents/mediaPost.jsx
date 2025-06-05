@@ -1,21 +1,34 @@
-import { useRef, useState } from 'react';
+import { BlurView } from '@react-native-community/blur';
+import { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import VideoPlayer from 'react-native-video-player';
-import { TagFriends } from '../../../assets/images/svgs';
+import { PlayIcon, TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 import CircleCounter from '../subComponents/CircleCounter';
 import PostBottomTab from '../subComponents/postBottomTab';
 
 const MediaPost = ({post, modal}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
+  const [play, setPlay] = useState(false); //play=false --> pause  play=true --> play
+  const [duration, setDuration] = useState(0);
+
+  const formatTime = seconds => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  const videoRef = useRef(null);
 
   const handleMediaLayout = event => {
     const {width} = event.nativeEvent.layout;
@@ -32,7 +45,15 @@ const MediaPost = ({post, modal}) => {
     }
   }).current;
 
-  console.log('post', post?.media?.url);
+  useEffect(() => {
+    if (videoRef?.current) {
+      if (play) {
+        videoRef?.current?.pause();
+      } else {
+        videoRef?.current?.resume();
+      }
+    }
+  }, [play]);
   return (
     <View>
       <FlatList
@@ -69,14 +90,64 @@ const MediaPost = ({post, modal}) => {
                       centerTextColor={colors?.white}
                     />
                   )}
+                  {(item?.split('.')?.pop() === 'MOV' || //m3u8
+                    item?.split('.')?.pop() === 'mp4' ||
+                    item?.split('.')?.pop() === 'm3u8') && (
+                    <View style={styles?.duration}>
+                      <BlurView
+                        style={StyleSheet.absoluteFill}
+                        blurType="light"
+                        blurAmount={1}
+                      />
+                      <Text style={styles?.durationText}>
+                        {formatTime(duration)}
+                      </Text>
+                    </View>
+                  )}
                 </View>
-                {item?.split('.')?.pop() === 'MOV' ||
+                {item?.split('.')?.pop() === 'MOV' || //m3u8
                 item?.split('.')?.pop() === 'mp4' ||
                 item?.split('.')?.pop() === 'm3u8' ? (
-                  <VideoPlayer source={{uri: item}} style={styles.mediaImage} />
+                  <>
+                    <VideoPlayer
+                      // ref={videoRef}
+                      source={{uri: item}}
+                      style={styles.mediaImage}
+                      // paused={!play}
+                      resizeMode="contain"
+                      // hideControlsOnStart={true}
+                      // autoplay={true}
+                      onLoad={data => setDuration(data.duration)}
+                      // onEnd={() => setPlay(false)}
+                      bufferConfig={{
+                        minBufferMs: 15000,
+                        maxBufferMs: 50000,
+                        bufferForPlaybackMs: 2500,
+                        bufferForPlaybackAfterRebufferMs: 5000,
+                        backBufferDurationMs: 120000,
+                        cacheSizeMB: 0,
+                        live: {
+                          targetOffsetMs: 500,
+                        },
+                      }}
+                    />
+
+                    <TouchableOpacity
+                      style={styles.playButton}
+                      onPress={() => setPlay(prev => !prev)}>
+                      <BlurView
+                        style={StyleSheet.absoluteFill}
+                        blurType="light"
+                        blurAmount={10}
+                      />
+                      {!play && <PlayIcon /> 
+                      // : <PauseIcon />
+                      }
+                    </TouchableOpacity>
+                  </>
                 ) : (
                   <Image
-                    source={{uri : item}}
+                    source={{uri: item}}
                     style={styles.mediaImage}
                     resizeMode="cover"
                   />
@@ -163,5 +234,31 @@ const styles = StyleSheet.create({
     right: height * 0.0045,
     left: height * 0.01,
     alignSelf: 'center',
+  },
+  playButton: {
+    backgroundColor: colors?.black,
+    borderRadius: width * 0.2,
+    position: 'absolute',
+    zIndex: 100,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: width * 0.4,
+    top: height * 0.165,
+    padding: width * 0.02,
+  },
+  duration: {
+    backgroundColor: colors?.black,
+    borderRadius: width * 0.02,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: width * 0.02,
+    paddingVertical: width * 0.01,
+  },
+  durationText: {
+    color: colors?.white,
+    fontFamily: fonts?.montserratMedium,
+    fontSize: width * 0.03,
   },
 });

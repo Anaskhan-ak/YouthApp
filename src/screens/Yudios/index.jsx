@@ -21,10 +21,8 @@ import { styles } from './styles';
 
 const Yudios = () => {
   const [yudios, setYudios] = useState([]);
-  const [showFullText, setShowFullText] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10)
-  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const user = useUser();
   useEffect(() => {
@@ -51,7 +49,6 @@ const Yudios = () => {
         toast('error', 'Error fetching yudios')
       }
     };
-
     fetchYudios();
   }, []); 
 
