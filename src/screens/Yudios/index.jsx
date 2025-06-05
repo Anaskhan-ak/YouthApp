@@ -6,38 +6,54 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlackBackArrow, BlackYouthLogo } from '../../assets/images/svgs';
+import { toast } from '../../components/toast';
 import { height } from '../../constant';
+import { getDataLocally } from '../../helper';
+import useUser from '../../hooks/user';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
+import RenderYudios from './components/renderYudios';
 import { styles } from './styles';
 
 const Yudios = () => {
   const [yudios, setYudios] = useState([]);
   const [showFullText, setShowFullText] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10)
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const user = useUser();
   useEffect(() => {
     const fetchYudios = async () => {
+      const userDetails = await getDataLocally();
+      console.log('userDetails', userDetails?.id)
+      if (!userDetails) {
+        // return; // Don't toast here, wait for user to load
+        toast('error', 'User not found. Please login again')
+      }
+
       const data = {
-        userId: 'cm60ql39f003l91r8l18bd80z',
-        page: page,
-        pageSize: pageSize,
+        userId: userDetails.id,
+        page,
+        pageSize,
       };
+
       try {
         const result = await apiCall?.getAllYudios(data);
         console.log('yudios fetched successfully', result);
         setYudios(result);
       } catch (error) {
         console.log('Error fetching all yudios', error);
+        toast('error', 'Error fetching yudios')
       }
     };
+
     fetchYudios();
-  }, []);
+  }, []); 
 
   const handleScroll = event => {
     const x = event.nativeEvent.contentOffset.x;
@@ -66,9 +82,9 @@ const Yudios = () => {
           style={styles?.headerIcon}>
           <BlackBackArrow />
         </TouchableOpacity>
-        {['For You', 'Following', 'Trending', 'Live']?.map(item => {
+        {['For You', 'Following', 'Trending', 'Live']?.map((item,index) => {
           return (
-            <TouchableOpacity>
+            <TouchableOpacity key={index}>
               <Text style={[styles?.headerText, {color: colors?.gray}]}>
                 {item}
               </Text>

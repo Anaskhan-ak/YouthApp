@@ -1,3 +1,4 @@
+import { pick } from '@react-native-documents/picker';
 import { useEffect, useState } from 'react';
 import {
   FlatList,
@@ -23,42 +24,45 @@ import {
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
+import CameraComponent from './camera';
 
 const ChatFooter = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [add, setAdd] = useState(false);
-  const icons = [
+  const [camera, setCamera] = useState(false);
+  const [media, setMedia] = useState({});
+  const [icons, setIcons] = useState([
     {
       name: 'documents',
-      text : "Document",
+      text: 'Document',
       icon: <ChatDocumentIcon />,
       active: false,
     },
     {
       name: 'gallery',
-      text : "Gallery",
+      text: 'Gallery',
       icon: <ChatGalleryIcon />,
       active: false,
     },
     {
       name: 'location',
-      text : 'Location',
+      text: 'Location',
       icon: <ChatLocationIcon />,
       active: false,
     },
     {
       name: 'contact',
-      text : 'Contact',
+      text: 'Contact',
       icon: <ChatContactIcon />,
       active: false,
     },
     {
       name: 'youth',
-      text : 'Transfer',
+      text: 'Transfer',
       icon: <ChatYouthIcon />,
       active: false,
     },
-  ];
+  ]);
   useEffect(() => {
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
@@ -71,6 +75,72 @@ const ChatFooter = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (media?.uri !== null) {
+      setCamera(false);
+    }
+  }, [media]);
+
+  const handlePress = async item => {
+    setIcons(prev =>
+      prev?.map(icon =>
+        icon.name === item.name
+          ? {...icon, active: true}
+          : {...icon, active: false},
+      ),
+    );
+    if (icons?.some(obj => obj?.name === 'documents' && obj?.active === true)) {
+      try {
+        const [res] = await pick({
+          type: [
+            'application/pdf',
+            'application/msword', // .doc
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+            'application/vnd.ms-excel', // .xls
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+            'application/vnd.ms-powerpoint', // .ppt
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation', // .pptx
+            'text/plain', // .txt
+            'application/zip', // .zip
+          ],
+          allowMultiSelection: false,
+        });
+        setMedia({
+          name: res?.name,
+          type: res?.type,
+          uri: res?.uri,
+        });
+        if (res) {
+          setIcons(prev => prev?.map(icon => ({...icon, active: false})));
+        }
+      } catch (error) {
+        console.log('Error selecting files', error);
+        setIcons(prev => prev?.map(icon => ({...icon, active: false})));
+      }
+    }
+    if (icons?.some(obj => obj?.name === 'gallery' && obj?.active === true)) {
+      try {
+        const [res] = await pick({
+          type: ['image/jpeg', 'video/mp4'],
+          allowMultiSelection: false,
+        });
+        setMedia({
+          name: res?.name,
+          type: res?.type,
+          uri: res?.uri,
+        });
+        if (res) {
+          setIcons(prev => prev?.map(icon => ({...icon, active: false})));
+        }
+      } catch (error) {
+        console.log('Error selecting files', error);
+        setIcons(prev => prev?.map(icon => ({...icon, active: false})));
+      }
+    }
+  };
+
+  // console.log("Media", media)
   return (
     <View style={styles?.container}>
       <View style={styles?.content}>
@@ -96,7 +166,9 @@ const ChatFooter = () => {
             </TouchableOpacity>
           ) : (
             <>
-              <TouchableOpacity style={styles?.button}>
+              <TouchableOpacity
+                style={styles?.button}
+                onPress={() => setCamera(!camera)}>
                 <BlackCameraIcon />
               </TouchableOpacity>
               <TouchableOpacity style={styles?.button}>
@@ -110,11 +182,13 @@ const ChatFooter = () => {
         <FlatList
           data={icons}
           renderItem={({item}) => (
-            <View >
-            <TouchableOpacity style={styles?.icon}>
-              {item?.icon}
-            </TouchableOpacity>
-            <Text style={styles?.iconText}>{item?.text}</Text>
+            <View>
+              <TouchableOpacity
+                style={styles?.icon}
+                onPress={() => handlePress(item)}>
+                {item?.icon}
+              </TouchableOpacity>
+              <Text style={styles?.iconText}>{item?.text}</Text>
             </View>
           )}
           horizontal
@@ -122,6 +196,7 @@ const ChatFooter = () => {
           contentContainerStyle={styles?.listContent}
         />
       )}
+      {camera && <CameraComponent media={media} setMedia={setMedia} />}
     </View>
   );
 };
@@ -191,11 +266,11 @@ const styles = StyleSheet.create({
     shadowRadius: 2.54,
     elevation: 3,
   },
-  iconText : {
-    fontFamily : fonts?.montserratRegular,
-    fontSize : width * 0.025,
-    color : colors?.text,
-    textAlign : "center",
-    marginTop : height * 0.01
-  }
+  iconText: {
+    fontFamily: fonts?.montserratRegular,
+    fontSize: width * 0.025,
+    color: colors?.text,
+    textAlign: 'center',
+    marginTop: height * 0.01,
+  },
 });

@@ -1,8 +1,9 @@
 import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../assets/images';
 import {
   CameraIcon,
@@ -18,19 +19,21 @@ import MultilineInput from '../../components/inputs/multilineInput';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
+import { toast } from '../../components/toast';
+import useUser from '../../hooks/user';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
 import MediaUploader from './components/mediaUpload';
 import PostContentModal from './components/postContentModal';
 import { styles } from './styles';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CreatePost = () => {
   const [drawer, setDrawer] = useState(false);
   const [description, setDescription] = useState('');
   const [media, setMedia] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [metaData, setMetaData] = useState({
     audience: {
       active: false,
@@ -51,6 +54,7 @@ const CreatePost = () => {
   const [chars, setChars] = useState(0);
   const maxChars = 4000;
   const navigation = useNavigation();
+  const user = useUser()
   const [options, setOptions] = useState([
     {
       type: 'gallery',
@@ -75,9 +79,12 @@ const CreatePost = () => {
   ]);
 
   const handleForm = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append('location', 'Pakistan');
     formData.append('audience', 'PUBLIC');
+    formData.append('userId', user?.id);
+    formData.append('isPublic', 'true');
     // if (
     //   tagFriends &&
     //   tagFriends.filter(item => item !== undefined && item !== '').length >
@@ -88,7 +95,7 @@ const CreatePost = () => {
       // JSON.stringify(
       //   tagFriends.filter(item => item !== undefined && item !== ''),
       // ),
-      JSON?.stringify(['cm64oiovt005391r8pjysmd7b']),
+      JSON?.stringify(['cmbeywh9v0000yrc1vcoycrlm']),
     );
     // }
     if (
@@ -183,8 +190,11 @@ const CreatePost = () => {
     try {
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
+      setLoading(false);
     } catch (error) {
       console.log('Error creating post', error);
+      toast('error', 'Error creating post');
+      setLoading(false);
     }
   };
 
@@ -294,7 +304,15 @@ const CreatePost = () => {
           media={media}
         />
       )}
-      <CreateButton title="Create New Post" onPress={handleForm} />
+      <CreateButton
+        title="Create New Post"
+        loader={
+          loading ? (
+            <ActivityIndicator size={'small'} color={colors?.RGB1} />
+          ) : null
+        }
+        onPress={handleForm}
+      />
       {metaData?.audience?.active && (
         <Audience
           sheetRef={metaData?.audience?.ref}

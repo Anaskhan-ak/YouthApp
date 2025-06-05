@@ -10,12 +10,13 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
-import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
+import { ActiveLike, GradientPlayIcon, PauseIcon, PlayIcon } from '../../../assets/images/svgs';
+import GradientText from '../../../components/text/GradientText';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const ChatPlayer = ({audio, user}) => {
+const ChatPlayer = ({audio, user, customWidth, iconType}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -73,12 +74,38 @@ const ChatPlayer = ({audio, user}) => {
 
   return (
     <LinearGradient
-      colors={[colors?.RGB1, colors?.RGB2]}
-      style={styles?.container}>
-      <Image source={{uri: user?.photo}} style={styles?.image} />
+      colors={[colors?.RGB3, colors?.RGB4]}
+      style={[
+        styles?.container,
+        {width: customWidth ? customWidth : width * 0.8},
+      ]}>
+      {/* <Image source={{uri: user?.photo}} style={styles?.image} /> */}
+      <Image source={user?.photo} style={styles?.image} />
       <View style={styles?.content}>
-        <Text
-          style={styles?.name}>{`${user?.firstName} ${user?.lastName}`}</Text>
+        <View style={styles?.header}>
+          <Text
+            style={styles?.name}>{`${user?.firstName} ${user?.lastName}`}</Text>
+          {iconType === 'profile' && (
+            <View style={styles?.iconContainer}>
+              <TouchableOpacity
+                style={[
+                  styles?.playIcon,
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  },
+                ]}>
+                <GradientPlayIcon width={width * 0.04} height={width * 0.04} />
+                <GradientText style={styles?.playIconText}>375K</GradientText>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles?.playIcon}>
+                <ActiveLike />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+
         <View style={styles?.playerContainer}>
           <TouchableOpacity onPress={playPause}>
             <View
@@ -86,7 +113,11 @@ const ChatPlayer = ({audio, user}) => {
                 styles.playPauseButton,
                 isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
               ]}>
-              {isPlaying ? <PauseIcon height={width * 0.03} /> : <PlayIcon height={width * 0.03} />}
+              {isPlaying ? (
+                <PauseIcon height={width * 0.03} />
+              ) : (
+                <PlayIcon height={width * 0.03} />
+              )}
             </View>
           </TouchableOpacity>
           <View style={styles?.player}>
@@ -132,7 +163,6 @@ export default ChatPlayer;
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.8,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -145,17 +175,17 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.02,
   },
   content: {
-    flex : 1,
-    marginLeft : width * 0.02,
-    marginTop : width * 0.02
+    flex: 1,
+    marginLeft: width * 0.02,
+    marginTop: width * 0.02,
   },
   name: {
-    fontFamily : fonts?.montserratBold
+    fontFamily: fonts?.montserratBold,
   },
   playerContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',    
+    alignItems: 'center',
   },
   playPauseButton: {
     width: width * 0.06,
@@ -164,13 +194,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors?.pink,
-    marginBottom : width * 0.025
+    marginBottom: width * 0.025,
   },
   player: {
-    flex : 1,
+    flex: 1,
   },
   waveformContainer: {
-    paddingHorizontal : width * 0.03
+    paddingHorizontal: width * 0.03,
   },
   timeRow: {
     flexDirection: 'row',
@@ -178,8 +208,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   timeText: {
-    fontSize: width * 0.02, 
+    fontSize: width * 0.02,
     color: colors?.text,
-    fontFamily : fonts?.montserratRegular
+    fontFamily: fonts?.montserratRegular,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  playIcon: {
+    marginHorizontal: width * 0.01,
+  },
+  playIconText: {
+    fontSize: width * 0.028,
+    fontFamily: fonts?.montserratBold,
   },
 });

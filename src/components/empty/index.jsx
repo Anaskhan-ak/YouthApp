@@ -1,14 +1,15 @@
-import { height, width } from '../../constant';
+import { width } from '../../constant';
 import { colors } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
 
 const {StyleSheet, Text} = require('react-native');
 const {View} = require('react-native');
 
-const EmptyComponent = ({icon, text, subtext}) => {
+const EmptyComponent = ({Icon, text, subtext}) => {
   return (
     <View style={styles?.container}>
-      {icon && icon}
+      <View style={{backgroundColor : 'red'}}>{Icon}</View>
+      
       <Text style={styles?.text}>{text}</Text>
       <Text style={styles?.subText}>{subtext}</Text>
     </View>
@@ -19,7 +20,8 @@ export default EmptyComponent
 
 const styles = StyleSheet.create({
   container: {
-    height: height,
+    // height: height,
+    flex : 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
   subText: {
     textAlign: 'center',
     fontFamily: fonts?.montserratSemiBold,
-    fontSize: width * 0.04,
+    fontSize: width * 0.03,
     color : colors?.textGray
   },
 });

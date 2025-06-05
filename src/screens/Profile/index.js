@@ -1,15 +1,49 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {Image} from 'react-native';
-import {images} from '../../assets/images';
-import {colors} from '../../utils/colors';
-import ProfilePicture from './compoents/profilePicture';
-import ProfileDetailCard from './compoents/profileDetailCard';
-import ProfileStats from './compoents/profileStats';
-import ProfileOption from './compoents/profileOption';
+import { useState } from 'react';
+import { Image, View } from 'react-native';
+import { images } from '../../assets/images';
+import {
+  EventsIcon,
+  FileAudio,
+  FileImport,
+  GalleryIcon,
+  MomentsIcon,
+} from '../../assets/images/svgs';
 import Stories from '../../components/stories';
+import { colors } from '../../utils/colors';
+import PostContentModal from './compoents/postContentModal';
+import ProfileDetailCard from './compoents/profileDetailCard';
+import ProfileOption from './compoents/profileOption';
+import ProfilePicture from './compoents/profilePicture';
+import ProfileStats from './compoents/profileStats';
 
 const Profile = () => {
+  const [options, setOptions] = useState([
+    {
+      type: 'gallery',
+      icon: <GalleryIcon />,
+      active: true,
+    },
+    {
+      type: 'audios',
+      icon: <FileAudio />,
+      active: false,
+    },
+    {
+      type: 'moments',
+      icon: <MomentsIcon />,
+      active: false,
+    },
+    {
+      type: 'files',
+      icon: <FileImport />,
+      active: false,
+    },
+    {
+      type: 'events',
+      icon: <EventsIcon />,
+      active: false,
+    },
+  ]);
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 0.3}}>
@@ -24,12 +58,13 @@ const Profile = () => {
           zIndex: 999,
           backgroundColor: colors?.white,
         }}>
-          <ProfilePicture/>
-          <ProfileDetailCard/>
-          <ProfileStats/>
-          <ProfileOption/>
-          <Stories/>
-        </View>
+        <ProfilePicture />
+        <ProfileDetailCard />
+        <ProfileStats />
+        <ProfileOption />
+        <Stories />
+        <PostContentModal options={options} setOptions={setOptions} />
+      </View>
     </View>
   );
 };

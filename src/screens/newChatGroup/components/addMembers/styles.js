@@ -44,14 +44,13 @@ export const styles = StyleSheet?.create({
     fontSize: width * 0.035,
     marginLeft: width * 0.01,
   },
-  gradientButton: {
+  button: {
     borderRadius: width * 0.02,
     paddingVertical: width * 0.02,
     paddingHorizontal: width * 0.04,
   },
-  gradientText: {
+  text: {
     fontFamily: fonts?.montserratSemiBold,
-    color: colors?.white,
     fontSize: width * 0.03,
   },
 });

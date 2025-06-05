@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
-import GradientText from '../../components/text/GradientText';
-import {BlueTick, Gallery} from '../../assets/images/svgs';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {sideBottomSheetOptions} from '../../utils/string';
 import {NextButton} from '../../components/buttons/NextButton';
-import {useNavigation} from '@react-navigation/native';
 import {styles} from './styles';
 import {colors} from '../../utils/colors';
 import {height, width} from '../../constant';
+import GradientText from '../../components/text/GradientText';
+import { BlueTick, Gallery } from '../../assets/images/svgs';
 
 export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
   const [selected, setSelected] = useState({
@@ -34,36 +34,41 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
         <GradientText style={styles.heading}>
           What do you want to create?
         </GradientText>
-        {sideBottomSheetOptions?.map(item => (
-          <TouchableOpacity key={item.id} onPress={() => setSelected(item)}>
-            <LinearGradient
-              colors={
-                selected?.id === item?.id
-                  ? [colors?.RGB1, colors?.RGB2]
-                  : [colors?.white, colors?.white]
-              }
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={styles.cardContainer}>
-              <View style={styles.cardInner}>
-                <View style={styles.iconContainer}>
-                  <Gallery height={height * 0.07} width={width * 0.07} />
+        {sideBottomSheetOptions?.map(item => {
+          return (
+            <TouchableOpacity key={item.id} onPress={() => {
+              // console.log('Item', item?.route);
+              setSelected(item)
+              }}>
+              <LinearGradient
+                colors={
+                  selected?.id === item?.id
+                    ? [colors?.RGB1, colors?.RGB2]
+                    : [colors?.white, colors?.white]
+                }
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                style={styles.cardContainer}>
+                <View style={styles.cardInner}>
+                  <View style={styles.iconContainer}>
+                    <Gallery height={height * 0.07} width={width * 0.07} />
+                  </View>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.title}>{item?.title}</Text>
+                    <Text style={styles.desc}>{item?.desc}</Text>
+                  </View>
+                  <View style={styles.indicatorContainer}>
+                    {selected?.id === item?.id ? (
+                      <BlueTick width={18} height={18} />
+                    ) : (
+                      <View style={styles.unselectedIndicator} />
+                    )}
+                  </View>
                 </View>
-                <View style={styles.textContainer}>
-                  <Text style={styles.title}>{item?.title}</Text>
-                  <Text style={styles.desc}>{item?.desc}</Text>
-                </View>
-                <View style={styles.indicatorContainer}>
-                  {selected?.id === item?.id ? (
-                    <BlueTick width={18} height={18} />
-                  ) : (
-                    <View style={styles.unselectedIndicator} />
-                  )}
-                </View>
-              </View>
-            </LinearGradient>
-          </TouchableOpacity>
-        ))}
+              </LinearGradient>
+            </TouchableOpacity>
+          );
+        })}
         <View style={styles?.btnContainer}>
           <NextButton
             onPress={handlePress}

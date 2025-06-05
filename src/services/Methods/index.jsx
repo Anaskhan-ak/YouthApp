@@ -25,8 +25,10 @@ export const get = async (endPoint, params) => {
 };
 
 export const post = async (endPoint, data) => {
+  
   try {
     const token = await AsyncStorage.getItem('token');
+    console.log("Token", token)
     let config = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,

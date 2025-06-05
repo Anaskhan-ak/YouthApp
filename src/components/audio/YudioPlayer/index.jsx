@@ -12,7 +12,6 @@ import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
 import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
-import { generateAudioWaveforms } from '../../../helper';
 import { colors } from '../../../utils/colors';
 
 // const waveform = [
@@ -329,27 +328,27 @@ const YudioPlayer = ({audio}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [waveform, setWaveform] = useState([]);
+  const [waveform, setWaveform] = useState(audio?.waveform);
   const fixedBarsCount = 35;
 
-  useEffect(() => {
-    console.log('Audio', audio);
-    const loadWaveform = async () => {
-      if (!audio || !audio.uri) return;
+  // useEffect(() => {
+  //   console.log('Audio', audio);
+  //   const loadWaveform = async () => {
+  //     if (!audio || !audio.uri) return;
 
-      try {
-        // Optional: add small delay to let state fully update
-        await new Promise(resolve => setTimeout(resolve, 50));
+  //     try {
+  //       // Optional: add small delay to let state fully update
+  //       await new Promise(resolve => setTimeout(resolve, 50));
 
-        const result = await generateAudioWaveforms(audio);
-        setWaveform(result);
-      } catch (err) {
-        console.error('Waveform generation error:', err);
-      }
-    };
+  //       const result = await generateAudioWaveforms(audio);
+  //       setWaveform(result);
+  //     } catch (err) {
+  //       console.error('Waveform generation error:', err);
+  //     }
+  //   };
 
-    loadWaveform();
-  }, [audio]);
+  //   loadWaveform();
+  // }, [audio]);
 
   useEffect(() => {
     SoundPlayer.loadUrl(audio?.uri);

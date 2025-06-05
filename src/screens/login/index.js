@@ -57,6 +57,10 @@ const Login = () => {
       setLoading(true);
       let result = await apiCall?.Login(obj);
       await AsyncStorage.setItem('token', result?.access_token);
+      if (rememberMe) {
+        await AsyncStorage.setItem('rememberMe', "rememberMe");
+      }
+
       const jsonValue = JSON.stringify(result?.data);
       await AsyncStorage.setItem('UserLocalData', jsonValue);
       navigation?.navigate('LandingWidget');
@@ -116,6 +120,17 @@ const Login = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
+  const clearAsyncStorage = async () => {
+  try {
+    await AsyncStorage.clear();
+    console.log('AsyncStorage has been cleared!');
+  } catch (error) {
+    console.error('Error clearing AsyncStorage:', error);
+  }
+};
+useEffect(()=>{
+clearAsyncStorage()
+},[])
   return (
     <SafeAreaView style={styles?.container}>
       <StatusBar
@@ -208,12 +223,10 @@ const Login = () => {
                 // <View style={styles?.checkRememberMe} />
                 <GreenCheckMark />
               )} */}
-            {!rememberMe ? (
-              <GreenCheckMark width={18} height={18}/>
+            {rememberMe ? (
+              <GreenCheckMark width={18} height={18} />
             ) : (
-              <View
-                style={styles?.unSelect}
-              />
+              <View style={styles?.unSelect} />
             )}
             {/* </LinearGradient> */}
             <Text style={[styles?.content, {left: 4}]}>Remember me</Text>

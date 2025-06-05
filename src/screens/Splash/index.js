@@ -7,6 +7,7 @@ import {apiCall} from '../../services/apiCall';
 import DeviceInfo from 'react-native-device-info';
 import {toast, hideToast} from '../../components/toast';
 import NetInfo from '@react-native-community/netinfo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = ({navigation}) => {
   const hasShownToast = useRef(false);
@@ -29,10 +30,15 @@ const Splash = ({navigation}) => {
   }, []);
 
   const getOnboardingContent = async () => {
+     let rememberMe = await AsyncStorage.getItem('rememberMe');
     try {
       const response = await apiCall?.getOnboardingContent();
       setTimeout(() => {
+        if(rememberMe){
+        navigation?.navigate('Home');
+        }else{
         navigation?.navigate('Onboarding', {details: response});
+        }
       }, 2000);
     } catch (error) {
       toast('error', 'Something went wrong', error);

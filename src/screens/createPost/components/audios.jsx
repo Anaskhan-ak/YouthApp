@@ -12,31 +12,49 @@ import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import EmptyComponent from '../../../components/empty';
-import { width } from '../../../constant';
+import { height, width } from '../../../constant';
+import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const AudioComponent = ({media, setMedia}) => {
   const [yudios, setYudios] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const user = useUser();
   useEffect(() => {
     const fetchYudios = async () => {
-      const result = await apiCall?.getAllYudios({
-        userId: 'cm60ql39f003l91r8l18bd80z',
-        page: 1,
-        pageSize: 6,
-      });
-      setYudios(
-        result?.map(yudio => ({
-          id: yudio?.yudios?.id,
-          thumbnail: yudio?.yudios?.thumbnail,
-          title: yudio?.yudios?.title,
-          caption: yudio?.yudios?.caption,
-          url: yudio?.yudios?.url,
-          type: 'audio/wav',
-          isPlaying: false,
-        })),
-      );
+      
+      if (user) {
+        setLoading(true);
+        try {
+          const result = await apiCall?.getAllYudios({
+            userId: user?.id,
+            page: 1,
+            pageSize: 6,
+          });
+          console.log("Result", result)
+          if (result) {
+            setLoading(false);
+          }
+          setYudios(
+            result?.map(yudio => ({
+              id: yudio?.yudios?.id,
+              thumbnail: yudio?.yudios?.thumbnail,
+              title: yudio?.yudios?.title,
+              caption: yudio?.yudios?.caption,
+              url: yudio?.yudios?.url,
+              type: 'audio/wav',
+              isPlaying: false,
+            })),
+          );
+        } catch (error) {
+          console.log('Error fetching yudios', error);
+          setLoading(false);
+        } finally {
+          setLoading(false);
+        }
+      }
     };
     fetchYudios();
   }, []);
@@ -141,29 +159,30 @@ const AudioComponent = ({media, setMedia}) => {
   };
 
   const HeaderComponent = () => {
-      return (
-        <View style={styles?.header}>
-            <Text style={styles?.headerText}>Recently Uploaded</Text>
-          <TouchableOpacity>
-            <Text style={styles?.headerText}>View all</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
+    return (
+      <View style={styles?.header}>
+        <Text style={styles?.headerText}>Recently Uploaded</Text>
+        <TouchableOpacity>
+          <Text style={styles?.headerText}>View all</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <>
-      {yudios?.length > 0 ? (
+      {loading ? (
+        <View style={styles?.loader}>
+          <ActivityIndicator size={'small'} color={colors?.RGB1} />
+        </View>
+      ) : (
         <FlatList
           data={yudios}
           renderItem={renderItem}
           ListEmptyComponent={<EmptyComponent text="No yudios to show" />}
-          ListHeaderComponent={<HeaderComponent/>}
+          ListHeaderComponent={yudios?.length !== 0 && <HeaderComponent />}
+          contentContainerStyle={yudios?.length === 0 && {alignItems :"center", justifyContent : 'center', flex : 1}}
         />
-      ) : (
-        <View style={styles?.loader}>
-          <ActivityIndicator size={'small'} color={colors?.RGB1} />
-        </View>
       )}
     </>
   );
@@ -212,19 +231,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loader : {
-    flex : 1,
-    alignItems : 'center',
-    justifyContent : "center"
+  loader: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginVertical: height * 0.15,
   },
-   header : {
-    flexDirection : 'row',
-    justifyContent : 'space-between',
-    alignItems : "center",
-    padding : width * 0.02
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: width * 0.02,
   },
-  headerText : {
-    fontFamily : fonts?.montserratBold,
-    fontSize : width * 0.04
-  }
+  headerText: {
+    fontFamily: fonts?.montserratBold,
+    fontSize: width * 0.04,
+  },
 });

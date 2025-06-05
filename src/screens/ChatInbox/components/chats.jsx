@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { images } from '../../../assets/images';
-import { EmptyChatInboxIcon } from '../../../assets/images/svgs';
+import { EmptyCallsInboxIcon } from '../../../assets/images/svgs';
 import EmptyComponent from '../../../components/empty';
 import GradientText from '../../../components/text/GradientText';
 import { height, width } from '../../../constant';
@@ -77,7 +77,7 @@ const Chats = () => {
         contentContainerStyle={styles?.listContent}
         ListEmptyComponent={
           <EmptyComponent
-            icon={<EmptyChatInboxIcon />}
+            Icon={<EmptyCallsInboxIcon />}
             text={'No chats yet'}
             subtext={'Notifications will be displayed here soon'}
           />

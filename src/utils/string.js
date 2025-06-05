@@ -1,5 +1,5 @@
 import { images } from '../assets/images';
-import {SwitchAcc, Chat, Eye, LiveNow, Moment, NearBy, Notification, Plus, QR, Search, Trending, UserFollow, YouthCoin, Yudio } from '../assets/images/svgs';
+import { Chat, Eye, LiveNow, Moment, NearBy, Notification, Plus, QR, Search, SwitchAcc, Trending, UserFollow, YouthCoin, Yudio } from '../assets/images/svgs';
 
 export const onboardingContent = [
   {
@@ -82,12 +82,12 @@ export const sideBarOptions = [
     },
     {
       screen: 'notification',
-      route: 'Notification',
+      route: 'Notifications',
       icon: <Notification width={24} height={24} />,
     },
     {
       screen: 'chat',
-      route: 'Chat',
+      route: 'ChatInbox',
       icon: <Chat width={24} height={24} />,
     },
     {

@@ -13,7 +13,7 @@ const {height, width} = Dimensions.get('window');
 
 export const PrimaryButton = props => {
   return (
-    <TouchableOpacity {...props} onPress={props.onPress}>
+    <TouchableOpacity {...props} onPress={props.onPress} disabled={props?.disable ? props?.disable : false}>
       <LinearGradient
         colors={[colors.primary, colors.RGB2]}
         start={{x: 0, y: 0}}
@@ -22,6 +22,7 @@ export const PrimaryButton = props => {
           {
             width: props?.width || width * 0.69,
             borderRadius: props?.borderRadius ||  5,
+            height : props?.height || height * 0.05
           },
           styles.primaryButton,
           props?.style, 

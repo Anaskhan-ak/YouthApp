@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import EmptyComponent from '../../../../components/empty';
 import YudioReactions from '../../../../components/reactions/yudioReactions';
+import useUser from '../../../../hooks/user';
 import YudioCard from '../yudioCard';
 import { styles } from './styles';
 
 const RenderYudios = ({yudios, yudio}) => {
     const [showFullText, setShowFullText] = useState(false);
+    const user = useUser()
     // console.log('Yudio', yudio?.yudios);
     return (
       <>
@@ -28,7 +30,7 @@ const RenderYudios = ({yudios, yudio}) => {
               </Text>
               <FlatList
                 data={yudios
-                  ?.filter(item => item?.userId === 'cm60ql39f003l91r8l18bd80z')
+                  ?.filter(item => item?.userId === user?.id)
                   ?.slice(0, 3)}
                 renderItem={({item}) => {
                   return (

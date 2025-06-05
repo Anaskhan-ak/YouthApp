@@ -35,6 +35,8 @@ import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
 import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
 import Error from './error.svg';
 import ErrorWhite from './error1.svg';
+import EventsIcon from './EventsIcon.svg';
+import Eye from './eye.svg';
 import FacebookIcon from './FacebookIcon.svg';
 import FileAudio from './FileAudioIcon.svg';
 import FileIcon from './FileIcon.svg';
@@ -46,9 +48,12 @@ import Google from './google.svg';
 import GradientBlueMic from './GradientBlueMic.svg';
 import GradientCalender from './GradientCalender.svg';
 import GradientCross from './GradientCross.svg';
+import GradientDownloadIcon from './GradientDownloadIcon.svg';
 import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
 import GradientMessageSendIcon from './GradientMessageSendIcon.svg';
+import GradientPauseIcon from './GradientPauseIcon.svg';
+import GradientPlayIcon from './GradientPlayIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
 import GrayLocationIcon from './GrayLocationIcon.svg';
@@ -57,6 +62,7 @@ import GrayWalletIcon from './GrayWalletIcon.svg';
 import GreenCheckMark from './greenCheckMark.svg';
 import Home from './home.svg';
 import HomeHeaderLogo from './homeHeaderLogo.svg';
+import HorizontalDots from './HorizontalDots.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
 import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
@@ -73,8 +79,14 @@ import Menu from './menu.svg';
 import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
 import Moment from './moment.svg';
+import MomentsIcon from './MomentsIcon.svg';
 import NearBy from './nearBy.svg';
 import Notification from './notification.svg';
+import OutlineBlockIcon from './OutlineBlockIcon.svg';
+import OutlineCloudDOwnloadIcon from './OutlineCloudDownloadIcon.svg';
+import OutlineFollowIcon from './OutlineFollowIcon.svg';
+import OutlineHeartbreakIcon from './OutlineHeartbreakIcon.svg';
+import OutlineHeartIcon from './OutlineHeartIcon.svg';
 import PasswordHide from './PasswordHide.svg';
 import PasswordShow from './PasswordShow.svg';
 import PauseIcon from './PauseIcon.svg';
@@ -88,6 +100,7 @@ import PinterestIcon from './PinterestIcon.svg';
 import PlayIcon from './PlayIcon.svg';
 import Plus from './plus.svg';
 import PublicIcon from './PublicIcon.svg';
+import QR from './qr.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
 import RightArrow from './RightArrow.svg';
@@ -95,6 +108,8 @@ import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
 import Sparkles from './Sparkles.svg';
+import SwitchAcc from './switchAcc.svg';
+import TagFriends from './TagFriends.svg';
 import TagFriendsIcon from './TagFriendsIcon.svg';
 import TiktokIcon from './TiktokIcon.svg';
 import ToggleCameraIcon from './ToggleCameraIcon.svg';
@@ -102,19 +117,19 @@ import Trending from './trending.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
+import UserFollow from './user_follow.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
 import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
+import WhiteBackwardAudioIcon from './WhiteBackwardAudioIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
+import WhiteForwardAudioIcon from './WhiteForwardAudioIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
+import WhiteTick from './WhiteTick.svg';
+import YouthCoin from './youthCoin.svg';
 import YouthIcon from './YouthIcon.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 import Yudio from './yudio.svg';
-import UserFollow from './user_follow.svg';
-import QR from './qr.svg';
-import Eye from './eye.svg';
-import YouthCoin from './youthCoin.svg';
-import SwitchAcc from './switchAcc.svg';
 import YouthIconWhite from './YouthIconWhite.svg';
 
 export {
@@ -145,9 +160,13 @@ export {
   BlueTick,
   Calendar,
   CameraIcon,
-  Chat, ChatContactIcon, ChatDocumentIcon,
+  Chat,
+  ChatContactIcon,
+  ChatDocumentIcon,
   ChatGalleryIcon,
-  ChatLocationIcon, ChatYouthIcon, CopyIcon,
+  ChatLocationIcon,
+  ChatYouthIcon,
+  CopyIcon,
   Cross,
   DontShowLandingWidget,
   DropDown,
@@ -157,6 +176,7 @@ export {
   EmptyChatInboxIcon,
   Error,
   ErrorWhite,
+  EventsIcon,
   FacebookIcon,
   FileAudio,
   FileIcon,
@@ -168,9 +188,12 @@ export {
   GradientBlueMic,
   GradientCalender,
   GradientCross,
+  GradientDownloadIcon,
   GradientDropRightCircle,
   GradientLocationIcon,
   GradientMessageSendIcon,
+  GradientPauseIcon,
+  GradientPlayIcon,
   GradientRedMic,
   GradientRedTick,
   GrayLocationIcon,
@@ -179,6 +202,7 @@ export {
   GreenCheckMark,
   Home,
   HomeHeaderLogo,
+  HorizontalDots,
   InactiveComment,
   InactiveDownload,
   InactiveGroupChatIcon,
@@ -195,9 +219,9 @@ export {
   MessageIcon,
   MessengerIcon,
   Moment,
+  MomentsIcon,
   NearBy,
-  Notification,
-  PasswordHide,
+  Notification, OutlineBlockIcon, OutlineCloudDOwnloadIcon, OutlineFollowIcon, OutlineHeartbreakIcon, OutlineHeartIcon, PasswordHide,
   PasswordShow,
   PauseIcon,
   PinkForwardAudioButton,
@@ -217,6 +241,7 @@ export {
   SearchIcon,
   SnapchatIcon,
   Sparkles,
+  TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
@@ -224,14 +249,17 @@ export {
   TwitterIcon,
   TwitterIconRound,
   UploadThumbnail,
+  UserFollow,
   VideoCallIcon,
   VoiceCallIcon,
   WhatsappIcon,
+  WhiteBackwardAudioIcon,
   WhiteCameraIcon,
+  WhiteForwardAudioIcon,
   WhiteLeftArrow,
+  WhiteTick,
   YouthIcon,
   YoutubeIcon,
-  Yudio,
-  UserFollow
+  Yudio
 };
 
