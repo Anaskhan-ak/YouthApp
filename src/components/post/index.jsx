@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Modal,
+  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -52,6 +53,9 @@ const Post = ({post}) => {
 
       <View style={styles?.content}>
         {renderPostContent(post, {modal, setModal})}
+      </View>
+      <View style={styles?.caption}>
+        <Text style={styles?.captionText}>{post?.caption}</Text>
       </View>
       <View style={styles?.likes}>
         <Likes post={post} />
