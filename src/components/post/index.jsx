@@ -22,7 +22,6 @@ const Post = ({post}) => {
     isPost: false,
     visible: false,
   });
-
   const renderPostContent = (post, modalProps) => {
     switch (post?.type) {
       case 'MEDIA':

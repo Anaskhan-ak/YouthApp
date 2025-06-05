@@ -8,6 +8,7 @@ import SuggestedUsers from '../../components/post/subComponents/suggestedUsers';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
+import { getDataLocally } from '../../helper';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
@@ -19,14 +20,15 @@ const Home = () => {
   const [posts, setPosts] = useState([])
   useEffect(() => {
     const fetchPosts = async () => {
+      const userDetails = await getDataLocally()
       const body = {
-        userId: 'cm60ql39f003l91r8l18bd80z',
+        userId: userDetails?.id,
         page: 1,
-        pageSize: 20,
+        pageSize: 50,
       };
       try {
         const response = await apiCall?.getAllPosts(body);
-        // console.log('Get All Posts', response?.data?.posts);
+        console.log('Get All Posts', response?.data?.posts);
         setPosts(response?.data?.posts)
       } catch (error) {
         throw error

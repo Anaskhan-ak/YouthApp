@@ -1,33 +1,23 @@
-import { BlurView } from '@react-native-community/blur';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import VideoPlayer from 'react-native-video-player';
-import { PlayIcon, TagFriends } from '../../../assets/images/svgs';
+import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
 import CircleCounter from '../subComponents/CircleCounter';
 import PostBottomTab from '../subComponents/postBottomTab';
+import PostVideo from './videoPlayer';
+// import VideoPlayer from './videoPlayer';
 
 const MediaPost = ({post, modal}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
-  const [pause, setPause] = useState(false); 
-  const [duration, setDuration] = useState(0);
-  const videoRef = useRef(null);
-  const formatTime = seconds => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-  };
-
+console.log("post?.media?.url", post?.media?.url)
   const handleMediaLayout = event => {
     const {width} = event.nativeEvent.layout;
     setMediaWidth(width);
@@ -44,6 +34,7 @@ const MediaPost = ({post, modal}) => {
   }).current;
 
   const renderItem = ({item, index}) => {
+    console.log("Item", item)
     const isVideo =
       item?.split('.')?.pop() === 'MOV' ||
       item?.split('.')?.pop() === 'mp4' ||
@@ -52,77 +43,25 @@ const MediaPost = ({post, modal}) => {
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
         <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
-          <View style={styles.mediaElements}>
-            <TouchableOpacity>
-              <TagFriends />
-            </TouchableOpacity>
-            {post?.media?.url?.length > 1 && (
-              <CircleCounter
-                segments={post?.media?.length}
-                filled={index + 1}
-                centerText={index + 1}
-                activeColor={colors?.white}
-                inactiveColor={colors?.gray}
-                centerTextColor={colors?.white}
-              />
-            )}
-            {isVideo && (
-              <View style={styles?.duration}>
-                <BlurView
-                  style={StyleSheet.absoluteFill}
-                  blurType="light"
-                  blurAmount={1}
-                />
-                <Text style={styles?.durationText}>{formatTime(duration)}</Text>
-              </View>
-            )}
-          </View>
-          {isVideo ? (
-            <View style={{position: 'relative'}}>
-              <VideoPlayer
-                ref={videoRef}
-                source={{uri: item}}
-                style={styles.mediaImage}
-                paused={pause}
-                resizeMode="contain"
-                hideControlsOnStart={true}
-                // autoplay={true}
-                onLoad={data => {
-                  setPause(true)
-                  setDuration(data.duration)
-                }}
-                bufferConfig={{
-                  minBufferMs: 15000,
-                  maxBufferMs: 50000,
-                  bufferForPlaybackMs: 2500,
-                  bufferForPlaybackAfterRebufferMs: 5000,
-                  backBufferDurationMs: 120000,
-                  cacheSizeMB: 0,
-                  live: {targetOffsetMs: 500},
-                }}
-              />
-
-              {/* Transparent Touchable area over the whole video */}
-              <TouchableOpacity
-                onPress={() => setPause(!pause)}
-                activeOpacity={1}
-                style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
-                {/* Show Play button only when paused */}
-                {pause && (
-                  <View style={styles.playButton}>
-                    <BlurView
-                      style={[
-                        StyleSheet.absoluteFill,
-                        {borderRadius: width * 0.2},
-                      ]}
-                      blurType="light"
-                      blurAmount={10}
-                    />
-                    <PlayIcon />
-                  </View>
-                )}
+          {!isVideo && (
+            <View style={styles.mediaElements}>
+              <TouchableOpacity>
+                <TagFriends />
               </TouchableOpacity>
+              {post?.media?.url?.length > 1 && (
+                <CircleCounter
+                  segments={post?.media?.length}
+                  filled={index + 1}
+                  centerText={index + 1}
+                  activeColor={colors?.white}
+                  inactiveColor={colors?.gray}
+                  centerTextColor={colors?.white}
+                />
+              )}
             </View>
+          )}
+          {isVideo ? (
+            <PostVideo url={item}/>
           ) : (
             <Image
               source={{uri: item}}
@@ -135,15 +74,6 @@ const MediaPost = ({post, modal}) => {
     );
   };
 
-  useEffect(() => {
-    if (videoRef?.current) {
-      if (pause) {
-        videoRef?.current?.pause();
-      } else {
-        videoRef?.current?.resume();
-      }
-    }
-  }, [pause]);
   return (
     <View>
       <FlatList
@@ -231,33 +161,5 @@ const styles = StyleSheet.create({
     right: height * 0.0045,
     left: height * 0.01,
     alignSelf: 'center',
-  },
-  playButton: {
-    // backgroundColor: 'rgba(0,0,0,0.3)',
-    borderRadius: width * 0.2,
-    position: 'absolute',
-    zIndex: 11,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    left: width * 0.37,
-    top: height * 0.16,
-    alignSelf: 'center',
-    width: width * 0.15,
-    height: width * 0.15,
-  },
-  duration: {
-    backgroundColor: colors?.black,
-    borderRadius: width * 0.02,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: width * 0.02,
-    paddingVertical: width * 0.01,
-  },
-  durationText: {
-    color: colors?.white,
-    fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.03,
   },
 });
