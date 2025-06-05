@@ -80,6 +80,7 @@ import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
 import Moment from './moment.svg';
 import MomentsIcon from './MomentsIcon.svg';
+import MuteIcon from './MuteIcon.svg';
 import NearBy from './nearBy.svg';
 import Notification from './notification.svg';
 import OutlineBlockIcon from './OutlineBlockIcon.svg';
@@ -116,6 +117,7 @@ import ToggleCameraIcon from './ToggleCameraIcon.svg';
 import Trending from './trending.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
+import UnmuteIcon from './UnmuteIcon.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
 import UserFollow from './user_follow.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
@@ -214,8 +216,7 @@ export {
   MessageIcon,
   MessengerIcon,
   Moment,
-  MomentsIcon,
-  NearBy,
+  MomentsIcon, MuteIcon, NearBy,
   Notification, OutlineBlockIcon, OutlineCloudDOwnloadIcon, OutlineFollowIcon, OutlineHeartbreakIcon, OutlineHeartIcon, PasswordHide,
   PasswordShow,
   PauseIcon,
@@ -236,16 +237,14 @@ export {
   Search,
   SearchIcon,
   SnapchatIcon,
-  Sparkles,
-  SwitchAcc,
+  Sparkles, SwitchAcc,
   TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
   Trending,
   TwitterIcon,
-  TwitterIconRound,
-  UploadThumbnail,
+  TwitterIconRound, UnmuteIcon, UploadThumbnail,
   UserFollow,
   VideoCallIcon,
   VoiceCallIcon,

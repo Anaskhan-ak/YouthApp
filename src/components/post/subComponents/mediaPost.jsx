@@ -17,7 +17,6 @@ import PostVideo from './videoPlayer';
 const MediaPost = ({post, modal}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
-console.log("post?.media?.url", post?.media?.url)
   const handleMediaLayout = event => {
     const {width} = event.nativeEvent.layout;
     setMediaWidth(width);
@@ -34,7 +33,6 @@ console.log("post?.media?.url", post?.media?.url)
   }).current;
 
   const renderItem = ({item, index}) => {
-    console.log("Item", item)
     const isVideo =
       item?.split('.')?.pop() === 'MOV' ||
       item?.split('.')?.pop() === 'mp4' ||
