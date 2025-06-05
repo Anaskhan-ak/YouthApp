@@ -4,7 +4,6 @@ import { useRef, useState } from 'react';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
 import {
   CameraIcon,
   FileAudio,
@@ -265,8 +264,8 @@ const CreatePost = () => {
       <ScrollView style={styles?.content}>
         <View style={styles?.userInfoHeader}>
           <UserInfoHeader
-            userName={'Sannya Wasim'}
-            image={images?.defaultProfilePicture}
+            userName={user?.name}
+            image={user?.photo}
             data={metaData}
             setData={setMetaData}
           />

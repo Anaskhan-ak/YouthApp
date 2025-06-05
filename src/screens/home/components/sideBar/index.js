@@ -16,8 +16,8 @@ const SideBar = ({refRBSheet}) => {
   };
   return (
     <View style={styles?.container}>
-      {sideBarOptions?.map(item => (
-        <TouchableOpacity onPress={() => handlePress(item)}>
+      {sideBarOptions?.map((item,index) => (
+        <TouchableOpacity key={index} onPress={() => handlePress(item)}>
           <LinearGradient
             colors={[colors?.RGB2, colors?.RGB1]}
             style={styles?.btn}>

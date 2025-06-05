@@ -86,14 +86,13 @@ export const apiCall = {
     if (result?.status === 200) return result?.data
     else throw result
   },
- 
-  //GET API CALL
   getAllYudios : async (params) => {
     let result = await post(apis?.getYudios, params)
     if (result?.status) return result?.data?.data?.posts
     else throw result
   },
-
+ 
+  //GET API CALL
   getAllDocuments : async (params) => {
     let result = await post(apis?.getDocuments, params)
     if (result?.status) return result?.data?.posts

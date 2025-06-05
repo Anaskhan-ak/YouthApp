@@ -1,112 +1,15 @@
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { images } from '../../../../assets/images';
 import { PlayIcon } from '../../../../assets/images/svgs';
+import EmptyComponent from '../../../../components/empty';
 import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 
-const MomentPosts = () => {
-  const data = [
-    {
-      user: {
-        firstName: 'Sannya',
-        lastName: 'Wasim',
-        photo: images?.onboarding1,
-      },
-      type: 'MOMMENT',
-      likes: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-      ],
-      comments: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-      ],
-      share: 10,
-      repost: 10,
-      Momment: {
-        url: require('../../../../assets/video/video.mp4'),
-        thumbnail : images?.onboarding1
-      },
-    },
-  ];
+const MomentPosts = ({posts}) => {
   return (
     <View style={styles?.container}>
       <FlatList
-        data={data}
+        data={posts}
         renderItem={({item}) => {
           return (
             <TouchableOpacity>
@@ -120,6 +23,8 @@ const MomentPosts = () => {
         }}
         numColumns={3}
         style={styles?.list}
+        ListEmptyComponent={<EmptyComponent text="No moments yet" /> }
+
       />
     </View>
   );

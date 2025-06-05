@@ -1,135 +1,36 @@
 import { useNavigation } from '@react-navigation/native';
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { images } from '../../../../assets/images';
 import {
-    ActiveLike,
-    GradientDownloadIcon,
-    InactiveDownload,
+  ActiveLike,
+  GradientDownloadIcon,
+  InactiveDownload,
 } from '../../../../assets/images/svgs';
 import GradientText from '../../../../components/text/GradientText';
 import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 
-const FilePosts = () => {
-    const navigation = useNavigation()
-  const data = [
-    {
-      user: {
-        firstName: 'Sannya',
-        lastName: 'Wasim',
-        photo: images?.onboarding1,
-      },
-      type: 'MEDIA',
-      file: {
-        thumbnail: images?.onboarding1,
-        caption: 'Rich Dad, Poor Dad',
-        type: 'PDF',
-      },
-      likes: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-      ],
-      comments: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-      ],
-      share: 10,
-      repost: 10,
-    },
-  ];
+const FilePosts = ({posts}) => {
+    const navigation = useNavigation()  
   return (
     <View style={styles?.container}>
       <FlatList
-        data={data}
+        data={posts}
         renderItem={({item}) => {
           return(
             <TouchableOpacity onPress={() => navigation?.navigate('PostDetails', {post:item})}>
             <LinearGradient
               colors={[colors?.RGB3, colors?.RGB4]}
               style={styles?.file}>
-              <Image source={item?.file?.thumbnail} style={styles?.thumbnail} />
+              <Image source={{uri : item?.documents?.thumbnail}} style={styles?.thumbnail} />
               <View style={styles?.right}>
                 <View style={styles?.header}>
                 <Text
@@ -146,8 +47,8 @@ const FilePosts = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Text style={styles?.caption}>{item?.file?.caption}</Text>
-              <Text style={styles?.fileType}>{item?.file?.type}</Text>
+              <Text style={styles?.caption}>{item?.documents?.caption}</Text>
+              <Text style={styles?.fileType}>{item?.documents?.url?.split('.')?.pop()?.toUpperCase()}</Text>
               <TouchableOpacity style={styles?.downloadIcon}>
                 <InactiveDownload />
               </TouchableOpacity>

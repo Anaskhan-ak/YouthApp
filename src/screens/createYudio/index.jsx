@@ -15,6 +15,7 @@ import {
 import AudioRecord from 'react-native-audio-record';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../assets/images';
 import {
   Cross,
   GradientBlueMic,
@@ -287,8 +288,8 @@ const CreateYudio = () => {
       <ScrollView style={styles?.content}>
         <View style={styles?.userInfoHeader}>
           <UserInfoHeader
-            userName={'Sannya Wasim'}
-            image={require('../../assets/images/SignupImage.jpeg')}
+            userName={user?.name}
+            image={user?.photo}
             data={metaData}
             setData={setMetaData}
           />
@@ -359,10 +360,10 @@ const CreateYudio = () => {
             </TouchableOpacity>
             <Image
               style={styles?.yudioImage}
-              source={require('../../assets/images/SignupImage.jpeg')}
+              source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture}
             />
             <Text style={styles?.recordedPlayerHeading}>
-              What’s going on with Gaza
+              {title}
             </Text>
             <Text style={styles?.recordedPlayerName}>Sannya Wasim</Text>
             <View style={styles?.recordedPlayer}>
@@ -385,7 +386,7 @@ const CreateYudio = () => {
                   style={styles?.yudioGradientImageBorder}>
                   <Image
                     style={styles?.yudioImage}
-                    source={require('../../assets/images/SignupImage.jpeg')}
+                    source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture}
                   />
                 </LinearGradient>
               </View>
@@ -406,6 +407,7 @@ const CreateYudio = () => {
           ) : null
         }
         onPress={handleForm}
+        disabled={(waveform?.length > 0 && yudio) ? true : false}
       />
       {metaData?.audience?.active && (
         <Audience

@@ -29,7 +29,6 @@ const Post = ({post}) => {
       case 'EVENT':
         return <EventPost post={post} modal={modalProps} />;
       case 'YUDIO':
-        console.log("Post", post)
         return <YudioPost post={post} modal={modalProps} />;
       case 'MUSIC':
         return <MusicPost post={post} modal={modalProps} />;

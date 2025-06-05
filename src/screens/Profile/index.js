@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { images } from '../../assets/images';
 import {
   EventsIcon,
@@ -7,14 +8,17 @@ import {
   FileImport,
   GalleryIcon,
   MomentsIcon,
+  WhiteLeftArrow
 } from '../../assets/images/svgs';
 import Stories from '../../components/stories';
+import { width } from '../../constant';
 import { colors } from '../../utils/colors';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
+import { styles } from './styles';
 
 const Profile = () => {
   const [options, setOptions] = useState([
@@ -44,10 +48,19 @@ const Profile = () => {
       active: false,
     },
   ]);
+  const navigation = useNavigation()
   return (
     <View style={{flex: 1}}>
-      <View style={{flex: 0.3}}>
-        <Image source={images?.palestine} style={{flex: 1}} />
+      <View style={styles?.header}>
+        <TouchableOpacity onPress={() => navigation?.goBack()} style={styles?.backButton}>
+          <WhiteLeftArrow/>
+        </TouchableOpacity>
+      </View>
+      <View style={{flex: 0.3, alignItems: 'center', justifyContent: 'center'}}>
+        <Image
+          source={images?.defaultPicture}
+          style={{width: width, flex: 1}}
+        />
       </View>
       <View
         style={{

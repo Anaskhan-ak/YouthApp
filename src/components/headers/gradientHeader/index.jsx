@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { WhiteLeftArrow } from '../../../assets/images/svgs';
-import { getDataLocally } from '../../../helper';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
 const GradientHeader = props => {
-  const getUserDetails = async () => {
-    const getUser = await getDataLocally()
-    console.log("getUser", getUser)
-  }
-
-  useEffect(()=>{
-    // getUserDetails()
-  },[])
   return (
     <LinearGradient
       colors={[colors?.RGB2, colors?.RGB1]}
@@ -29,7 +19,13 @@ const GradientHeader = props => {
       <TouchableOpacity style={styles?.backButton} onPress={props?.backPress}>
         <WhiteLeftArrow />
       </TouchableOpacity>
-      <Text style={[styles?.title, !props?.advancedButtonPress && {marginLeft : width * 0.16}]}>{props?.title}</Text>
+      <Text
+        style={[
+          styles?.title,
+          !props?.advancedButtonPress && {marginLeft: width * 0.16},
+        ]}>
+        {props?.title}
+      </Text>
       {props?.advancedButtonPress && (
         <TouchableOpacity
           style={styles?.advancedButton}

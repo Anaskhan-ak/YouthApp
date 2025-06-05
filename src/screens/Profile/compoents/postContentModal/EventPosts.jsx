@@ -1,126 +1,27 @@
 import { useNavigation } from '@react-navigation/native';
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { images } from '../../../../assets/images';
 import {
-    ActiveLike
+  ActiveLike
 } from '../../../../assets/images/svgs';
+import EmptyComponent from '../../../../components/empty';
 import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 
-const EventPosts = () => {
+const EventPosts = ({posts}) => {
     const navigation = useNavigation()
-  const data = [
-    {
-      user: {
-        firstName: 'Sannya',
-        lastName: 'Wasim',
-        photo: images?.onboarding1,
-      },
-      type: 'EVENT',
-      event: {
-        thumbnail: images?.onboarding1,
-        caption: 'Coffee Meetup',
-        location : 'Today at 16:00 @KAVA',
-        type: 'PDF',
-      },
-      likes: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-        },
-      ],
-      comments: [
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-        {
-          firstName: 'Sannya',
-          lastName: 'Wasim',
-          photo: images?.onboarding1,
-          text: 'Lovely 😘😍 I’ve enjoyed the day too With @Haya & @Battamostafffa',
-        },
-      ],
-      share: 10,
-      repost: 10,
-    },
-  ];
   return (
     <View style={styles?.container}>
       <FlatList
-        data={data}
+        data={posts}
         renderItem={({item}) => {
           return(
             <TouchableOpacity onPress={() => navigation?.navigate('PostDetails', {post:item})}>
@@ -148,6 +49,7 @@ const EventPosts = () => {
           </TouchableOpacity>
           )
         }}
+        ListEmptyComponent={<EmptyComponent text='No events yet'/>}
       />
     </View>
   );

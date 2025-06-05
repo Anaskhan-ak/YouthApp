@@ -22,8 +22,9 @@ const BottomTabNavigator = () => {
         <Home />
       </TouchableOpacity>
       <View style={styles?.subContainer}>
-        {bottomTabs?.map(item => (
+        {bottomTabs?.map((item, index) => (
           <TouchableOpacity
+          key={index}
             onPress={() => handlePress(item?.route)}
             style={styles?.iconView}>
             {item?.icon}

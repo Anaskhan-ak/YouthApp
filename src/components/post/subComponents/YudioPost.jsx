@@ -4,7 +4,6 @@ import { colors } from '../../../utils/colors';
 import PostBottomTab from '../subComponents/postBottomTab';
 
 const YudioPost = ({post, modal}) => {
-  // console.log('Post', post)
   return (
     <View>
       <TouchableOpacity
