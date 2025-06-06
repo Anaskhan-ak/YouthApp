@@ -73,3 +73,20 @@ export const getFirebaseToken = async () => {
     console.error('Error fetching audio metadata:', error);
   }
 };
+export const getFileNameWithExtension = (uri, type) => {
+  const extensionMap = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'video/mp4': 'mp4',
+    'audio/wav': 'wav',
+    'audio/mpeg': 'mp3',
+    'application/pdf': 'pdf',
+    // Add more types as needed
+  };
+
+  const ext = extensionMap[type] || '';
+  const filename = uri?.split('/').pop()?.split('?')[0] || `file_${Date.now()}`;
+  const hasExtension = /\.[^/.]+$/.test(filename);
+
+  return hasExtension ? filename : `${filename}.${ext}`;
+};

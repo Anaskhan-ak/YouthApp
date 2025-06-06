@@ -1,10 +1,10 @@
-import { pick } from '@react-native-documents/picker';
-import { useNavigation } from '@react-navigation/native';
-import { useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import {pick} from '@react-native-documents/picker';
+import {useNavigation} from '@react-navigation/native';
+import {useRef, useState} from 'react';
+import {ActivityIndicator, Platform, ScrollView, View} from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {images} from '../../assets/images';
 import {
   CameraIcon,
   FileAudio,
@@ -19,14 +19,15 @@ import MultilineInput from '../../components/inputs/multilineInput';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
-import { toast } from '../../components/toast';
+import {toast} from '../../components/toast';
 import useUser from '../../hooks/user';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
 import MediaUploader from './components/mediaUpload';
 import PostContentModal from './components/postContentModal';
-import { styles } from './styles';
+import {styles} from './styles';
+import {getFileNameWithExtension} from '../../helper';
 
 const CreatePost = () => {
   const [drawer, setDrawer] = useState(false);
@@ -54,7 +55,7 @@ const CreatePost = () => {
   const [chars, setChars] = useState(0);
   const maxChars = 4000;
   const navigation = useNavigation();
-  const user = useUser()
+  const user = useUser();
   const [options, setOptions] = useState([
     {
       type: 'gallery',
@@ -101,7 +102,8 @@ const CreatePost = () => {
     if (
       media?.some(m => m?.type === 'video/mp4') ||
       media?.some(m => m.type === 'image/jpeg') ||
-      media?.some(m => m?.type === 'image/png')
+      media?.some(m => m?.type === 'image/png') ||
+      media?.some(m => m?.type === 'image')
     ) {
       formData.append('type', 'MEDIA');
       formData.append('caption', description);
@@ -111,7 +113,7 @@ const CreatePost = () => {
             uri: m?.uri,
             type: m?.type,
             name:
-              m?.type === 'image/jpeg'
+              m?.type === 'image/jpeg' || m?.type === 'image'
                 ? `${Date.now()}.jpeg`
                 : `${Date.now()}.mp4`,
           }),
@@ -189,12 +191,10 @@ const CreatePost = () => {
       }
     }
     try {
-      console.log("media", media)
-      console.log("Form data", formData)
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
       setLoading(false);
-      // navigation?.navigate('Home')
+      navigation?.navigate('Home');
     } catch (error) {
       console.log('Error creating post', error);
       toast('error', 'Error creating post');
@@ -208,7 +208,6 @@ const CreatePost = () => {
         type: ['audio/*'],
         allowMultiSelection: false,
       });
-      // console.log(res);
       setMedia(prev => [
         ...prev,
         {
@@ -222,7 +221,6 @@ const CreatePost = () => {
         type: ['image/*'],
         allowMultiSelection: false,
       });
-      // console.log(res);
       setThumbnail({
         uri: res?.uri,
         type: res?.type,

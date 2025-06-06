@@ -21,14 +21,12 @@ const MediaPost = ({post, modal}) => {
   const [mediaWidth, setMediaWidth] = useState(null);
   const [play, setPlay] = useState(false); //play=false --> pause  play=true --> play
   const [duration, setDuration] = useState(0);
-
+  const videoRef = useRef(null);
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
   };
-
-  const videoRef = useRef(null);
 
   const handleMediaLayout = event => {
     const {width} = event.nativeEvent.layout;
@@ -108,17 +106,17 @@ const MediaPost = ({post, modal}) => {
                 {item?.split('.')?.pop() === 'MOV' || //m3u8
                 item?.split('.')?.pop() === 'mp4' ||
                 item?.split('.')?.pop() === 'm3u8' ? (
-                  <>
+                  <TouchableOpacity
+                    onPress={() => setPlay(prev => !prev)}>
                     <VideoPlayer
-                      // ref={videoRef}
+                      ref={videoRef}
                       source={{uri: item}}
                       style={styles.mediaImage}
-                      // paused={!play}
+                      paused={!play}
                       resizeMode="contain"
-                      // hideControlsOnStart={true}
-                      // autoplay={true}
+                      hideControlsOnStart={true}
+                      autoplay={true}
                       onLoad={data => setDuration(data.duration)}
-                      // onEnd={() => setPlay(false)}
                       bufferConfig={{
                         minBufferMs: 15000,
                         maxBufferMs: 50000,
@@ -126,25 +124,23 @@ const MediaPost = ({post, modal}) => {
                         bufferForPlaybackAfterRebufferMs: 5000,
                         backBufferDurationMs: 120000,
                         cacheSizeMB: 0,
-                        live: {
-                          targetOffsetMs: 500,
-                        },
+                        live: {targetOffsetMs: 500},
                       }}
                     />
-
-                    <TouchableOpacity
-                      style={styles.playButton}
-                      onPress={() => setPlay(prev => !prev)}>
-                      <BlurView
-                        style={StyleSheet.absoluteFill}
-                        blurType="light"
-                        blurAmount={10}
-                      />
-                      {!play && <PlayIcon /> 
-                      // : <PauseIcon />
-                      }
-                    </TouchableOpacity>
-                  </>
+                    {play && (
+                      <View style={styles.playButton} activeOpacity={0.7}>
+                        <BlurView
+                          style={[
+                            StyleSheet.absoluteFill,
+                            {borderRadius: width * 0.2},
+                          ]}
+                          blurType="light"
+                          blurAmount={10}
+                        />
+                        <PlayIcon />
+                      </View>
+                    )}
+                  </TouchableOpacity>
                 ) : (
                   <Image
                     source={{uri: item}}
@@ -246,6 +242,8 @@ const styles = StyleSheet.create({
     left: width * 0.4,
     top: height * 0.165,
     padding: width * 0.02,
+    width: width * 0.1,
+    height: width * 0.1,
   },
   duration: {
     backgroundColor: colors?.black,

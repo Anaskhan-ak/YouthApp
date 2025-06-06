@@ -15,10 +15,12 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
+  console.log("media",media)
   if (media) {
     if (
       media?.some(m => m?.type === 'video/mp4') ||
-      media?.some(m => m.type === 'image/jpeg')
+      media?.some(m => m.type === 'image/jpeg') ||
+      media?.some(m => m.type === 'image')
     ) {
       return (
         <FlatList
