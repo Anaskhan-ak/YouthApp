@@ -81,7 +81,7 @@ const CreateYudio = () => {
     formData.append('caption', description);
     formData.append('title', title);
     formData.append('location', 'Pakistan');
-    formData.append('audience', 'PUBLIC');
+    formData.append('audience', metaData?.audience?.value);
     formData.append('isPublic', 'true');
     formData.append('userId', user?.id);
     // if (

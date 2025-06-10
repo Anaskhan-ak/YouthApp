@@ -81,7 +81,7 @@ const CreatePost = () => {
     setLoading(true);
     const formData = new FormData();
     formData.append('location', 'Pakistan');
-    formData.append('audience', 'PUBLIC');
+    formData.append('audience', metaData?.audience?.value);
     formData.append('userId', user?.id);
     formData.append('isPublic', 'true');
     // if (
@@ -253,6 +253,8 @@ const CreatePost = () => {
       ]);
     }
   };
+
+  console.log('metaData', metaData)
 
   return (
     <SafeAreaView style={styles?.container}>
