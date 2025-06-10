@@ -1,5 +1,6 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { images } from '../../../assets/images';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
@@ -27,7 +28,7 @@ const Likes = ({post}) => {
               {isMore ? (
                 <Text style={styles?.gradientText}>+{item.moreCount}</Text>
               ) : (
-                <Image source={item?.photo} style={styles?.image} />
+                <Image source={item?.photo ? {uri : item?.photo} : images?.defaultProfilePicture} style={styles?.image} />
               )}
             </LinearGradient>
           );

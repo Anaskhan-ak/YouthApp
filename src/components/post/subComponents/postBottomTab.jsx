@@ -1,69 +1,152 @@
 import { BlurView } from '@react-native-community/blur';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { ActiveComment, ActiveLike, ActiveRepost, ActiveSave, ActiveShare, InactiveComment, InactiveLike, InactiveRepost, InactiveSave, InactiveShare } from '../../../assets/images/svgs';
+import {
+  ActiveComment,
+  ActiveLike,
+  ActiveRepost,
+  ActiveSave,
+  ActiveShare,
+  InactiveComment,
+  InactiveLike,
+  InactiveRepost,
+  InactiveSave,
+  InactiveShare,
+} from '../../../assets/images/svgs';
+import { toast } from '../../../components/toast';
 import { width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
+import useUser from '../../../hooks/user';
+import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const PostBottomTab = ({post}) => {
+  const user = useUser();
   const [icons, setIcons] = useState([
     {
       type: 'like',
-      active: false,
-      count: 0,
-      activeIcon: <ActiveLike width={width * 0.065} height={width * 0.065}/>,
-      inactiveIcon: <InactiveLike width={width * 0.065} height={width * 0.065}/>,
+      id: '',
+      active: post?.reactions?.some(r => r?.postId === post?.id),
+      count: post?.reactions?.length,
+      activeIcon: <ActiveLike width={width * 0.065} height={width * 0.065} />,
+      inactiveIcon: (
+        <InactiveLike width={width * 0.065} height={width * 0.065} />
+      ),
     },
     {
       type: 'comment',
       active: false,
       count: 0,
-      activeIcon: <ActiveComment width={width * 0.065} height={width * 0.065}/>,
-      inactiveIcon: <InactiveComment width={width * 0.065} height={width * 0.065}/>,
+      activeIcon: (
+        <ActiveComment width={width * 0.065} height={width * 0.065} />
+      ),
+      inactiveIcon: (
+        <InactiveComment width={width * 0.065} height={width * 0.065} />
+      ),
     },
     {
       type: 'save',
       active: false,
       count: 0,
-      activeIcon: <ActiveSave width={width * 0.065} height={width * 0.065}/>,
-      inactiveIcon: <InactiveSave width={width * 0.065} height={width * 0.065}/>,
+      activeIcon: <ActiveSave width={width * 0.065} height={width * 0.065} />,
+      inactiveIcon: (
+        <InactiveSave width={width * 0.065} height={width * 0.065} />
+      ),
     },
     {
       type: 'repost',
       active: false,
       count: 0,
-      activeIcon: <ActiveRepost width={width * 0.065} height={width * 0.065}/>,
-      inactiveIcon: <InactiveRepost width={width * 0.065} height={width * 0.065}/>,
+      activeIcon: <ActiveRepost width={width * 0.065} height={width * 0.065} />,
+      inactiveIcon: (
+        <InactiveRepost width={width * 0.065} height={width * 0.065} />
+      ),
     },
     {
       type: 'share',
       active: false,
       count: 0,
-      activeIcon: <ActiveShare width={width * 0.065} height={width * 0.065}/>,
-      inactiveIcon: <InactiveShare width={width * 0.065} height={width * 0.065}/>,
+      activeIcon: <ActiveShare width={width * 0.065} height={width * 0.065} />,
+      inactiveIcon: (
+        <InactiveShare width={width * 0.065} height={width * 0.065} />
+      ),
     },
   ]);
+  useEffect(() => {
+    if (user?.id) {
+      setIcons(prev =>
+        prev?.map(icon =>
+          icon?.type === 'like'
+            ? {
+                ...icon,
+                id: post?.reactions?.find(r => r?.userId === user?.id)?.id,
+              }
+            : icon,
+        ),
+      );
+    }
+  }, [user?.id]);
+
+  const handlePress = async icon => {
+    const userDetails = await getDataLocally();
+    switch (icon?.type) {
+      case 'like':
+        try {
+          const isLiked = icon?.active;
+          const body = isLiked
+            ? {id: icon.id, status: false}
+            : {
+                userId: userDetails?.id,
+                type: 'LIKE',
+                postId: post?.id,
+                status: true,
+              };
+
+          const response = await apiCall?.likePost(body);
+          setIcons(prev =>
+            prev.map(i => {
+              if (i.type !== 'like') return i;
+
+              return {
+                ...i,
+                active: !isLiked,
+                id: isLiked ? undefined : response.id,
+                count: isLiked ? i.count - 1 : i.count + 1,
+              };
+            }),
+          );
+        } catch (error) {
+          console.error('Like error:', error);
+          toast('error', 'Error processing like');
+        }
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <View style={styles?.container}>
-      <LinearGradient colors={[colors?.RGB3, colors?.RGB4]} style={styles?.wrapper}>
-        <BlurView
-          style={styles.absolute}
-          blurType="light"
-          blurAmount={20}
-        />
+      <LinearGradient
+        colors={[colors?.RGB3, colors?.RGB4]}
+        style={styles?.wrapper}>
+        <BlurView style={styles.absolute} blurType="light" blurAmount={20} />
         {icons?.map((icon, index) => {
           return (
             <View key={index} style={styles?.iconContainer}>
-              <TouchableOpacity style={styles?.iconButton}>
+              <TouchableOpacity
+                style={styles?.iconButton}
+                onPress={() => handlePress(icon)}>
                 {icon?.active ? icon?.activeIcon : icon?.inactiveIcon}
               </TouchableOpacity>
               <Text style={styles?.iconText}>{icon?.count}</Text>
             </View>
           );
         })}
-        {(post?.type === 'MEDIA' || post?.type === 'MUSIC' || post?.type === 'DOCUMENT') && (
+        {(post?.type === 'MEDIA' ||
+          post?.type === 'MUSIC' ||
+          post?.type === 'DOCUMENT') && (
           <TouchableOpacity style={styles?.pinkButton}>
             <Text style={styles?.pinkButtonText}>Follow</Text>
           </TouchableOpacity>

@@ -12,6 +12,7 @@ export const apis = {
   resetPassword : 'api/v1/resetPassword',
   getPosts : 'api/v1/getPost',
   getUsers : 'api/v1/getUsers',
+  like  : 'api/v1/likePost',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

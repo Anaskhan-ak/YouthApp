@@ -50,15 +50,14 @@ const Post = ({post}) => {
           <HorizontalDots />
         </TouchableOpacity>
       </View>
-
       <View style={styles?.content}>
         {renderPostContent(post, {modal, setModal})}
       </View>
-      <View style={styles?.caption}>
-        <Text style={styles?.captionText}>{post?.caption}</Text>
-      </View>
       <View style={styles?.likes}>
         <Likes post={post} />
+      </View>
+      <View style={styles?.caption}>
+        <Text style={styles?.captionText}>{post?.caption}</Text>
       </View>
       <View style={styles?.comments}>
         <Comments post={post} />
