@@ -11,6 +11,7 @@ export const apis = {
   verifyForgetPassword : 'api/v1/verifyPasswordToken',
   resetPassword : 'api/v1/resetPassword',
   getPosts : 'api/v1/getPost',
+  getUsers : 'api/v1/getUsers',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

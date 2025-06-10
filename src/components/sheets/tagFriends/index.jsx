@@ -1,107 +1,75 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
+import { toast } from '../../../components/toast';
+import { getDataLocally } from '../../../helper';
+import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import CustomSearchBar from '../../inputs/search';
 import GradientText from '../../text/GradientText';
 import { styles } from './styles';
 
 export default function TagFriends({sheetRef, tagFriends, setTagFriends}) {
-  const [selected, setSelected] = useState([
-    {
-      id: 'qqqqqqqqqqqqqqqqqqqq',
-      image: images?.onboarding1,
-      name: 'Sannya Wasim',
-      active: true,
-    },
-    {
-      id: 'wwwwwwwwwwwwwwwwwww',
-      image: images?.onboarding1,
-      name: 'Muzammil Ali',
-      active: false,
-    },
-    {
-      id: 'eeeeeeeeeeeeeeeeeee',
-      image: images?.onboarding1,
-      name: 'Tehreem Zahid',
-      active: false,
-    },
-    {
-      id: 'rrrrrrrrrrrrrrrrrrrrr',
-      image: images?.onboarding1,
-      name: 'Shahmeer Khan',
-      active: false,
-    },
-    {
-      id: 'aaaaaaaaaaaaaaaaaaaa',
-      image: images?.onboarding1,
-      name: 'Areeba Fatima',
-      active: false,
-    },
-    {
-      id: 'ssssssssssssssss',
-      image: images?.onboarding1,
-      name: 'Daniyal Ahmed',
-      active: false,
-    },
-    {
-      id: 'ddddddddddddddddddd',
-      image: images?.onboarding1,
-      name: 'Fariha Siddiqui',
-      active: false,
-    },
-    {
-      id: 'fffffffffffffff',
-      image: images?.onboarding1,
-      name: 'Hammad Raza',
-      active: false,
-    },
-    {
-      id: 'ccccccccccccccccccc',
-      image: images?.onboarding1,
-      name: 'Zoya Malik',
-      active: false,
-    },
-    {
-      id: 'xxxxxxxxxxxxxxxxxxxxx',
-      image: images?.onboarding1,
-      name: 'Ibrahim Noor',
-      active: false,
-    },
-  ]);
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      try {
+        const userDetails = await getDataLocally()
+        const response = await apiCall?.getAllUsers({
+          page,
+          pageSize,
+        });
+        if (response) {
+          setSelected(
+            response?.filter(r => r?.id !== userDetails?.id)?.map(r => ({
+              id: r?.id,
+              name: `${r?.firstName} ${r?.lastName}`,
+              image: r?.photo,
+              active: false,
+            })),
+          );
+        }
+      } catch (error) {
+        console.log('Error fetching friends', error);
+        toast('error', 'Error fetching friends');
+      }
+    };
+    getFriends();
+  }, []);
 
   const [search, setSearch] = useState('');
   const handleCheck = obj => {
-  setSelected(prev =>
-    prev.map(item =>
-      item.id === obj?.id
-        ? { ...item, active: !item.active }
-        : item
-    ),
-  );
+    setSelected(prev =>
+      prev.map(item =>
+        item.id === obj?.id ? {...item, active: !item.active} : item,
+      ),
+    );
 
-  setTagFriends(prev => {
-    const isAlreadyTagged = prev.tagFriends.value.includes(obj.id);
-    const updatedValue = isAlreadyTagged
-      ? prev.tagFriends.value.filter(id => id !== obj.id)
-      : [...prev.tagFriends.value, obj.id];
+    setTagFriends(prev => {
+      const isAlreadyTagged = prev.tagFriends.value.includes(obj.id);
+      const updatedValue = isAlreadyTagged
+        ? prev.tagFriends.value.filter(id => id !== obj.id)
+        : [...prev.tagFriends.value, obj.id];
 
-    return {
-      ...prev,
-      tagFriends: {
-        ...prev.tagFriends,
-        value: updatedValue,
-      },
-    };
-  });
-};
+      return {
+        ...prev,
+        tagFriends: {
+          ...prev.tagFriends,
+          value: updatedValue,
+        },
+      };
+    });
+  };
   const renderItem = ({item, index}) => {
     return (
       <View key={item?.id} style={styles?.itemContainer}>
         <View style={styles?.itemLeft}>
-          <Image source={item?.image} style={styles?.itemImage} />
+          <Image source={item?.image ? {uri:item?.image} : images?.defaultProfilePicture} style={styles?.itemImage} />
           <Text style={styles?.itemName}>{item?.name}</Text>
         </View>
 

@@ -84,19 +84,18 @@ const CreatePost = () => {
     formData.append('audience', metaData?.audience?.value);
     formData.append('userId', user?.id);
     formData.append('isPublic', 'true');
-    // if (
-    //   tagFriends &&
-    //   tagFriends.filter(item => item !== undefined && item !== '').length >
-    //     0
-    // ) {
+    if (
+      metaData?.tagFriends?.value &&
+      metaData?.tagFriends?.value?.filter(item => item !== undefined && item !== '').length >
+        0
+    ) {
     formData.append(
       'Tag',
-      // JSON.stringify(
-      //   tagFriends.filter(item => item !== undefined && item !== ''),
-      // ),
-      JSON?.stringify(['cmbeywh9v0000yrc1vcoycrlm']),
+      JSON.stringify(
+        metaData?.tagFriends?.value?.filter(item => item !== undefined && item !== ''),
+      ),
     );
-    // }
+    }
     if (
       media?.some(m => m?.type === 'video/mp4') ||
       media?.some(m => m.type === 'image/jpeg') ||
@@ -192,12 +191,12 @@ const CreatePost = () => {
       console.log("Form data", formData)
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
-      setLoading(false);
       navigation?.navigate('Home')
     } catch (error) {
       console.log('Error creating post', error);
       toast('error', 'Error creating post');
-      setLoading(false);
+    } finally {
+      setLoading(false)
     }
   };
 

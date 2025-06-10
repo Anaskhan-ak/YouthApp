@@ -68,13 +68,13 @@ const CreateYudio = () => {
       ref: useRef(),
     },
   });
-  const user=useUser()
+  const user = useUser();
 
   const handleForm = async () => {
     if (!user?.id) {
-    toast('error', 'User not found. Please log in again.');
-    return;
-  }
+      toast('error', 'User not found. Please log in again.');
+      return;
+    }
     setLoading(true);
     const formData = new FormData();
     formData.append('type', 'YUDIO');
@@ -84,20 +84,21 @@ const CreateYudio = () => {
     formData.append('audience', metaData?.audience?.value);
     formData.append('isPublic', 'true');
     formData.append('userId', user?.id);
-    // if (
-    //   tagFriends &&
-    //   tagFriends.filter(item => item !== undefined && item !== '').length >
-    //     0
-    // ) {
-    formData.append(
-      'Tag',
-      // JSON.stringify(
-      //   tagFriends.filter(item => item !== undefined && item !== ''),
-      // ),
-      JSON?.stringify(['cmbeywh9v0000yrc1vcoycrlm']),
-    );
-    // }
-
+    if (
+      metaData?.tagFriends?.value &&
+      metaData?.tagFriends?.value?.filter(
+        item => item !== undefined && item !== '',
+      ).length > 0
+    ) {
+      formData.append(
+        'Tag',
+        JSON.stringify(
+          metaData?.tagFriends?.value?.filter(
+            item => item !== undefined && item !== '',
+          ),
+        ),
+      );
+    }
     formData.append('thumbnail', {
       uri: thumbnail?.uri,
       type: 'image/jpeg',
@@ -360,11 +361,11 @@ const CreateYudio = () => {
             </TouchableOpacity>
             <Image
               style={styles?.yudioImage}
-              source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture}
+              source={
+                user?.photo ? {uri: user?.photo} : images?.defaultProfilePicture
+              }
             />
-            <Text style={styles?.recordedPlayerHeading}>
-              {title}
-            </Text>
+            <Text style={styles?.recordedPlayerHeading}>{title}</Text>
             <Text style={styles?.recordedPlayerName}>Sannya Wasim</Text>
             <View style={styles?.recordedPlayer}>
               <RecordedAudioPlayer audioURL={yudio} />
@@ -386,7 +387,11 @@ const CreateYudio = () => {
                   style={styles?.yudioGradientImageBorder}>
                   <Image
                     style={styles?.yudioImage}
-                    source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture}
+                    source={
+                      user?.photo
+                        ? {uri: user?.photo}
+                        : images?.defaultProfilePicture
+                    }
                   />
                 </LinearGradient>
               </View>
@@ -407,7 +412,7 @@ const CreateYudio = () => {
           ) : null
         }
         onPress={handleForm}
-        disabled={(waveform?.length > 0 && yudio) ? true : false}
+        disabled={waveform?.length > 0 && yudio ? true : false}
       />
       {metaData?.audience?.active && (
         <Audience
