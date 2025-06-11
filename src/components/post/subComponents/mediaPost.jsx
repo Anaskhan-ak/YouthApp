@@ -28,22 +28,22 @@ const MediaPost = ({post, modal}) => {
   }).current;
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
-    if (viewableItems.length > 0) {
-      setActiveIndex(viewableItems[0].index);      
-    }
+    setActiveIndex(viewableItems[0].index);
     setActiveVideo(null);
   }).current;
 
   const renderItem = ({item, index}) => {
     const isVideo = ['MOV', 'mp4', 'm3u8'].includes(item?.split('.')?.pop());
-    const isActiveVideo = activeVideo === item; // ✅ reference latest value
-    const paused = !isActiveVideo; // ✅ compute paused dynamically
+    const isActiveVideo = activeVideo === item;
+    const paused = !isActiveVideo;
+    console.log('pause', paused)
 
     const handleTogglePlay = () => {
-      const nextActive = isActiveVideo ? null : item;
+      const nextActive = activeVideo === item ? null : item;
+      const willBePaused = nextActive !== item; // 👈 future paused state
+      console.log('Paused', willBePaused);
+      console.log('active video', nextActive);
       setActiveVideo(nextActive);
-      console.log('active video:::::::::::', nextActive);
-      console.log('paused', nextActive !== item);
     };
 
     return (

@@ -12,7 +12,6 @@ const PostVideo = ({url, paused, togglePlay}) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [muted, setMuted] = useState(false);
-
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -23,20 +22,11 @@ const PostVideo = ({url, paused, togglePlay}) => {
     if (!videoRef.current) return;
 
     if (paused) {
-      videoRef.current.resume();
+      videoRef?.current?.resume();
     } else {
-      videoRef.current.pause();
+      videoRef?.current?.pause();
     }
   }, [paused]);
-
-  //   useEffect(() => {
-  //   return () => {
-  //     // Pause the video when component unmounts
-  //     if (videoRef.current) {
-  //       videoRef.current.pause();
-  //     }
-  //   };
-  // }, []);
 
   return (
     <View>
@@ -88,7 +78,7 @@ const PostVideo = ({url, paused, togglePlay}) => {
           activeOpacity={1}
           style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
           {/* Show play icon only when paused */}
-          {!paused && (
+          {paused && (
             <View style={styles.playButton}>
               <BlurView
                 style={[StyleSheet.absoluteFill, {borderRadius: width * 0.2}]}
