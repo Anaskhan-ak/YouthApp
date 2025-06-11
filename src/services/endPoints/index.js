@@ -13,6 +13,7 @@ export const apis = {
   getPosts : 'api/v1/getPost',
   getUsers : 'api/v1/getUsers',
   like  : 'api/v1/likePost',
+  comment : 'api/v1/addComment',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Modal,
   Text,
@@ -23,21 +23,24 @@ const Post = ({post}) => {
     isPost: false,
     visible: false,
   });
-  const renderPostContent = (post, modalProps) => {
-    switch (post?.type) {
-      case 'MEDIA':
-        return <MediaPost post={post} modal={modalProps} />;
-      case 'EVENT':
-        return <EventPost post={post} modal={modalProps} />;
-      case 'YUDIO':
-        return <YudioPost post={post} modal={modalProps} />;
-      case 'MUSIC':
-        return <MusicPost post={post} modal={modalProps} />;
-      case 'DOCUMENT':
-        return <DocumentPost post={post} modal={modalProps} />;
-      default:
-        return null;
+  const [actions, setActions] = useState({
+    comments : {
+      ref : useRef(null),
+      value : post?.comments,
+      count : post?.comments?.length
     }
+  })
+  const renderPostContent = (post, modalProps) => {
+    const postComponents = {
+      MEDIA: MediaPost,
+      MUSIC: MusicPost,
+      YUDIO: YudioPost,
+      EVENT: EventPost,
+      DOCUMENT: DocumentPost,
+    };
+
+    const PostComponent = postComponents[post.type];
+    return <PostComponent post={post} modal={modalProps}  actions={actions}/>;
   };
 
   return (
@@ -60,7 +63,7 @@ const Post = ({post}) => {
         <Text style={styles?.captionText}>{post?.caption}</Text>
       </View>
       <View style={styles?.comments}>
-        <Comments post={post} />
+        <Comments post={post} actions={actions} setActions={setActions} />
       </View>
       {(modal?.visible || modal?.isPost) && (
         <Modal animationType="slide" transparent statusBarTranslucent>

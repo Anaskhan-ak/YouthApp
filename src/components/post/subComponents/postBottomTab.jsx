@@ -22,7 +22,7 @@ import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const PostBottomTab = ({post}) => {
+const PostBottomTab = ({post,actions}) => {
   const user = useUser();
   const [icons, setIcons] = useState([
     {
@@ -38,7 +38,7 @@ const PostBottomTab = ({post}) => {
     {
       type: 'comment',
       active: false,
-      count: 0,
+      count: actions?.comments?.count,
       activeIcon: (
         <ActiveComment width={width * 0.065} height={width * 0.065} />
       ),
@@ -89,6 +89,17 @@ const PostBottomTab = ({post}) => {
     }
   }, [user?.id]);
 
+  useEffect(() => {
+    setIcons(prev =>
+      prev.map(icon =>
+        icon.type === 'comment'
+          ? { ...icon, count: actions?.comments?.count }
+          : icon
+      )
+    );
+  }, [actions?.comments?.count]);
+
+
   const handlePress = async icon => {
     const userDetails = await getDataLocally();
     switch (icon?.type) {
@@ -122,6 +133,8 @@ const PostBottomTab = ({post}) => {
           toast('error', 'Error processing like');
         }
         break;
+      case ('comment'):
+        actions?.comments?.ref?.current?.focus()
       default:
         break;
     }

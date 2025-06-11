@@ -14,7 +14,7 @@ import PostBottomTab from '../subComponents/postBottomTab';
 import PostVideo from './videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal}) => {
+const MediaPost = ({post, modal, actions}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
   const [activeVideo, setActiveVideo] = useState(null);
@@ -118,7 +118,7 @@ const MediaPost = ({post, modal}) => {
       )}
       {!modal?.modal?.isPost && (
         <View style={[styles.reactionsTab, {width: mediaWidth}]}>
-          <PostBottomTab post={post} />
+          <PostBottomTab post={post} actions={actions}/>
         </View>
       )}
     </View>

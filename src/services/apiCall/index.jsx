@@ -103,6 +103,12 @@ export const apiCall = {
     if (result?.status) return result?.data?.data
     else throw result
   },
+
+  addComment : async (params) => {
+    let result = await post(apis?.comment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
  
   //GET API CALL
   getAllDocuments : async (params) => {
