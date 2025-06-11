@@ -187,8 +187,8 @@ const CreatePost = () => {
       }
     }
     try {
-      console.log("media", media)
-      console.log("Form data", formData)
+      // console.log("media", media)
+      // console.log("Form data", formData)
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
       navigation?.navigate('Home')
@@ -253,13 +253,13 @@ const CreatePost = () => {
     }
   };
 
-  console.log('metaData', metaData)
+  // console.log('metaData', metaData)
 
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
         title="New Post"
-        backPress={() => navigation?.goBack}
+        backPress={() => navigation?.goBack()}
         advancedButtonPress={() => setDrawer(!drawer)}
       />
       <ScrollView style={styles?.content}>

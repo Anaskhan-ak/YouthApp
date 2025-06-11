@@ -35,6 +35,8 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
               setData(prev => ({
                 ...prev,
                 audience: {...prev?.audience, active: true},
+                location: {...prev?.location, active: false},
+                tagFriends: {...prev?.tagFriends, active: false},
               }));
               data?.audience?.ref?.current?.snapToIndex(0);
             }}>
@@ -52,6 +54,8 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
               setData(prev => ({
                 ...prev,
                 location: {...prev?.location, active: true},
+                audience: {...prev?.audience, active: false},
+                tagFriends: {...prev?.tagFriends, active: false},
               }));
               data?.location?.ref?.current?.snapToIndex(0);
             }}>
@@ -65,10 +69,12 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles?.button}
-             onPress={() => {
+            onPress={() => {
               setData(prev => ({
                 ...prev,
                 tagFriends: {...prev?.tagFriends, active: true},
+                location: {...prev?.location, active: false},
+                audience: {...prev?.audience, active: false},
               }));
               data?.location?.ref?.current?.snapToIndex(0);
             }}>
