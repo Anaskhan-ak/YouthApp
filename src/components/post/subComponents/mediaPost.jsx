@@ -4,7 +4,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
@@ -17,6 +17,7 @@ import PostVideo from './videoPlayer';
 const MediaPost = ({post, modal}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
+  const [activeVideo, setActiveVideo] = useState(null);
   const handleMediaLayout = event => {
     const {width} = event.nativeEvent.layout;
     setMediaWidth(width);
@@ -28,15 +29,23 @@ const MediaPost = ({post, modal}) => {
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     if (viewableItems.length > 0) {
-      setActiveIndex(viewableItems[0].index);
+      setActiveIndex(viewableItems[0].index);      
     }
+    setActiveVideo(null);
   }).current;
 
   const renderItem = ({item, index}) => {
-    const isVideo =
-      item?.split('.')?.pop() === 'MOV' ||
-      item?.split('.')?.pop() === 'mp4' ||
-      item?.split('.')?.pop() === 'm3u8';
+    const isVideo = ['MOV', 'mp4', 'm3u8'].includes(item?.split('.')?.pop());
+    const isActiveVideo = activeVideo === item; // ✅ reference latest value
+    const paused = !isActiveVideo; // ✅ compute paused dynamically
+
+    const handleTogglePlay = () => {
+      const nextActive = isActiveVideo ? null : item;
+      setActiveVideo(nextActive);
+      console.log('active video:::::::::::', nextActive);
+      console.log('paused', nextActive !== item);
+    };
+
     return (
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
@@ -58,8 +67,13 @@ const MediaPost = ({post, modal}) => {
               )}
             </View>
           )}
+
           {isVideo ? (
-            <PostVideo url={item}/>
+            <PostVideo
+              url={item}
+              paused={paused} // ✅ always correct
+              togglePlay={handleTogglePlay}
+            />
           ) : (
             <Image
               source={{uri: item}}
@@ -79,7 +93,7 @@ const MediaPost = ({post, modal}) => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, index) => index.toString()}
+        keyExtractor={(_, index) => `${index}_${activeIndex}`}
         renderItem={renderItem}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
