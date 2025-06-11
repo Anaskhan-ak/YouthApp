@@ -22,14 +22,14 @@ import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const PostBottomTab = ({post,actions}) => {
+const PostBottomTab = ({post, actions, setActions}) => {
   const user = useUser();
   const [icons, setIcons] = useState([
     {
       type: 'like',
       id: '',
-      active: post?.reactions?.some(r => r?.postId === post?.id),
-      count: post?.reactions?.length,
+      active: actions?.likes?.value?.some(r => r?.postId === post?.id),
+      count: actions?.likes?.count,
       activeIcon: <ActiveLike width={width * 0.065} height={width * 0.065} />,
       inactiveIcon: (
         <InactiveLike width={width * 0.065} height={width * 0.065} />
@@ -81,7 +81,8 @@ const PostBottomTab = ({post,actions}) => {
           icon?.type === 'like'
             ? {
                 ...icon,
-                id: post?.reactions?.find(r => r?.userId === user?.id)?.id,
+                id: actions?.likes?.value?.find(r => r?.userId === user?.id)
+                  ?.id,
               }
             : icon,
         ),
@@ -93,12 +94,11 @@ const PostBottomTab = ({post,actions}) => {
     setIcons(prev =>
       prev.map(icon =>
         icon.type === 'comment'
-          ? { ...icon, count: actions?.comments?.count }
-          : icon
-      )
+          ? {...icon, count: actions?.comments?.count}
+          : icon,
+      ),
     );
   }, [actions?.comments?.count]);
-
 
   const handlePress = async icon => {
     const userDetails = await getDataLocally();
@@ -116,6 +116,7 @@ const PostBottomTab = ({post,actions}) => {
               };
 
           const response = await apiCall?.likePost(body);
+          console.log('Post liked successfully', response);
           setIcons(prev =>
             prev.map(i => {
               if (i.type !== 'like') return i;
@@ -128,13 +129,23 @@ const PostBottomTab = ({post,actions}) => {
               };
             }),
           );
+          setActions(prev => ({
+            ...prev,
+            likes: {
+              ...prev?.likes,
+              count: isLiked ? prev?.likes?.count + 1 : prev?.likes?.count - 1,
+              value: isLiked
+                ? prev?.likes?.value?.filter(res => res?.id !== icon.id) // when unliking
+                : [...prev?.likes?.value, response], // when liking
+            },
+          }));
         } catch (error) {
           console.error('Like error:', error);
           toast('error', 'Error processing like');
         }
         break;
-      case ('comment'):
-        actions?.comments?.ref?.current?.focus()
+      case 'comment':
+        actions?.comments?.ref?.current?.focus();
       default:
         break;
     }

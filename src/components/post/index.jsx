@@ -24,12 +24,16 @@ const Post = ({post}) => {
     visible: false,
   });
   const [actions, setActions] = useState({
-    comments : {
-      ref : useRef(null),
-      value : post?.comments,
-      count : post?.comments?.length
-    }
-  })
+    likes : {
+      value : post?.reactions,
+      count : post?.reactions?.length
+    },
+    comments: {
+      ref: useRef(null),
+      value: post?.comments,
+      count: post?.comments?.length,
+    },
+  });
   const renderPostContent = (post, modalProps) => {
     const postComponents = {
       MEDIA: MediaPost,
@@ -40,7 +44,7 @@ const Post = ({post}) => {
     };
 
     const PostComponent = postComponents[post.type];
-    return <PostComponent post={post} modal={modalProps}  actions={actions}/>;
+    return <PostComponent post={post} modal={modalProps} actions={actions} setActions={setActions}/>;
   };
 
   return (
@@ -57,7 +61,7 @@ const Post = ({post}) => {
         {renderPostContent(post, {modal, setModal})}
       </View>
       <View style={styles?.likes}>
-        <Likes post={post} />
+        <Likes post={post} actions={actions}/>
       </View>
       <View style={styles?.caption}>
         <Text style={styles?.captionText}>{post?.caption}</Text>

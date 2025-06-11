@@ -51,34 +51,35 @@ const UserPostHeader = ({post, user}) => {
               ?.replace('days', 'd')
               ?.replace('day', 'd')
               ?.replace('hours', 'h')
-              ?.replace('minutes','m')
-              ?.replace('minute','m')
-              ?.replace('seconds','s')
-              ?.replace('second','s')
-              ?.replace('months','mth')
-              ?.replace('month','mth')
-              ?.replace('a', 1)}
+              ?.replace('minutes', 'm')
+              ?.replace('minute', 'm')
+              ?.replace('seconds', 's')
+              ?.replace('second', 's')
+              ?.replace('months', 'mth')
+              ?.replace('month', 'mth')}
           />
-          <PrimaryButton
-            style={{
-              alignSelf: 'center',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: width * 0.18,
-              height: height * 0.024,
-              marginLeft: width * 0.01,
-            }}
-            textStyle={{
-              fontFamily: fonts?.montserratSemiBold,
-              fontSize: width * 0.03,
-              color: colors?.white,
-            }}
-            title={
-              post?.location?.length > 20
-                ? `${post?.location?.slice(0, 20)}...`
-                : post?.location
-            }
-          />
+          {post?.location && (
+            <PrimaryButton
+              style={{
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: width * 0.18,
+                height: height * 0.024,
+                marginLeft: width * 0.01,
+              }}
+              textStyle={{
+                fontFamily: fonts?.montserratSemiBold,
+                fontSize: width * 0.03,
+                color: colors?.white,
+              }}
+              title={
+                post?.location?.length > 20
+                  ? `${post?.location?.slice(0, 20)}...`
+                  : post?.location
+              }
+            />
+          )}
         </View>
       </View>
     </TouchableOpacity>
