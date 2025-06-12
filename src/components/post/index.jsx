@@ -85,7 +85,7 @@ const Post = ({post}) => {
                 </View>
               )}
               <View style={styles?.modal}>
-                <PostModal />
+                <PostModal post={post} modal={modal} setModal={setModal}/>
               </View>
             </View>
           </TouchableWithoutFeedback>

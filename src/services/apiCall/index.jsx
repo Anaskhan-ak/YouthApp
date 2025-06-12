@@ -37,6 +37,12 @@ export const apiCall = {
     else throw result;
   },
 
+  getFollower: async params => {
+    let result = await post(`${apis?.getFollower}${params}`);
+    if (result?.status === 200) return result?.data?.data;
+    else throw result;
+  },
+
   follow: async params => {
     let result = await post(apis?.follow, params);
     if (result?.status === 200) return result?.data?.data;
