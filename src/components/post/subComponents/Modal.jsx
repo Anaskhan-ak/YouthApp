@@ -144,7 +144,7 @@ const PostModal = ({post, modal, setModal}) => {
       {actions?.map((action, index) => {
         return (
           <TouchableOpacity
-          key={index}
+            key={index}
             onPress={action?.func}
             style={[
               styles?.button,
