@@ -10,7 +10,6 @@ export const apis = {
   forgotPassword : 'api/v1/forgotPassword',
   verifyForgetPassword : 'api/v1/verifyPasswordToken',
   resetPassword : 'api/v1/resetPassword',
-  getPosts : 'api/v1/getPost',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',
@@ -21,7 +20,8 @@ export const apis = {
   generateWaveforms : 'api/v1/generateWaveForms',
   getChats : 'api/v1/chats',
   getMessages : 'api/v1/messages',
-  //GET ENDPOINTS
+  getPosts : 'api/v1/getPost',
+  getProfile : 'api/v1/profile',
   getNotification : `api/v1/notification`,
   getAllInterests : 'api/v1/intrest',
   getOnBoardingContent : 'api/v1/onboarding',

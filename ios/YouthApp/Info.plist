@@ -54,10 +54,17 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true />
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to your photo library so you can upload a posts or a story in app</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library so you can select a photo to use as your profile picture.</string>
+	<key>NSCameraUsageDescription</key>
+<string>We need access to your camera so you can take photos and videos to share in the app.</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library so you can select a photo to use as your profile picture.</string>
+
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need access to your photo library so you can upload a post or a story in the app.</string>
+
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need access to your location to provide map-based features and nearby content.</string>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array>
 		<string>MKDirectionsModeBike</string>
@@ -78,8 +85,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string />
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.ttf</string>

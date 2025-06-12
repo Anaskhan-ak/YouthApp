@@ -7,12 +7,15 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import { images } from '../../../assets/images';
 import { width } from '../../../constant';
+import useUser from '../../../hooks/user';
 import { colors } from '../../../utils/colors';
 
 const BAR_COUNT = 100;
 
 const AudioBars = ({ isRecording }) => {
+  const user = useUser()
   const bars = Array.from({ length: BAR_COUNT }, (_, i) => ({
     rotate: (360 / BAR_COUNT) * i,
     scale: useSharedValue(1),
@@ -64,7 +67,7 @@ const AudioBars = ({ isRecording }) => {
         style={styles.gradientBorder}
       >
         <Image
-          source={require('../../../assets/images/SignupImage.jpeg')}
+          source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture}
           style={styles.image}
         />
       </LinearGradient>

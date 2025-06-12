@@ -1,33 +1,22 @@
-import { BlurView } from '@react-native-community/blur';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import VideoPlayer from 'react-native-video-player';
-import { PlayIcon, TagFriends } from '../../../assets/images/svgs';
+import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
 import CircleCounter from '../subComponents/CircleCounter';
 import PostBottomTab from '../subComponents/postBottomTab';
+import PostVideo from './videoPlayer';
+// import VideoPlayer from './videoPlayer';
 
 const MediaPost = ({post, modal}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
-  const [play, setPlay] = useState(false); //play=false --> pause  play=true --> play
-  const [duration, setDuration] = useState(0);
-  const videoRef = useRef(null);
-  const formatTime = seconds => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-  };
-
   const handleMediaLayout = event => {
     const {width} = event.nativeEvent.layout;
     setMediaWidth(width);
@@ -43,15 +32,46 @@ const MediaPost = ({post, modal}) => {
     }
   }).current;
 
-  useEffect(() => {
-    if (videoRef?.current) {
-      if (play) {
-        videoRef?.current?.pause();
-      } else {
-        videoRef?.current?.resume();
-      }
-    }
-  }, [play]);
+  const renderItem = ({item, index}) => {
+    const isVideo =
+      item?.split('.')?.pop() === 'MOV' ||
+      item?.split('.')?.pop() === 'mp4' ||
+      item?.split('.')?.pop() === 'm3u8';
+    return (
+      <TouchableOpacity
+        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
+          {!isVideo && (
+            <View style={styles.mediaElements}>
+              <TouchableOpacity>
+                <TagFriends />
+              </TouchableOpacity>
+              {post?.media?.url?.length > 1 && (
+                <CircleCounter
+                  segments={post?.media?.length}
+                  filled={index + 1}
+                  centerText={index + 1}
+                  activeColor={colors?.white}
+                  inactiveColor={colors?.gray}
+                  centerTextColor={colors?.white}
+                />
+              )}
+            </View>
+          )}
+          {isVideo ? (
+            <PostVideo url={item}/>
+          ) : (
+            <Image
+              source={{uri: item}}
+              style={styles.mediaImage}
+              resizeMode="cover"
+            />
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View>
       <FlatList
@@ -60,98 +80,7 @@ const MediaPost = ({post, modal}) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableOpacity
-              onLongPress={() =>
-                modal?.setModal(prev => ({...prev, isPost: true}))
-              }>
-              <View
-                onLayout={handleMediaLayout}
-                style={[
-                  styles.mediaContainer,
-                  // , modal === true && {
-                  //   position : "absolute",
-                  //   zIndex : 100            }
-                ]}>
-                <View style={styles.mediaElements}>
-                  <TouchableOpacity>
-                    <TagFriends />
-                  </TouchableOpacity>
-                  {post?.media?.url?.length > 1 && (
-                    <CircleCounter
-                      segments={post?.media?.length}
-                      filled={index + 1}
-                      centerText={index + 1}
-                      activeColor={colors?.white}
-                      inactiveColor={colors?.gray}
-                      centerTextColor={colors?.white}
-                    />
-                  )}
-                  {(item?.split('.')?.pop() === 'MOV' || //m3u8
-                    item?.split('.')?.pop() === 'mp4' ||
-                    item?.split('.')?.pop() === 'm3u8') && (
-                    <View style={styles?.duration}>
-                      <BlurView
-                        style={StyleSheet.absoluteFill}
-                        blurType="light"
-                        blurAmount={1}
-                      />
-                      <Text style={styles?.durationText}>
-                        {formatTime(duration)}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-                {item?.split('.')?.pop() === 'MOV' || //m3u8
-                item?.split('.')?.pop() === 'mp4' ||
-                item?.split('.')?.pop() === 'm3u8' ? (
-                  <TouchableOpacity
-                    onPress={() => setPlay(prev => !prev)}>
-                    <VideoPlayer
-                      ref={videoRef}
-                      source={{uri: item}}
-                      style={styles.mediaImage}
-                      paused={!play}
-                      resizeMode="contain"
-                      hideControlsOnStart={true}
-                      autoplay={true}
-                      onLoad={data => setDuration(data.duration)}
-                      bufferConfig={{
-                        minBufferMs: 15000,
-                        maxBufferMs: 50000,
-                        bufferForPlaybackMs: 2500,
-                        bufferForPlaybackAfterRebufferMs: 5000,
-                        backBufferDurationMs: 120000,
-                        cacheSizeMB: 0,
-                        live: {targetOffsetMs: 500},
-                      }}
-                    />
-                    {play && (
-                      <View style={styles.playButton} activeOpacity={0.7}>
-                        <BlurView
-                          style={[
-                            StyleSheet.absoluteFill,
-                            {borderRadius: width * 0.2},
-                          ]}
-                          blurType="light"
-                          blurAmount={10}
-                        />
-                        <PlayIcon />
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                ) : (
-                  <Image
-                    source={{uri: item}}
-                    style={styles.mediaImage}
-                    resizeMode="cover"
-                  />
-                )}
-              </View>
-            </TouchableOpacity>
-          );
-        }}
+        renderItem={renderItem}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
         scrollEventThrottle={16}
@@ -230,33 +159,5 @@ const styles = StyleSheet.create({
     right: height * 0.0045,
     left: height * 0.01,
     alignSelf: 'center',
-  },
-  playButton: {
-    backgroundColor: colors?.black,
-    borderRadius: width * 0.2,
-    position: 'absolute',
-    zIndex: 100,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    left: width * 0.4,
-    top: height * 0.165,
-    padding: width * 0.02,
-    width: width * 0.1,
-    height: width * 0.1,
-  },
-  duration: {
-    backgroundColor: colors?.black,
-    borderRadius: width * 0.02,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: width * 0.02,
-    paddingVertical: width * 0.01,
-  },
-  durationText: {
-    color: colors?.white,
-    fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.03,
   },
 });

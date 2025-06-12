@@ -22,13 +22,15 @@ import { fonts } from '../../../utils/fonts';
 
 const Comments = ({post}) => {
   const [showAll, setShowAll] = useState(false);
-  const [text, setText] = useState('')
+  const [text, setText] = useState('');
   return (
     <View style={styles?.container}>
       <TouchableOpacity onPress={() => setShowAll(!showAll)}>
         <Text style={styles?.showAllText}>
           {showAll
-            ? `Show less`
+            ? 'Show less'
+            : post?.comments?.length === 0
+            ? 'No comments yet'
             : `View all ${post?.comments?.length} comments`}
         </Text>
       </TouchableOpacity>
@@ -67,13 +69,20 @@ const Comments = ({post}) => {
       {/* comment input */}
       <View style={styles?.inputContainer}>
         <Image source={images?.onboarding1} style={styles?.image} />
-        <TextInput placeholder='Write your comment' placeholderTextColor={colors?.textGray} style={styles?.input}/>
+        <TextInput
+          placeholder="Write your comment"
+          placeholderTextColor={colors?.textGray}
+          style={styles?.input}
+        />
         <View style={styles?.iconContainer}>
           <TouchableOpacity style={styles?.button}>
             <FileMicIcon width={width * 0.04} height={width * 0.04} />
           </TouchableOpacity>
           <TouchableOpacity style={styles?.button}>
-            <GradientMessageSendIcon width={width * 0.04} height={width * 0.04}/>
+            <GradientMessageSendIcon
+              width={width * 0.04}
+              height={width * 0.04}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -153,11 +162,11 @@ const styles = StyleSheet.create({
     marginVertical: height * 0.005,
   },
   input: {
-    flex : 0.65,
-    color : colors?.text
+    flex: 0.65,
+    color: colors?.text,
   },
-  button : {
-    padding : width * 0.01,
-    marginHorizontal : width * 0.005
-  }
+  button: {
+    padding: width * 0.01,
+    marginHorizontal: width * 0.005,
+  },
 });

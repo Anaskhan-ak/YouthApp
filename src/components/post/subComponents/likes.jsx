@@ -5,13 +5,14 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const Likes = ({post}) => {
+  // console.log("Post", post)
   return (
     <View style={styles?.container}>
       <FlatList
         data={
-          post?.likes?.length > 4
-            ? [...post?.likes.slice(0, 4), {moreCount: post?.likes.length - 4}]
-            : post?.likes
+          post?.reactions?.length > 4
+            ? [...post?.reactions.slice(0, 4), {moreCount: post?.reactions.length - 4}]
+            : post?.reactions
         }
         renderItem={({item, index}) => {
           const isMore = item?.moreCount !== undefined;
@@ -31,7 +32,7 @@ const Likes = ({post}) => {
             </LinearGradient>
           );
         }}
-        ListFooterComponent={<Text style={styles?.text}>Like it</Text>}
+        ListFooterComponent={post?.reactions?.length === 0 ? null : <Text style={styles?.text}>Like it</Text>}
         horizontal
         contentContainerStyle={{
           alignItems: 'center',

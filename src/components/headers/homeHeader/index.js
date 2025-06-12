@@ -2,13 +2,17 @@ import { useNavigation } from '@react-navigation/native';
 import { Image, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../../assets/images';
 import { HomeHeaderLogo, Menu } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
+import useUser from '../../../hooks/user';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
-const HomeHeader = ({img}) => {
+
+const HomeHeader = () => {
   const navigation = useNavigation()
+  const user = useUser()
   return (
     <LinearGradient
       colors={[colors?.RGB1, colors?.RGB2]}
@@ -25,7 +29,7 @@ const HomeHeader = ({img}) => {
             style={styles.imageBorder}>
             <Image
               source={
-                img ? img : require('../../../assets/images/SignupImage.jpeg')
+                user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture
               }
               style={styles.image}
             />

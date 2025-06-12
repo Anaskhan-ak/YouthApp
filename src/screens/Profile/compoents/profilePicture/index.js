@@ -1,13 +1,12 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {Image} from 'react-native';
-import {images} from '../../../../assets/images';
-import {styles} from './styles';
+import { Image, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors} from '../../../../utils/colors';
-import {Plus} from '../../../../assets/images/svgs';
+import { images } from '../../../../assets/images';
+import { Plus } from '../../../../assets/images/svgs';
+import useUser from '../../../../hooks/user';
+import { colors } from '../../../../utils/colors';
+import { styles } from './styles';
 
-const ProfilePicture = () => {
+const ProfilePicture = ({user}) => {
   return (
     <View style={styles?.container}>
       <LinearGradient colors={[colors?.RGB2, colors?.RGB1]} style={styles?.btn}>
@@ -15,7 +14,7 @@ const ProfilePicture = () => {
           <Plus width={12} height={12} />
         </View>
       </LinearGradient>
-      <Image source={images?.profileImage} style={styles?.image} />
+      <Image source={user?.profilePicture ? {uri : user?.profilePicture} : images?.defaultProfilePicture} style={styles?.image} />
     </View>
   );
 };

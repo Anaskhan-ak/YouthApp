@@ -10,6 +10,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
+import { images } from '../../../assets/images';
 import { ActiveLike, GradientPlayIcon, PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import GradientText from '../../../components/text/GradientText';
 import { width } from '../../../constant';
@@ -80,7 +81,7 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
         {width: customWidth ? customWidth : width * 0.8},
       ]}>
       {/* <Image source={{uri: user?.photo}} style={styles?.image} /> */}
-      <Image source={user?.photo} style={styles?.image} />
+      <Image source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture} style={styles?.image} />
       <View style={styles?.content}>
         <View style={styles?.header}>
           <Text

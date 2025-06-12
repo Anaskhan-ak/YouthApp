@@ -1,5 +1,4 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-// import YudioPlayer from '../../../components/audio/YudioPlayer';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import PostBottomTab from '../subComponents/postBottomTab';
@@ -7,12 +6,13 @@ import PostBottomTab from '../subComponents/postBottomTab';
 const YudioPost = ({post, modal}) => {
   return (
     <View>
-      <TouchableOpacity onLongPress={() => modal?.setModal(prev => ({...prev, isPost : true}))}>
-      <View style={styles?.player}>
-        {/* <YudioPlayer
-          audio={{uri : post?.yudio?.url}}
-        /> */}
-      </View>
+      <TouchableOpacity
+        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        <View style={styles?.player}>
+          
+            {/* <YudioPlayer audio={{uri: post?.yudios?.url, wavform: post?.yudios?.waveform}} /> */}
+          
+        </View>
       </TouchableOpacity>
       {!modal?.modal?.isPost && (
         <View style={styles?.reactionsTab}>

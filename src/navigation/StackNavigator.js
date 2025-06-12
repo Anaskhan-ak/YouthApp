@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CreateEvent from '../screens/createEvent';
@@ -66,12 +66,12 @@ const StackNavigator = () => {
         component={Otp}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Profile"
         component={Profile}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="CreateWallet"
         component={CreateWallet}
         options={{headerShown: false, animation: 'slide_from_left'}}
@@ -151,10 +151,10 @@ const StackNavigator = () => {
         component={NewChatGroup}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Wallet"
         component={Wallet}
-         options={{headerShown: false, animation: 'slide_from_left'}}
+        options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
         name="PostDetails"

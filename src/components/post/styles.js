@@ -76,5 +76,13 @@ export const styles = StyleSheet.create({
   },
   modal : {
     marginVertical : height * 0.01
+  },
+  caption : {
+    marginTop : height * 0.02
+  },
+  captionText : {
+    fontFamily : fonts?.montserratMedium,
+    fontSize : width * 0.03,
+    color : colors?.text
   }
 });

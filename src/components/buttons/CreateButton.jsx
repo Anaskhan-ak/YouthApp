@@ -9,7 +9,7 @@ const CreateButton = props => {
     <LinearGradient
       colors={[colors?.RGB1, colors?.RGB2]}
       style={styles?.container}>
-      <TouchableOpacity style={styles?.button} onPress={props?.onPress}>
+      <TouchableOpacity style={styles?.button} onPress={props?.onPress} disabled={props?.disabled}>
         {
           props?.loader ? props?.loader : <GradientText style={styles?.text}>{props?.title}</GradientText>
         }

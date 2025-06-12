@@ -29,7 +29,7 @@ import ChatYouthIcon from './ChatYouthIcon.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
-import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
+import {default as DropDown, default as DropDownIcon} from './dropdown.svg';
 import EditEventThumbnail from './EditEventThumbnail.svg';
 import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
 import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
@@ -80,6 +80,7 @@ import MessageIcon from './MessageIcon.svg';
 import MessengerIcon from './MessengerIcon.svg';
 import Moment from './moment.svg';
 import MomentsIcon from './MomentsIcon.svg';
+import MuteIcon from './MuteIcon.svg';
 import NearBy from './nearBy.svg';
 import Notification from './notification.svg';
 import OutlineBlockIcon from './OutlineBlockIcon.svg';
@@ -116,6 +117,7 @@ import ToggleCameraIcon from './ToggleCameraIcon.svg';
 import Trending from './trending.svg';
 import TwitterIcon from './TwitterIcon.svg';
 import TwitterIconRound from './TwitterIconRound.svg';
+import UnmuteIcon from './UnmuteIcon.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
 import UserFollow from './user_follow.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
@@ -220,8 +222,15 @@ export {
   MessengerIcon,
   Moment,
   MomentsIcon,
+  MuteIcon,
   NearBy,
-  Notification, OutlineBlockIcon, OutlineCloudDOwnloadIcon, OutlineFollowIcon, OutlineHeartbreakIcon, OutlineHeartIcon, PasswordHide,
+  Notification,
+  OutlineBlockIcon,
+  OutlineCloudDOwnloadIcon,
+  OutlineFollowIcon,
+  OutlineHeartbreakIcon,
+  OutlineHeartIcon,
+  PasswordHide,
   PasswordShow,
   PauseIcon,
   PinkForwardAudioButton,
@@ -248,6 +257,7 @@ export {
   Trending,
   TwitterIcon,
   TwitterIconRound,
+  UnmuteIcon,
   UploadThumbnail,
   UserFollow,
   VideoCallIcon,
@@ -260,6 +270,5 @@ export {
   WhiteTick,
   YouthIcon,
   YoutubeIcon,
-  Yudio
+  Yudio,
 };
-
