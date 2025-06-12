@@ -23,6 +23,7 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const PostBottomTab = ({post, actions, setActions}) => {
+  console.log("actions?.likes?.count", actions?.likes?.count)
   const user = useUser();
   const [icons, setIcons] = useState([
     {

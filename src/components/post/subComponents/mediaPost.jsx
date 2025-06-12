@@ -3,12 +3,14 @@ import {
   FlatList,
   Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 import CircleCounter from '../subComponents/CircleCounter';
 import PostBottomTab from '../subComponents/postBottomTab';
 import PostVideo from './videoPlayer';
@@ -17,10 +19,25 @@ import PostVideo from './videoPlayer';
 const MediaPost = ({post, modal, actions, setActions}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
-  const [activeVideo, setActiveVideo] = useState(null);
+  const [showTags, setShowTags] = useState(false);
+  const [mediaLayout, setMediaLayout] = useState(null);
+  const [tagPositions, setTagPositions] = useState([]);
+
   const handleMediaLayout = event => {
-    const {width} = event.nativeEvent.layout;
-    setMediaWidth(width);
+    const {width, height} = event.nativeEvent.layout;
+    setMediaLayout({width, height});
+
+    // Generate tag positions if not already generated
+    if (post?.Tag?.length && tagPositions.length === 0) {
+      const newPositions = post.Tag.map(() => {
+        const padding = 40; // safe zone from edges and top bar
+        return {
+          top: Math.random() * (height - padding * 2) + padding,
+          left: Math.random() * (width - 100), // avoid horizontal overflow
+        };
+      });
+      setTagPositions(newPositions);
+    }
   };
 
   const viewabilityConfig = useRef({
@@ -28,31 +45,50 @@ const MediaPost = ({post, modal, actions, setActions}) => {
   }).current;
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
-    setActiveIndex(viewableItems[0].index);
-    setActiveVideo(null);
+    if (viewableItems.length > 0) {
+      setActiveIndex(viewableItems[0].index);
+    }
   }).current;
 
+  const Tags = () => {
+    return (
+      <>
+        {post?.Tag?.map((tag, index) => {
+          const pos = tagPositions[index];
+          if (!pos) return null;
+
+          return (
+            <View
+              key={index}
+              style={[
+                styles.tag,
+                {
+                  top: pos.top,
+                  left: pos.left,
+                },
+              ]}>
+              <Text style={styles.tagText}>
+                {`${tag?.user?.firstName} ${tag?.user?.lastName}`}
+              </Text>
+            </View>
+          );
+        })}
+      </>
+    );
+  };
+
   const renderItem = ({item, index}) => {
-    const isVideo = ['MOV', 'mp4', 'm3u8'].includes(item?.split('.')?.pop());
-    const isActiveVideo = activeVideo === item;
-    const paused = !isActiveVideo;
-    console.log('pause', paused)
-
-    const handleTogglePlay = () => {
-      const nextActive = activeVideo === item ? null : item;
-      const willBePaused = nextActive !== item; // 👈 future paused state
-      console.log('Paused', willBePaused);
-      console.log('active video', nextActive);
-      setActiveVideo(nextActive);
-    };
-
+    const isVideo =
+      item?.split('.')?.pop() === 'MOV' ||
+      item?.split('.')?.pop() === 'mp4' ||
+      item?.split('.')?.pop() === 'm3u8';
     return (
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
         <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
           {!isVideo && (
             <View style={styles.mediaElements}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowTags(!showTags)}>
                 <TagFriends />
               </TouchableOpacity>
               {post?.media?.url?.length > 1 && (
@@ -68,12 +104,11 @@ const MediaPost = ({post, modal, actions, setActions}) => {
             </View>
           )}
 
+          {/* Show tags only after layout is measured */}
+          {showTags && mediaLayout && <Tags />}
+
           {isVideo ? (
-            <PostVideo
-              url={item}
-              paused={paused} // ✅ always correct
-              togglePlay={handleTogglePlay}
-            />
+            <PostVideo url={item} index={index} activeIndex={activeIndex} />
           ) : (
             <Image
               source={{uri: item}}
@@ -93,7 +128,7 @@ const MediaPost = ({post, modal, actions, setActions}) => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(_, index) => `${index}_${activeIndex}`}
+        keyExtractor={(_, index) => index.toString()}
         renderItem={renderItem}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
@@ -118,7 +153,11 @@ const MediaPost = ({post, modal, actions, setActions}) => {
       )}
       {!modal?.modal?.isPost && (
         <View style={[styles.reactionsTab, {width: mediaWidth}]}>
-          <PostBottomTab post={post} actions={actions} setActions={setActions}/>
+          <PostBottomTab
+            post={post}
+            actions={actions}
+            setActions={setActions}
+          />
         </View>
       )}
     </View>
@@ -173,5 +212,20 @@ const styles = StyleSheet.create({
     right: height * 0.0045,
     left: height * 0.01,
     alignSelf: 'center',
+  },
+  tag: {
+    backgroundColor: colors?.black,
+    paddingVertical: width * 0.01,
+    paddingHorizontal: width * 0.02,
+    borderRadius: width * 0.2,
+    margin: width * 0.02,
+    position: 'absolute',
+    zIndex: 20,
+    top: 40,
+  },
+  tagText: {
+    fontFamily: fonts?.montserratMedium,
+    fontSize: width * 0.025,
+    color: colors?.white,
   },
 });

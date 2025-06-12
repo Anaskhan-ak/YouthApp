@@ -7,11 +7,14 @@ import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const PostVideo = ({url, paused, togglePlay}) => {
+const PostVideo = ({url, index, activeIndex}) => {
+  const [pause, setPause] = useState(false);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [muted, setMuted] = useState(false);
+
+
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -19,27 +22,25 @@ const PostVideo = ({url, paused, togglePlay}) => {
   };
 
   useEffect(() => {
-    if (!videoRef.current) return;
-
-    if (paused) {
-      videoRef?.current?.resume();
-    } else {
-      videoRef?.current?.pause();
+    if (videoRef?.current) {
+      if (pause || index !== activeIndex) {
+        videoRef?.current?.pause();
+      } else {
+        videoRef?.current?.resume();
+      }
     }
-  }, [paused]);
+  }, [pause]);
 
   return (
     <View>
       <View style={styles?.mediaElements}>
-        <TouchableOpacity
-          style={styles?.icon}
-          onPress={() => setMuted(prev => !prev)}>
+        <TouchableOpacity style={styles?.icon} onPress={() => setMuted(prev => !prev)}>
           <BlurView
             style={StyleSheet.absoluteFill}
             blurType="light"
             blurAmount={1}
           />
-          {muted ? <MuteIcon /> : <UnmuteIcon />}
+          {muted ? <MuteIcon/> : <UnmuteIcon />}
         </TouchableOpacity>
         <View style={styles?.icon}>
           <BlurView
@@ -59,26 +60,35 @@ const PostVideo = ({url, paused, togglePlay}) => {
           ref={videoRef}
           source={{uri: url}}
           style={styles.mediaImage}
-          paused={paused}
+          paused={pause}
           muted={muted}
           resizeMode="contain"
           hideControlsOnStart={true}
           onLoad={data => {
-            setDuration(data.duration);
+            setPause(true); // Start paused
+            setDuration(data.duration); // total duration in seconds
           }}
           onProgress={data => {
-            setCurrentTime(data.currentTime);
+            setCurrentTime(data.currentTime); // current playback time
+          }}
+          bufferConfig={{
+            minBufferMs: 15000,
+            maxBufferMs: 50000,
+            bufferForPlaybackMs: 2500,
+            bufferForPlaybackAfterRebufferMs: 5000,
+            backBufferDurationMs: 120000,
+            cacheSizeMB: 0,
+            live: {targetOffsetMs: 500},
           }}
         />
 
-        {/* Transparent overlay for play/paused toggle */}
+        {/* Transparent overlay for play/pause toggle */}
         <TouchableOpacity
-          // onPress={() => setPause(!paused)}
-          onPress={togglePlay}
+          onPress={() => setPause(!pause)}
           activeOpacity={1}
           style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
           {/* Show play icon only when paused */}
-          {paused && (
+          {pause && (
             <View style={styles.playButton}>
               <BlurView
                 style={[StyleSheet.absoluteFill, {borderRadius: width * 0.2}]}
@@ -120,10 +130,10 @@ const styles = StyleSheet.create({
     zIndex: 11,
     right: width * 0.03,
     top: height * 0.01,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: width * 0.2,
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between',
+    width : width * 0.2
   },
   icon: {
     backgroundColor: colors?.black,
