@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
@@ -9,9 +10,11 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const UserPostHeader = ({post, user}) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation?.navigate("PostDetails", {post:post})} style={styles?.container}>
+    <TouchableOpacity
+      onPress={() => navigation?.navigate('PostDetails', {post: post})}
+      style={styles?.container}>
       <LinearGradient
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
@@ -21,43 +24,62 @@ const UserPostHeader = ({post, user}) => {
         />
       </LinearGradient>
       <View style={styles?.content}>
-       <View style={styles?.row}>
-         <Text
-          style={styles?.name}>{`${user?.firstName} ${user?.lastName}`}</Text>
-          <View style={styles?.tick}><BlueTick/></View>
-       </View>
+        <View style={styles?.row}>
+          <Text
+            style={styles?.name}>{`${user?.firstName} ${user?.lastName}`}</Text>
+          <View style={styles?.tick}>
+            <BlueTick />
+          </View>
+        </View>
         <View style={styles?.row}>
           <PrimaryButton
             style={{
               alignSelf: 'center',
               alignItems: 'center',
               justifyContent: 'center',
-              width : width * 0.18,
-              height : height * 0.024,
+              width: width * 0.18,
+              height: height * 0.024,
             }}
             textStyle={{
-                fontFamily : fonts?.montserratSemiBold,
-                fontSize : width * 0.03,
-                color : colors?.white,                
+              fontFamily: fonts?.montserratSemiBold,
+              fontSize: width * 0.03,
+              color: colors?.white,
             }}
-            title="1h ago"
+            title={moment(post?.createdAt)
+              .startOf('hour')
+              .fromNow()
+              ?.replace('days', 'd')
+              ?.replace('day', 'd')
+              ?.replace('hours', 'h')
+              ?.replace('minutes', 'm')
+              ?.replace('minute', 'm')
+              ?.replace('seconds', 's')
+              ?.replace('second', 's')
+              ?.replace('months', 'mth')
+              ?.replace('month', 'mth')}
           />
-          <PrimaryButton
-            style={{
-              alignSelf: 'center',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width : width * 0.18,
-              height : height * 0.024,
-              marginLeft : width * 0.01
-            }}
-            textStyle={{
-                fontFamily : fonts?.montserratSemiBold,
-                fontSize : width * 0.03,
-                color : colors?.white,                
-            }}
-            title="Dubai"
-          />
+          {post?.location && (
+            <PrimaryButton
+              style={{
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: width * 0.18,
+                height: height * 0.024,
+                marginLeft: width * 0.01,
+              }}
+              textStyle={{
+                fontFamily: fonts?.montserratSemiBold,
+                fontSize: width * 0.03,
+                color: colors?.white,
+              }}
+              title={
+                post?.location?.length > 20
+                  ? `${post?.location?.slice(0, 20)}...`
+                  : post?.location
+              }
+            />
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -98,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'start',
   },
-  tick : {
-    marginLeft : width * 0.06
-  }
+  tick: {
+    marginLeft: width * 0.06,
+  },
 });

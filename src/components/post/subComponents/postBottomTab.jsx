@@ -1,6 +1,6 @@
-import {BlurView} from '@react-native-community/blur';
-import {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Platform} from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
@@ -14,16 +14,22 @@ import {
   InactiveSave,
   InactiveShare,
 } from '../../../assets/images/svgs';
-import {width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { toast } from '../../../components/toast';
+import { width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
+import useUser from '../../../hooks/user';
+import { apiCall } from '../../../services/apiCall';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
-const PostBottomTab = ({post}) => {
+const PostBottomTab = ({post, actions, setActions}) => {
+  const user = useUser();
   const [icons, setIcons] = useState([
     {
       type: 'like',
-      active: false,
-      count: 0,
+      id: '',
+      active: actions?.likes?.value?.some(r => r?.postId === post?.id),
+      count: actions?.likes?.count,
       activeIcon: <ActiveLike width={width * 0.065} height={width * 0.065} />,
       inactiveIcon: (
         <InactiveLike width={width * 0.065} height={width * 0.065} />
@@ -32,7 +38,7 @@ const PostBottomTab = ({post}) => {
     {
       type: 'comment',
       active: false,
-      count: 0,
+      count: actions?.comments?.count,
       activeIcon: (
         <ActiveComment width={width * 0.065} height={width * 0.065} />
       ),
@@ -68,6 +74,82 @@ const PostBottomTab = ({post}) => {
       ),
     },
   ]);
+  useEffect(() => {
+    if (user?.id) {
+      setIcons(prev =>
+        prev?.map(icon =>
+          icon?.type === 'like'
+            ? {
+                ...icon,
+                id: actions?.likes?.value?.find(r => r?.userId === user?.id)
+                  ?.id,
+              }
+            : icon,
+        ),
+      );
+    }
+  }, [user?.id]);
+
+  useEffect(() => {
+    setIcons(prev =>
+      prev.map(icon =>
+        icon.type === 'comment'
+          ? {...icon, count: actions?.comments?.count}
+          : icon,
+      ),
+    );
+  }, [actions?.comments?.count]);
+
+  const handlePress = async icon => {
+    const userDetails = await getDataLocally();
+    switch (icon?.type) {
+      case 'like':
+        try {
+          const isLiked = icon?.active;
+          const body = isLiked
+            ? {id: icon.id, status: false}
+            : {
+                userId: userDetails?.id,
+                type: 'LIKE',
+                postId: post?.id,
+                status: true,
+              };
+
+          const response = await apiCall?.likePost(body);
+          console.log('Post liked successfully', response);
+          setIcons(prev =>
+            prev.map(i => {
+              if (i.type !== 'like') return i;
+
+              return {
+                ...i,
+                active: !isLiked,
+                id: isLiked ? undefined : response.id,
+                count: isLiked ? i.count - 1 : i.count + 1,
+              };
+            }),
+          );
+          setActions(prev => ({
+            ...prev,
+            likes: {
+              ...prev?.likes,
+              count: isLiked ? prev?.likes?.count + 1 : prev?.likes?.count - 1,
+              value: isLiked
+                ? prev?.likes?.value?.filter(res => res?.id !== icon.id) // when unliking
+                : [...prev?.likes?.value, response], // when liking
+            },
+          }));
+        } catch (error) {
+          console.error('Like error:', error);
+          toast('error', 'Error processing like');
+        }
+        break;
+      case 'comment':
+        actions?.comments?.ref?.current?.focus();
+      default:
+        break;
+    }
+  };
   return (
     <View style={styles?.container}>
       <LinearGradient
@@ -77,7 +159,9 @@ const PostBottomTab = ({post}) => {
         {icons?.map((icon, index) => {
           return (
             <View key={index} style={styles?.iconContainer}>
-              <TouchableOpacity style={styles?.iconButton}>
+              <TouchableOpacity
+                style={styles?.iconButton}
+                onPress={() => handlePress(icon)}>
                 {icon?.active ? icon?.activeIcon : icon?.inactiveIcon}
               </TouchableOpacity>
               <Text style={styles?.iconText}>{icon?.count}</Text>

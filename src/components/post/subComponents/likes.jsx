@@ -1,18 +1,19 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { images } from '../../../assets/images';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const Likes = ({post}) => {
+const Likes = ({actions}) => {
   // console.log("Post", post)
   return (
     <View style={styles?.container}>
       <FlatList
         data={
-          post?.reactions?.length > 4
-            ? [...post?.reactions.slice(0, 4), {moreCount: post?.reactions.length - 4}]
-            : post?.reactions
+          actions?.likes?.value?.length > 4
+            ? [...actions?.likes?.value.slice(0, 4), {moreCount: actions?.likes?.value.length - 4}]
+            : actions?.likes?.value
         }
         renderItem={({item, index}) => {
           const isMore = item?.moreCount !== undefined;
@@ -27,12 +28,12 @@ const Likes = ({post}) => {
               {isMore ? (
                 <Text style={styles?.gradientText}>+{item.moreCount}</Text>
               ) : (
-                <Image source={item?.photo} style={styles?.image} />
+                <Image source={item?.photo ? {uri : item?.photo} : images?.defaultProfilePicture} style={styles?.image} />
               )}
             </LinearGradient>
           );
         }}
-        ListFooterComponent={post?.reactions?.length === 0 ? null : <Text style={styles?.text}>Like it</Text>}
+        ListFooterComponent={actions?.likes?.value.length === 0 ? null : <Text style={styles?.text}>Like it</Text>}
         horizontal
         contentContainerStyle={{
           alignItems: 'center',

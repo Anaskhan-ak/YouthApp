@@ -23,37 +23,31 @@ export const apiCall = {
     if (result?.status >= 200 && result?.status < 400) return result.data;
     else throw result;
   },
-
   getContactSuggestions: async params => {
     let result = await post(apis?.getContactSuggestions, params);
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
-
   getFollowing: async params => {
     let result = await post(`${apis?.getFollowing}${params}`);
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
-
   follow: async params => {
     let result = await post(apis?.follow, params);
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
-
   unfollow: async params => {
     let result = await post(apis?.unfollow, params);
     if (result?.status === 200) return result?.status;
     else throw result;
   },
-
   addInterest: async params => {
     let result = await post(apis?.addInterest, params);
     if (result?.status === 200) return result?.status;
     else throw result;
   },
-
   generateWaveforms: async params => {
     let result = await documentPost(apis?.generateWaveforms, params);
     if (result?.status === 200) return result?.data?.yudioWaveform;
@@ -90,6 +84,21 @@ export const apiCall = {
     let result = await post(apis?.getYudios, params);
     if (result?.status) return result?.data?.data?.posts;
     else throw result;
+  },
+  getAllUsers : async (params) => {
+    let result = await post(apis?.getUsers, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+  likePost : async (params) => {
+    let result = await post(apis?.like, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+  addComment : async (params) => {
+    let result = await post(apis?.comment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
   },
 
   //GET API CALL

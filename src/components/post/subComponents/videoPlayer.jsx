@@ -7,7 +7,7 @@ import {height, width} from '../../../constant';
 import {colors} from '../../../utils/colors';
 import {fonts} from '../../../utils/fonts';
 
-const PostVideo = ({url}) => {
+const PostVideo = ({url, index, activeIndex}) => {
   const [pause, setPause] = useState(false);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
@@ -22,7 +22,7 @@ const PostVideo = ({url}) => {
 
   useEffect(() => {
     if (videoRef?.current) {
-      if (pause) {
+      if (pause || index !== activeIndex) {
         videoRef?.current?.pause();
       } else {
         videoRef?.current?.resume();

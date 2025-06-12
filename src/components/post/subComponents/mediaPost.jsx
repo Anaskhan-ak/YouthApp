@@ -3,23 +3,41 @@ import {
   FlatList,
   Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { TagFriends } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 import CircleCounter from '../subComponents/CircleCounter';
 import PostBottomTab from '../subComponents/postBottomTab';
 import PostVideo from './videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal}) => {
+const MediaPost = ({post, modal, actions, setActions}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
+  const [showTags, setShowTags] = useState(false);
+  const [mediaLayout, setMediaLayout] = useState(null);
+  const [tagPositions, setTagPositions] = useState([]);
+
   const handleMediaLayout = event => {
-    const {width} = event.nativeEvent.layout;
-    setMediaWidth(width);
+    const {width, height} = event.nativeEvent.layout;
+    setMediaLayout({width, height});
+
+    // Generate tag positions if not already generated
+    if (post?.Tag?.length && tagPositions.length === 0) {
+      const newPositions = post.Tag.map(() => {
+        const padding = 40; // safe zone from edges and top bar
+        return {
+          top: Math.random() * (height - padding * 2) + padding,
+          left: Math.random() * (width - 100), // avoid horizontal overflow
+        };
+      });
+      setTagPositions(newPositions);
+    }
   };
 
   const viewabilityConfig = useRef({
@@ -32,6 +50,33 @@ const MediaPost = ({post, modal}) => {
     }
   }).current;
 
+  const Tags = () => {
+    return (
+      <>
+        {post?.Tag?.map((tag, index) => {
+          const pos = tagPositions[index];
+          if (!pos) return null;
+
+          return (
+            <View
+              key={index}
+              style={[
+                styles.tag,
+                {
+                  top: pos.top,
+                  left: pos.left,
+                },
+              ]}>
+              <Text style={styles.tagText}>
+                {`${tag?.user?.firstName} ${tag?.user?.lastName}`}
+              </Text>
+            </View>
+          );
+        })}
+      </>
+    );
+  };
+
   const renderItem = ({item, index}) => {
     const isVideo =
       item?.split('.')?.pop() === 'MOV' ||
@@ -43,7 +88,7 @@ const MediaPost = ({post, modal}) => {
         <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
           {!isVideo && (
             <View style={styles.mediaElements}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowTags(!showTags)}>
                 <TagFriends />
               </TouchableOpacity>
               {post?.media?.url?.length > 1 && (
@@ -58,8 +103,12 @@ const MediaPost = ({post, modal}) => {
               )}
             </View>
           )}
+
+          {/* Show tags only after layout is measured */}
+          {showTags && mediaLayout && <Tags />}
+
           {isVideo ? (
-            <PostVideo url={item}/>
+            <PostVideo url={item} index={index} activeIndex={activeIndex} />
           ) : (
             <Image
               source={{uri: item}}
@@ -104,7 +153,11 @@ const MediaPost = ({post, modal}) => {
       )}
       {!modal?.modal?.isPost && (
         <View style={[styles.reactionsTab, {width: mediaWidth}]}>
-          <PostBottomTab post={post} />
+          <PostBottomTab
+            post={post}
+            actions={actions}
+            setActions={setActions}
+          />
         </View>
       )}
     </View>
@@ -159,5 +212,20 @@ const styles = StyleSheet.create({
     right: height * 0.0045,
     left: height * 0.01,
     alignSelf: 'center',
+  },
+  tag: {
+    backgroundColor: colors?.black,
+    paddingVertical: width * 0.01,
+    paddingHorizontal: width * 0.02,
+    borderRadius: width * 0.2,
+    margin: width * 0.02,
+    position: 'absolute',
+    zIndex: 20,
+    top: 40,
+  },
+  tagText: {
+    fontFamily: fonts?.montserratMedium,
+    fontSize: width * 0.025,
+    color: colors?.white,
   },
 });

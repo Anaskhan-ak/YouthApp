@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useState } from 'react';
 import {
   FlatList,
@@ -16,41 +17,87 @@ import {
   GradientMessageSendIcon,
   InactiveComment,
 } from '../../../assets/images/svgs';
+import { toast } from '../../../components/toast';
 import { height, width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
+import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const Comments = ({post}) => {
+const Comments = ({post, actions, setActions}) => {
   const [showAll, setShowAll] = useState(false);
   const [text, setText] = useState('');
+
+  const handleComment = async () => {
+    const userDetails = await getDataLocally();
+    try {
+      const body = {
+        userId: userDetails?.id,
+        postId: post?.id,
+        comment: text,
+      };
+      const response = await apiCall?.addComment(body);
+      if (response) {
+        console.log('Comment added successfully', response);
+        setText('');
+        setActions(prev => ({
+          ...prev,
+          comments: {
+            ...prev?.comments,
+            count: prev?.comments?.count + 1,
+            value: [...prev?.comments?.value, response], 
+          },
+        }));
+
+        actions?.comments?.ref?.current?.blur();
+      }
+    } catch (error) {
+      console.log('Error adding comment', error);
+      toast('error', 'Error adding comment');
+    }
+  };
   return (
     <View style={styles?.container}>
       <TouchableOpacity onPress={() => setShowAll(!showAll)}>
         <Text style={styles?.showAllText}>
           {showAll
             ? 'Show less'
-            : post?.comments?.length === 0
+            : actions?.comments?.value?.length === 0
             ? 'No comments yet'
-            : `View all ${post?.comments?.length} comments`}
+            : `View all ${actions?.comments?.value?.length} comments`}
         </Text>
       </TouchableOpacity>
       <FlatList
-        data={showAll ? post?.comments : post?.comments?.slice(0, 1)}
+        data={
+          showAll
+            ? actions?.comments?.value
+            : post?.comments?.value?.slice(0, 1)
+        }
         renderItem={({item, index}) => {
+          console.log('Item', item);
           return (
             <View key={index} style={styles?.commentBox}>
               <View style={styles?.header}>
                 <LinearGradient
                   colors={[colors?.RGB1, colors?.RGB2]}
                   style={styles?.gradientBorder}>
-                  <Image source={item?.photo} style={styles?.image} />
+                  <Image
+                    source={
+                      item?.photo
+                        ? {uri: item?.user?.photo}
+                        : images?.defaultProfilePicture
+                    }
+                    style={styles?.image}
+                  />
                 </LinearGradient>
                 <View style={styles?.textContainer}>
                   <Text
                     style={
                       styles?.name
-                    }>{`${item?.firstName} ${item?.lastName}`}</Text>
-                  <Text style={styles?.time}>14 hours ago</Text>
+                    }>{`${item?.user?.firstName} ${item?.user?.lastName}`}</Text>
+                  <Text style={styles?.time}>
+                    {moment(item?.createdAt).startOf('hour').fromNow()}
+                  </Text>
                 </View>
                 <View style={styles?.iconContainer}>
                   <TouchableOpacity>
@@ -61,7 +108,7 @@ const Comments = ({post}) => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <Text style={styles?.commentText}>{item?.text}</Text>
+              <Text style={styles?.commentText}>{item?.content}</Text>
             </View>
           );
         }}
@@ -70,15 +117,18 @@ const Comments = ({post}) => {
       <View style={styles?.inputContainer}>
         <Image source={images?.onboarding1} style={styles?.image} />
         <TextInput
+          ref={actions?.comments?.ref}
           placeholder="Write your comment"
           placeholderTextColor={colors?.textGray}
           style={styles?.input}
+          value={text}
+          onChangeText={setText}
         />
         <View style={styles?.iconContainer}>
           <TouchableOpacity style={styles?.button}>
             <FileMicIcon width={width * 0.04} height={width * 0.04} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles?.button}>
+          <TouchableOpacity style={styles?.button} onPress={handleComment}>
             <GradientMessageSendIcon
               width={width * 0.04}
               height={width * 0.04}

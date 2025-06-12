@@ -5,11 +5,13 @@ import { fonts } from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1,
-    paddingBottom: height * 0.15,
+    // flex: 1,
+    // paddingBottom: height * 0.2,
+    height : height * 0.8,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: colors?.white,
+    
   },
   heading: {
     alignSelf: 'center',
@@ -38,7 +40,7 @@ export const styles = StyleSheet.create({
   },
   itemName: {
     marginLeft : width * 0.01,
-    fontFamily : fonts?.montserratRegular,
+    fontFamily : fonts?.montserratMedium,
     fontSize : width * 0.038
   },
   itemButton: {
@@ -48,9 +50,12 @@ export const styles = StyleSheet.create({
   },
   itemText: {
     color : colors?.white,
-    fontFamily : fonts?.montserratMedium,
+    fontFamily : fonts?.montserratSemiBold,
   },
   search: {
     marginHorizontal: width * 0.04,
   },
+  checkboxContainer : {
+    // marginBottom : height * 0.1
+  }
 });
