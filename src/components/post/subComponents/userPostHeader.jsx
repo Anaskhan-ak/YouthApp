@@ -11,6 +11,14 @@ import { fonts } from '../../../utils/fonts';
 
 const UserPostHeader = ({post, user}) => {
   const navigation = useNavigation();
+
+  const formatDate = params => {
+    const array = params?.split(' ');
+    const date = array[0];
+    const text = array[1];
+    const ago = array[2];
+    return `${date}${text} ${ago}`;
+  };
   return (
     <TouchableOpacity
       onPress={() => navigation?.navigate('PostDetails', {post: post})}
@@ -45,18 +53,20 @@ const UserPostHeader = ({post, user}) => {
               fontSize: width * 0.03,
               color: colors?.white,
             }}
-            title={moment(post?.createdAt)
-              .startOf('hour')
-              .fromNow()
-              ?.replace('days', 'd')
-              ?.replace('day', 'd')
-              ?.replace('hours', 'h')
-              ?.replace('minutes', 'm')
-              ?.replace('minute', 'm')
-              ?.replace('seconds', 's')
-              ?.replace('second', 's')
-              ?.replace('months', 'mth')
-              ?.replace('month', 'mth')}
+            title={formatDate(
+              moment(post?.createdAt)
+                .startOf('hour')
+                .fromNow()
+                ?.replace('days', 'd')
+                ?.replace('day', 'd')
+                ?.replace('hours', 'h')
+                ?.replace('minutes', 'm')
+                ?.replace('minute', 'm')
+                ?.replace('seconds', 's')
+                ?.replace('second', 's')
+                ?.replace('months', 'mth')
+                ?.replace('month', 'mth'),
+            )}
           />
           {post?.location && (
             <PrimaryButton

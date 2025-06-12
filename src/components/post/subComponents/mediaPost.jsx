@@ -59,17 +59,19 @@ const MediaPost = ({post, modal, actions, setActions}) => {
 
           return (
             <View
-              key={index}
               style={[
-                styles.tag,
+                styles?.tagContainer,
                 {
                   top: pos.top,
                   left: pos.left,
                 },
               ]}>
-              <Text style={styles.tagText}>
-                {`${tag?.user?.firstName} ${tag?.user?.lastName}`}
-              </Text>
+              <View key={index} style={styles.tag}>
+                <Text style={styles.tagText}>
+                  {`@${tag?.user?.firstName} ${tag?.user?.lastName}`}
+                </Text>
+              </View>
+              <View style={styles?.tagPointer} />
             </View>
           );
         })}
@@ -213,19 +215,37 @@ const styles = StyleSheet.create({
     left: height * 0.01,
     alignSelf: 'center',
   },
+  tagContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 20,
+    // top: 40,
+  },
   tag: {
     backgroundColor: colors?.black,
     paddingVertical: width * 0.01,
     paddingHorizontal: width * 0.02,
     borderRadius: width * 0.2,
     margin: width * 0.02,
-    position: 'absolute',
-    zIndex: 20,
-    top: 40,
   },
   tagText: {
     fontFamily: fonts?.montserratMedium,
     fontSize: width * 0.025,
     color: colors?.white,
+  },
+  tagPointer: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: height * 0.005,
+    borderBottomWidth: height * 0.005,
+    borderLeftWidth: width * 0.03,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: colors?.black,
+    left: -width * 0.025,
   },
 });

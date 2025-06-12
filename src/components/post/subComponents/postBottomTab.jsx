@@ -4,15 +4,15 @@ import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
+  ActiveIOSShare,
   ActiveLike,
   ActiveRepost,
   ActiveSave,
-  ActiveShare,
   InactiveComment,
+  InactiveIOSShare,
   InactiveLike,
   InactiveRepost,
-  InactiveSave,
-  InactiveShare,
+  InactiveSave
 } from '../../../assets/images/svgs';
 import { toast } from '../../../components/toast';
 import { width } from '../../../constant';
@@ -69,9 +69,9 @@ const PostBottomTab = ({post, actions, setActions}) => {
       type: 'share',
       active: false,
       count: 0,
-      activeIcon: <ActiveShare width={width * 0.065} height={width * 0.065} />,
+      activeIcon: <ActiveIOSShare width={width * 0.065} height={width * 0.065} />,
       inactiveIcon: (
-        <InactiveShare width={width * 0.065} height={width * 0.065} />
+        <InactiveIOSShare width={width * 0.065} height={width * 0.065} />
       ),
     },
   ]);
