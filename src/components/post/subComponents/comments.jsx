@@ -7,18 +7,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
 import {
   ActiveLike,
-  FileMicIcon,
-  GradientMessageSendIcon,
-  InactiveComment,
+  GraySolidMicIcon,
+  InactiveGrayCommentIcon,
+  SolidMessageSendIcon
 } from '../../../assets/images/svgs';
 import { toast } from '../../../components/toast';
-import { height, width } from '../../../constant';
+import { height, Pixels, width } from '../../../constant';
 import { getDataLocally } from '../../../helper';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
@@ -74,7 +74,7 @@ const Comments = ({post, actions, setActions}) => {
             : post?.comments?.value?.slice(0, 1)
         }
         renderItem={({item, index}) => {
-          console.log('Item', item);
+          // console.log('Item', item);
           return (
             <View key={index} style={styles?.commentBox}>
               <View style={styles?.header}>
@@ -104,7 +104,7 @@ const Comments = ({post, actions, setActions}) => {
                     <ActiveLike />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <InactiveComment />
+                    <InactiveGrayCommentIcon />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -119,17 +119,17 @@ const Comments = ({post, actions, setActions}) => {
         <TextInput
           ref={actions?.comments?.ref}
           placeholder="Write your comment"
-          placeholderTextColor={colors?.textGray}
+          placeholderTextColor={colors?.text}
           style={styles?.input}
           value={text}
           onChangeText={setText}
         />
         <View style={styles?.iconContainer}>
           <TouchableOpacity style={styles?.button}>
-            <FileMicIcon width={width * 0.04} height={width * 0.04} />
+            <GraySolidMicIcon width={width * 0.04} height={width * 0.04} />
           </TouchableOpacity>
           <TouchableOpacity style={styles?.button} onPress={handleComment}>
-            <GradientMessageSendIcon
+            <SolidMessageSendIcon
               width={width * 0.04}
               height={width * 0.04}
             />
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   showAllText: {
     fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.03,
+    fontSize: Pixels(8),
     color: colors?.text,
   },
   header: {
@@ -161,31 +161,31 @@ const styles = StyleSheet.create({
     borderColor: colors?.gray11,
     borderRadius: width * 0.02,
     padding: width * 0.02,
-    marginVertical: height * 0.01,
+    marginVertical: height * 0.005,
   },
   gradientBorder: {
-    width: width * 0.07,
-    height: width * 0.07,
-    borderRadius: width * 0.07,
+    width: width * 0.06,
+    height: width * 0.06,
+    borderRadius: width * 0.06,
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
-    width: width * 0.06,
-    height: width * 0.06,
-    borderRadius: width * 0.06,
+    width: width * 0.07,
+    height: width * 0.07,
+    borderRadius: width * 0.07,
   },
   textContainer: {
     flex: 0.65,
   },
   name: {
     fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.03,
+    fontSize: Pixels(10),
     color: colors?.text,
   },
   time: {
-    fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.02,
+    fontFamily: fonts?.montserratMedium,
+    fontSize: Pixels(9),
     color: colors?.textGray,
   },
   iconContainer: {
@@ -193,12 +193,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 0.3,
+    justifyContent : 'space-evenly',
+    right : -width * 0.03
   },
   commentText: {
-    fontFamily: fonts?.montserratRegular,
-    fontSize: width * 0.03,
+    fontFamily: fonts?.montserratMedium,
+    fontSize: Pixels(11),
     color: colors?.text,
-    marginLeft: width * 0.09,
+    marginLeft: width * 0.075,
     marginTop: height * 0.01,
   },
   inputContainer: {
@@ -207,8 +209,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     borderWidth: width * 0.002,
     borderColor: colors?.gray11,
-    borderRadius: width * 0.06,
-    padding: width * 0.01,
+    borderRadius: width * 0.065,
+    paddingHorizontal: width * 0.01,
     marginVertical: height * 0.005,
   },
   input: {
@@ -217,6 +219,6 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: width * 0.01,
-    marginHorizontal: width * 0.005,
+    // marginHorizontal: width * 0.005,
   },
 });

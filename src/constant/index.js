@@ -1,3 +1,7 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, PixelRatio } from 'react-native';
 
 export const {height, width} = Dimensions.get('window')
+
+export const Pixels = (pixels) => {
+    return PixelRatio?.getFontScale()*pixels
+}

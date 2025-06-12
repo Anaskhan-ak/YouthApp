@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../constant';
+import { height, Pixels, width } from '../../constant';
 import { colors } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
 
@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
     margin: height * 0.01,
   },
   comments: {
-    // backgroundColor : 'red'
+    // backgroundColor : 'red',
+    margin: height * 0.01,
   },
   eventTextConatiner: {
     marginLeft: width * 0.02,
@@ -64,25 +65,27 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: height * 0.01,
   },
   dots: {
     padding: width * 0.04,
   },
-  modalBg : {
-    flex : 1,
-    backgroundColor : `${colors?.black}CC`,
-    justifyContent : "center",
+  modalBg: {
+    flex: 1,
+    backgroundColor: `${colors?.black}CC`,
+    justifyContent: 'center',
     // alignItems : 'center'
   },
-  modal : {
-    marginVertical : height * 0.01
+  modal: {
+    marginVertical: height * 0.01,
   },
-  caption : {
-    marginTop : height * 0.02
+  caption: {
+    margin: height * 0.01,
   },
-  captionText : {
-    fontFamily : fonts?.montserratMedium,
-    fontSize : width * 0.03,
-    color : colors?.text
-  }
+  captionText: {
+    fontFamily: fonts?.montserratMedium,
+    fontSize: Pixels(12),
+    color: colors?.text,
+    lineHeight : height * 0.02
+  },
 });

@@ -58,6 +58,7 @@ import GradientPlayIcon from './GradientPlayIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
 import GrayLocationIcon from './GrayLocationIcon.svg';
+import GraySolidMicIcon from './GraySolidMicIcon.svg';
 import GrayTimeIcon from './GrayTimeIcon.svg';
 import GrayWalletIcon from './GrayWalletIcon.svg';
 import GreenCheckMark from './greenCheckMark.svg';
@@ -66,6 +67,7 @@ import HomeHeaderLogo from './homeHeaderLogo.svg';
 import HorizontalDots from './HorizontalDots.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
+import InactiveGrayCommentIcon from './InactiveGrayCommentIcon.svg';
 import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
 import InactiveIOSShare from './InactiveIOSShare.svg';
 import InactiveLike from './InactiveLike.svg';
@@ -110,6 +112,7 @@ import RightArrow from './RightArrow.svg';
 import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
+import SolidMessageSendIcon from './SolidMessageSendIcon.svg';
 import Sparkles from './Sparkles.svg';
 import SwitchAcc from './switchAcc.svg';
 import TagFriends from './TagFriends.svg';
@@ -193,16 +196,14 @@ export {
   GradientPlayIcon,
   GradientRedMic,
   GradientRedTick,
-  GrayLocationIcon,
-  GrayTimeIcon,
+  GrayLocationIcon, GraySolidMicIcon, GrayTimeIcon,
   GrayWalletIcon,
   GreenCheckMark,
   Home,
   HomeHeaderLogo,
   HorizontalDots,
   InactiveComment,
-  InactiveDownload,
-  InactiveGroupChatIcon, InactiveIOSShare, InactiveLike,
+  InactiveDownload, InactiveGrayCommentIcon, InactiveGroupChatIcon, InactiveIOSShare, InactiveLike,
   InactiveNewChatIcon,
   InactiveRepost,
   InactiveSave,
@@ -241,8 +242,7 @@ export {
   RightArrow,
   Search,
   SearchIcon,
-  SnapchatIcon,
-  Sparkles, SwitchAcc, TagFriends,
+  SnapchatIcon, SolidMessageSendIcon, Sparkles, SwitchAcc, TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,

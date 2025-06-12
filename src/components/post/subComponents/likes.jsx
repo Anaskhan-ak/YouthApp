@@ -1,7 +1,7 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
-import { width } from '../../../constant';
+import { Pixels, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors?.text,
     fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.04,
+    fontSize: Pixels(14),
     marginLeft: width * 0.02,
   },
 });
