@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CreateEvent from '../screens/createEvent';
@@ -20,15 +20,17 @@ import OtpVerification from '../screens/otpVerification';
 import PostDetails from '../screens/postDetails';
 import Profile from '../screens/Profile';
 import SignUp from '../screens/signup';
-import Splash from '../screens/Splash';
+import Splash from '../screens/splash';
 import SuggestedContent from '../screens/suggestions';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
+import Wallet from '../screens/wallet';
+import CreateWallet from '../screens/createWallet';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Splash">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -64,9 +66,14 @@ const StackNavigator = () => {
         component={Otp}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Profile"
         component={Profile}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateWallet"
+        component={CreateWallet}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
@@ -142,6 +149,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="NewChatGroup"
         component={NewChatGroup}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Wallet"
+        component={Wallet}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen

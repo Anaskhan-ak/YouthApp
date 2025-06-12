@@ -113,7 +113,7 @@ const MediaPost = ({post, modal, actions, setActions}) => {
             <Image
               source={{uri: item}}
               style={styles.mediaImage}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           )}
         </View>
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   mediaImage: {
     width: width * 0.89,
     height: height * 0.38,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
   pagination: {
     flexDirection: 'row',

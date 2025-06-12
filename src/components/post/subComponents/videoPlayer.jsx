@@ -1,11 +1,11 @@
-import { BlurView } from '@react-native-community/blur';
-import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {BlurView} from '@react-native-community/blur';
+import {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import VideoPlayer from 'react-native-video-player';
-import { MuteIcon, PlayIcon, UnmuteIcon } from '../../../assets/images/svgs';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {MuteIcon, PlayIcon, UnmuteIcon} from '../../../assets/images/svgs';
+import {height, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 const PostVideo = ({url, index, activeIndex}) => {
   const [pause, setPause] = useState(false);
@@ -13,7 +13,6 @@ const PostVideo = ({url, index, activeIndex}) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [muted, setMuted] = useState(false);
-
 
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
@@ -34,13 +33,15 @@ const PostVideo = ({url, index, activeIndex}) => {
   return (
     <View>
       <View style={styles?.mediaElements}>
-        <TouchableOpacity style={styles?.icon} onPress={() => setMuted(prev => !prev)}>
+        <TouchableOpacity
+          style={styles?.icon}
+          onPress={() => setMuted(prev => !prev)}>
           <BlurView
             style={StyleSheet.absoluteFill}
             blurType="light"
             blurAmount={1}
           />
-          {muted ? <MuteIcon/> : <UnmuteIcon />}
+          {muted ? <MuteIcon /> : <UnmuteIcon />}
         </TouchableOpacity>
         <View style={styles?.icon}>
           <BlurView
@@ -62,7 +63,7 @@ const PostVideo = ({url, index, activeIndex}) => {
           style={styles.mediaImage}
           paused={pause}
           muted={muted}
-          resizeMode="contain"
+          resizeMode="cover"
           hideControlsOnStart={true}
           onLoad={data => {
             setPause(true); // Start paused
@@ -130,10 +131,10 @@ const styles = StyleSheet.create({
     zIndex: 11,
     right: width * 0.03,
     top: height * 0.01,
-    flexDirection : 'row',
-    alignItems : 'center',
-    justifyContent : 'space-between',
-    width : width * 0.2
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: width * 0.2,
   },
   icon: {
     backgroundColor: colors?.black,

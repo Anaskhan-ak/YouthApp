@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -8,21 +8,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlackBackArrow, BlackYouthLogo } from '../../assets/images/svgs';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {BlackBackArrow, BlackYouthLogo} from '../../assets/images/svgs';
 import EmptyComponent from '../../components/empty';
-import { toast } from '../../components/toast';
-import { height } from '../../constant';
-import { getDataLocally } from '../../helper';
+import {toast} from '../../components/toast';
+import {height} from '../../constant';
+import {getDataLocally} from '../../helper';
 import useUser from '../../hooks/user';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import RenderYudios from './components/renderYudios';
-import { styles } from './styles';
+import {styles} from './styles';
 
 const Yudios = () => {
   const [yudios, setYudios] = useState([]);
-  const [showFullText, setShowFullText] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [loading, setLoading] = useState(false);
@@ -56,7 +55,6 @@ const Yudios = () => {
         setLoading(false);
       }
     };
-
     fetchYudios();
   }, []);
 

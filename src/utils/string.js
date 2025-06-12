@@ -112,6 +112,11 @@ export const homeCategoryOptions = [
     name: 'Following',
     icon: null,
   },
+   {
+    id: 4,
+    name: 'Swipe',
+    icon: null,
+  },
 ];
 export const sideBottomSheetOptions = [
   {

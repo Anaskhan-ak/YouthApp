@@ -17,9 +17,9 @@ export const styles = StyleSheet.create({
         justifyContent : 'center'
     },
     image : {
-        width : width * 0.14,
-        height : width * 0.14,
-        borderRadius : width * 0.14
+        width : width * 0.15,
+        height : width * 0.15,
+        borderRadius : width * 0.15
     },
     content : {
         marginLeft : width * 0.03,

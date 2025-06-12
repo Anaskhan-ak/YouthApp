@@ -6,7 +6,7 @@ import useUser from '../../../../hooks/user';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
-const ProfilePicture = () => {const user = useUser()
+const ProfilePicture = ({user}) => {
   return (
     <View style={styles?.container}>
       <LinearGradient colors={[colors?.RGB2, colors?.RGB1]} style={styles?.btn}>
@@ -14,7 +14,7 @@ const ProfilePicture = () => {const user = useUser()
           <Plus width={12} height={12} />
         </View>
       </LinearGradient>
-      <Image source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture} style={styles?.image} />
+      <Image source={user?.profilePicture ? {uri : user?.profilePicture} : images?.defaultProfilePicture} style={styles?.image} />
     </View>
   );
 };

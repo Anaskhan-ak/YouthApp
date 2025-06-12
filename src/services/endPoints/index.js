@@ -25,8 +25,7 @@ export const apis = {
   generateWaveforms : 'api/v1/generateWaveForms',
   getChats : 'api/v1/chats',
   getMessages : 'api/v1/messages',
-  //GET ENDPOINTS
-  getNotification : `api/v1/notification`,
+  getProfile : 'api/v1/profile',
   getAllInterests : 'api/v1/intrest',
   getOnBoardingContent : 'api/v1/onboarding',
   // DELETE ENDPOINTS

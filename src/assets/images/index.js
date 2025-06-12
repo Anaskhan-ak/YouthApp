@@ -17,5 +17,6 @@ export const images = {
     defaultPicture : require('../images/DefaultPicture.png'),
     chatBackground : require('./ChatBackground.png'),
     palestine : require('./palestine.png'),
-    profileImage : require('./profileImage.png')
+    profileImage : require('./profileImage.png'),
+    wallet : require('./wallet.png')
 }

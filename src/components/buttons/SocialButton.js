@@ -6,7 +6,7 @@ import { styles } from './styles';
 
 export const SocialButton = props => {
   return (
-    <TouchableOpacity onPress={props.onPress} style={[styles.socialButton, {width : props?.width ? props?.width : width * 0.7,}]}>
+    <TouchableOpacity onPress={props.onPress} style={[styles.socialButton, {width : props?.width ? props?.width : width * 0.7,...props?.style}]}>
       {/* <Image style={styles.socialButtonImage} source={props.source} /> */}
       {props?.type === 'google' ? (
         <Google />

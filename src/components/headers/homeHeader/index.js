@@ -9,6 +9,7 @@ import useUser from '../../../hooks/user';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
+
 const HomeHeader = () => {
   const navigation = useNavigation()
   const user = useUser()

@@ -29,7 +29,7 @@ import ChatYouthIcon from './ChatYouthIcon.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
-import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
+import {default as DropDown, default as DropDownIcon} from './dropdown.svg';
 import EditEventThumbnail from './EditEventThumbnail.svg';
 import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
 import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
@@ -132,8 +132,14 @@ import YouthCoin from './youthCoin.svg';
 import YouthIcon from './YouthIcon.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 import Yudio from './yudio.svg';
+import YouthIconWhite from './YouthIconWhite.svg';
 
 export {
+  YouthIconWhite,
+  QR,
+  Eye,
+  YouthCoin,
+  SwitchAcc,
   ActiveComment,
   ActiveDownload,
   ActiveGroupChatIcon,
@@ -173,7 +179,6 @@ export {
   Error,
   ErrorWhite,
   EventsIcon,
-  Eye,
   FacebookIcon,
   FileAudio,
   FileIcon,
@@ -216,8 +221,16 @@ export {
   MessageIcon,
   MessengerIcon,
   Moment,
-  MomentsIcon, MuteIcon, NearBy,
-  Notification, OutlineBlockIcon, OutlineCloudDOwnloadIcon, OutlineFollowIcon, OutlineHeartbreakIcon, OutlineHeartIcon, PasswordHide,
+  MomentsIcon,
+  MuteIcon,
+  NearBy,
+  Notification,
+  OutlineBlockIcon,
+  OutlineCloudDOwnloadIcon,
+  OutlineFollowIcon,
+  OutlineHeartbreakIcon,
+  OutlineHeartIcon,
+  PasswordHide,
   PasswordShow,
   PauseIcon,
   PinkForwardAudioButton,
@@ -230,21 +243,22 @@ export {
   PlayIcon,
   Plus,
   PublicIcon,
-  QR,
   RateUs,
   RedditIcon,
   RightArrow,
   Search,
   SearchIcon,
   SnapchatIcon,
-  Sparkles, SwitchAcc,
+  Sparkles,
   TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
   Trending,
   TwitterIcon,
-  TwitterIconRound, UnmuteIcon, UploadThumbnail,
+  TwitterIconRound,
+  UnmuteIcon,
+  UploadThumbnail,
   UserFollow,
   VideoCallIcon,
   VoiceCallIcon,
@@ -254,9 +268,7 @@ export {
   WhiteForwardAudioIcon,
   WhiteLeftArrow,
   WhiteTick,
-  YouthCoin,
   YouthIcon,
   YoutubeIcon,
-  Yudio
+  Yudio,
 };
-

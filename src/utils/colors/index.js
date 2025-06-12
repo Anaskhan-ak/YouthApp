@@ -8,8 +8,8 @@ export const colors = {
   yellow: '#FFFF00',
   RGB1: '#478FE4',
   RGB2: '#5CD3C6',
-  RGB3: '#478FE444',
-  RGB4: '#36AFD688',
+  RGB3: 'rgba(71, 143, 228, 0.5)',
+  RGB4: 'rgba(54, 175, 214, 0.5)',
   blackTransparent: 'rgba(0, 0, 0, 0.21)',
   grayTransparent: 'rgba(108, 122, 137, 0.5)',
   greyBackground: 'rgba(231, 232, 239, 1)',
@@ -25,7 +25,8 @@ export const colors = {
   lightGrey:'#424242',
   extraLightGrey:'rgba(234, 234, 234, 1)',
   red:'rgba(255, 9, 9, 1)',
-  ashGrey:'#D9D9D9'
+  ashGrey:'#D9D9D9',
+  lightGreen:'#0FB700'
 };
 
 // Dark theme colors

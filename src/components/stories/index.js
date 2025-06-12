@@ -55,12 +55,12 @@ const Stories = () => {
   return (
     <View style={styles.container}>
       <View style={styles.addStory}>
-        <Plus width={30} height={30} />
+        <Plus width={width * 0.06} height={width * 0.06} />
       </View>
       <InstagramStories
         ref={ref}
         stories={stories}
-        avatarSize={width * 0.15}
+        avatarSize={width * 0.125}
         avatarTextStyle={styles.avatarText}
         textStyle={styles.storyText}
         closeIconColor={colors?.white}
@@ -79,13 +79,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   addStory: {
-    width: width * 0.17,
-    height: width * 0.17,
+    width: width * 0.145,
+    height: width * 0.145,
     backgroundColor: colors?.ashGrey,
-    borderRadius: width * 0.17,
+    borderRadius: width * 0.145,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
   },
   avatarText: {
     fontSize: 12,

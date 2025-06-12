@@ -3,15 +3,15 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { BlueTick, Gallery } from '../../assets/images/svgs';
-import { NextButton } from '../../components/buttons/NextButton';
+import {sideBottomSheetOptions} from '../../utils/string';
+import {NextButton} from '../../components/buttons/NextButton';
+import {styles} from './styles';
+import {colors} from '../../utils/colors';
+import {height, width} from '../../constant';
 import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { sideBottomSheetOptions } from '../../utils/string';
-import { styles } from './styles';
+import { BlueTick, Gallery } from '../../assets/images/svgs';
 
-export default function RNBottomSheet({sheetRef}) {
+export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
   const [selected, setSelected] = useState({
     id: 'post',
     title: 'Post',
@@ -23,7 +23,13 @@ export default function RNBottomSheet({sheetRef}) {
     navigation?.navigate(selected?.route);
   };
   return (
-    <BottomSheet index={-1} enablePanDownToClose={true} ref={sheetRef}>
+    <BottomSheet
+      onChange={index => {
+        setIsSheetOpen(index >= 0);
+      }}
+      index={-1}
+      enablePanDownToClose={true}
+      ref={sheetRef}>
       <BottomSheetView style={styles.contentContainer}>
         <GradientText style={styles.heading}>
           What do you want to create?

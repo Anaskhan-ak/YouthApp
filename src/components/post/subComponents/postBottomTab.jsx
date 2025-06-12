@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
@@ -228,18 +228,17 @@ const PostBottomTab = ({post, actions, setActions}) => {
 export default PostBottomTab;
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor : 'red'
-  },
+  container: {},
   wrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    padding: width * 0.02,
+    padding: Platform?.OS === 'android' && width * 0.02,
     borderBottomLeftRadius: width * 0.04,
     borderBottomRightRadius: width * 0.04,
     overflow: 'hidden',
+    height: Platform?.OS === 'ios' && width * 0.12,
   },
   iconContainer: {
     flexDirection: 'row',
