@@ -68,6 +68,7 @@ import HorizontalDots from './HorizontalDots.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
 import InactiveGrayCommentIcon from './InactiveGrayCommentIcon.svg';
+import InactiveGrayLike from './InactiveGrayLike.svg';
 import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
 import InactiveIOSShare from './InactiveIOSShare.svg';
 import InactiveLike from './InactiveLike.svg';
@@ -203,7 +204,7 @@ export {
   HomeHeaderLogo,
   HorizontalDots,
   InactiveComment,
-  InactiveDownload, InactiveGrayCommentIcon, InactiveGroupChatIcon, InactiveIOSShare, InactiveLike,
+  InactiveDownload, InactiveGrayCommentIcon, InactiveGrayLike, InactiveGroupChatIcon, InactiveIOSShare, InactiveLike,
   InactiveNewChatIcon,
   InactiveRepost,
   InactiveSave,

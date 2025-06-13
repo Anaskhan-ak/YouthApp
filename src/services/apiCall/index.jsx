@@ -108,6 +108,24 @@ export const apiCall = {
     else throw result
   },
 
+  addAudioComment : async (params) => {
+    let result = await documentPost(apis?.comment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
+  likeAComment : async (params) => {
+    let result = await post(apis?.reactOnComment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
+  commentReply : async (params) => {
+    let result = await post(apis?.replyOnComment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
   //GET API CALL
   getAllDocuments: async params => {
     let result = await post(apis?.getDocuments, params);

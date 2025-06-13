@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   FlatList,
   Image,
@@ -11,52 +11,36 @@ import {
   View,
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
-import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import RNFS from 'react-native-fs';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSharedValue } from 'react-native-reanimated';
 import { images } from '../../../assets/images';
 import {
-  ActiveLike,
   GraySolidMicIcon,
   InactiveGrayCommentIcon,
+  InactiveGrayLike,
   SolidMessageSendIcon,
 } from '../../../assets/images/svgs';
 import YudioPlayer from '../../../components/audio/YudioPlayer';
 import { toast } from '../../../components/toast';
 import { height, Pixels, width } from '../../../constant';
 import { getDataLocally } from '../../../helper';
+import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
-
-const audioRecorderPlayer = new AudioRecorderPlayer();
-
-const audioSet = {
-  AudioEncoderAndroid: 'aac',
-  AudioSourceAndroid: 'mic',
-  OutputFormatAndroid: 'aac_adts',
-  AVEncoderAudioQualityKeyIOS: 'high',
-  AVNumberOfChannelsKeyIOS: 2,
-  AVFormatIDKeyIOS: 'aac',
-};
+import RecordingBars from './RecordingBars';
 
 const Comments = ({post, actions, setActions}) => {
   const [showAll, setShowAll] = useState(false);
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const recordingTimer = useRef(null);
-  const [waveform, setWaveform] = useState([]);
-  const [audio, setAudio] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [temp, setTemp] = useState([]);
-  const tempRef = useRef({
-    isPlaying: false,
-    meter: [],
+  const [reply, setReply] = useState({
+    userName: '',
+    commentId: '',
+    active: false,
   });
-  const animatedWidth = useSharedValue(0);
-  const recordSubscription = useRef(null);
-  const [metering, setMetering] = useState([]);
+  const user = useUser();
 
   const getRealPathFromURI = async uri => {
     if (uri.startsWith('content://')) {
@@ -80,63 +64,51 @@ const Comments = ({post, actions, setActions}) => {
     return uri; // Return the uri as-is for file URLs
   };
 
-  const fetchAudioMetadata = async audio => {
-    try {
-      const fileUri = await getRealPathFromURI(audio); // Resolve content URI to actual file path
-      if (!fileUri) {
-        console.error('Invalid file URI');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('audio', {
-        uri: `file://${fileUri}`, // Use the resolved file URI
-        type: 'audio/mpeg',
-        name: 'audio-file.wav',
-      });
-
-      const audioMetaDataPayload = await apiCall?.generateWaveforms(formData);
-      // console.log('audioMetaDataPayload', audioMetaDataPayload);
-      return audioMetaDataPayload;
-    } catch (error) {
-      console.error('Error fetching audio metadata:', error);
-    }
-  };
-
-  // 🎧 This triggers waveform visual updates
-  const playerForVisuals = async () => {
-    await audioRecorderPlayer.startRecorder(undefined, audioSet, true);
-    tempRef.current.isPlaying = true;
-
-    recordSubscription.current = audioRecorderPlayer.addRecordBackListener(
-      e => {
-        console.log('Metering:', e.currentMetering); // Debug log
-        if (tempRef.current.isPlaying && e.currentMetering != null) {
-          let temp1 = [30 + e.currentMetering, ...tempRef.current.meter];
-          if (temp1.length > 40) temp1 = temp1.slice(0, 20);
-          tempRef.current.meter = temp1;
-          setMetering([...temp1]);
-        }
-      },
-    );
-  };
-
   const toggleRecording = async () => {
+    const userDetails = await getDataLocally();
     if (isRecording) {
       try {
         setIsRecording(false);
         const audioFile = await AudioRecord.stop();
-        console.log('Audio file saved at:', audioFile);
-        setAudio(audioFile)
-        const audioWaves = await fetchAudioMetadata(audioFile)
-        console.log("audiowaves", audioWaves)
-        setWaveform(audioWaves)
-        tempRef.current.isPlaying = false;
-        if (recordSubscription.current) {
-          recordSubscription.current.remove();
-          recordSubscription.current = null;
-        }
+        // console.log('Audio file', audioFile);
+        if (audioFile) {
+          const formData = new FormData();
+          try {
+            formData?.append('userId', userDetails?.id);
+            formData?.append('postId', post?.id);
+            formData?.append('type', 'audio');
+            const fileUri = await getRealPathFromURI(audioFile); // Resolve content URI to actual file path
+            if (!fileUri) {
+              console.error('Invalid file URI');
+              return;
+            }
+            // console.log("FileUri", fileUri)
+            formData.append('audio', {
+              uri: `file://${fileUri}`, // Use the resolved file URI
+              type: 'audio/wav',
+              name: 'audio-file.wav',
+            });
+            // console.log("formData", formData)
+            const response = await apiCall?.addAudioComment(formData);
+            if (response) {
+              console.log('Comment added successfully', response);
+              setText('');
+              setActions(prev => ({
+                ...prev,
+                comments: {
+                  ...prev?.comments,
+                  count: prev?.comments?.count + 1,
+                  value: [...prev?.comments?.value, response],
+                },
+              }));
 
-        await audioRecorderPlayer.stopRecorder();
+              actions?.comments?.ref?.current?.blur();
+            }
+          } catch (error) {
+            console.log('Error adding comment', error);
+            toast('error', 'Error adding comment');
+          }
+        }
       } catch (error) {
         console.error('Error stopping recording:', error);
       }
@@ -151,7 +123,6 @@ const Comments = ({post, actions, setActions}) => {
           wavFile: `recording-${Date.now()}.wav`,
         });
         AudioRecord.start();
-        playerForVisuals();
       } catch (error) {
         console.error('Error starting recording:', error);
       }
@@ -187,6 +158,65 @@ const Comments = ({post, actions, setActions}) => {
     }
   };
 
+  // console.log("actions?.comments?.value", actions?.comments?.value)
+  const LikeAComment = async commentId => {
+    const userDetails = await getDataLocally();
+    const body = {
+      userId: userDetails?.id,
+      commentId: commentId,
+      type: 'LIKE',
+    };
+    console.log('Body', body);
+    try {
+      const response = await apiCall?.likeAComment(body);
+      if (response) {
+        console.log('LIked the comment successfully', response);
+      }
+    } catch (error) {
+      console.log('Error liking the comment', error);
+      toast('error', 'Error liking the comment');
+    }
+  };
+
+  const CommentReply = async commentId => {
+    const userDetails = await getDataLocally();
+    const body = {
+      userId: userDetails?.id,
+      commentId: commentId,
+      comment: text,
+    };
+    try {
+      const response = await apiCall?.commentReply(body);
+      if (response) {
+        console.log('Successfully replied to comment', response);
+        setReply({
+          userName: '',
+          commentId: '',
+          active: false,
+        });
+        setText('');
+        setActions(prev => ({
+          ...prev,
+          comments: {
+            ...prev.comments,
+            value: prev.comments.value.map(comment => {
+              if (comment.id === commentId) {
+                return {
+                  ...comment,
+                  replies: [...comment.replies, response],
+                };
+              }
+              return comment;
+            }),
+          },
+        }));
+        actions?.comments?.ref?.current?.blur();
+      }
+    } catch (error) {
+      console.log('Error replying to comment', error);
+      toast('error', 'Error replying to comment');
+    }
+  };
 
   return (
     <View style={styles?.container}>
@@ -232,60 +262,90 @@ const Comments = ({post, actions, setActions}) => {
                   </Text>
                 </View>
                 <View style={styles?.iconContainer}>
-                  <TouchableOpacity>
-                    <ActiveLike />
+                  <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
+                    {/* {item?.reactions?.some(r => r?.) */}
+                    <InactiveGrayLike />
+                    {/* } */}
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setReply({
+                        userName: `${item?.user?.firstName} ${item?.user?.lastName}`,
+                        commentId: item?.id,
+                        active: true,
+                      });
+                      actions?.comments?.ref?.current?.focus();
+                    }}>
                     <InactiveGrayCommentIcon />
                   </TouchableOpacity>
                 </View>
               </View>
-              <Text style={styles?.commentText}>{item?.content}</Text>
+              {item?.waveform?.length > 0 ? (
+                <View style={styles?.yudioPlayer}>
+                  <View style={styles?.yudioWrapper}>
+                    <YudioPlayer
+                      audio={{
+                        uri: item?.url,
+                        waveform: item?.waveform,
+                      }}
+                      bg={false}
+                    />
+                  </View>
+                </View>
+              ) : (
+                <Text style={styles?.commentText}>{item?.content}</Text>
+              )}
+              {
+                item?.replies?.length > 0 && (
+                  <FlatList data={item?.replies} renderItem={({item})=><Text>{item?.content}</Text>}/>
+                )
+              }
             </View>
           );
         }}
       />
+      {reply?.active && (
+        <View style={styles?.replyTitle}>
+          <Text style={styles?.replyName}>Replying to {reply?.userName}</Text>
+          <TouchableOpacity
+            style={styles?.cancelReply}
+            onPress={() => setReply(prev => ({...prev, active: false}))}>
+            <Text style={styles?.cancelReplyText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       {/* comment input */}
       <View style={styles?.inputContainer}>
         <Image source={images?.onboarding1} style={styles?.image} />
-        <TextInput
-          ref={actions?.comments?.ref}
-          placeholder="Write your comment"
-          placeholderTextColor={colors?.text}
-          style={styles?.input}
-          value={text}
-          onChangeText={setText}
-        />
+        {isRecording ? (
+          <View style={styles?.recordingBars}>
+            <RecordingBars isRecording={isRecording} />
+          </View>
+        ) : (
+          <TextInput
+            ref={actions?.comments?.ref}
+            placeholder="Write your comment"
+            placeholderTextColor={colors?.text}
+            style={styles?.input}
+            value={text}
+            onChangeText={setText}
+          />
+        )}
         <View style={styles?.iconContainer}>
           <TouchableOpacity style={styles?.button} onPress={toggleRecording}>
             <GraySolidMicIcon width={width * 0.04} height={width * 0.04} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles?.button} onPress={handleComment}>
+          <TouchableOpacity
+            style={styles?.button}
+            onPress={
+              reply?.active
+                ? () => CommentReply(reply?.commentId)
+                : handleComment
+            }>
             <SolidMessageSendIcon width={width * 0.04} height={width * 0.04} />
           </TouchableOpacity>
         </View>
       </View>
-      {metering.map((value, index) => (
-        <View
-          key={index}
-          style={{
-            width: 4,
-            marginHorizontal: 1,
-            height: value,
-            backgroundColor: '#4f46e5',
-          }}
-        />
-      ))}
-      {waveform?.length > 0 && (
-        <View style={styles?.yudioPlayerContainer}>
-          <YudioPlayer
-            audio={{
-              uri: audio,
-              waveform: waveform,
-            }}
-          />
-        </View>
-      )}
     </View>
   );
 };
@@ -371,7 +431,40 @@ const styles = StyleSheet.create({
     padding: width * 0.01,
     // marginHorizontal: width * 0.005,
   },
-  yudioPlayerContainer: {
-    marginVertical: height * 0.02,
+  recordingBars: {
+    marginHorizontal: width * 0.05,
+    marginVertical: height * 0.01,
+  },
+  yudioPlayer: {
+    width: width * 0.8,
+    height: height * 0.08,
+    overflow: 'hidden',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  yudioWrapper: {
+    transform: [{scale: 0.7}],
+    marginLeft: -width * 0.05,
+  },
+  replyTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  replyName: {
+    fontFamily: fonts?.montserratSemiBold,
+    color: colors?.textGray,
+    fontSize: Pixels(10),
+  },
+  cancelReply: {
+    backgroundColor: colors?.gray,
+    paddingHorizontal: width * 0.01,
+    borderRadius: width * 0.01,
+    marginLeft: width * 0.02,
+  },
+  cancelReplyText: {
+    fontFamily: fonts?.montserratSemiBold,
+    color: colors?.pink,
+    fontSize: Pixels(10),
   },
 });

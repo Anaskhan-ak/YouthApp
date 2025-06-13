@@ -1,29 +1,28 @@
-import {useEffect, useRef, useState} from 'react';
+import { BlurView } from '@react-native-community/blur';
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Platform,
-  RefreshControl,
-  StatusBar,
-  ActivityIndicator,
+  StatusBar
 } from 'react-native';
-import {LinearGradient} from 'react-native-linear-gradient';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { LinearGradient } from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyComponent from '../../components/empty';
 import HomeHeader from '../../components/headers/homeHeader';
 import Post from '../../components/post';
 import SuggestedUsers from '../../components/post/subComponents/suggestedUsers';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
-import {height} from '../../constant';
-import {toast} from '../../components/toast';
-import {getDataLocally} from '../../helper';
+import { toast } from '../../components/toast';
+import { height } from '../../constant';
+import { getDataLocally } from '../../helper';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
-import {apiCall} from '../../services/apiCall';
-import {colors} from '../../utils/colors';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
-import {BlurView} from '@react-native-community/blur';
-import {useIsFocused} from '@react-navigation/native';
 
 const Home = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -126,7 +125,7 @@ const Home = () => {
       ) : (
         <FlatList
           ListHeaderComponent={<Stories />}
-          data={posts}
+          data={posts?.slice(0,2)}
           renderItem={({item}) => <Post post={item} />}
           contentContainerStyle={{paddingBottom: height * 0.1}}
           ListFooterComponent={<SuggestedUsers />}
