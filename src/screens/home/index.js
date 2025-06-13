@@ -125,7 +125,7 @@ const Home = () => {
       ) : (
         <FlatList
           ListHeaderComponent={<Stories />}
-          data={posts?.slice(0,2)}
+          data={posts}
           renderItem={({item}) => <Post post={item} />}
           contentContainerStyle={{paddingBottom: height * 0.1}}
           ListFooterComponent={<SuggestedUsers />}
