@@ -1,10 +1,8 @@
-import moment from 'moment';
 import { useState } from 'react';
 import {
   FlatList,
   Image,
   Platform,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -12,23 +10,20 @@ import {
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
 import RNFS from 'react-native-fs';
-import LinearGradient from 'react-native-linear-gradient';
-import { images } from '../../../assets/images';
+import { images } from '../../../../assets/images';
 import {
   GraySolidMicIcon,
-  InactiveGrayCommentIcon,
-  InactiveGrayLike,
   SolidMessageSendIcon,
-} from '../../../assets/images/svgs';
-import YudioPlayer from '../../../components/audio/YudioPlayer';
-import { toast } from '../../../components/toast';
-import { height, Pixels, width } from '../../../constant';
-import { getDataLocally } from '../../../helper';
-import useUser from '../../../hooks/user';
-import { apiCall } from '../../../services/apiCall';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
-import RecordingBars from './RecordingBars';
+} from '../../../../assets/images/svgs';
+import { toast } from '../../../../components/toast';
+import { width } from '../../../../constant';
+import { getDataLocally } from '../../../../helper';
+import useUser from '../../../../hooks/user';
+import { apiCall } from '../../../../services/apiCall';
+import { colors } from '../../../../utils/colors';
+import CommentBox from './components/commentBox';
+import RecordingBars from './components/RecordingBars';
+import { styles } from './styles';
 
 const Comments = ({post, actions, setActions}) => {
   const [showAll, setShowAll] = useState(false);
@@ -159,25 +154,6 @@ const Comments = ({post, actions, setActions}) => {
   };
 
   // console.log("actions?.comments?.value", actions?.comments?.value)
-  const LikeAComment = async commentId => {
-    const userDetails = await getDataLocally();
-    const body = {
-      userId: userDetails?.id,
-      commentId: commentId,
-      type: 'LIKE',
-    };
-    console.log('Body', body);
-    try {
-      const response = await apiCall?.likeAComment(body);
-      if (response) {
-        console.log('LIked the comment successfully', response);
-      }
-    } catch (error) {
-      console.log('Error liking the comment', error);
-      toast('error', 'Error liking the comment');
-    }
-  };
-
   const CommentReply = async commentId => {
     const userDetails = await getDataLocally();
     const body = {
@@ -238,69 +214,14 @@ const Comments = ({post, actions, setActions}) => {
         renderItem={({item, index}) => {
           // console.log('Item', item);
           return (
-            <View key={index} style={styles?.commentBox}>
-              <View style={styles?.header}>
-                <LinearGradient
-                  colors={[colors?.RGB1, colors?.RGB2]}
-                  style={styles?.gradientBorder}>
-                  <Image
-                    source={
-                      item?.photo
-                        ? {uri: item?.user?.photo}
-                        : images?.defaultProfilePicture
-                    }
-                    style={styles?.image}
-                  />
-                </LinearGradient>
-                <View style={styles?.textContainer}>
-                  <Text
-                    style={
-                      styles?.name
-                    }>{`${item?.user?.firstName} ${item?.user?.lastName}`}</Text>
-                  <Text style={styles?.time}>
-                    {moment(item?.createdAt).startOf('hour').fromNow()}
-                  </Text>
-                </View>
-                <View style={styles?.iconContainer}>
-                  <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
-                    {/* {item?.reactions?.some(r => r?.) */}
-                    <InactiveGrayLike />
-                    {/* } */}
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setReply({
-                        userName: `${item?.user?.firstName} ${item?.user?.lastName}`,
-                        commentId: item?.id,
-                        active: true,
-                      });
-                      actions?.comments?.ref?.current?.focus();
-                    }}>
-                    <InactiveGrayCommentIcon />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              {item?.waveform?.length > 0 ? (
-                <View style={styles?.yudioPlayer}>
-                  <View style={styles?.yudioWrapper}>
-                    <YudioPlayer
-                      audio={{
-                        uri: item?.url,
-                        waveform: item?.waveform,
-                      }}
-                      bg={false}
-                    />
-                  </View>
-                </View>
-              ) : (
-                <Text style={styles?.commentText}>{item?.content}</Text>
-              )}
-              {
-                item?.replies?.length > 0 && (
-                  <FlatList data={item?.replies} renderItem={({item})=><Text>{item?.content}</Text>}/>
-                )
-              }
-            </View>
+            <CommentBox
+              item={item}
+              index={index}
+              actions={actions}
+              setActions={setActions}
+              reply={reply}
+              setReply={setReply}
+            />
           );
         }}
       />
@@ -351,120 +272,3 @@ const Comments = ({post, actions, setActions}) => {
 };
 
 export default Comments;
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-  },
-  showAllText: {
-    fontFamily: fonts?.montserratMedium,
-    fontSize: Pixels(8),
-    color: colors?.text,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  commentBox: {
-    borderWidth: width * 0.002,
-    borderColor: colors?.gray11,
-    borderRadius: width * 0.02,
-    padding: width * 0.02,
-    marginVertical: height * 0.005,
-  },
-  gradientBorder: {
-    width: width * 0.06,
-    height: width * 0.06,
-    borderRadius: width * 0.06,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    width: width * 0.07,
-    height: width * 0.07,
-    borderRadius: width * 0.07,
-  },
-  textContainer: {
-    flex: 0.65,
-  },
-  name: {
-    fontFamily: fonts?.montserratBold,
-    fontSize: Pixels(10),
-    color: colors?.text,
-  },
-  time: {
-    fontFamily: fonts?.montserratMedium,
-    fontSize: Pixels(9),
-    color: colors?.textGray,
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0.3,
-    justifyContent: 'space-evenly',
-    right: -width * 0.03,
-  },
-  commentText: {
-    fontFamily: fonts?.montserratMedium,
-    fontSize: Pixels(11),
-    color: colors?.text,
-    marginLeft: width * 0.075,
-    marginTop: height * 0.01,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    borderWidth: width * 0.002,
-    borderColor: colors?.gray11,
-    borderRadius: width * 0.065,
-    paddingHorizontal: width * 0.01,
-    marginVertical: height * 0.005,
-  },
-  input: {
-    flex: 0.65,
-    color: colors?.text,
-  },
-  button: {
-    padding: width * 0.01,
-    // marginHorizontal: width * 0.005,
-  },
-  recordingBars: {
-    marginHorizontal: width * 0.05,
-    marginVertical: height * 0.01,
-  },
-  yudioPlayer: {
-    width: width * 0.8,
-    height: height * 0.08,
-    overflow: 'hidden',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  yudioWrapper: {
-    transform: [{scale: 0.7}],
-    marginLeft: -width * 0.05,
-  },
-  replyTitle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  replyName: {
-    fontFamily: fonts?.montserratSemiBold,
-    color: colors?.textGray,
-    fontSize: Pixels(10),
-  },
-  cancelReply: {
-    backgroundColor: colors?.gray,
-    paddingHorizontal: width * 0.01,
-    borderRadius: width * 0.01,
-    marginLeft: width * 0.02,
-  },
-  cancelReplyText: {
-    fontFamily: fonts?.montserratSemiBold,
-    color: colors?.pink,
-    fontSize: Pixels(10),
-  },
-});

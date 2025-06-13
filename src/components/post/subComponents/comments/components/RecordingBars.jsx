@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
-import { width } from '../../../constant';
-import { colors } from '../../../utils/colors';
+import { width } from '../../../../../constant';
+import { colors } from '../../../../../utils/colors';
 
 const RecordingBars = ({ isRecording }) => {
   const bars = useRef([...Array(16)].map(() => new Animated.Value(20))).current;
