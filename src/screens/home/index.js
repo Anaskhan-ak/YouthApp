@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
 import { useIsFocused } from '@react-navigation/native';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,8 +16,8 @@ import Post from '../../components/post';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
+import { getDataLocally } from '../../helper';
 import usePagination from '../../hooks/usePagination';
-import useUser from '../../hooks/user';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
@@ -26,13 +26,24 @@ import SideBar from './components/sideBar';
 
 const Home = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [posts, setPosts] = useState([]);
-  // const [refreshing, setRefreshing] = useState(false);
   const refRBSheet = useRef(null);
   const [loading, setLoading] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const isFocus = useIsFocused();
-  const user = useUser();
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    (async () => {
+      const getUser = await getDataLocally();
+      if (getUser) {
+        setUser({
+          id: getUser.id,
+          name: `${getUser.firstName} ${getUser.lastName}`,
+          photo: getUser.photo,
+        });
+      }
+    })();
+  }, [user]);
   const {
     data,
     totalResult,
@@ -44,35 +55,12 @@ const Home = () => {
   } = usePagination({
     url: apiCall?.getAllPosts,
     body: {
-      userId: 'cmbhntz1u000325i4b6291aew',
+      userId: user?.id,
       page: 1,
       pageSize: 10,
     },
-  });
-  // useEffect(() => {
-  //   fetchPosts();
-  //   fetchPostsAndYudios();
-  // }, [isFocus]);
-  // const fetchPosts = async () => {
-  //   const userData = await getDataLocally();
-  //   const body = {
-  //     userId: userData?.id,
-  //     page,
-  //     pageSize,
-  //   };
-  //   try {
-  //     const response = await apiCall?.getAllPosts(body);
-  //     setPosts(response?.data?.posts);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // };
-  // const onRefresh = () => {
-  //   fetchPosts();
-  //   setTimeout(() => {
-  //     setRefreshing(false);
-  //   }, 3000);
-  // };
+  },[isFocus]);
+  console.log('initialLoader', initialLoader)
   // const fetchPostsAndYudios = async () => {
   //   setLoading(true);
   //   const userDetails = await getDataLocally();

@@ -8,7 +8,7 @@ const initialData = {
   totalResult : 0
 };
 
-const usePagination = ({url, body}) => {
+const usePagination = ({url, body}, dependencies=[]) => {
   const [initialLoader, setInitialLoader] = useState(true);
   const [data, setData] = useState(initialData?.data);
   const [pageNo, setPageNo] = useState(initialData?.pageNo);
@@ -49,7 +49,7 @@ const usePagination = ({url, body}) => {
 
   useEffect(() => {
     fetchData(pageNo);
-  }, []);
+  }, dependencies);
 
   // Pull-to-refresh
   const handleRefresh = useCallback(() => {
