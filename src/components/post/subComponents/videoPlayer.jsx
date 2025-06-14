@@ -1,13 +1,13 @@
-import {BlurView} from '@react-native-community/blur';
-import {useEffect, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+import { useEffect, useRef, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import VideoPlayer from 'react-native-video-player';
-import {MuteIcon, PlayIcon, UnmuteIcon} from '../../../assets/images/svgs';
-import {height, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { MuteIcon, PlayIcon, UnmuteIcon } from '../../../assets/images/svgs';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
-const PostVideo = ({url, index, activeIndex}) => {
+const PostVideo = ({url, isScrolling}) => {
   const [pause, setPause] = useState(false);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
@@ -22,13 +22,23 @@ const PostVideo = ({url, index, activeIndex}) => {
 
   useEffect(() => {
     if (videoRef?.current) {
-      if (pause || index !== activeIndex) {
+      if (pause) {
         videoRef?.current?.pause();
       } else {
         videoRef?.current?.resume();
       }
     }
   }, [pause]);
+
+  useEffect(() => {
+    if (videoRef?.current) {
+      if (!pause && isScrolling) { //if a video is playing and we start scrolling
+        videoRef?.current?.stop();
+        console.log('Video stopped');
+      }
+    }
+  }, [pause, isScrolling]);
+
 
   return (
     <View>

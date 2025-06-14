@@ -16,7 +16,7 @@ import PostBottomTab from '../subComponents/postBottomTab';
 import PostVideo from './videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal, actions, setActions}) => {
+const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
   const [showTags, setShowTags] = useState(false);
@@ -110,7 +110,7 @@ const MediaPost = ({post, modal, actions, setActions}) => {
           {showTags && mediaLayout && <Tags />}
 
           {isVideo ? (
-            <PostVideo url={item} index={index} activeIndex={activeIndex} />
+            <PostVideo url={item} isScrolling={isScrolling} />
           ) : (
             <Image
               source={{uri: item}}

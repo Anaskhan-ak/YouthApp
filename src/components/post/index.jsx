@@ -18,7 +18,7 @@ import MusicPost from './subComponents/MusicPost';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
 
-const Post = ({post}) => {
+const Post = ({post, isScrolling}) => {
   const [modal, setModal] = useState({
     isPost: false,
     visible: false,
@@ -48,7 +48,7 @@ const Post = ({post}) => {
     }
 
     const PostComponent = postComponents[post.type];
-    return <PostComponent post={post} modal={modalProps} actions={actions} setActions={setActions}/>;
+    return <PostComponent post={post} modal={modalProps} actions={actions} setActions={setActions} isScrolling={isScrolling}/>;
   };
 
   return (
