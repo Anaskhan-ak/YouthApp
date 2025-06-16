@@ -33,7 +33,8 @@ const PostVideo = ({url, isScrolling}) => {
   useEffect(() => {
     if (videoRef?.current) {
       if (!pause && isScrolling) { //if a video is playing and we start scrolling
-        videoRef?.current?.stop();
+        // videoRef?.current?.stop();
+        setPause(true)
         console.log('Video stopped');
       }
     }
@@ -95,7 +96,7 @@ const PostVideo = ({url, isScrolling}) => {
 
         {/* Transparent overlay for play/pause toggle */}
         <TouchableOpacity
-          onPress={() => setPause(!pause)}
+          onPress={() => setPause(prev=>!prev)}
           activeOpacity={1}
           style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
           {/* Show play icon only when paused */}
