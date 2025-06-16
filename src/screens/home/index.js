@@ -17,6 +17,7 @@ import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
 import usePagination from '../../hooks/usePagination';
+import useUser from '../../hooks/user';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
@@ -28,6 +29,7 @@ const Home = () => {
   const refRBSheet = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const isFocus = useIsFocused();
+  const user = useUser()
   
   const {
     data,
@@ -40,7 +42,7 @@ const Home = () => {
   } = usePagination({
     url: apiCall?.getAllPosts,
     body: {
-      userId: 'cmbhntz1u000325i4b6291aew',
+      userId: user?.id || null,
       page: 1,
       pageSize: 10,
     },
