@@ -1,9 +1,10 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CreateEvent from '../screens/createEvent';
 import CreatePost from '../screens/createPost';
 import CreateStory from '../screens/createStory';
+import CreateWallet from '../screens/createWallet';
 import CreateYudio from '../screens/createYudio';
 import EmailVerification from '../screens/emailVerification';
 import FindFriends from '../screens/findFriends';
@@ -22,10 +23,9 @@ import Profile from '../screens/Profile';
 import SignUp from '../screens/signup';
 import Splash from '../screens/splash';
 import SuggestedContent from '../screens/suggestions';
+import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
-import Wallet from '../screens/wallet';
-import CreateWallet from '../screens/createWallet';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();

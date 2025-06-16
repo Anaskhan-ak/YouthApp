@@ -44,9 +44,6 @@ const CreateStory = () => {
               style={styles?.media}
               ref={playerRef}
               endWithThumbnail
-              thumbnail={{
-                uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg',
-              }}
               source={{
                 uri: media?.uri
                   ? media?.uri

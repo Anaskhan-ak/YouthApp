@@ -1,6 +1,7 @@
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { WhiteLeftArrow } from '../../../assets/images/svgs';
+import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 

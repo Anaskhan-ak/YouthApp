@@ -42,7 +42,7 @@ const Home = () => {
   } = usePagination({
     url: apiCall?.getAllPosts,
     body: {
-      userId: user?.id || null,
+      userId: 'cmbhntz1u000325i4b6291aew',
       page: 1,
       pageSize: 10,
     },

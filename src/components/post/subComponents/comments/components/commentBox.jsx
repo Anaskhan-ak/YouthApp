@@ -4,34 +4,94 @@ import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../../../assets/images';
 import {
-    InactiveGrayCommentIcon,
-    InactiveGrayLike,
+  ActiveLike,
+  InactiveGrayCommentIcon,
+  InactiveGrayLike,
 } from '../../../../../assets/images/svgs';
 import YudioPlayer from '../../../../../components/audio/YudioPlayer';
 import { toast } from '../../../../../components/toast';
 import { getDataLocally } from '../../../../../helper';
+import useUser from '../../../../../hooks/user';
 import { apiCall } from '../../../../../services/apiCall';
 import { colors } from '../../../../../utils/colors';
 import { styles } from '../styles';
 
 const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
   const [showAll, setShowAll] = useState(false);
+  const user = useUser();
   const LikeAComment = async commentId => {
     const userDetails = await getDataLocally();
-    const body = {
-      userId: userDetails?.id,
-      commentId: commentId,
-      type: 'LIKE',
-    };
-    console.log('Body', body);
-    try {
-      const response = await apiCall?.likeAComment(body);
-      if (response) {
-        console.log('LIked the comment successfully', response);
+    const isLiked = actions?.comments?.value
+      ?.find(com => com?.id === commentId)
+      ?.reactions?.find(react => react?.userId === userDetails?.id);
+    if (isLiked) {
+      const body = {
+        userId: userDetails?.id,
+        commentId: commentId,
+        type: 'LIKE',
+        id: isLiked?.id,
+        status: false,
+      };
+      // console.log('Body', body);
+      try {
+        const response = await apiCall?.likeAComment(body);
+        if (response) {
+          console.log('Unliked the comment successfully', response);
+          setActions(prev => ({
+            ...prev,
+            comments: {
+              ...prev.comments,
+              value: prev?.comments?.value?.map(comment => {
+                console.log("Comment", comment)
+                if (comment?.id === commentId) {
+                  return {
+                    ...comment,
+                    reactions: comment.reactions.filter(
+                      like => like.id !== isLiked.id,
+                    ),
+                  };
+                }
+                return comment;
+              }),
+            },
+          }));
+        }
+      } catch (error) {
+        console.log('Error unliking the comment', error);
+        toast('error', 'Error unliking the comment');
       }
-    } catch (error) {
-      console.log('Error liking the comment', error);
-      toast('error', 'Error liking the comment');
+    } else {
+      const body = {
+        userId: userDetails?.id,
+        commentId: commentId,
+        type: 'LIKE',
+        status: true,
+      };
+      // console.log('Body', body);
+      try {
+        const response = await apiCall?.likeAComment(body);
+        if (response) {
+          console.log('LIked the comment successfully', response);
+          setActions(prev => ({
+            ...prev,
+            comments: {
+              ...prev?.comments,
+              value: prev?.comments?.value?.map(comment => {
+                if (comment?.id === commentId) {
+                  return {
+                    ...comment,
+                    reactions: [...comment?.reactions, response],
+                  };
+                }
+                return comment
+              }),
+            },
+          }));
+        }
+      } catch (error) {
+        console.log('Error liking the comment', error);
+        toast('error', 'Error liking the comment');
+      }
     }
   };
 
@@ -61,9 +121,13 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
         </View>
         <View style={styles?.iconContainer}>
           <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
-            {/* {item?.reactions?.some(r => r?.) */}
-            <InactiveGrayLike />
-            {/* } */}
+            {actions?.comments?.value
+              ?.find(comment => comment?.id === item?.id)
+              ?.reactions?.some(r => r?.userId === user?.id) ? (
+              <ActiveLike />
+            ) : (
+              <InactiveGrayLike />
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
