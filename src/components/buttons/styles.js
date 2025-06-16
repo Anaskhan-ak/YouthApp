@@ -114,15 +114,17 @@ export const CreateButtonStyles = StyleSheet.create({
     borderTopRightRadius: width * 0.05,
     height: Platform?.OS === 'ios' && height * 0.15,
     marginBottom: Platform?.OS === 'ios' && -height * 0.03,
+    alignItems : "center"
   },
   button: {
     backgroundColor: colors?.white,
     borderRadius: width * 0.02,
     alignItems: 'center',
-    width: '70%',
+    paddingHorizontal : width * 0.04,
     alignSelf: 'center',
     height: height * 0.05,
     justifyContent: 'center',
+    marginHorizontal : width * 0.02,
   },
   text: {
     fontFamily: fonts?.montserratExtraBold,

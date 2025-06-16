@@ -17,6 +17,7 @@ const GradientHeader = props => {
         barStyle="light-content"
         backgroundColor={'transparent'}
       />
+
       <TouchableOpacity style={styles?.backButton} onPress={props?.backPress}>
         <WhiteLeftArrow />
       </TouchableOpacity>
@@ -34,6 +35,7 @@ const GradientHeader = props => {
           <Text style={styles?.advancedButtonText}>Advanced</Text>
         </TouchableOpacity>
       )}
+      {props?.storyIcons && props?.storyIcons}
     </LinearGradient>
   );
 };

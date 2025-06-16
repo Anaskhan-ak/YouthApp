@@ -115,6 +115,11 @@ import SearchIcon from './SearchIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
 import SolidMessageSendIcon from './SolidMessageSendIcon.svg';
 import Sparkles from './Sparkles.svg';
+import StoryIconFilters from './StoryIconFilters.svg';
+import StoryIconFriends from './StoryIconFriends.svg';
+import StoryIconMusic from './StoryIconMusic.svg';
+import StoryIconSticker from './StoryIconSticker.svg';
+import StoryIconText from './StoryIconText.svg';
 import SwitchAcc from './switchAcc.svg';
 import TagFriends from './TagFriends.svg';
 import TagFriendsIcon from './TagFriendsIcon.svg';
@@ -243,7 +248,7 @@ export {
   RightArrow,
   Search,
   SearchIcon,
-  SnapchatIcon, SolidMessageSendIcon, Sparkles, SwitchAcc, TagFriends,
+  SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
