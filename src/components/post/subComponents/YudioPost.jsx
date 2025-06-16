@@ -1,4 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import YudioPlayer from '../../../components/audio/YudioPlayer';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import PostBottomTab from '../subComponents/postBottomTab';
@@ -9,16 +10,13 @@ const YudioPost = ({post, modal}) => {
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
         <View style={styles?.player}>
-          
-            {/* <YudioPlayer audio={{uri: post?.yudios?.url, wavform: post?.yudios?.waveform}} /> */}
-          
+          <YudioPlayer
+            audio={{uri: post?.yudios?.url, waveform: post?.yudios?.waveform}}
+          />
+          {!modal?.modal?.isPost && <PostBottomTab post={post} />}
         </View>
       </TouchableOpacity>
-      {!modal?.modal?.isPost && (
-        <View style={styles?.reactionsTab}>
-          <PostBottomTab post={post} />
-        </View>
-      )}
+      // <View style={styles?.reactionsTab}>// </View>
     </View>
   );
 };
@@ -38,14 +36,17 @@ const styles = StyleSheet.create({
   },
   player: {
     backgroundColor: colors?.gray11,
+    overflow: 'hidden',
+    borderRadius: width * 0.04,
+    marginVertical: height * 0.02,
   },
   reactionsTab: {
     position: 'absolute',
     zIndex: 100,
     bottom: 0,
     // width: width * 0.89,
-    right: height * 0.0045,
-    left: height * 0.01,
+    right: 0,
+    left: 0,
     alignSelf: 'center',
   },
   likes: {

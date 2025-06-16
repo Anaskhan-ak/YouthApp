@@ -43,10 +43,6 @@ const Post = ({post, isScrolling}) => {
       DOCUMENT: DocumentPost,
     };
 
-    if (post?.type === 'YUDIO'){
-      return null
-    }
-
     const PostComponent = postComponents[post.type];
     return <PostComponent post={post} modal={modalProps} actions={actions} setActions={setActions} isScrolling={isScrolling}/>;
   };
