@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getDataLocally } from '../helper';
+import { apiCall } from '../services/apiCall';
 
 const useUser = () => {
   const [user, setUser] = useState(null);
@@ -7,12 +8,15 @@ const useUser = () => {
   useEffect(() => {
     (async () => {
       const getUser = await getDataLocally();
-      if (getUser) {
+      try {
+        const result = await apiCall?.getProfileData({userId: getUser?.id});
         setUser({
-          id: getUser.id,
-          name: `${getUser.firstName} ${getUser.lastName}`,
-          photo: getUser.photo,
+          id: result.id,
+          name: `${result.firstName} ${result.lastName}`,
+          photo: result.photo,
         });
+      } catch (e) {
+        console.error('Failed to fetch profile data', e);
       }
     })();
   }, []);

@@ -18,6 +18,7 @@ export const apis = {
   getFollower : 'api/v1/getFollowing/',
   reactOnComment : 'api/v1/reactoncomment',
   replyOnComment : 'api/v1/replyoncomment',
+  getStories : 'api/v1/getStory',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

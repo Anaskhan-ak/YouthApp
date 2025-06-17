@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Home} from '../assets/images/svgs';
-import {height, width} from '../constant';
+import {height, Pixels, width} from '../constant';
 import {colors} from '../utils/colors';
 import {fonts} from '../utils/fonts';
 import {bottomTabs} from '../utils/string';
@@ -43,7 +43,7 @@ const BottomTabNavigator = () => {
           // reducedTransparencyFallbackColor="#32BCD1"
         />
         <Svg
-          width={Platform?.OS === 'android' ? width * 0.9 : width * 0.8}
+          width={Platform?.OS === 'android' ? width * 0.7 : width * 0.7}
           height={70}
           viewBox="0 0 307 66"
           fill="none"
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
   iconView: {alignItems: 'center', justifyContent: 'center'},
   title: {
-    fontSize: width * 0.015,
+    fontSize: Pixels(8),
     fontFamily: fonts?.montserratExtraBold,
     marginTop: height * 0.01,
     color: colors?.white,

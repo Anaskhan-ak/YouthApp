@@ -2117,6 +2117,8 @@ PODS:
   - RecaptchaInterop (101.0.0)
   - RNAudioRecord (0.2.2):
     - React
+  - RNAudioRecorderPlayer (3.6.12):
+    - React-Core
   - RNCAsyncStorage (2.1.2):
     - DoubleConversion
     - glog
@@ -2623,6 +2625,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNAudioRecord (from `../node_modules/react-native-audio-record`)
+  - RNAudioRecorderPlayer (from `../node_modules/react-native-audio-recorder-player`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
@@ -2831,6 +2834,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNAudioRecord:
     :path: "../node_modules/react-native-audio-record"
+  RNAudioRecorderPlayer:
+    :path: "../node_modules/react-native-audio-recorder-player"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
@@ -2970,6 +2975,7 @@ SPEC CHECKSUMS:
   ReactCommon: 35a5629d7159876dd048c63751eaeb3aa3a6a53b
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   RNAudioRecord: 162fee3b8fb628773ec704bf0333823125be2ed7
+  RNAudioRecorderPlayer: 224c7de87722938aedce04000d09baa633148f5b
   RNCAsyncStorage: e25fda4679876e5204c4c502d297757ec1f17ced
   RNCClipboard: dfcfff4ab54bba045a73273c00ab60a90940388b
   RNCMaskedView: 16e6917a83e0696d3b5edd69f940c2e1fb377a66

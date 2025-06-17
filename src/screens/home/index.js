@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
 import { useIsFocused } from '@react-navigation/native';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,8 +16,8 @@ import Post from '../../components/post';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height } from '../../constant';
+import { getDataLocally } from '../../helper';
 import usePagination from '../../hooks/usePagination';
-import useUser from '../../hooks/user';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
@@ -28,9 +28,8 @@ const Home = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const refRBSheet = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [stories, setStories] = useState([]);
   const isFocus = useIsFocused();
-  const user = useUser()
-  
   const {
     data,
     totalResult,
@@ -39,14 +38,17 @@ const Home = () => {
     handleRefresh,
     loadMore,
     initialLoader,
-  } = usePagination({
-    url: apiCall?.getAllPosts,
-    body: {
-      userId: 'cmbhntz1u000325i4b6291aew',
-      page: 1,
-      pageSize: 10,
+  } = usePagination(
+    {
+      url: apiCall?.getAllPosts,
+      body: {
+        userId: 'cmbhntz1u000325i4b6291aew',
+        page: 1,
+        pageSize: 10,
+      },
     },
-  },[isFocus]);
+    [isFocus],
+  );
   // const fetchPostsAndYudios = async () => {
   //   setLoading(true);
   //   const userDetails = await getDataLocally();
@@ -90,7 +92,20 @@ const Home = () => {
     if (!loadingMore || data?.length < 8) return null; //show footer only for subsequent pages
     return <ActivityIndicator size={'large'} animating />;
   };
-
+  const getStories = async () => {
+    try {
+      const userData = await getDataLocally();
+      const stories = await apiCall?.getStories({userId: userData?.id});
+      console.log(userData?.id);
+      setStories(stories);
+    } catch (e) {
+      console.log('e', e);
+    } finally {
+    }
+  };
+  useEffect(() => {
+    getStories();
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar translucent backgroundColor={'transparent'}></StatusBar>
@@ -121,7 +136,7 @@ const Home = () => {
         <EmptyComponent title="Failed to load posts" />
       ) : (
         <FlatList
-          ListHeaderComponent={<Stories />}
+          ListHeaderComponent={<Stories stories={stories} />}
           data={data}
           // keyExtractor={item => item?._id.toString()}
           renderItem={({item}) => (
@@ -145,19 +160,6 @@ const Home = () => {
           }}
         />
       )}
-
-      {/* <BlurView
-        style={{
-          position: 'absolute',
-          top: height * 0.19,
-          left: 0,
-          bottom: 0,
-          right: 0,
-        }}
-        blurType="light"
-        blurAmount={10}
-        reducedTransparencyFallbackColor="white"
-      /> */}
       <SideBar refRBSheet={refRBSheet} />
       <RNBottomSheet setIsSheetOpen={setIsSheetOpen} sheetRef={refRBSheet} />
       <BottomTabNavigator />

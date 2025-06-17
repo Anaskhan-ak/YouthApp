@@ -20,6 +20,7 @@ import CreateButton from '../../components/buttons/CreateButton';
 import GradientHeader from '../../components/headers/gradientHeader';
 import { toast } from '../../components/toast';
 import { height, width } from '../../constant';
+import { getRealPathFromURI } from '../../helper';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import Gallery from './components/gallery';
@@ -48,7 +49,7 @@ const CreateStory = () => {
     formData.append('location', 'Pakistan');
     formData.append('mediaType', isImage ? 'image' : 'video');
     formData.append('media', {
-      uri: media?.uri,
+      uri: await getRealPathFromURI(media?.uri),
       type: media?.type,
       name: media?.name,
     });
@@ -89,11 +90,9 @@ const CreateStory = () => {
     <View style={styles?.container}>
       {preview ? (
         <>
-          <GradientHeader
-            backPress={() => setPreview(false)}
-            storyIcons={<StoryIcons />}
-          />
-          {media?.type?.startsWith('image/') ? (
+          <GradientHeader backPress={() => setPreview(false)} />
+          {media?.type?.startsWith('image/') ||
+          media?.type?.startsWith('image') ? (
             <Image source={{uri: media?.uri}} style={styles?.media} />
           ) : (
             <VideoPlayer

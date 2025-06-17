@@ -27,8 +27,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
   },
   imageBorder: {
-    width: width * 0.11,
-    height: width * 0.11,
+    width: width * 0.12,
+    height: width * 0.12,
     borderRadius: width * 0.11,
     alignItems: 'center',
     justifyContent: 'center',

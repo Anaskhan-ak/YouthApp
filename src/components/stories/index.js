@@ -1,55 +1,33 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import InstagramStories from '@birdwingo/react-native-instagram-stories';
 import {colors} from '../../utils/colors';
-import {width} from '../../constant';
+import {Pixels, width} from '../../constant';
 import {Plus} from '../../assets/images/svgs';
+import {fonts} from '../../utils/fonts';
+import LinearGradient from 'react-native-linear-gradient';
 
-const Stories = () => {
+const avatarSize = width * 0.125;
+const borderRadius = avatarSize / 2;
+
+const Stories = ({stories}) => {
   const ref = useRef(null);
 
-  const stories = [
-    {
-      id: 'user1',
-      name: 'Nature Lover',
-      avatarSource: {
-        uri: 'https://images.unsplash.com/photo-1502764613149-7f1d229e230f?auto=format&fit=crop&w=200&q=60',
-      },
-      stories: [
-        {
-          id: 'story1',
-          source: {
-            uri: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=800&q=60',
-          },
-        },
-        {
-          id: 'story2',
-          source: {
-            uri: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-          },
-          mediaType: 'video',
-        },
-      ],
-    },
-    {
-      id: 'user2',
-      name: 'City Explorer',
-      avatarSource: {
-        uri: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=200&q=60',
-      },
-      stories: [
-        {
-          id: 'story3',
-          source: {
-            uri: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=60',
-          },
-        },
-      ],
-    },
-  ];
+  const renderAvatar = item => {
+    const uri = item?.avatarSource?.uri;
+    const avatarImage = <Image source={{uri}} style={styles.avatarImage} />;
 
-  const setStories = () => {
-    ref.current?.setStories(stories);
+    if (!item?.seen) {
+      return (
+        <LinearGradient
+          colors={[colors?.RGB1 || '#478FE4', colors?.RGB2 || '#36AFD6']}
+          style={styles.avatarGradient}>
+          <View style={styles.avatarInner}>{avatarImage}</View>
+        </LinearGradient>
+      );
+    }
+
+    return <View style={styles.avatarPlain}>{avatarImage}</View>;
   };
 
   return (
@@ -60,12 +38,15 @@ const Stories = () => {
       <InstagramStories
         ref={ref}
         stories={stories}
-        avatarSize={width * 0.125}
+        showName={true}
+        avatarSize={avatarSize}
         avatarTextStyle={styles.avatarText}
         textStyle={styles.storyText}
         closeIconColor={colors?.white}
         animationDuration={3000}
         avatarListContainerStyle={styles.avatarListContainer}
+        nameTextStyle={styles.nameTextStyle}
+        avatarProps={{renderAvatar}}
       />
     </View>
   );
@@ -75,8 +56,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    justifyContent: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   addStory: {
     width: width * 0.145,
@@ -94,7 +75,36 @@ const styles = StyleSheet.create({
   },
   avatarListContainer: {
     paddingHorizontal: 5,
-    flexGrow: 0,
+    gap: 5,
+  },
+  nameTextStyle: {
+    fontSize: Pixels(9),
+    textAlign: 'center',
+    fontFamily: fonts?.montserratMedium,
+  },
+  avatarGradient: {
+    width: avatarSize,
+    height: avatarSize,
+    borderRadius,
+    padding: 2,
+  },
+  avatarInner: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius,
+    overflow: 'hidden',
+  },
+  avatarPlain: {
+    width: avatarSize,
+    height: avatarSize,
+    borderRadius,
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+  },
+  avatarImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius,
   },
 });
 
