@@ -25,7 +25,7 @@ const HomeHeader = () => {
           <Menu width={width * 0.08} height={width * 0.08} />
           <TouchableOpacity onPress={() => navigation?.navigate('Profile')}>
             <LinearGradient
-            colors={[colors?.RGB2, colors?.RGB1]}
+            colors={[colors?.RGB1, colors?.RGB4,colors?.RGB1]}
             style={styles.imageBorder}>
             <Image
               source={

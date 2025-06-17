@@ -1,5 +1,5 @@
-import {deleted, documentPost, get, patch, post} from '../Methods';
-import {apis} from '../endPoints';
+import { deleted, documentPost, get, patch, post } from '../Methods';
+import { apis } from '../endPoints';
 
 export const apiCall = {
   //POST API CALL
@@ -30,6 +30,16 @@ export const apiCall = {
   },
   getFollowing: async params => {
     let result = await post(`${apis?.getFollowing}${params}`);
+    if (result?.status === 200) return result?.data?.data;
+    else throw result;
+  },
+ getStories: async params => {
+    let result = await post(apis?.getStories, params);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data?.posts;
+    else throw result;
+  },
+  getFollower: async params => {
+    let result = await post(`${apis?.getFollower}${params}`);
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
@@ -97,6 +107,24 @@ export const apiCall = {
   },
   addComment : async (params) => {
     let result = await post(apis?.comment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
+  addAudioComment : async (params) => {
+    let result = await documentPost(apis?.comment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
+  likeAComment : async (params) => {
+    let result = await post(apis?.reactOnComment, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
+  commentReply : async (params) => {
+    let result = await post(apis?.replyOnComment, params)
     if (result?.status) return result?.data?.data
     else throw result
   },

@@ -78,12 +78,12 @@ export const sideBarOptions = [
     {
       screen: 'openSheet',
       func: 'openSheet',
-      icon: <Plus width={18} height={18} />,
+      icon: <Plus width={14} height={14} />,
     },
     {
       screen: 'notification',
       route: 'Notifications',
-      icon: <Notification width={24} height={24} />,
+      icon: <Notification width={18} height={18} />,
     },
     {
       screen: 'chat',
@@ -93,7 +93,7 @@ export const sideBarOptions = [
     {
       screen: 'search',
       route: 'Search',
-      icon: <Search width={18} height={18} />,
+      icon: <Search width={14} height={14} />,
     },
 ];
 export const homeCategoryOptions = [
@@ -141,7 +141,7 @@ export const sideBottomSheetOptions = [
     id: 'story',
     title: 'Story',
     desc: 'Share your Daily best moments with the friends...',
-    route:''
+    route:'CreateStory'
   },
   {
     id: 'live',

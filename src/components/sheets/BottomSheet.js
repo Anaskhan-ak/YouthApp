@@ -71,7 +71,7 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
         })}
         <View style={styles?.btnContainer}>
           <NextButton
-            onPress={handlePress}
+           onPress={handlePress}
             width={width * 0.6}
             title={'Create New Post'}
           />

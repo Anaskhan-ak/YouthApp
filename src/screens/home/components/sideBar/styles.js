@@ -10,9 +10,9 @@ export const styles = StyleSheet.create({
     marginHorizontal: width * 0.06,
   },
   btn: {
-    width: width * 0.09,
-    height: width * 0.09,
-    borderRadius: width * 0.12,
+    width: width * 0.08,
+    height: width * 0.08,
+    borderRadius: width * 0.08,
     alignItems: 'center',
     justifyContent: 'center',
     left: 10,

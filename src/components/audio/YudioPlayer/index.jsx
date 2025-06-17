@@ -324,7 +324,7 @@ import { colors } from '../../../utils/colors';
 //   0.3578941834568762, 0.3554285135458403, 0.6979039026148278,
 // ];
 
-const YudioPlayer = ({audio}) => {
+const YudioPlayer = ({audio, bg}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -351,15 +351,30 @@ const YudioPlayer = ({audio}) => {
   // }, [audio]);
 
   useEffect(() => {
-    SoundPlayer.loadUrl(audio?.uri);
-    const interval = setInterval(() => {
-      SoundPlayer.getInfo()
-        .then(info => {
-          setCurrentTime(info.currentTime);
-          setDuration(info.duration);
-        })
-        .catch(() => {});
-    }, 500);
+    let interval;
+
+    if (audio?.uri) {
+      SoundPlayer.loadUrl(audio.uri);
+
+      interval = setInterval(() => {
+        SoundPlayer.getInfo()
+          .then(info => {
+            setCurrentTime(info.currentTime);
+            setDuration(info.duration);
+
+            // When audio ends
+            if (info.currentTime >= info.duration && info.duration !== 0) {
+              setIsPlaying(false);
+              setCurrentTime(0); // reset time
+              SoundPlayer.seek(0); // reset player to beginning
+              clearInterval(interval);
+            }
+          })
+          .catch(e => {
+            console.log('getInfo error:', e);
+          });
+      }, 500);
+    }
 
     return () => clearInterval(interval);
   }, [audio?.uri]);
@@ -417,7 +432,11 @@ const YudioPlayer = ({audio}) => {
   const progress = currentTime / duration;
 
   return (
-    <View style={[styles.container, {backgroundColor: colors?.extraLightGrey}]}>
+    <View
+      style={[
+        styles.container,
+        bg && {backgroundColor: colors?.extraLightGrey},
+      ]}>
       <TouchableOpacity onPress={playPause}>
         <LinearGradient
           colors={['#478FE4', '#5CD3C6']}

@@ -18,7 +18,7 @@ const colors = {white: '#FFFFFF'};
 
 export const NextButton = props => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={props?.onPress}>
       <LinearGradient
         colors={[darkThemeColors?.RGB1, darkThemeColors?.RGB2]}
         start={{x: 0, y: 0}}

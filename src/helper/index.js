@@ -5,7 +5,9 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { Platform } from 'react-native';
 import { apiCall } from "services/apiCall";
+import RNFS from 'react-native-fs';
 
 export const emailValidation = value => {
   const trimmedValue = value.trim();
@@ -89,4 +91,25 @@ export const getFileNameWithExtension = (uri, type) => {
   const hasExtension = /\.[^/.]+$/.test(filename);
 
   return hasExtension ? filename : `${filename}.${ext}`;
+};
+ export const getRealPathFromURI = async uri => {
+    if (uri.startsWith('content://')) {
+      try {
+        if (Platform.OS === 'ios') {
+          const realPath = await RNFS.copyAssetsFileIOS(
+            uri,
+            RNFS.CachesDirectoryPath,
+            0,
+            0,
+          ); // Only for iOS
+          return realPath;
+        } else {
+          return uri;
+        }
+      } catch (err) {
+        console.error('Error resolving content URI:', err);
+        return null;
+      }
+    }
+    return uri; // Return the uri as-is for file URLs
 };

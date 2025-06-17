@@ -1,11 +1,11 @@
-import { Platform, StyleSheet } from 'react-native';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {Platform, StyleSheet} from 'react-native';
+import {height, Pixels, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
-    height: height * 0.12,
+    height: Platform?.OS === 'android' ? height * 0.12 : height * 0.1,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
@@ -15,15 +15,15 @@ export const styles = StyleSheet.create({
   title: {
     fontFamily: fonts?.montserratExtraBold,
     color: colors?.white,
-    fontSize: width * 0.055,
-    flex : 0.7,
-    textAlign : 'center'
+    fontSize: Pixels(20),
+    flex: 0.7,
+    textAlign: 'center',
   },
   backButton: {
     alignItems: 'center',
     paddingVertical: width * 0.01,
     paddingHorizontal: width * 0.03,
-    flex : 0.1
+    flex: 0.1,
   },
   advancedButton: {
     borderWidth: width * 0.003,
@@ -32,11 +32,11 @@ export const styles = StyleSheet.create({
     padding: width * 0.01,
     alignItems: 'center',
     right: Platform?.OS === 'ios' && 8,
-    flex : 0.2
+    flex: 0.2,
   },
   advancedButtonText: {
     color: colors?.white,
     fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.03,
+     fontSize: Pixels(10),
   },
 });

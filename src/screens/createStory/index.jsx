@@ -1,18 +1,21 @@
-import { useRef, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import {useRef, useState} from 'react';
+import {Image, StyleSheet, View} from 'react-native';
 import VideoPlayer from 'react-native-video-player';
 import CreateButton from '../../components/buttons/CreateButton';
 import GradientHeader from '../../components/headers/gradientHeader';
-import { height, width } from '../../constant';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {height, width} from '../../constant';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import Gallery from './components/gallery';
+import { getRealPathFromURI } from '../../helper';
+import { useNavigation } from '@react-navigation/native';
+import { toast } from '../../components/toast';
 
 const CreateStory = () => {
   const [media, setMedia] = useState({});
   const [preview, setPreview] = useState(false);
   const playerRef = useRef();
-
+  const navigation = useNavigation();
   const handleForm = async () => {
     const formData = new FormData();
     formData?.append('type', 'STORY');
@@ -20,16 +23,17 @@ const CreateStory = () => {
     formData.append('isPublic', true);
     formData.append('location', 'Pakistan');
     formData.append('media', {
-      uri: media?.uri,
+      uri: await getRealPathFromURI(media?.uri),
       type: media?.type,
       name: media?.name,
     });
-    console.log("formData", formData)
+    console.log(formData)
     try {
-      const response = await apiCall?.createNewPost(formData)
-      console.log("Successfully created story", response)
+      const response = await apiCall?.createNewPost(formData);
+      toast("success",'Story creating story')
+      navigation?.navigate("Home")
     } catch (error) {
-      console.log("Error creating story", error)
+      toast("error",error||'Error creating story')
     }
   };
   return (
@@ -37,16 +41,14 @@ const CreateStory = () => {
       {preview ? (
         <>
           <GradientHeader backPress={() => setPreview(false)} />
-          {media?.type?.startsWith('image/') ? (
+          {media?.type?.startsWith('image/') ||
+          media?.type?.startsWith('image') ? (
             <Image source={{uri: media?.uri}} style={styles?.media} />
           ) : (
             <VideoPlayer
               style={styles?.media}
               ref={playerRef}
               endWithThumbnail
-              thumbnail={{
-                uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg',
-              }}
               source={{
                 uri: media?.uri
                   ? media?.uri
@@ -60,7 +62,7 @@ const CreateStory = () => {
         <Gallery media={media} setMedia={setMedia} />
       )}
       {preview ? (
-        <CreateButton title="Add to Story" onPress={handleForm}/>
+        <CreateButton title="Add to Story" onPress={handleForm} />
       ) : (
         <CreateButton
           title="Create New Story"
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: height * 0.02,
     borderRadius: width * 0.02,
-    resizeMode: 'contain',
-    backgroundColor : colors?.black
+    resizeMode: 'cover',
+    backgroundColor: colors?.black,
   },
 });

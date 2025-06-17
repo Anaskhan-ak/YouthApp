@@ -1,6 +1,7 @@
 import ActiveComment from './ActiveComment.svg';
 import ActiveDownload from './ActiveDownload.svg';
 import ActiveGroupChatIcon from './ActiveGroupChatIcon.svg';
+import ActiveIOSShare from './ActiveIOSShare.svg';
 import ActiveLike from './ActiveLike.svg';
 import ActiveNewChatIcon from './ActiveNewChatIcon.svg';
 import ActiveRepost from './ActiveRepost.svg';
@@ -29,7 +30,7 @@ import ChatYouthIcon from './ChatYouthIcon.svg';
 import CopyIcon from './CopyIcon.svg';
 import Cross from './cross.svg';
 import DontShowLandingWidget from './DontShowLandingWidget.svg';
-import {default as DropDown, default as DropDownIcon} from './dropdown.svg';
+import { default as DropDown, default as DropDownIcon } from './dropdown.svg';
 import EditEventThumbnail from './EditEventThumbnail.svg';
 import EmptyCallsInboxIcon from './EmptyCallsInboxIcon.svg';
 import EmptyChatInboxIcon from './EmptyChatInboxIcon.svg';
@@ -57,6 +58,7 @@ import GradientPlayIcon from './GradientPlayIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
 import GrayLocationIcon from './GrayLocationIcon.svg';
+import GraySolidMicIcon from './GraySolidMicIcon.svg';
 import GrayTimeIcon from './GrayTimeIcon.svg';
 import GrayWalletIcon from './GrayWalletIcon.svg';
 import GreenCheckMark from './greenCheckMark.svg';
@@ -65,7 +67,10 @@ import HomeHeaderLogo from './homeHeaderLogo.svg';
 import HorizontalDots from './HorizontalDots.svg';
 import InactiveComment from './InactiveComment.svg';
 import InactiveDownload from './InactiveDownload.svg';
+import InactiveGrayCommentIcon from './InactiveGrayCommentIcon.svg';
+import InactiveGrayLike from './InactiveGrayLike.svg';
 import InactiveGroupChatIcon from './InactiveGroupChatIcon.svg';
+import InactiveIOSShare from './InactiveIOSShare.svg';
 import InactiveLike from './InactiveLike.svg';
 import InactiveNewChatIcon from './InactiveNewChatIcon.svg';
 import InactiveRepost from './InactiveRepost.svg';
@@ -108,6 +113,7 @@ import RightArrow from './RightArrow.svg';
 import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
+import SolidMessageSendIcon from './SolidMessageSendIcon.svg';
 import Sparkles from './Sparkles.svg';
 import SwitchAcc from './switchAcc.svg';
 import TagFriends from './TagFriends.svg';
@@ -130,20 +136,14 @@ import WhiteLeftArrow from './WhiteLeftArrow.svg';
 import WhiteTick from './WhiteTick.svg';
 import YouthCoin from './youthCoin.svg';
 import YouthIcon from './YouthIcon.svg';
+import YouthIconWhite from './YouthIconWhite.svg';
 import YoutubeIcon from './YoutubeIcon.svg';
 import Yudio from './yudio.svg';
-import YouthIconWhite from './YouthIconWhite.svg';
 
 export {
-  YouthIconWhite,
-  QR,
-  Eye,
-  YouthCoin,
-  SwitchAcc,
   ActiveComment,
   ActiveDownload,
-  ActiveGroupChatIcon,
-  ActiveLike,
+  ActiveGroupChatIcon, ActiveIOSShare, ActiveLike,
   ActiveNewChatIcon,
   ActiveRepost,
   ActiveSave,
@@ -178,8 +178,7 @@ export {
   EmptyChatInboxIcon,
   Error,
   ErrorWhite,
-  EventsIcon,
-  FacebookIcon,
+  EventsIcon, Eye, FacebookIcon,
   FileAudio,
   FileIcon,
   FileImport,
@@ -198,17 +197,14 @@ export {
   GradientPlayIcon,
   GradientRedMic,
   GradientRedTick,
-  GrayLocationIcon,
-  GrayTimeIcon,
+  GrayLocationIcon, GraySolidMicIcon, GrayTimeIcon,
   GrayWalletIcon,
   GreenCheckMark,
   Home,
   HomeHeaderLogo,
   HorizontalDots,
   InactiveComment,
-  InactiveDownload,
-  InactiveGroupChatIcon,
-  InactiveLike,
+  InactiveDownload, InactiveGrayCommentIcon, InactiveGrayLike, InactiveGroupChatIcon, InactiveIOSShare, InactiveLike,
   InactiveNewChatIcon,
   InactiveRepost,
   InactiveSave,
@@ -242,15 +238,12 @@ export {
   PinterestIcon,
   PlayIcon,
   Plus,
-  PublicIcon,
-  RateUs,
+  PublicIcon, QR, RateUs,
   RedditIcon,
   RightArrow,
   Search,
   SearchIcon,
-  SnapchatIcon,
-  Sparkles,
-  TagFriends,
+  SnapchatIcon, SolidMessageSendIcon, Sparkles, SwitchAcc, TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
@@ -267,8 +260,7 @@ export {
   WhiteCameraIcon,
   WhiteForwardAudioIcon,
   WhiteLeftArrow,
-  WhiteTick,
-  YouthIcon,
-  YoutubeIcon,
-  Yudio,
+  WhiteTick, YouthCoin, YouthIcon, YouthIconWhite, YoutubeIcon,
+  Yudio
 };
+

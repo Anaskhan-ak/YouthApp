@@ -78,7 +78,7 @@ const Profile = () => {
           subscribers={50}
         />
         <ProfileOption />
-        <Stories />
+        {/* <Stories /> */}
         <PostContentModal options={options} setOptions={setOptions} />
       </View>
     </View>

@@ -1,18 +1,18 @@
 import { BlurView } from '@react-native-community/blur';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
+  ActiveIOSShare,
   ActiveLike,
   ActiveRepost,
   ActiveSave,
-  ActiveShare,
   InactiveComment,
+  InactiveIOSShare,
   InactiveLike,
   InactiveRepost,
-  InactiveSave,
-  InactiveShare,
+  InactiveSave
 } from '../../../assets/images/svgs';
 import { toast } from '../../../components/toast';
 import { width } from '../../../constant';
@@ -23,6 +23,7 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const PostBottomTab = ({post, actions, setActions}) => {
+  const [follow, setFollow] = useState(false)
   const user = useUser();
   const [icons, setIcons] = useState([
     {
@@ -68,9 +69,9 @@ const PostBottomTab = ({post, actions, setActions}) => {
       type: 'share',
       active: false,
       count: 0,
-      activeIcon: <ActiveShare width={width * 0.065} height={width * 0.065} />,
+      activeIcon: <ActiveIOSShare width={width * 0.065} height={width * 0.065} />,
       inactiveIcon: (
-        <InactiveShare width={width * 0.065} height={width * 0.065} />
+        <InactiveIOSShare width={width * 0.065} height={width * 0.065} />
       ),
     },
   ]);
@@ -99,6 +100,22 @@ const PostBottomTab = ({post, actions, setActions}) => {
       ),
     );
   }, [actions?.comments?.count]);
+
+  useEffect(()=>{
+    const getFollowing = async()=>{
+      const userDetails = await getDataLocally()
+      try {
+        const response = await apiCall?.getFollower(userDetails?.id)
+        if (response) {
+          // console.log('Following fetched successfully', response)
+          setFollow(response?.some(f => f?.followingId === post?.userId))
+        }
+      } catch (error) {
+        console.log("Error fetching following", error)
+      }
+    }
+    getFollowing()
+  },[])
 
   const handlePress = async icon => {
     const userDetails = await getDataLocally();
@@ -150,6 +167,29 @@ const PostBottomTab = ({post, actions, setActions}) => {
         break;
     }
   };
+
+  const handleFollow = async () => {
+    const userDetails = await getDataLocally();
+    if (post?.userId === userDetails?.id) {
+      toast('error', 'You cant follow yourself!');
+    } else {
+      try {
+        const body = {
+          followerId: userDetails?.id,
+          followingId: post?.userId,
+        };
+        const response = await apiCall?.follow(body);
+        if (response) {
+          console.log('Followed successfully', response);
+          setFollow(true)
+        }
+      } catch (error) {
+        console.log('Error following', error);
+        toast('error', 'Error following');
+        setFollow(false)
+      }
+    }
+  };
   return (
     <View style={styles?.container}>
       <LinearGradient
@@ -171,8 +211,8 @@ const PostBottomTab = ({post, actions, setActions}) => {
         {(post?.type === 'MEDIA' ||
           post?.type === 'MUSIC' ||
           post?.type === 'DOCUMENT') && (
-          <TouchableOpacity style={styles?.pinkButton}>
-            <Text style={styles?.pinkButtonText}>Follow</Text>
+          <TouchableOpacity style={styles?.pinkButton} onPress={handleFollow}>
+            <Text style={styles?.pinkButtonText}>{follow ? `Followed` : `Follow`}</Text>
           </TouchableOpacity>
         )}
         {post?.type === 'EVENT' && (

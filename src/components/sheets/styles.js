@@ -75,7 +75,8 @@ export const styles = StyleSheet.create({
     borderColor: '#5392E9',
   },
   btnContainer: {
-    paddingBottom: 100,
+    paddingBottom: 120,
     marginVertical: 5,
+    zIndex:999
   },
 });

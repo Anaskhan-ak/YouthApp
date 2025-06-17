@@ -16,7 +16,7 @@ import PostBottomTab from '../subComponents/postBottomTab';
 import PostVideo from './videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal, actions, setActions}) => {
+const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
   const [showTags, setShowTags] = useState(false);
@@ -59,17 +59,19 @@ const MediaPost = ({post, modal, actions, setActions}) => {
 
           return (
             <View
-              key={index}
               style={[
-                styles.tag,
+                styles?.tagContainer,
                 {
                   top: pos.top,
                   left: pos.left,
                 },
               ]}>
-              <Text style={styles.tagText}>
-                {`${tag?.user?.firstName} ${tag?.user?.lastName}`}
-              </Text>
+              <View key={index} style={styles.tag}>
+                <Text style={styles.tagText}>
+                  {`@${tag?.user?.firstName} ${tag?.user?.lastName}`}
+                </Text>
+              </View>
+              <View style={styles?.tagPointer} />
             </View>
           );
         })}
@@ -108,7 +110,7 @@ const MediaPost = ({post, modal, actions, setActions}) => {
           {showTags && mediaLayout && <Tags />}
 
           {isVideo ? (
-            <PostVideo url={item} index={index} activeIndex={activeIndex} />
+            <PostVideo url={item} isScrolling={isScrolling} />
           ) : (
             <Image
               source={{uri: item}}
@@ -213,19 +215,37 @@ const styles = StyleSheet.create({
     left: height * 0.01,
     alignSelf: 'center',
   },
+  tagContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 20,
+    // top: 40,
+  },
   tag: {
     backgroundColor: colors?.black,
     paddingVertical: width * 0.01,
     paddingHorizontal: width * 0.02,
     borderRadius: width * 0.2,
     margin: width * 0.02,
-    position: 'absolute',
-    zIndex: 20,
-    top: 40,
   },
   tagText: {
     fontFamily: fonts?.montserratMedium,
     fontSize: width * 0.025,
     color: colors?.white,
+  },
+  tagPointer: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: height * 0.005,
+    borderBottomWidth: height * 0.005,
+    borderLeftWidth: width * 0.03,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: colors?.black,
+    left: -width * 0.025,
   },
 });
