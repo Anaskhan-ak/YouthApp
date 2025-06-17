@@ -1,8 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { Image, TouchableOpacity, View } from 'react-native';
 
-import {images} from '../../assets/images';
+import { images } from '../../assets/images';
 import {
   EventsIcon,
   FileAudio,
@@ -19,11 +19,11 @@ import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 
-import {apiCall} from '../../services/apiCall';
-import {getDataLocally} from '../../helper';
-import {styles} from './styles';
-import {colors} from '../../utils/colors';
-import {width} from '../../constant';
+import { pick } from '@react-native-documents/picker';
+import { toast } from '../../components/toast';
+import { getDataLocally } from '../../helper';
+import { apiCall } from '../../services/apiCall';
+import { styles } from './styles';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -50,6 +50,27 @@ const Profile = () => {
     getUserData();
   }, []);
 
+  // console.log('User data', userhandleProfilePictureData);
+
+  const handleCoverImage = async()=>{
+    try {
+      const [res] =await pick({
+      allowMultiSelection : false,
+      type : 'image/*'
+    })
+    console.log("res", res)
+    setUserData(prev=>({
+      ...prev,
+      coverImage : res?.uri
+    }))
+    } catch (error) {
+      console.log("Error setting cover image", error)
+      toast("error", "Error setting cover image")
+    }
+  }
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -59,13 +80,20 @@ const Profile = () => {
           <WhiteLeftArrow />
         </TouchableOpacity>
       </View>
-
-      <View style={styles.coverImageContainer}>
-        <Image source={images?.defaultPicture} style={styles.coverImage} />
-      </View>
+    
+      <TouchableOpacity style={styles.coverImageContainer} onPress={handleCoverImage}>
+        <Image
+          source={
+            userData?.coverImage
+              ? {uri: userData?.coverImage}
+              : images?.defaultPicture
+          }
+          style={styles.coverImage}
+        />
+      </TouchableOpacity>
 
       <View style={styles.profileContentContainer}>
-        <ProfilePicture user={userData} />
+        <ProfilePicture user={userData} setUser={setUserData}/>
         <ProfileDetailCard
           userName={`${userData?.firstName} ${userData?.lastName}`}
           bio={userData?.bio}

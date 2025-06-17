@@ -1,9 +1,7 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {styles} from './styles';
-import {BlueTick, DropDown} from '../../../../assets/images/svgs';
-import {height} from 'constant';
+import { Text, View } from 'react-native';
+import { BlueTick, DropDown } from '../../../../assets/images/svgs';
 import GradientText from '../../../../components/text/GradientText';
+import { styles } from './styles';
 
 const ProfileDetailCard = ({userName, bio, link}) => {
   return (
@@ -15,7 +13,6 @@ const ProfileDetailCard = ({userName, bio, link}) => {
         </View>
         <DropDown width={18} height={18} />
       </View>
-      <Text style={styles?.title}>{bio}</Text>
       <GradientText style={styles?.link}>{link}</GradientText>
     </View>
   );

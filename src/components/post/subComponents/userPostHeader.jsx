@@ -60,6 +60,7 @@ const UserPostHeader = ({post, user}) => {
                 ?.replace('days', 'd')
                 ?.replace('day', 'd')
                 ?.replace('hours', 'h')
+                ?.replace('hour', 'h')
                 ?.replace('minutes', 'm')
                 ?.replace('minute', 'm')
                 ?.replace('seconds', 's')

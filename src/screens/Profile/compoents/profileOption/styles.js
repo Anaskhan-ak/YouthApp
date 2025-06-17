@@ -1,10 +1,12 @@
-import { width } from "../../../../constant";
 import { StyleSheet } from "react-native";
+import { width } from "../../../../constant";
 import { colors } from "../../../../utils/colors";
 import { fonts } from "../../../../utils/fonts";
 
 export const styles = StyleSheet.create({
-  container: {
+  container : {
+  },
+  content: {
     alignSelf: 'center',
     width: '90%',
     flexDirection: 'row',
@@ -27,4 +29,8 @@ export const styles = StyleSheet.create({
   editProfileText: {
     fontFamily: fonts?.montserratBold,
   },
+  suggestions : {
+    // transform : [{scale : 0.6}],
+    // backgroundColor : 'red',
+  }
 });

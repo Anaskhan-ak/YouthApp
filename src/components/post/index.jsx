@@ -24,9 +24,9 @@ const Post = ({post, isScrolling}) => {
     visible: false,
   });
   const [actions, setActions] = useState({
-    likes : {
-      value : post?.reactions,
-      count : post?.reactions?.length
+    likes: {
+      value: post?.reactions,
+      count: post?.reactions?.length,
     },
     comments: {
       ref: useRef(null),
@@ -44,7 +44,15 @@ const Post = ({post, isScrolling}) => {
     };
 
     const PostComponent = postComponents[post.type];
-    return <PostComponent post={post} modal={modalProps} actions={actions} setActions={setActions} isScrolling={isScrolling}/>;
+    return (
+      <PostComponent
+        post={post}
+        modal={modalProps}
+        actions={actions}
+        setActions={setActions}
+        isScrolling={isScrolling}
+      />
+    );
   };
 
   return (
@@ -60,12 +68,16 @@ const Post = ({post, isScrolling}) => {
       <View style={styles?.content}>
         {renderPostContent(post, {modal, setModal})}
       </View>
-      <View style={styles?.likes}>
-        <Likes post={post} actions={actions}/>
-      </View>
-      <View style={styles?.caption}>
-        <Text style={styles?.captionText}>{post?.caption}</Text>
-      </View>
+      {post?.reactions && (
+        <View style={styles?.likes}>
+          <Likes post={post} actions={actions} />
+        </View>
+      )}
+      {post?.caption && (
+        <View style={styles?.caption}>
+          <Text style={styles?.captionText}>{post?.caption}</Text>
+        </View>
+      )}
       <View style={styles?.comments}>
         <Comments post={post} actions={actions} setActions={setActions} />
       </View>
@@ -85,7 +97,7 @@ const Post = ({post, isScrolling}) => {
                 </View>
               )}
               <View style={styles?.modal}>
-                <PostModal post={post} modal={modal} setModal={setModal}/>
+                <PostModal post={post} modal={modal} setModal={setModal} />
               </View>
             </View>
           </TouchableWithoutFeedback>

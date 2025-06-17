@@ -16,7 +16,6 @@ const YudioPost = ({post, modal}) => {
           {!modal?.modal?.isPost && <PostBottomTab post={post} />}
         </View>
       </TouchableOpacity>
-      // <View style={styles?.reactionsTab}>// </View>
     </View>
   );
 };
@@ -39,15 +38,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: width * 0.04,
     marginVertical: height * 0.02,
-  },
-  reactionsTab: {
-    position: 'absolute',
-    zIndex: 100,
-    bottom: 0,
-    // width: width * 0.89,
-    right: 0,
-    left: 0,
-    alignSelf: 'center',
   },
   likes: {
     margin: height * 0.01,

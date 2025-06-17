@@ -15,7 +15,7 @@ import {
   InactiveSave
 } from '../../../assets/images/svgs';
 import { toast } from '../../../components/toast';
-import { width } from '../../../constant';
+import { height, width } from '../../../constant';
 import { getDataLocally } from '../../../helper';
 import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
@@ -31,9 +31,9 @@ const PostBottomTab = ({post, actions, setActions}) => {
       id: '',
       active: actions?.likes?.value?.some(r => r?.postId === post?.id),
       count: actions?.likes?.count,
-      activeIcon: <ActiveLike width={width * 0.065} height={width * 0.065} />,
+      activeIcon: <ActiveLike width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
-        <InactiveLike width={width * 0.065} height={width * 0.065} />
+        <InactiveLike width={width * 0.055} height={width * 0.055} />
       ),
     },
     {
@@ -41,37 +41,37 @@ const PostBottomTab = ({post, actions, setActions}) => {
       active: false,
       count: actions?.comments?.count,
       activeIcon: (
-        <ActiveComment width={width * 0.065} height={width * 0.065} />
+        <ActiveComment width={width * 0.055} height={width * 0.055} />
       ),
       inactiveIcon: (
-        <InactiveComment width={width * 0.065} height={width * 0.065} />
+        <InactiveComment width={width * 0.055} height={width * 0.055} />
       ),
     },
     {
       type: 'save',
       active: false,
       count: 0,
-      activeIcon: <ActiveSave width={width * 0.065} height={width * 0.065} />,
+      activeIcon: <ActiveSave width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
-        <InactiveSave width={width * 0.065} height={width * 0.065} />
+        <InactiveSave width={width * 0.055} height={width * 0.055} />
       ),
     },
     {
       type: 'repost',
       active: false,
       count: 0,
-      activeIcon: <ActiveRepost width={width * 0.065} height={width * 0.065} />,
+      activeIcon: <ActiveRepost width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
-        <InactiveRepost width={width * 0.065} height={width * 0.065} />
+        <InactiveRepost width={width * 0.055} height={width * 0.055} />
       ),
     },
     {
       type: 'share',
       active: false,
       count: 0,
-      activeIcon: <ActiveIOSShare width={width * 0.065} height={width * 0.065} />,
+      activeIcon: <ActiveIOSShare width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
-        <InactiveIOSShare width={width * 0.065} height={width * 0.065} />
+        <InactiveIOSShare width={width * 0.055} height={width * 0.055} />
       ),
     },
   ]);
@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical : height * 0.003
   },
   iconButton: {
     padding: width * 0.01,
