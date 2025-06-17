@@ -1,7 +1,4 @@
-import {View, Text} from 'react-native';
-import React from 'react';
 import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
 const DateMonthPicker = ({setSelectedDate, showDate, selectedDate,setShowDate}) => {
   const today = new Date();
   const maxDate = new Date(
@@ -10,6 +7,7 @@ const DateMonthPicker = ({setSelectedDate, showDate, selectedDate,setShowDate}) 
     today.getDate()
   );
   const handleDateConfirm = date => {
+    console.log("Selected date", date)
     setSelectedDate(date);
     setShowDate(false);
    };

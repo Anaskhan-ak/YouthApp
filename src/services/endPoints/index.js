@@ -19,6 +19,7 @@ export const apis = {
   reactOnComment : 'api/v1/reactoncomment',
   replyOnComment : 'api/v1/replyoncomment',
   getStories : 'api/v1/getStory',
+  updateProfile : 'api/v1/profile/update',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

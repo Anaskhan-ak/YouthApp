@@ -1,5 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
-import { height, width } from '../../../constant';
+import { height, Pixels, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts/index';
 
@@ -15,9 +15,9 @@ export const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: width * 0.03,
+    fontSize: Pixels(13),
     color: colors.black,
-    fontFamily: fonts?.montserratRegular,
+    fontFamily: fonts?.montserratMedium,
     alignItems: 'center',
   },
   text : {

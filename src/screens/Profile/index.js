@@ -12,7 +12,6 @@ import {
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
-import Stories from '../../components/stories';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
@@ -23,6 +22,7 @@ import { pick } from '@react-native-documents/picker';
 import { toast } from '../../components/toast';
 import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
+import EditProfile from './compoents/editProfile';
 import { styles } from './styles';
 
 const Profile = () => {
@@ -35,6 +35,8 @@ const Profile = () => {
     {type: 'files', icon: <FileImport />, active: false},
     {type: 'events', icon: <EventsIcon />, active: false},
   ]);
+
+  const [editProfile, setEditProfile] = useState(false);
 
   const getUserData = async () => {
     const localUserData = await getDataLocally();
@@ -52,36 +54,36 @@ const Profile = () => {
 
   // console.log('User data', userhandleProfilePictureData);
 
-  const handleCoverImage = async()=>{
+  const handleCoverImage = async () => {
     try {
-      const [res] =await pick({
-      allowMultiSelection : false,
-      type : 'image/*'
-    })
-    console.log("res", res)
-    setUserData(prev=>({
-      ...prev,
-      coverImage : res?.uri
-    }))
+      const [res] = await pick({
+        allowMultiSelection: false,
+        type: 'image/*',
+      });
+      console.log('res', res);
+      setUserData(prev => ({
+        ...prev,
+        coverImage: res?.uri,
+      }));
     } catch (error) {
-      console.log("Error setting cover image", error)
-      toast("error", "Error setting cover image")
+      console.log('Error setting cover image', error);
+      toast('error', 'Error setting cover image');
     }
-  }
-
-
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => navigation?.goBack()}
+          onPress={() => editProfile ? setEditProfile(false) :  navigation?.goBack()}
           style={styles.backButton}>
           <WhiteLeftArrow />
         </TouchableOpacity>
       </View>
-    
-      <TouchableOpacity style={styles.coverImageContainer} onPress={handleCoverImage}>
+
+      <TouchableOpacity
+        style={styles.coverImageContainer}
+        onPress={handleCoverImage}>
         <Image
           source={
             userData?.coverImage
@@ -92,22 +94,28 @@ const Profile = () => {
         />
       </TouchableOpacity>
 
-      <View style={styles.profileContentContainer}>
-        <ProfilePicture user={userData} setUser={setUserData}/>
-        <ProfileDetailCard
-          userName={`${userData?.firstName} ${userData?.lastName}`}
-          bio={userData?.bio}
-          link={userData?.links}
-        />
-        <ProfileStats
-          post={userData?.numPosts}
-          followers={userData?.numFollowers}
-          followings={userData?.numFollowing}
-          subscribers={50}
-        />
-        <ProfileOption />
-        {/* <Stories /> */}
-        <PostContentModal options={options} setOptions={setOptions} />
+      <View style={[styles.profileContentContainer, editProfile &&{flex : 0.9}]}>
+        <ProfilePicture user={userData} setUser={setUserData} />
+        {editProfile ? (
+          <EditProfile data={userData} />
+        ) : (
+          <>
+            <ProfileDetailCard
+              userName={`${userData?.firstName} ${userData?.lastName}`}
+              bio={userData?.bio}
+              link={userData?.links}
+            />
+            <ProfileStats
+              post={userData?.numPosts}
+              followers={userData?.numFollowers}
+              followings={userData?.numFollowing}
+              subscribers={50}
+            />
+            <ProfileOption setEditProfile={setEditProfile} />
+            {/* <Stories /> */}
+            <PostContentModal options={options} setOptions={setOptions} />
+          </>
+        )}
       </View>
     </View>
   );

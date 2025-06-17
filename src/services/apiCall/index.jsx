@@ -129,6 +129,12 @@ export const apiCall = {
     else throw result
   },
 
+  editProfile : async (params) => {
+    let result = await documentPost(apis?.updateProfile, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
   //GET API CALL
   getAllDocuments: async params => {
     let result = await post(apis?.getDocuments, params);

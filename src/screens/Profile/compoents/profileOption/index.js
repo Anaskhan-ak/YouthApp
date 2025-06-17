@@ -4,14 +4,15 @@ import SuggestedUsers from '../../../../components/post/subComponents/suggestedU
 import { profileOptions } from '../../../../utils/string';
 import { styles } from './styles';
 
-const ProfileOption = () => {
+const ProfileOption = ({setEditProfile}) => {
   const [suggestedUsers, setSuggestedUsers] = useState(false);
   const handlePress = async id => {
     switch (id) {
       case 'follow':
         setSuggestedUsers(prev => !prev);
         break;
-
+      case 'editProfile':
+        setEditProfile(prev => !prev)
       default:
         break;
     }
