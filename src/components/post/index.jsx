@@ -14,6 +14,7 @@ import EventPost from './subComponents/eventPost';
 import Likes from './subComponents/likes';
 import MediaPost from './subComponents/mediaPost';
 import PostModal from './subComponents/Modal';
+import MomentPost from './subComponents/MomentPost';
 import MusicPost from './subComponents/MusicPost';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
@@ -41,6 +42,7 @@ const Post = ({post, isScrolling}) => {
       YUDIO: YudioPost,
       EVENT: EventPost,
       DOCUMENT: DocumentPost,
+      MOMMENTS : MomentPost
     };
 
     const PostComponent = postComponents[post.type];

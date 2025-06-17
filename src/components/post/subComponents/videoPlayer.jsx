@@ -121,7 +121,7 @@ export default PostVideo;
 const styles = StyleSheet.create({
   mediaImage: {
     width: width * 0.89,
-    height: height * 0.38,
+    height: height * 0.5,
     resizeMode: 'contain',
   },
   playButton: {

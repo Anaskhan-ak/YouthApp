@@ -210,7 +210,9 @@ const PostBottomTab = ({post, actions, setActions}) => {
         })}
         {(post?.type === 'MEDIA' ||
           post?.type === 'MUSIC' ||
-          post?.type === 'DOCUMENT') && (
+          post?.type === 'DOCUMENT'||
+          post?.type === 'MOMMENTS'
+        ) && (
           <TouchableOpacity style={styles?.pinkButton} onPress={handleFollow}>
             <Text style={styles?.pinkButtonText}>{follow ? `Followed` : `Follow`}</Text>
           </TouchableOpacity>
