@@ -6,7 +6,7 @@ import { Plus } from '../../../../assets/images/svgs';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
-const ProfilePicture = ({user, setUser}) => {
+const ProfilePicture = ({user, setUser, setEditProfile}) => {
   const handleProfilePicture = async()=>{
       try {
         const [res] =await pick({
@@ -18,6 +18,7 @@ const ProfilePicture = ({user, setUser}) => {
         ...prev,
         profilePicture : res?.uri
       }))
+      setEditProfile(true)
       } catch (error) {
         console.log("Error setting cover image", error)
         toast("error", "Error setting cover image")

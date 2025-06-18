@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Dimensions, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import {
   Calendar,
+  Calendar1,
   Error,
   GrayLocationIcon,
   GrayTimeIcon,
@@ -54,6 +55,11 @@ const AuthInput = ({
       {(icon === 'calendar' || icon === 'time') && (
         <TouchableOpacity onPress={onPress} style={{right: 10}}>
           <Calendar />
+        </TouchableOpacity>
+      )}
+      {(icon === 'calendar1') && (
+        <TouchableOpacity onPress={onPress} style={{right: 10}}>
+          <Calendar1 />
         </TouchableOpacity>
       )}
       {icon === 'cost' && (

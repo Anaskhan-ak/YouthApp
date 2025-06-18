@@ -65,6 +65,7 @@ const Profile = () => {
         ...prev,
         coverImage: res?.uri,
       }));
+      setEditProfile(true)
     } catch (error) {
       console.log('Error setting cover image', error);
       toast('error', 'Error setting cover image');
@@ -94,8 +95,8 @@ const Profile = () => {
         />
       </TouchableOpacity>
 
-      <View style={[styles.profileContentContainer, editProfile &&{flex : 0.9}]}>
-        <ProfilePicture user={userData} setUser={setUserData} />
+      <View style={[styles.profileContentContainer, editProfile &&{flex : 1.2}]}>
+        <ProfilePicture user={userData} setUser={setUserData} setEditProfile={setEditProfile}/>
         {editProfile ? (
           <EditProfile data={userData} />
         ) : (
@@ -113,7 +114,11 @@ const Profile = () => {
             />
             <ProfileOption setEditProfile={setEditProfile} />
             {/* <Stories /> */}
-            <PostContentModal options={options} setOptions={setOptions} />
+            <View style={{
+              position : "absolute",
+              zIndex : 20,
+              bottom : 0
+            }}><PostContentModal options={options} setOptions={setOptions} /></View>
           </>
         )}
       </View>

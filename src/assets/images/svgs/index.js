@@ -20,6 +20,7 @@ import BlackShare from './BlackShare.svg';
 import BlackYouthLogo from './BlackYouthLogo.svg';
 import BlueTick from './BlueTick.svg';
 import Calendar from './calendar.svg';
+import Calendar1 from './Calendar1.svg';
 import CameraIcon from './CameraIcon.svg';
 import Chat from './chat.svg';
 import ChatContactIcon from './ChatContactIcon.svg';
@@ -165,8 +166,7 @@ export {
   BlackShare,
   BlackYouthLogo,
   BlueTick,
-  Calendar,
-  CameraIcon,
+  Calendar, Calendar1, CameraIcon,
   Chat,
   ChatContactIcon,
   ChatDocumentIcon,

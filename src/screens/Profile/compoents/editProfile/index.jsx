@@ -2,11 +2,11 @@ import moment from 'moment';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { DropDown } from '../../../../assets/images/svgs';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
@@ -33,6 +33,7 @@ const EditProfile = ({data}) => {
     control,
     formState: {errors},
     handleSubmit,
+    watch
   } = useForm({
     defaultValues: {
       firstName: data?.firstName,
@@ -43,50 +44,51 @@ const EditProfile = ({data}) => {
       links: data?.links,
     },
   });
-const onSubmit = async values => {
-    console.log("date", selectedDate)
-  const formData = new FormData();
-  formData.append('firstName', values?.firstName);
-  formData.append('lastName', values?.lastName);
-  formData.append('gender', gender);
-  formData.append('country', values?.country);
-  formData.append('dateOfBirth', selectedDate);
-  formData.append('bio', values?.bio);
-  const links = ['www.Youthapp.io','bjfyhfvyjhjh']; 
-  links.forEach(link => {
-    formData.append('links', link); 
-  });
-
-  if (data?.profilePicture) {
-    formData.append('profilePicture', {
-      uri: data?.profilePicture,
-      name: 'profilePicture.jpg',
-      type: 'image/jpeg',
+  const links = watch('links')
+// console.log("Links", links)
+  const onSubmit = async values => {
+    // console.log('date', selectedDate);
+    const formData = new FormData();
+    formData.append('firstName', values?.firstName);
+    formData.append('lastName', values?.lastName);
+    formData.append('gender', gender);
+    formData.append('country', values?.country);
+    formData.append('dateOfBirth', selectedDate);
+    formData.append('bio', values?.bio);
+    const links = ['www.Youthapp.io', 'bjfyhfvyjhjh'];
+    links.forEach(link => {
+      formData.append('links', link);
     });
-  }
 
-  if (data?.coverImage) {
-    formData.append('coverImage', {
-      uri: data?.coverImage,
-      name: 'coverImage.jpg',
-      type: 'image/jpeg',
-    });
-  }
-
-  console.log("formData", formData);
-
-  try {
-    const response = await apiCall?.editProfile(formData);
-    if (response) {
-      console.log('Profile updated successfully', response);
-      toast('success', 'Profile updated successfully');
+    if (data?.profilePicture) {
+      formData.append('profilePicture', {
+        uri: data?.profilePicture,
+        name: 'profilePicture.jpg',
+        type: 'image/jpeg',
+      });
     }
-  } catch (error) {
-    console.log('Error updating profile', error);
-    toast('error', 'Error updating profile');
-  }
-};
 
+    if (data?.coverImage) {
+      formData.append('coverImage', {
+        uri: data?.coverImage,
+        name: 'coverImage.jpg',
+        type: 'image/jpeg',
+      });
+    }
+
+    console.log('formData', formData);
+
+    try {
+      const response = await apiCall?.editProfile(formData);
+      if (response) {
+        console.log('Profile updated successfully', response);
+        toast('success', 'Profile updated successfully');
+      }
+    } catch (error) {
+      console.log('Error updating profile', error);
+      toast('error', 'Error updating profile');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles?.container}>
@@ -111,7 +113,9 @@ const onSubmit = async values => {
                   ]}
                 />
                 {errors?.firstName?.message && (
-                  <Text>{errors?.firstName?.message}</Text>
+                  <Text style={styles?.errorText}>
+                    {errors?.firstName?.message}
+                  </Text>
                 )}
               </View>
             )}
@@ -134,7 +138,9 @@ const onSubmit = async values => {
                   ]}
                 />
                 {errors?.lastName?.message && (
-                  <Text>{errors?.lastName?.message}</Text>
+                  <Text style={styles?.errorText}>
+                    {errors?.lastName?.message}
+                  </Text>
                 )}
               </View>
             )}
@@ -239,6 +245,7 @@ const onSubmit = async values => {
                   }
                   placeholder="Date Of Birth"
                   inputStyle={{color: colors?.text}}
+                  icon={'calendar1'}
                 />
               </TouchableOpacity>
             );
@@ -257,8 +264,9 @@ const onSubmit = async values => {
                 backgroundColor: colors?.extraLightGrey,
                 borderRadius: width * 0.02,
                 height: height * 0.18,
-                padding: width * 0.01,
+                padding: width * 0.02,
               }}>
+              <Text style={styles?.bioHeading}>Bio</Text>
               <TextInput
                 style={styles?.bioInput}
                 placeholder="Say something about yourself..."
@@ -284,33 +292,39 @@ const onSubmit = async values => {
           )}
         />
 
-        <Controller
-          control={control}
-          name="links"
-          rules={{
-            required: 'At least one link is required.',
-          }}
-          render={({field: {value, onChange}}) => (
-            <View>
-              <View>
-                <AuthInput
-                  placeholder="Links"
-                  value={value}
-                  onChangeText={onChange}
-                  inputStyle={[
-                    styles?.inputStyle,
-                    {paddingVertical: height * 0.005},
-                  ]}
-                />
-                <TouchableOpacity style={styles?.addMoreButton}>
-                  <Text style={styles?.addMoreText}>Add more links</Text>
-                </TouchableOpacity>
-              </View>
+        {/* {links?.map((link, index) => {
+          return (
+            <Controller
+              control={control}
+              name={`links[index]`}
+              rules={{
+                required: 'At least one link is required.',
+              }}
+              render={({field: {value, onChange}}) => (
+                <View>
+                  <View>
+                    <AuthInput
+                      placeholder="Links"
+                      value={value}
+                      onChangeText={onChange}
+                      inputStyle={[
+                        styles?.inputStyle,
+                        {paddingVertical: height * 0.005},
+                      ]}
+                    />
+                    <TouchableOpacity style={styles?.addMoreButton}>
+                      <Text style={styles?.addMoreText}>Add more links</Text>
+                    </TouchableOpacity>
+                  </View>
 
-              {errors?.links?.message && <Text>{errors?.links?.message}</Text>}
-            </View>
-          )}
-        />
+                  {errors?.links[index]?.message && (
+                    <Text>{errors?.links[index]?.message}</Text>
+                  )}
+                </View>
+              )}
+            />
+          );
+        })} */}
         <TouchableOpacity style={styles?.link}>
           <GradientText style={styles?.linkText}>
             Switch to a creator account

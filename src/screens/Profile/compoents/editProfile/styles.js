@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
   addMoreText: {
     fontSize: Pixels(14),
     textDecorationLine: 'underline',
-    fontFamily: fonts?.montserratMedium,
+    fontFamily: fonts?.montserratBold,
   },
   addMoreButton: {
     position: 'absolute',
@@ -59,4 +59,15 @@ export const styles = StyleSheet.create({
     fontFamily: fonts?.montserratMedium,
     fontSize : Pixels(13)
   },
+  errorText:{
+    color : colors?.red,
+    fontFamily : fonts?.montserratMedium,
+    fontSize : Pixels(10)
+  },
+  bioHeading : {
+    fontSize: Pixels(14),
+    fontFamily: fonts?.montserratBold,
+    color : colors?.text,
+    
+  }
 });
