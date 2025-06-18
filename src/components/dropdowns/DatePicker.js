@@ -7,7 +7,7 @@ const DateMonthPicker = ({setSelectedDate, showDate, selectedDate,setShowDate}) 
     today.getDate()
   );
   const handleDateConfirm = date => {
-    console.log("Selected date", date)
+    console.log("Selected date", date?.toString())
     setSelectedDate(date);
     setShowDate(false);
    };

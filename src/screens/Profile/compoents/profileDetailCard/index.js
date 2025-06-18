@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native';
 import { BlueTick, DropDown } from '../../../../assets/images/svgs';
-import GradientText from '../../../../components/text/GradientText';
 import { styles } from './styles';
 
-const ProfileDetailCard = ({userName, bio, link}) => {
+const ProfileDetailCard = ({userName, bio, links}) => {
+  // console.log("LInks", links)
   return (
     <View style={styles?.container}>
       <View style={styles?.profileView}>
@@ -13,7 +13,13 @@ const ProfileDetailCard = ({userName, bio, link}) => {
         </View>
         <DropDown width={18} height={18} />
       </View>
-      <GradientText style={styles?.link}>{link}</GradientText>
+      {/* {
+        links?.length > 0 ? links?.map((link, index)=>{
+          return (
+            <GradientText style={styles?.link}>,;;;;;;;;;;</GradientText>
+          )
+        }) : null
+      } */}
     </View>
   );
 };

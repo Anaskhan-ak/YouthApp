@@ -35,6 +35,7 @@ const Profile = () => {
     {type: 'files', icon: <FileImport />, active: false},
     {type: 'events', icon: <EventsIcon />, active: false},
   ]);
+  // const isFocus = useIsFocused()
 
   const [editProfile, setEditProfile] = useState(false);
 
@@ -98,13 +99,13 @@ const Profile = () => {
       <View style={[styles.profileContentContainer, editProfile &&{flex : 1}]}>
         <ProfilePicture user={userData} setUser={setUserData} setEditProfile={setEditProfile}/>
         {editProfile ? (
-          <EditProfile data={userData} />
+          <EditProfile data={userData} setData={setUserData} setEditProfile={setEditProfile}/>
         ) : (
           <>
             <ProfileDetailCard
               userName={`${userData?.firstName} ${userData?.lastName}`}
               bio={userData?.bio}
-              link={userData?.links}
+              links={userData?.links}
             />
             <ProfileStats
               post={userData?.numPosts}

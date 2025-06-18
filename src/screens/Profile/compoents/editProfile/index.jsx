@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DropDown } from '../../../../assets/images/svgs';
+import { DropDown, GradientCross } from '../../../../assets/images/svgs';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
 import DateMonthPicker from '../../../../components/dropdowns/DatePicker';
 import AuthInput from '../../../../components/inputs/authInput';
@@ -20,14 +20,15 @@ import { apiCall } from '../../../../services/apiCall';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
-const EditProfile = ({data}) => {
+const EditProfile = ({data, setData, setEditProfile}) => {
   const [showGender, setShowGender] = useState(false);
   const [gender, setGender] = useState(data?.gender);
   const [countryDetails, setCountryDetails] = useState(null);
   const [showCountry, setShowCountry] = useState(false);
   const [showDate, setShowDate] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(data?.dateOfBirth ?? 'DOB');
+  const [selectedDate, setSelectedDate] = useState('DOB');
   const [chars, setChars] = useState(data?.bio?.length);
+  const [loading, setLoading] = useState(false);
   const maxChars = 200;
   const {
     control,
@@ -40,7 +41,7 @@ const EditProfile = ({data}) => {
       firstName: data?.firstName,
       lastName: data?.lastName,
       country: data?.country,
-      date: selectedDate,
+      date: data?.dateOfBirth,
       bio: data?.bio,
       links: ['www.Youthapp.io', 'www.Youthapp.io'],
     },
@@ -52,13 +53,17 @@ const EditProfile = ({data}) => {
   const links = watch('links');
 
   const onSubmit = async values => {
-    // console.log('date', selectedDate);
+    // console.log('selectedDate', selectedDate?.toISOString());
+    setLoading(true);
     const formData = new FormData();
     formData.append('firstName', values?.firstName);
     formData.append('lastName', values?.lastName);
     formData.append('gender', gender);
     formData.append('country', values?.country);
-    formData.append('dateOfBirth', selectedDate?.toISOString());
+    formData.append(
+      'dateOfBirth',
+      selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
+    );
     formData.append('bio', values?.bio);
     values?.links.forEach(link => {
       formData.append('links', link);
@@ -87,10 +92,26 @@ const EditProfile = ({data}) => {
       if (response) {
         console.log('Profile updated successfully', response);
         toast('success', 'Profile updated successfully');
+        setLoading(false);
+        setEditProfile(false);
+        setData({
+          firstName: values?.firstName,
+          lastName: values?.lastName,
+          gender: gender,
+          country: values?.country,
+          dateOfBirth:
+            selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
+          links: values?.links,
+          profilePicture: data?.profilePicture,
+          coverImage: data?.coverImage
+        });
       }
     } catch (error) {
       console.log('Error updating profile', error);
       toast('error', 'Error updating profile');
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -243,9 +264,11 @@ const EditProfile = ({data}) => {
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={
-                    selectedDate !== 'DOB'
-                      ? moment(selectedDate).format('DD-MM-YYYY')
-                      : value
+                    selectedDate === 'DOB'
+                      ? moment(value)?.format('DD-MM-YYYY')
+                      : moment(selectedDate?.toISOString())?.format(
+                          'DD-MM-YYYY',
+                        )
                   }
                   placeholder="Date Of Birth"
                   inputStyle={{color: colors?.text}}
@@ -314,11 +337,17 @@ const EditProfile = ({data}) => {
                   ]}
                 />
 
-                {index === 0 && (
+                {index === 0 ? (
                   <TouchableOpacity
                     style={styles?.addMoreButton}
                     onPress={() => append('')}>
                     <Text style={styles?.addMoreText}>Add more links</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles?.addMoreButton}
+                    onPress={() => remove(index)}>
+                    <GradientCross width={width * 0.05} height={width * 0.05} />
                   </TouchableOpacity>
                 )}
 
@@ -361,7 +390,11 @@ const EditProfile = ({data}) => {
         showDate={showDate}
         setShowDate={setShowDate}
       />
-      <PrimaryButton onPress={handleSubmit(onSubmit)} title="Update" />
+      <PrimaryButton
+        onPress={handleSubmit(onSubmit)}
+        title="Update"
+        isLoading={loading}
+      />
     </ScrollView>
   );
 };
