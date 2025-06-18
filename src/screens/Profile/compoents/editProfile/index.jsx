@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import {
   ScrollView,
   Text,
@@ -33,7 +33,8 @@ const EditProfile = ({data}) => {
     control,
     formState: {errors},
     handleSubmit,
-    watch
+    watch,
+    setValue,
   } = useForm({
     defaultValues: {
       firstName: data?.firstName,
@@ -41,11 +42,15 @@ const EditProfile = ({data}) => {
       country: data?.country,
       date: selectedDate,
       bio: data?.bio,
-      links: data?.links,
+      links: ['www.Youthapp.io', 'www.Youthapp.io'],
     },
   });
-  const links = watch('links')
-// console.log("Links", links)
+  const {fields, append, remove} = useFieldArray({
+    control,
+    name: 'links',
+  });
+  const links = watch('links');
+
   const onSubmit = async values => {
     // console.log('date', selectedDate);
     const formData = new FormData();
@@ -53,10 +58,9 @@ const EditProfile = ({data}) => {
     formData.append('lastName', values?.lastName);
     formData.append('gender', gender);
     formData.append('country', values?.country);
-    formData.append('dateOfBirth', selectedDate);
+    formData.append('dateOfBirth', selectedDate?.toISOString());
     formData.append('bio', values?.bio);
-    const links = ['www.Youthapp.io', 'bjfyhfvyjhjh'];
-    links.forEach(link => {
+    values?.links.forEach(link => {
       formData.append('links', link);
     });
 
@@ -292,39 +296,42 @@ const EditProfile = ({data}) => {
           )}
         />
 
-        {/* {links?.map((link, index) => {
-          return (
-            <Controller
-              control={control}
-              name={`links[index]`}
-              rules={{
-                required: 'At least one link is required.',
-              }}
-              render={({field: {value, onChange}}) => (
-                <View>
-                  <View>
-                    <AuthInput
-                      placeholder="Links"
-                      value={value}
-                      onChangeText={onChange}
-                      inputStyle={[
-                        styles?.inputStyle,
-                        {paddingVertical: height * 0.005},
-                      ]}
-                    />
-                    <TouchableOpacity style={styles?.addMoreButton}>
-                      <Text style={styles?.addMoreText}>Add more links</Text>
-                    </TouchableOpacity>
-                  </View>
+        {fields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={control}
+            name={`links.${index}`}
+            rules={{required: 'Link is required.'}}
+            render={({field: {value, onChange}}) => (
+              <View>
+                <AuthInput
+                  placeholder="Links"
+                  value={value}
+                  onChangeText={onChange}
+                  inputStyle={[
+                    styles?.inputStyle,
+                    {paddingVertical: height * 0.005},
+                  ]}
+                />
 
-                  {errors?.links[index]?.message && (
-                    <Text>{errors?.links[index]?.message}</Text>
-                  )}
-                </View>
-              )}
-            />
-          );
-        })} */}
+                {index === 0 && (
+                  <TouchableOpacity
+                    style={styles?.addMoreButton}
+                    onPress={() => append('')}>
+                    <Text style={styles?.addMoreText}>Add more links</Text>
+                  </TouchableOpacity>
+                )}
+
+                {errors?.links?.[index]?.message && (
+                  <Text style={{color: 'red'}}>
+                    {errors.links[index].message}
+                  </Text>
+                )}
+              </View>
+            )}
+          />
+        ))}
+
         <TouchableOpacity style={styles?.link}>
           <GradientText style={styles?.linkText}>
             Switch to a creator account
@@ -332,7 +339,7 @@ const EditProfile = ({data}) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles?.link}>
           <GradientText style={styles?.linkText}>
-            Switch to a creator account
+            Switch to a business account
           </GradientText>
         </TouchableOpacity>
       </View>

@@ -95,7 +95,7 @@ const Profile = () => {
         />
       </TouchableOpacity>
 
-      <View style={[styles.profileContentContainer, editProfile &&{flex : 1.2}]}>
+      <View style={[styles.profileContentContainer, editProfile &&{flex : 1}]}>
         <ProfilePicture user={userData} setUser={setUserData} setEditProfile={setEditProfile}/>
         {editProfile ? (
           <EditProfile data={userData} />

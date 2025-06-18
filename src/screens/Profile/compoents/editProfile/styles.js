@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   linkText: {
     fontSize: Pixels(14),
     textDecorationLine: 'underline',
-    fontFamily: fonts?.montserratMedium,
+    fontFamily: fonts?.montserratSemiBold,
   },
   addMoreText: {
     fontSize: Pixels(14),
