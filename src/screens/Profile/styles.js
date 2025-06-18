@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   profileContentContainer: {
-    flex: 0.7,
+    flex: 0.8,
     borderTopStartRadius: 30,
     borderTopEndRadius: 30,
     marginTop: -20,

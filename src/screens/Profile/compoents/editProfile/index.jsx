@@ -52,8 +52,10 @@ const EditProfile = ({data, setData, setEditProfile}) => {
   });
   const links = watch('links');
 
+  console.log(data?.dateOfBirth)
+
   const onSubmit = async values => {
-    // console.log('selectedDate', selectedDate?.toISOString());
+    console.log('selectedDate',selectedDate?.toISOString());
     setLoading(true);
     const formData = new FormData();
     formData.append('firstName', values?.firstName);

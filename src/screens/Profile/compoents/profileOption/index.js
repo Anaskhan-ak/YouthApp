@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import SuggestedUsers from '../../../../components/post/subComponents/suggestedUsers';
+import { width } from '../../../../constant';
 import { profileOptions } from '../../../../utils/string';
 import { styles } from './styles';
 
@@ -12,7 +13,7 @@ const ProfileOption = ({setEditProfile}) => {
         setSuggestedUsers(prev => !prev);
         break;
       case 'editProfile':
-        setEditProfile(prev => !prev)
+        setEditProfile(prev => !prev);
       default:
         break;
     }
@@ -38,15 +39,11 @@ const ProfileOption = ({setEditProfile}) => {
       </View>
 
       {suggestedUsers && (
-          <View style={{
-            // alignItems : 'flex-start',
-            // justifyContent : "center",
-            // flex : 1
-          }}>
-            <View style={styles?.suggestions}>
-            <SuggestedUsers />
-          </View>
-          </View>
+       <View style={{width : width * 2}}>
+         <View style={styles?.suggestions}>
+          <SuggestedUsers />
+        </View>
+        </View>
       )}
     </View>
   );
