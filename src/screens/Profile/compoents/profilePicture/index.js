@@ -3,6 +3,7 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../../assets/images';
 import { Plus } from '../../../../assets/images/svgs';
+import { width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
@@ -28,7 +29,7 @@ const ProfilePicture = ({user, setUser, setEditProfile}) => {
     <TouchableOpacity style={styles?.container} onPress={handleProfilePicture}>
       <LinearGradient colors={[colors?.RGB2, colors?.RGB1]} style={styles?.btn}>
         <View>
-          <Plus width={12} height={12} />
+          <Plus width={width * 0.04} height={width * 0.04} />
         </View>
       </LinearGradient>
       <Image source={user?.profilePicture ? {uri : user?.profilePicture} : images?.defaultProfilePicture} style={styles?.image} />

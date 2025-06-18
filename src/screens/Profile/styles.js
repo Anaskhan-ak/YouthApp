@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     flex: 0.3,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors?.gray,
   },
   coverImage: {
     width: width,
@@ -36,5 +37,13 @@ export const styles = StyleSheet.create({
     zIndex: 999,
     backgroundColor: colors.white,
     paddingBottom: 20,
+  },
+  icons: {
+    marginVertical: height * 0.008,
+  },
+  postModal: {
+    position: 'absolute',
+    zIndex: 20,
+    bottom: width * 0.03,
   },
 });

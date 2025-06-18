@@ -1,5 +1,10 @@
-import { Text, View } from 'react-native';
-import { BlueTick, DropDown } from '../../../../assets/images/svgs';
+import { Text, TouchableOpacity, View } from 'react-native';
+import {
+  BlueTick,
+  DropDown,
+  GradientPencilIcon,
+} from '../../../../assets/images/svgs';
+import { height } from '../../../../constant';
 import { styles } from './styles';
 
 const ProfileDetailCard = ({userName, bio, links}) => {
@@ -13,6 +18,16 @@ const ProfileDetailCard = ({userName, bio, links}) => {
         </View>
         <DropDown width={18} height={18} />
       </View>
+      {bio ? (
+        <Text style={[styles?.taglineText,{marginVertical : height * 0.01}]}>
+            {bio}
+          </Text>
+      ) : <TouchableOpacity style={styles?.tagline}>
+          <Text style={styles?.taglineText}>
+            Tell your friends more about you
+          </Text>
+          <GradientPencilIcon />
+        </TouchableOpacity> }
       {/* {
         links?.length > 0 ? links?.map((link, index)=>{
           return (

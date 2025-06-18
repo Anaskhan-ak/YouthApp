@@ -1,7 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../../../utils/colors';
-import {height, width} from '../../../../constant';
-import {fonts} from '../../../../utils/fonts';
+import { StyleSheet } from 'react-native';
+import { Pixels, width } from '../../../../constant';
+import { fonts } from '../../../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,15 +12,16 @@ export const styles = StyleSheet.create({
     marginTop:10
   },
   count: {
-     fontSize: width * 0.026,
-    fontFamily: fonts?.montserratExtraBold,
+     fontSize: Pixels(12),
+    fontFamily: fonts?.montserratBold,
   },
   title: {
-    fontSize: width * 0.026,
-    fontFamily: fonts?.montserratMedium,
+    fontSize: Pixels(10),
+    fontFamily: fonts?.montserratRegular,
   },
   statsView:{
     flexDirection:"row",
-    alignItems:'center'
+    alignItems:'baseline',
+    paddingHorizontal : width * 0.03,
   }
 });

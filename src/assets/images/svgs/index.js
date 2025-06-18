@@ -55,6 +55,7 @@ import GradientDropRightCircle from './GradientDropRightCircle.svg';
 import GradientLocationIcon from './GradientLocationIcon.svg';
 import GradientMessageSendIcon from './GradientMessageSendIcon.svg';
 import GradientPauseIcon from './GradientPauseIcon.svg';
+import GradientPencilIcon from './GradientPencilIcon.svg';
 import GradientPlayIcon from './GradientPlayIcon.svg';
 import GradientRedMic from './GradientRedMic.svg';
 import GradientRedTick from './GradientRedTick.svg';
@@ -198,8 +199,7 @@ export {
   GradientDropRightCircle,
   GradientLocationIcon,
   GradientMessageSendIcon,
-  GradientPauseIcon,
-  GradientPlayIcon,
+  GradientPauseIcon, GradientPencilIcon, GradientPlayIcon,
   GradientRedMic,
   GradientRedTick,
   GrayLocationIcon, GraySolidMicIcon, GrayTimeIcon,

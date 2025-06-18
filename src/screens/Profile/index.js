@@ -12,17 +12,17 @@ import {
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
+import { pick } from '@react-native-documents/picker';
+import { toast } from '../../components/toast';
+import { height, width } from '../../constant';
+import { getDataLocally } from '../../helper';
+import { apiCall } from '../../services/apiCall';
+import EditProfile from './compoents/editProfile';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
-
-import { pick } from '@react-native-documents/picker';
-import { toast } from '../../components/toast';
-import { getDataLocally } from '../../helper';
-import { apiCall } from '../../services/apiCall';
-import EditProfile from './compoents/editProfile';
 import { styles } from './styles';
 
 const Profile = () => {
@@ -66,7 +66,7 @@ const Profile = () => {
         ...prev,
         coverImage: res?.uri,
       }));
-      setEditProfile(true)
+      setEditProfile(true);
     } catch (error) {
       console.log('Error setting cover image', error);
       toast('error', 'Error setting cover image');
@@ -77,7 +77,9 @@ const Profile = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
-          onPress={() => editProfile ? setEditProfile(false) :  navigation?.goBack()}
+          onPress={() =>
+            editProfile ? setEditProfile(false) : navigation?.goBack()
+          }
           style={styles.backButton}>
           <WhiteLeftArrow />
         </TouchableOpacity>
@@ -92,14 +94,30 @@ const Profile = () => {
               ? {uri: userData?.coverImage}
               : images?.defaultPicture
           }
-          style={styles.coverImage}
+          style={
+            !userData?.coverImage
+              ? {
+                  width: width * 0.2,
+                  height: height * 0.1,
+                  borderRadius : width * 0.03
+                }
+              : styles.coverImage
+          }
         />
       </TouchableOpacity>
 
-      <View style={[styles.profileContentContainer, editProfile &&{flex : 1}]}>
-        <ProfilePicture user={userData} setUser={setUserData} setEditProfile={setEditProfile}/>
+      <View style={[styles.profileContentContainer, editProfile && {flex: 1}]}>
+        <ProfilePicture
+          user={userData}
+          setUser={setUserData}
+          setEditProfile={setEditProfile}
+        />
         {editProfile ? (
-          <EditProfile data={userData} setData={setUserData} setEditProfile={setEditProfile}/>
+          <EditProfile
+            data={userData}
+            setData={setUserData}
+            setEditProfile={setEditProfile}
+          />
         ) : (
           <>
             <ProfileDetailCard
@@ -113,13 +131,12 @@ const Profile = () => {
               followings={userData?.numFollowing}
               subscribers={50}
             />
-            <ProfileOption setEditProfile={setEditProfile} />
+            <View style={styles?.icons}><ProfileOption setEditProfile={setEditProfile} /></View>
             {/* <Stories /> */}
-            <View style={{
-              position : "absolute",
-              zIndex : 20,
-              bottom : 0
-            }}><PostContentModal options={options} setOptions={setOptions} /></View>
+            <View
+              style={styles?.postModal}>
+              <PostContentModal options={options} setOptions={setOptions} />
+            </View>
           </>
         )}
       </View>

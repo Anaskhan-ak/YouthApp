@@ -1,6 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../../../utils/colors';
-import {height, width} from '../../../../constant';
+import { StyleSheet } from 'react-native';
+import { height, width } from '../../../../constant';
 
 export const styles = StyleSheet.create({
   container: {
@@ -23,8 +22,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     alignSelf: 'flex-end',
-    bottom: 6,
+    bottom : 0,
     zIndex: 999,
-    right: 4,
+    right: 0,
   },
 });

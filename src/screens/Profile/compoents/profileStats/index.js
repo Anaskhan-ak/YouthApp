@@ -1,23 +1,43 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {styles} from './styles';
-import {BlueTick, DropDown} from '../../../../assets/images/svgs';
-import {height} from 'constant';
+import { Text, View } from 'react-native';
+import { width } from '../../../../constant';
+import { colors } from '../../../../utils/colors';
+import { styles } from './styles';
 
 const ProfileStats = ({post, followers, followings, subscribers}) => {
   return (
     <View style={styles?.container}>
-      <View style={styles?.statsView}>
+      <View
+        style={[
+          styles?.statsView,
+          {
+            borderRightWidth: width * 0.002,
+            borderRightColor: colors?.textGray,
+          },
+        ]}>
         <Text style={styles?.count}>{post}</Text>
         <Text style={styles?.title}> Posts</Text>
       </View>
 
-      <View style={styles?.statsView}>
+      <View
+        style={[
+          styles?.statsView,
+          {
+            borderRightWidth: width * 0.002,
+            borderRightColor: colors?.textGray,
+          },
+        ]}>
         <Text style={styles?.count}>{followers}</Text>
         <Text style={styles?.title}> Followers</Text>
       </View>
 
-      <View style={styles?.statsView}>
+      <View
+        style={[
+          styles?.statsView,
+          {
+            borderRightWidth: width * 0.002,
+            borderRightColor: colors?.textGray,
+          },
+        ]}>
         <Text style={styles?.count}>{followings}</Text>
         <Text style={styles?.title}> Following</Text>
       </View>
