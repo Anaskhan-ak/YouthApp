@@ -1,6 +1,4 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import LinearGradient from 'react-native-linear-gradient';
-import { QRcode } from '../../../../assets/images/svgs';
 import { styles } from './styles';
 
 export default function QRSheet({sheetRef, setVisible}) {
@@ -13,9 +11,14 @@ export default function QRSheet({sheetRef, setVisible}) {
       enablePanDownToClose={true}
       ref={sheetRef}>
       <BottomSheetView style={styles?.contentContainer}>
-       <LinearGradient style={styles?.gradientBorder}>
+       {/* <LinearGradient style={styles?.gradientBorder}>
         <QRcode/>
        </LinearGradient>
+       <View style={styles?.iconsContainer}>
+        <LinearGradient>
+          
+        </LinearGradient>
+       </View> */}
       </BottomSheetView>
     </BottomSheet>
   );

@@ -71,7 +71,7 @@ const MomentPost = ({post, modal, actions, setActions, isScrolling}) => {
           </View>
           {/* Show tags only after layout is measured */}
           {showTags && mediaLayout && <Tags />}
-          <PostVideo url={post?.Momments?.url} isScrolling={isScrolling} />
+          <PostVideo url={post?.Momments?.url} isScrolling={isScrolling} isMoment={true}/>
         </View>
       </TouchableOpacity>
       {!modal?.modal?.isPost && (
