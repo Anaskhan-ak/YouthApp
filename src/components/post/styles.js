@@ -73,11 +73,8 @@ export const styles = StyleSheet.create({
   modalBg: {
     flex: 1,
     backgroundColor: `${colors?.black}CC`,
-    // justifyContent: 'center',
-    alignItems : 'flex-start'
   },
   modal: {
-    marginVertical: height * 0.2,
   },
   caption: {
     margin: height * 0.01,
