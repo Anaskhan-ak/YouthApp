@@ -7,7 +7,7 @@ import {
 import { height } from '../../../../constant';
 import { styles } from './styles';
 
-const ProfileDetailCard = ({userName, bio, links}) => {
+const ProfileDetailCard = ({userName, bio, links, setEditProfile}) => {
   // console.log("LInks", links)
   return (
     <View style={styles?.container}>
@@ -22,7 +22,7 @@ const ProfileDetailCard = ({userName, bio, links}) => {
         <Text style={[styles?.taglineText,{marginVertical : height * 0.01}]}>
             {bio}
           </Text>
-      ) : <TouchableOpacity style={styles?.tagline}>
+      ) : <TouchableOpacity style={styles?.tagline} onPress={()=> setEditProfile(true)}>
           <Text style={styles?.taglineText}>
             Tell your friends more about you
           </Text>

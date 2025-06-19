@@ -40,7 +40,8 @@ const EditProfile = ({data, setData, setEditProfile}) => {
       firstName: data?.firstName,
       lastName: data?.lastName,
       country: data?.country,
-      date: data?.dateOfBirth,
+      // date: data?.dateOfBirth,
+      date : new Date(),
       bio: data?.bio,
       links: ['www.Youthapp.io', 'www.Youthapp.io'],
     },
@@ -50,7 +51,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     name: 'links',
   });
   const links = watch('links');
-  console.log("date", data?.dateOfBirth)
+  // console.log("date", data?.dateOfBirth)
 
   const onSubmit = async values => {
     // console.log('selectedDate',selectedDate?.toISOString());

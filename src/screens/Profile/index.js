@@ -19,6 +19,7 @@ import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import EditProfile from './compoents/editProfile';
+import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
@@ -126,6 +127,7 @@ const Profile = () => {
               userName={`${userData?.firstName} ${userData?.lastName}`}
               bio={userData?.bio}
               links={userData?.links}
+              setEditProfile={setEditProfile}
             />
             <ProfileStats
               post={userData?.numPosts}
@@ -137,9 +139,9 @@ const Profile = () => {
               <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
             </View>
             {/* <Stories /> */}
-            {/* <View style={styles?.postModal}>
+            <View style={styles?.postModal}>
               <PostContentModal options={options} setOptions={setOptions} />
-            </View> */}
+            </View>
             <TouchableOpacity onPress={()=>navigation?.navigate('CreateStory', {isHighlight : true})} style={{
               width : width * 0.1,
               height : width * 0.1,
