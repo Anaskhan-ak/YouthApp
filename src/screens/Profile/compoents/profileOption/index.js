@@ -5,7 +5,7 @@ import { width } from '../../../../constant';
 import { profileOptions } from '../../../../utils/string';
 import { styles } from './styles';
 
-const ProfileOption = ({setEditProfile}) => {
+const ProfileOption = ({setEditProfile, setQr}) => {
   const [suggestedUsers, setSuggestedUsers] = useState(false);
   const handlePress = async id => {
     switch (id) {
@@ -14,6 +14,8 @@ const ProfileOption = ({setEditProfile}) => {
         break;
       case 'editProfile':
         setEditProfile(prev => !prev);
+      case 'qr':
+        setQr(prev => !prev)
       default:
         break;
     }

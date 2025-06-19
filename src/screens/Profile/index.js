@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 
 import { images } from '../../assets/images';
@@ -18,11 +18,11 @@ import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
 import EditProfile from './compoents/editProfile';
-import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
+import QRSheet from './compoents/qrCode';
 import { styles } from './styles';
 
 const Profile = () => {
@@ -38,6 +38,8 @@ const Profile = () => {
   // const isFocus = useIsFocused()
 
   const [editProfile, setEditProfile] = useState(false);
+  const [qr, setQr] = useState(false);
+  const qrRef = useRef(null)
 
   const getUserData = async () => {
     const localUserData = await getDataLocally();
@@ -99,7 +101,7 @@ const Profile = () => {
               ? {
                   width: width * 0.2,
                   height: height * 0.1,
-                  borderRadius : width * 0.03
+                  borderRadius: width * 0.03,
                 }
               : styles.coverImage
           }
@@ -131,12 +133,14 @@ const Profile = () => {
               followings={userData?.numFollowing}
               subscribers={50}
             />
-            <View style={styles?.icons}><ProfileOption setEditProfile={setEditProfile} /></View>
-            {/* <Stories /> */}
-            <View
-              style={styles?.postModal}>
-              <PostContentModal options={options} setOptions={setOptions} />
+            <View style={styles?.icons}>
+              <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
             </View>
+            {/* <Stories /> */}
+            {/* <View style={styles?.postModal}>
+              <PostContentModal options={options} setOptions={setOptions} />
+            </View> */}
+            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef}/>}
           </>
         )}
       </View>

@@ -22,6 +22,7 @@ import BlueTick from './BlueTick.svg';
 import Calendar from './calendar.svg';
 import Calendar1 from './Calendar1.svg';
 import CameraIcon from './CameraIcon.svg';
+import ChainIcon from './ChainIcon.svg';
 import Chat from './chat.svg';
 import ChatContactIcon from './ChatContactIcon.svg';
 import ChatDocumentIcon from './ChatDocumentIcon.svg';
@@ -109,6 +110,7 @@ import PlayIcon from './PlayIcon.svg';
 import Plus from './plus.svg';
 import PublicIcon from './PublicIcon.svg';
 import QR from './qr.svg';
+import QRcode from './QRcode.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
 import RightArrow from './RightArrow.svg';
@@ -167,8 +169,7 @@ export {
   BlackShare,
   BlackYouthLogo,
   BlueTick,
-  Calendar, Calendar1, CameraIcon,
-  Chat,
+  Calendar, Calendar1, CameraIcon, ChainIcon, Chat,
   ChatContactIcon,
   ChatDocumentIcon,
   ChatGalleryIcon,
@@ -243,7 +244,7 @@ export {
   PinterestIcon,
   PlayIcon,
   Plus,
-  PublicIcon, QR, RateUs,
+  PublicIcon, QR, QRcode, RateUs,
   RedditIcon,
   RightArrow,
   Search,
