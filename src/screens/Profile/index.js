@@ -9,6 +9,7 @@ import {
   FileImport,
   GalleryIcon,
   MomentsIcon,
+  Plus,
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
@@ -17,6 +18,7 @@ import { toast } from '../../components/toast';
 import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
 import EditProfile from './compoents/editProfile';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
@@ -140,6 +142,16 @@ const Profile = () => {
             {/* <View style={styles?.postModal}>
               <PostContentModal options={options} setOptions={setOptions} />
             </View> */}
+            <TouchableOpacity onPress={()=>navigation?.navigate('CreateStory', {isHighlight : true})} style={{
+              width : width * 0.1,
+              height : width * 0.1,
+              borderRadius : width * 0.1,
+              backgroundColor : colors?.gray,
+              alignItems : "center",
+              justifyContent : 'center'
+            }}>
+              <Plus width={20} height={20}/>
+            </TouchableOpacity>
             {qr && <QRSheet setVisible={setQr} sheetRef={qrRef}/>}
           </>
         )}

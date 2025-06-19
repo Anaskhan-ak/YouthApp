@@ -24,23 +24,26 @@ import { getRealPathFromURI } from '../../helper';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import Gallery from './components/gallery';
+import Stories from './components/stories';
 
-const CreateStory = () => {
+const CreateStory = ({route}) => {
+  const {isHighlight} = route?.params;
   const [media, setMedia] = useState({});
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
   const playerRef = useRef();
   const navigation = useNavigation();
   const storyIcons = [
-    {type: 'music', icon: <StoryIconMusic/>},
-    {type: 'filter', icon: <StoryIconFilters/>},
-    {type: 'text', icon: <StoryIconText/>},
-    {type: 'sticker', icon: <StoryIconSticker/>},
-    {type: 'friends', icon: <StoryIconFriends/>},
+    {type: 'music', icon: <StoryIconMusic />},
+    {type: 'filter', icon: <StoryIconFilters />},
+    {type: 'text', icon: <StoryIconText />},
+    {type: 'sticker', icon: <StoryIconSticker />},
+    {type: 'friends', icon: <StoryIconFriends />},
   ];
 
   const handleForm = async () => {
-    const isImage = media?.type === 'jpg' || media?.type === 'png' || media?.type === 'jpeg'
+    const isImage =
+      media?.type === 'jpg' || media?.type === 'png' || media?.type === 'jpeg';
     setLoading(true);
     const formData = new FormData();
     formData?.append('type', 'STORY');
@@ -71,18 +74,16 @@ const CreateStory = () => {
 
   const StoryIcons = () => {
     return (
-        <FlatList
-          data={storyIcons}
-          renderItem={({item}) => (
-            <TouchableOpacity style={styles?.icon}>
-              {item?.icon}
-            </TouchableOpacity>
-          )}
-          horizontal
-          style={styles.iconList}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ justifyContent: 'flex-end', flexGrow: 1 }}
-        />
+      <FlatList
+        data={storyIcons}
+        renderItem={({item}) => (
+          <TouchableOpacity style={styles?.icon}>{item?.icon}</TouchableOpacity>
+        )}
+        horizontal
+        style={styles.iconList}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{justifyContent: 'flex-end', flexGrow: 1}}
+      />
     );
   };
 
@@ -96,7 +97,7 @@ const CreateStory = () => {
             <Image source={{uri: media?.uri}} style={styles?.media} />
           ) : (
             <VideoPlayer
-            autoplay={true}
+              autoplay={true}
               style={styles?.media}
               ref={playerRef}
               endWithThumbnail
@@ -106,12 +107,19 @@ const CreateStory = () => {
                   : 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
               }}
               onError={e => console.log(e)}
-              resizeMode='cover'
+              resizeMode="cover"
             />
           )}
         </>
       ) : (
-        <Gallery media={media} setMedia={setMedia} />
+        <>
+        <GradientHeader backPress={() => setPreview(false)}  title='New Highlight'/>
+          {isHighlight ? (
+            <Stories media={media} setMedia={setMedia} />
+          ) : (
+            <Gallery media={media} setMedia={setMedia} />
+          )}
+        </>
       )}
       {preview ? (
         <CreateButton
@@ -127,12 +135,12 @@ const CreateStory = () => {
             )
           }
           secondButton={{
-            title : 'Add to Highlights'
+            title: 'Add to Highlights',
           }}
         />
       ) : (
         <CreateButton
-          title="Create New Story"
+          title={isHighlight ? "Create Highlight":"Create New Story"}
           onPress={() => setPreview(true)}
         />
       )}
@@ -158,13 +166,13 @@ const styles = StyleSheet.create({
     width: width * 0.09,
     height: width * 0.09,
     borderRadius: width * 0.09,
-    alignItems : 'center',
-    justifyContent : 'center',
-    marginHorizontal : width * 0.01
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: width * 0.01,
   },
   iconList: {
     // flex : 1,
-    alignSelf : "flex-end",
+    alignSelf: 'flex-end',
     // alignItems : 'flex-end'
   },
 });
