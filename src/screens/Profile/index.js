@@ -24,6 +24,7 @@ import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 import QRSheet from './compoents/qrCode';
 import { styles } from './styles';
+import PostContentModal from './compoents/postContentModal';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -137,9 +138,7 @@ const Profile = () => {
               <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
             </View>
             {/* <Stories /> */}
-            {/* <View style={styles?.postModal}>
               <PostContentModal options={options} setOptions={setOptions} />
-            </View> */}
             {qr && <QRSheet setVisible={setQr} sheetRef={qrRef}/>}
           </>
         )}

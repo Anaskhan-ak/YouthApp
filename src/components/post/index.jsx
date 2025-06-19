@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
 import { HorizontalDots } from '../../assets/images/svgs';
 import { styles } from './styles';
@@ -34,6 +34,9 @@ const Post = ({post, isScrolling}) => {
       value: post?.comments,
       count: post?.comments?.length,
     },
+     save: {
+      count:  post?._count?.SavedPost,
+    },
   });
   const renderPostContent = (post, modalProps) => {
     const postComponents = {
@@ -42,7 +45,7 @@ const Post = ({post, isScrolling}) => {
       YUDIO: YudioPost,
       EVENT: EventPost,
       DOCUMENT: DocumentPost,
-      MOMMENTS : MomentPost
+      MOMMENTS: MomentPost,
     };
 
     const PostComponent = postComponents[post.type];
@@ -98,6 +101,11 @@ const Post = ({post, isScrolling}) => {
                   {renderPostContent(post, {modal, setModal})}
                 </View>
               )}
+              {/* <BlurView
+                style={StyleSheet?.absoluteFill}
+                blurType="dark"
+                blurAmount={1}
+              /> */}
               <View style={styles?.modal}>
                 <PostModal post={post} modal={modal} setModal={setModal} />
               </View>

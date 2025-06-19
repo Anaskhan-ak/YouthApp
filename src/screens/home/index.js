@@ -151,11 +151,9 @@ const Home = () => {
           onEndReached={loadMore}
           onEndReachedThreshold={0.1}
           onScrollBeginDrag={() => {
-            console.log('started scrolling');
             setIsScrolling(true);
           }}
           onScrollEndDrag={() => {
-            console.log('stopped scrolling');
             setIsScrolling(false);
           }}
         />

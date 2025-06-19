@@ -71,7 +71,7 @@ const MomentPost = ({post, modal, actions, setActions, isScrolling}) => {
           </View>
           {/* Show tags only after layout is measured */}
           {showTags && mediaLayout && <Tags />}
-          <PostVideo url={post?.Momments?.url} isScrolling={isScrolling} />
+          <PostVideo url={post?.Momments?.url} isScrolling={isScrolling} isMoment={true}/>
         </View>
       </TouchableOpacity>
       {!modal?.modal?.isPost && (
@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 20,
-    // top: 40,
   },
   tag: {
     backgroundColor: colors?.black,

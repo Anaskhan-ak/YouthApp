@@ -79,6 +79,7 @@ export const styles = StyleSheet.create({
   input: {
     flex: 0.65,
     color: colors?.text,
+    left:10
   },
   button: {
     padding: width * 0.01,

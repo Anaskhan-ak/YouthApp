@@ -43,8 +43,8 @@ const BottomTabNavigator = () => {
           // reducedTransparencyFallbackColor="#32BCD1"
         />
         <Svg
-          width={Platform?.OS === 'android' ? width * 0.7 : width * 0.7}
-          height={70}
+          width={Platform?.OS === 'android' ? width * 0.7 : width * 0.72}
+          height={64}
           viewBox="0 0 307 66"
           fill="none"
           style={StyleSheet.absoluteFill}>

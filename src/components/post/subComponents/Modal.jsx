@@ -171,6 +171,7 @@ export default PostModal;
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
+    transform : [{scale : 0.8}]
   },
   button: {
     margin: height * 0.001,

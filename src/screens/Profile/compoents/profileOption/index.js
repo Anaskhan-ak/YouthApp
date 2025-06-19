@@ -41,10 +41,10 @@ const ProfileOption = ({setEditProfile, setQr}) => {
       </View>
 
       {suggestedUsers && (
-       <View style={{width : width * 2}}>
+      //  <View style={{width : width * 2}}>
          <View style={styles?.suggestions}>
           <SuggestedUsers />
-        </View>
+        {/* </View> */}
         </View>
       )}
     </View>

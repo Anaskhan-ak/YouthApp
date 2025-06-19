@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import { useRef, useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -18,12 +18,13 @@ import {
 } from '../../assets/images/svgs';
 import CreateButton from '../../components/buttons/CreateButton';
 import GradientHeader from '../../components/headers/gradientHeader';
-import { toast } from '../../components/toast';
-import { height, width } from '../../constant';
-import { getRealPathFromURI } from '../../helper';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {toast} from '../../components/toast';
+import {height, width} from '../../constant';
+import {getRealPathFromURI} from '../../helper';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import Gallery from './components/gallery';
+import {Platform} from 'react-native';
 
 const CreateStory = () => {
   const [media, setMedia] = useState({});
@@ -32,15 +33,16 @@ const CreateStory = () => {
   const playerRef = useRef();
   const navigation = useNavigation();
   const storyIcons = [
-    {type: 'music', icon: <StoryIconMusic/>},
-    {type: 'filter', icon: <StoryIconFilters/>},
-    {type: 'text', icon: <StoryIconText/>},
-    {type: 'sticker', icon: <StoryIconSticker/>},
-    {type: 'friends', icon: <StoryIconFriends/>},
+    {type: 'music', icon: <StoryIconMusic />},
+    {type: 'filter', icon: <StoryIconFilters />},
+    {type: 'text', icon: <StoryIconText />},
+    {type: 'sticker', icon: <StoryIconSticker />},
+    {type: 'friends', icon: <StoryIconFriends />},
   ];
 
   const handleForm = async () => {
-    const isImage = media?.type === 'jpg' || media?.type === 'png' || media?.type === 'jpeg'
+    const isImage =
+      media?.type === 'jpg' || media?.type === 'png' || media?.type === 'jpeg';
     setLoading(true);
     const formData = new FormData();
     formData?.append('type', 'STORY');
@@ -71,18 +73,20 @@ const CreateStory = () => {
 
   const StoryIcons = () => {
     return (
-        <FlatList
-          data={storyIcons}
-          renderItem={({item}) => (
-            <TouchableOpacity style={styles?.icon}>
-              {item?.icon}
-            </TouchableOpacity>
-          )}
-          horizontal
-          style={styles.iconList}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ justifyContent: 'flex-end', flexGrow: 1 }}
-        />
+      <FlatList
+        data={storyIcons}
+        renderItem={({item}) => (
+          <TouchableOpacity style={styles?.icon}>{item?.icon}</TouchableOpacity>
+        )}
+        horizontal
+        style={styles.iconList}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          justifyContent: 'flex-end',
+          flexGrow: 1,
+          paddingRight: Platform?.OS === 'ios' && 10,
+        }}
+      />
     );
   };
 
@@ -90,13 +94,16 @@ const CreateStory = () => {
     <View style={styles?.container}>
       {preview ? (
         <>
-          <GradientHeader backPress={() => setPreview(false)} />
+          <GradientHeader
+            storyIcons={<StoryIcons />}
+            backPress={() => setPreview(false)}
+          />
           {media?.type?.startsWith('image/') ||
           media?.type?.startsWith('image') ? (
             <Image source={{uri: media?.uri}} style={styles?.media} />
           ) : (
             <VideoPlayer
-            autoplay={true}
+              autoplay={true}
               style={styles?.media}
               ref={playerRef}
               endWithThumbnail
@@ -106,7 +113,7 @@ const CreateStory = () => {
                   : 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
               }}
               onError={e => console.log(e)}
-              resizeMode='cover'
+              resizeMode="cover"
             />
           )}
         </>
@@ -127,7 +134,7 @@ const CreateStory = () => {
             )
           }
           secondButton={{
-            title : 'Add to Highlights'
+            title: 'Add to Highlights',
           }}
         />
       ) : (
@@ -158,13 +165,13 @@ const styles = StyleSheet.create({
     width: width * 0.09,
     height: width * 0.09,
     borderRadius: width * 0.09,
-    alignItems : 'center',
-    justifyContent : 'center',
-    marginHorizontal : width * 0.01
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: width * 0.01,
   },
   iconList: {
     // flex : 1,
-    alignSelf : "flex-end",
+    alignSelf: 'flex-end',
     // alignItems : 'flex-end'
   },
 });

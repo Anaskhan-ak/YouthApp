@@ -41,9 +41,4 @@ export const styles = StyleSheet.create({
   icons: {
     marginVertical: height * 0.008,
   },
-  postModal: {
-    position: 'absolute',
-    zIndex: 20,
-    bottom: width * 0.03,
-  },
 });
