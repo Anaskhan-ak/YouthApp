@@ -21,6 +21,7 @@ import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
+import { albumIds } from '../../../utils/string';
 
 const PostBottomTab = ({post, actions, setActions}) => {
   const [follow, setFollow] = useState(false)
@@ -164,7 +165,21 @@ const PostBottomTab = ({post, actions, setActions}) => {
       case 'comment':
         actions?.comments?.ref?.current?.focus();
       case 'save':
-        // const albumIds?.find()
+       const albumId =  albumIds?.find(album => album?.type === post?.type)?.id
+       console.log("albumID", albumId)
+       try {
+        const body ={
+          albumID  : albumId,
+          postId : post?.id
+        }
+        const response = await apiCall?.savePost(body)
+        if (response){
+          console.log("Successfully saved post", response)
+        }
+       } catch (error) {
+        console.log("Error saving post", error)
+        toast("error", "Error saving post")
+       }
       default:
         break;
     }

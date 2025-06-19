@@ -14,7 +14,6 @@ import {
 } from '../../assets/images/svgs';
 
 import { pick } from '@react-native-documents/picker';
-import { toast } from '../../components/toast';
 import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
@@ -73,7 +72,6 @@ const Profile = () => {
       setEditProfile(true);
     } catch (error) {
       console.log('Error setting cover image', error);
-      toast('error', 'Error setting cover image');
     }
   };
 
