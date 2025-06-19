@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { DropDown, GradientCross } from '../../../../assets/images/svgs';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
+import CountryPickerDropDown from '../../../../components/dropdowns/CountryPicker';
 import DateMonthPicker from '../../../../components/dropdowns/DatePicker';
 import AuthInput from '../../../../components/inputs/authInput';
 import GenderModal from '../../../../components/modals/genderModal';
@@ -23,10 +24,8 @@ import { styles } from './styles';
 const EditProfile = ({data, setData, setEditProfile}) => {
   const [showGender, setShowGender] = useState(false);
   const [gender, setGender] = useState(data?.gender);
-  const [countryDetails, setCountryDetails] = useState(null);
   const [showCountry, setShowCountry] = useState(false);
   const [showDate, setShowDate] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('DOB');
   const [chars, setChars] = useState(data?.bio?.length);
   const [loading, setLoading] = useState(false);
   const maxChars = 200;
@@ -51,11 +50,10 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     name: 'links',
   });
   const links = watch('links');
-
-  console.log(data?.dateOfBirth)
+  console.log("date", data?.dateOfBirth)
 
   const onSubmit = async values => {
-    console.log('selectedDate',selectedDate?.toISOString());
+    // console.log('selectedDate',selectedDate?.toISOString());
     setLoading(true);
     const formData = new FormData();
     formData.append('firstName', values?.firstName);
@@ -105,7 +103,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
             selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
           links: values?.links,
           profilePicture: data?.profilePicture,
-          coverImage: data?.coverImage
+          coverImage: data?.coverImage,
         });
       }
     } catch (error) {
@@ -196,30 +194,42 @@ const EditProfile = ({data, setData, setEditProfile}) => {
           </Text>
           <DropDown height={height * 0.02} width={width * 0.035} />
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={() => {
-            setShowCountry(!showCountry);
-          }}
-          style={[
-            styles?.inputStyle,
-            {
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingHorizontal: width * 0.02,
-              paddingVertical: height * 0.01,
-            },
-          ]}>
-          <Text style={styles?.phoneText}>
-            {countryDetails
-              ? `${countryDetails?.flag} ${countryDetails?.dial_code}`
-              : 'Country'}
-          </Text>
-          <View>
-            <DropDown height={height * 0.02} width={width * 0.035} />
-          </View>
-        </TouchableOpacity> */}
         <Controller
+          control={control}
+          rules={{
+            required: 'Country is required.',
+          }}
+          name="country"
+          render={({field: {value}}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  setShowCountry(!showCountry);
+                }}
+                style={[
+                  styles?.inputStyle,
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: width * 0.02,
+                    paddingVertical: height * 0.01,
+                  },
+                ]}>
+                <Text style={styles?.phoneText}>
+                  {/* {countryDetails
+                    ? `${countryDetails?.flag} ${countryDetails?.dial_code}`
+                    : 'Country'} */}
+                  {value}
+                </Text>
+                <View>
+                  <DropDown height={height * 0.02} width={width * 0.035} />
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
+        {/* <Controller
           control={control}
           name="country"
           rules={{
@@ -241,7 +251,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
               )}
             </View>
           )}
-        />
+        /> */}
         <Controller
           control={control}
           name="date"
@@ -265,13 +275,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   disable={true}
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  value={
-                    selectedDate === 'DOB'
-                      ? moment(value)?.format('DD-MM-YYYY')
-                      : moment(selectedDate?.toISOString())?.format(
-                          'DD-MM-YYYY',
-                        )
-                  }
+                  value={moment(value)?.format('DD-MM-YYYY')}
                   placeholder="Date Of Birth"
                   inputStyle={{color: colors?.text}}
                   icon={'calendar1'}
@@ -381,16 +385,14 @@ const EditProfile = ({data, setData, setEditProfile}) => {
         setGender={setGender}
         value={gender}
       />
-      {/* <CountryPickerDropDown
+      <CountryPickerDropDown
         showCountry={showCountry}
-        setShowCountry={setShowCountry}
-        setCountryDetails={setCountryDetails}
-      /> */}
+        setValue={setValue}
+      />
       <DateMonthPicker
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
         showDate={showDate}
         setShowDate={setShowDate}
+        setValue={setValue}
       />
       <PrimaryButton
         onPress={handleSubmit(onSubmit)}

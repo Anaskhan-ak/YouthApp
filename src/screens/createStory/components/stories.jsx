@@ -37,18 +37,15 @@ const Stories = ({media, setMedia}) => {
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
-      //   style={index === 0 && styles?.button}
-      //   onPress={() => {
-      //     if (index === 0) {
-      //       setOpenCamera(true);
-      //     } else {
-      //       setMedia({
-      //         uri: item?.node?.image?.uri,
-      //         name: `${item?.node?.id}.${item?.node?.type?.split('/')?.pop()}`,
-      //         type: item?.node?.type,
-      //       });
-      //     }
-      //   }}
+        style={index === 0 && styles?.button}
+        onPress={() => {
+          
+            setMedia({
+              uri: item?.source?.uri,
+              name: `${item?.node?.id}.${item?.node?.type?.split('/')?.pop()}`,
+              type: item?.stories?.mediaType,
+            });
+        }}
       >
         <>
           <View
@@ -59,7 +56,7 @@ const Stories = ({media, setMedia}) => {
               //   },
             ]}
           />
-          <Image source={{uri: item.source?.uri}} style={styles?.image} />
+          <Image source={{uri: item?.source?.uri}} style={styles?.image} />
         </>
       </TouchableOpacity>
     );

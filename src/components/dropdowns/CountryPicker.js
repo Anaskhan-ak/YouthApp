@@ -1,12 +1,11 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {colors} from '../../utils/colors';
-import {CountryPicker} from 'react-native-country-codes-picker';
+import { CountryPicker } from 'react-native-country-codes-picker';
+import { colors } from '../../utils/colors';
 
 const CountryPickerDropDown = ({
   showCountry,
   setShowCountry,
   setCountryDetails,
+  setValue
 }) => {
   return (
     <CountryPicker
@@ -32,6 +31,7 @@ const CountryPickerDropDown = ({
       pickerButtonOnPress={item => {
         setCountryDetails(item);
         setShowCountry(false);
+        setValue('country', item?.name?.en)
       }}
     />
   );
