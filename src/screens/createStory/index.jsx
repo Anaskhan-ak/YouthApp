@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native';
 import VideoPlayer from 'react-native-video-player';
 import {
@@ -24,9 +25,10 @@ import {getRealPathFromURI} from '../../helper';
 import {apiCall} from '../../services/apiCall';
 import {colors} from '../../utils/colors';
 import Gallery from './components/gallery';
-import {Platform} from 'react-native';
+import Stories from './components/stories';
 
-const CreateStory = () => {
+const CreateStory = ({route}) => {
+  const {isHighlight} = route?.params;
   const [media, setMedia] = useState({});
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -118,7 +120,17 @@ const CreateStory = () => {
           )}
         </>
       ) : (
-        <Gallery media={media} setMedia={setMedia} />
+        <>
+          <GradientHeader
+            backPress={() => setPreview(false)}
+            title="New Highlight"
+          />
+          {isHighlight ? (
+            <Stories media={media} setMedia={setMedia} />
+          ) : (
+            <Gallery media={media} setMedia={setMedia} />
+          )}
+        </>
       )}
       {preview ? (
         <CreateButton
@@ -139,7 +151,7 @@ const CreateStory = () => {
         />
       ) : (
         <CreateButton
-          title="Create New Story"
+          title={isHighlight ? 'Create Highlight' : 'Create New Story'}
           onPress={() => setPreview(true)}
         />
       )}

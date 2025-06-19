@@ -16,7 +16,7 @@ import {
   OutlineHeartIcon,
 } from '../../../assets/images/svgs';
 import { toast } from '../../../components/toast';
-import { height, width } from '../../../constant';
+import { height, Pixels, width } from '../../../constant';
 import { getDataLocally } from '../../../helper';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
@@ -156,6 +156,9 @@ const PostModal = ({post, modal, setModal}) => {
                 borderBottomLeftRadius: width * 0.03,
                 borderBottomRightRadius: width * 0.03,
               },
+               {
+                width: modal?.modal?.isPost ? width * 0.87: width * 0.7,
+              }
             ]}>
             <Text style={styles?.text}>{action?.title}</Text>
             {action?.icon}
@@ -171,7 +174,8 @@ export default PostModal;
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    transform : [{scale : 0.8}]
+    // transform : [{scale : 0.8}],
+    margin : width * 0.02
   },
   button: {
     margin: height * 0.001,
@@ -180,11 +184,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: width * 0.87,
+    
   },
   text: {
     fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.038,
+    fontSize: Pixels(12),
     color: colors?.gray13,
   },
 });

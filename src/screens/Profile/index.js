@@ -1,30 +1,32 @@
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useEffect, useRef, useState} from 'react';
+import {Image, TouchableOpacity, View} from 'react-native';
 
-import { images } from '../../assets/images';
+import {images} from '../../assets/images';
 import {
   EventsIcon,
   FileAudio,
   FileImport,
   GalleryIcon,
   MomentsIcon,
+  Plus,
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
-import { pick } from '@react-native-documents/picker';
-import { toast } from '../../components/toast';
-import { height, width } from '../../constant';
-import { getDataLocally } from '../../helper';
-import { apiCall } from '../../services/apiCall';
+import {pick} from '@react-native-documents/picker';
+import {height, width} from '../../constant';
+import {getDataLocally} from '../../helper';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import EditProfile from './compoents/editProfile';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 import QRSheet from './compoents/qrCode';
-import { styles } from './styles';
+import {styles} from './styles';
 import PostContentModal from './compoents/postContentModal';
+import {ActivityIndicator} from 'react-native';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -40,7 +42,8 @@ const Profile = () => {
 
   const [editProfile, setEditProfile] = useState(false);
   const [qr, setQr] = useState(false);
-  const qrRef = useRef(null)
+  const qrRef = useRef(null);
+  const focus = useIsFocused()
 
   const getUserData = async () => {
     const localUserData = await getDataLocally();
@@ -54,7 +57,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [focus]);
 
   // console.log('User data', userhandleProfilePictureData);
 
@@ -72,7 +75,6 @@ const Profile = () => {
       setEditProfile(true);
     } catch (error) {
       console.log('Error setting cover image', error);
-      toast('error', 'Error setting cover image');
     }
   };
 
@@ -115,7 +117,13 @@ const Profile = () => {
           setUser={setUserData}
           setEditProfile={setEditProfile}
         />
-        {editProfile ? (
+
+        {!userData ? (
+          <View
+            style={styles?.indicator}>
+            <ActivityIndicator size={'large'} />
+          </View>
+        ) : editProfile ? (
           <EditProfile
             data={userData}
             setData={setUserData}
@@ -138,8 +146,8 @@ const Profile = () => {
               <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
             </View>
             {/* <Stories /> */}
-              <PostContentModal options={options} setOptions={setOptions} />
-            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef}/>}
+            <PostContentModal options={options} setOptions={setOptions} />
+            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
           </>
         )}
       </View>

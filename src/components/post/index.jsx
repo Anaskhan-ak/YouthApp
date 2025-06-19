@@ -4,9 +4,10 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from 'react-native';
 import { HorizontalDots } from '../../assets/images/svgs';
+import { height } from '../../constant';
 import { styles } from './styles';
 import Comments from './subComponents/comments';
 import DocumentPost from './subComponents/documentPost';
@@ -89,13 +90,23 @@ const Post = ({post, isScrolling}) => {
       {(modal?.visible || modal?.isPost) && (
         <Modal animationType="slide" transparent statusBarTranslucent>
           <TouchableWithoutFeedback
+            style={{
+              backgroundColor: 'red',
+            }}
             onPress={() =>
               setModal({
                 isPost: false,
                 visible: false,
               })
             }>
-            <View style={styles?.modalBg}>
+            <View
+              style={[
+                styles?.modalBg,
+                {
+                  justifyContent: modal?.isPost && 'center',
+                  alignItems: modal?.visible && 'flex-start',
+                },
+              ]}>
               {modal?.isPost && (
                 <View style={styles?.content}>
                   {renderPostContent(post, {modal, setModal})}
@@ -106,7 +117,13 @@ const Post = ({post, isScrolling}) => {
                 blurType="dark"
                 blurAmount={1}
               /> */}
-              <View style={styles?.modal}>
+              <View
+                style={[
+                  styles?.modal,
+                  {marginVertical: modal?.visible && height * 0.2,
+                    alignSelf :  modal?.isPost && 'flex-start'
+                  },
+                ]}>
                 <PostModal post={post} modal={modal} setModal={setModal} />
               </View>
             </View>

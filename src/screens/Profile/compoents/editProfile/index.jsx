@@ -1,32 +1,32 @@
 import moment from 'moment';
-import { useState } from 'react';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import {useState} from 'react';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
 import {
+  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DropDown, GradientCross } from '../../../../assets/images/svgs';
+import {DropDown, GradientCross} from '../../../../assets/images/svgs';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
+import CountryPickerDropDown from '../../../../components/dropdowns/CountryPicker';
 import DateMonthPicker from '../../../../components/dropdowns/DatePicker';
 import AuthInput from '../../../../components/inputs/authInput';
 import GenderModal from '../../../../components/modals/genderModal';
 import GradientText from '../../../../components/text/GradientText';
-import { toast } from '../../../../components/toast';
-import { height, width } from '../../../../constant';
-import { apiCall } from '../../../../services/apiCall';
-import { colors } from '../../../../utils/colors';
-import { styles } from './styles';
+import {toast} from '../../../../components/toast';
+import {height, width} from '../../../../constant';
+import {apiCall} from '../../../../services/apiCall';
+import {colors} from '../../../../utils/colors';
+import {styles} from './styles';
 
 const EditProfile = ({data, setData, setEditProfile}) => {
   const [showGender, setShowGender] = useState(false);
   const [gender, setGender] = useState(data?.gender);
-  const [countryDetails, setCountryDetails] = useState(null);
   const [showCountry, setShowCountry] = useState(false);
   const [showDate, setShowDate] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('DOB');
   const [chars, setChars] = useState(data?.bio?.length);
   const [loading, setLoading] = useState(false);
   const maxChars = 200;
@@ -41,9 +41,10 @@ const EditProfile = ({data, setData, setEditProfile}) => {
       firstName: data?.firstName,
       lastName: data?.lastName,
       country: data?.country,
-      date: data?.dateOfBirth,
+      date:
+        data?.dateOfBirth === null ? new Date() : new Date(data?.dateOfBirth),
       bio: data?.bio,
-      links: ['www.Youthapp.io', 'www.Youthapp.io'],
+      links: data?.links,
     },
   });
   const {fields, append, remove} = useFieldArray({
@@ -52,25 +53,19 @@ const EditProfile = ({data, setData, setEditProfile}) => {
   });
   const links = watch('links');
 
-  console.log(data?.dateOfBirth)
-
   const onSubmit = async values => {
-    console.log('selectedDate',selectedDate?.toISOString());
+    // console.log('selectedDate',selectedDate?.toISOString());
     setLoading(true);
     const formData = new FormData();
     formData.append('firstName', values?.firstName);
     formData.append('lastName', values?.lastName);
     formData.append('gender', gender);
     formData.append('country', values?.country);
-    formData.append(
-      'dateOfBirth',
-      selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
-    );
+    formData.append('dateOfBirth', values?.date);
     formData.append('bio', values?.bio);
     values?.links.forEach(link => {
       formData.append('links', link);
     });
-
     if (data?.profilePicture) {
       formData.append('profilePicture', {
         uri: data?.profilePicture,
@@ -101,11 +96,10 @@ const EditProfile = ({data, setData, setEditProfile}) => {
           lastName: values?.lastName,
           gender: gender,
           country: values?.country,
-          dateOfBirth:
-            selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
+          dateOfBirth: values?.date,
           links: values?.links,
           profilePicture: data?.profilePicture,
-          coverImage: data?.coverImage
+          coverImage: data?.coverImage,
         });
       }
     } catch (error) {
@@ -196,30 +190,42 @@ const EditProfile = ({data, setData, setEditProfile}) => {
           </Text>
           <DropDown height={height * 0.02} width={width * 0.035} />
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          onPress={() => {
-            setShowCountry(!showCountry);
-          }}
-          style={[
-            styles?.inputStyle,
-            {
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingHorizontal: width * 0.02,
-              paddingVertical: height * 0.01,
-            },
-          ]}>
-          <Text style={styles?.phoneText}>
-            {countryDetails
-              ? `${countryDetails?.flag} ${countryDetails?.dial_code}`
-              : 'Country'}
-          </Text>
-          <View>
-            <DropDown height={height * 0.02} width={width * 0.035} />
-          </View>
-        </TouchableOpacity> */}
         <Controller
+          control={control}
+          rules={{
+            required: 'Country is required.',
+          }}
+          name="country"
+          render={({field: {value}}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  setShowCountry(!showCountry);
+                }}
+                style={[
+                  styles?.inputStyle,
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: width * 0.02,
+                    paddingVertical: height * 0.01,
+                  },
+                ]}>
+                <Text style={styles?.phoneText}>
+                  {/* {countryDetails
+                    ? `${countryDetails?.flag} ${countryDetails?.dial_code}`
+                    : 'Country'} */}
+                  {value}
+                </Text>
+                <View>
+                  <DropDown height={height * 0.02} width={width * 0.035} />
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
+        {/* <Controller
           control={control}
           name="country"
           rules={{
@@ -241,7 +247,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
               )}
             </View>
           )}
-        />
+        /> */}
         <Controller
           control={control}
           name="date"
@@ -265,13 +271,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   disable={true}
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  value={
-                    selectedDate === 'DOB'
-                      ? moment(value)?.format('DD-MM-YYYY')
-                      : moment(selectedDate?.toISOString())?.format(
-                          'DD-MM-YYYY',
-                        )
-                  }
+                  value={moment(value)?.format('DD-MM-YYYY')}
                   placeholder="Date Of Birth"
                   inputStyle={{color: colors?.text}}
                   icon={'calendar1'}
@@ -335,7 +335,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   onChangeText={onChange}
                   inputStyle={[
                     styles?.inputStyle,
-                    {paddingVertical: height * 0.005},
+                    {paddingVertical: Platform?.OS==='android'?height * 0.005:height * 0.015},
                   ]}
                 />
 
@@ -381,16 +381,12 @@ const EditProfile = ({data, setData, setEditProfile}) => {
         setGender={setGender}
         value={gender}
       />
-      {/* <CountryPickerDropDown
-        showCountry={showCountry}
-        setShowCountry={setShowCountry}
-        setCountryDetails={setCountryDetails}
-      /> */}
+      <CountryPickerDropDown showCountry={showCountry} setValue={setValue} />
       <DateMonthPicker
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
         showDate={showDate}
         setShowDate={setShowDate}
+        setValue={setValue}
+        selectedDate={data?.dateOfBirth}
       />
       <PrimaryButton
         onPress={handleSubmit(onSubmit)}

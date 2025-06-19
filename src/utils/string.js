@@ -188,3 +188,22 @@ export const profileOptions = [
     route:''
   },
 ];
+
+export const albumIds = [
+  {
+    type : 'MEDIA',
+    id : 'cmc33arm10003r2tj2x6rutlq'
+  },
+  {
+    type : 'YUDIO',
+    id : 'cmc33e3ae0007r2tjabp0hmyh'
+  },
+  {
+    type : 'DOCUMENT',
+    id : 'cmc33ehcb000dr2tjka5tftlo'
+  },
+  {
+    type : 'EVENT',
+    id : 'cm6hvc3lt00091jdq5xgnd47r'
+  },
+]

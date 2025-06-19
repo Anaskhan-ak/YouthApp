@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {BlurView} from '@react-native-community/blur';
 import {useEffect, useState} from 'react';
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -21,9 +22,9 @@ import useUser from '../../../hooks/user';
 import {apiCall} from '../../../services/apiCall';
 import {colors} from '../../../utils/colors';
 import {fonts} from '../../../utils/fonts';
+import {albumIds} from '../../../utils/string';
 
 const PostBottomTab = ({post, actions, setActions}) => {
-  console.log('post', post);
   const [follow, setFollow] = useState(false);
   const user = useUser();
   const [icons, setIcons] = useState([
@@ -118,7 +119,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
       }
     };
     getFollowing();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePress = async icon => {
@@ -166,6 +167,22 @@ const PostBottomTab = ({post, actions, setActions}) => {
         break;
       case 'comment':
         actions?.comments?.ref?.current?.focus();
+      case 'save':
+        const albumId = albumIds?.find(album => album?.type === post?.type)?.id;
+        console.log('albumID', albumId);
+        try {
+          const body = {
+            albumID: albumId,
+            postId: post?.id,
+          };
+          const response = await apiCall?.savePost(body);
+          if (response) {
+            console.log('Successfully saved post', response);
+          }
+        } catch (error) {
+          console.log('Error saving post', error);
+          toast('error', 'Error saving post');
+        }
       default:
         break;
     }

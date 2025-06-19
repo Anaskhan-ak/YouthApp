@@ -14,9 +14,12 @@ const UserPostHeader = ({post, user}) => {
 
   const formatDate = params => {
     const array = params?.split(' ');
-    const date = array[0];
+    let date = array[0];
     const text = array[1];
     const ago = array[2];
+    if (date === 'a' ){
+      date = 1
+    }
     return `${date}${text} ${ago}`;
   };
   return (

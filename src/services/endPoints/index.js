@@ -20,6 +20,7 @@ export const apis = {
   replyOnComment : 'api/v1/replyoncomment',
   getStories : 'api/v1/getStory',
   updateProfile : 'api/v1/profile/update',
+  savePost : "api/v1/post/save",
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

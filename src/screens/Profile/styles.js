@@ -41,4 +41,5 @@ export const styles = StyleSheet.create({
   icons: {
     marginVertical: height * 0.008,
   },
+  indicator:{flex: 1, alignItems: 'center', justifyContent: 'center'}
 });

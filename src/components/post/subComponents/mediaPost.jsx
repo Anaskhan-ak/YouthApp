@@ -87,7 +87,7 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
     return (
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
-        <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
+        <View onLayout={handleMediaLayout} style={[styles.mediaContainer,!modal?.modal?.isPost &&{borderRadius: width * 0.04}]}>
           {!isVideo && (
             <View style={styles.mediaElements}>
               <TouchableOpacity onPress={() => setShowTags(!showTags)}>
@@ -114,7 +114,13 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
           ) : (
             <Image
               source={{uri: item}}
-              style={styles.mediaImage}
+              style={[
+                styles.mediaImage,
+                modal?.modal?.isPost && {
+                  borderWidth: 3,
+                  borderColor: colors?.white,
+                },
+              ]}
               resizeMode="cover"
             />
           )}
@@ -172,7 +178,6 @@ const styles = StyleSheet.create({
   mediaContainer: {
     backgroundColor: colors?.black,
     marginHorizontal: height * 0.01,
-    borderRadius: width * 0.04,
     marginTop: height * 0.015,
     overflow: 'hidden',
   },

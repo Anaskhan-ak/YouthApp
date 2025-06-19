@@ -3,13 +3,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {sideBottomSheetOptions} from '../../utils/string';
-import {NextButton} from '../../components/buttons/NextButton';
-import {styles} from './styles';
-import {colors} from '../../utils/colors';
-import {height, width} from '../../constant';
-import GradientText from '../../components/text/GradientText';
 import { BlueTick, Gallery } from '../../assets/images/svgs';
+import { NextButton } from '../../components/buttons/NextButton';
+import GradientText from '../../components/text/GradientText';
+import { height, width } from '../../constant';
+import { colors } from '../../utils/colors';
+import { sideBottomSheetOptions } from '../../utils/string';
+import { styles } from './styles';
 
 export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
   const [selected, setSelected] = useState({
@@ -19,8 +19,11 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
     route: 'CreatePost',
   });
   const navigation = useNavigation();
-  const handlePress = () => {
+  const handlePress = () => {  
     navigation?.navigate(selected?.route);
+    if (selected?.id === 'story') {
+      navigation?.navigate(selected?.route, {isHighlight: false});
+    }
   };
   return (
     <BottomSheet
@@ -36,9 +39,11 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
         </GradientText>
         {sideBottomSheetOptions?.map(item => {
           return (
-            <TouchableOpacity key={item.id} onPress={() => {
-              // console.log('Item', item?.route);
-              setSelected(item)
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => {
+                // console.log('Item', item?.route);
+                setSelected(item);
               }}>
               <LinearGradient
                 colors={
@@ -71,7 +76,7 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
         })}
         <View style={styles?.btnContainer}>
           <NextButton
-           onPress={handlePress}
+            onPress={handlePress}
             width={width * 0.6}
             title={'Create New Post'}
           />
