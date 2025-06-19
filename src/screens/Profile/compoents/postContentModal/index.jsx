@@ -7,6 +7,7 @@ import EventPosts from './EventPosts';
 import FilePosts from './FilePosts';
 import MediaPosts from './MediaPosts';
 import MomentPosts from './MomentPosts';
+import { toast } from '../../../../components/toast';
 
 const PostContentModal = ({options, setOptions}) => {
   const currentType = options.find(opt => opt.active)?.type;
