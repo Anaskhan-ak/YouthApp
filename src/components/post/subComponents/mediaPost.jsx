@@ -22,7 +22,6 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
   const [showTags, setShowTags] = useState(false);
   const [mediaLayout, setMediaLayout] = useState(null);
   const [tagPositions, setTagPositions] = useState([]);
-  console.log(modal);
 
   const handleMediaLayout = event => {
     const {width, height} = event.nativeEvent.layout;

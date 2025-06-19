@@ -163,6 +163,8 @@ const PostBottomTab = ({post, actions, setActions}) => {
         break;
       case 'comment':
         actions?.comments?.ref?.current?.focus();
+      case 'save':
+        // const albumIds?.find()
       default:
         break;
     }
