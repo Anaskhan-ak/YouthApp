@@ -7,12 +7,13 @@ import EventPosts from './EventPosts';
 import FilePosts from './FilePosts';
 import MediaPosts from './MediaPosts';
 import MomentPosts from './MomentPosts';
+import { toast } from '../../../../components/toast';
+import { useIsFocused } from '@react-navigation/native';
 
 const PostContentModal = ({options, setOptions}) => {
   const currentType = options.find(opt => opt.active)?.type;
   const [data, setData] = useState([]);
   const [yudios, setYudios] = useState([])
-
   useEffect(() => {
     const fetchPosts = async () => {
       const userDetails = await getDataLocally();

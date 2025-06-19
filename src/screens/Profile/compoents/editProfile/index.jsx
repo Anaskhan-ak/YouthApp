@@ -2,6 +2,7 @@ import moment from 'moment';
 import { useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import {
+  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -40,10 +41,10 @@ const EditProfile = ({data, setData, setEditProfile}) => {
       firstName: data?.firstName,
       lastName: data?.lastName,
       country: data?.country,
-      // date: data?.dateOfBirth,
-      date : new Date(),
+      date:
+        data?.dateOfBirth === null ? new Date() : new Date(data?.dateOfBirth),
       bio: data?.bio,
-      links: ['www.Youthapp.io', 'www.Youthapp.io'],
+      links: data?.links,
     },
   });
   const {fields, append, remove} = useFieldArray({
@@ -51,7 +52,6 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     name: 'links',
   });
   const links = watch('links');
-  // console.log("date", data?.dateOfBirth)
 
   const onSubmit = async values => {
     // console.log('selectedDate',selectedDate?.toISOString());
@@ -61,15 +61,11 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     formData.append('lastName', values?.lastName);
     formData.append('gender', gender);
     formData.append('country', values?.country);
-    formData.append(
-      'dateOfBirth',
-      selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
-    );
+    formData.append('dateOfBirth', values?.date);
     formData.append('bio', values?.bio);
     values?.links.forEach(link => {
       formData.append('links', link);
     });
-
     if (data?.profilePicture) {
       formData.append('profilePicture', {
         uri: data?.profilePicture,
@@ -100,8 +96,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
           lastName: values?.lastName,
           gender: gender,
           country: values?.country,
-          dateOfBirth:
-            selectedDate === 'DOB' ? values?.date : selectedDate?.toISOString(),
+          dateOfBirth: values?.date,
           links: values?.links,
           profilePicture: data?.profilePicture,
           coverImage: data?.coverImage,
@@ -340,7 +335,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   onChangeText={onChange}
                   inputStyle={[
                     styles?.inputStyle,
-                    {paddingVertical: height * 0.005},
+                    {paddingVertical: Platform?.OS==='android'?height * 0.005:height * 0.015},
                   ]}
                 />
 
@@ -386,14 +381,12 @@ const EditProfile = ({data, setData, setEditProfile}) => {
         setGender={setGender}
         value={gender}
       />
-      <CountryPickerDropDown
-        showCountry={showCountry}
-        setValue={setValue}
-      />
+      <CountryPickerDropDown showCountry={showCountry} setValue={setValue} />
       <DateMonthPicker
         showDate={showDate}
         setShowDate={setShowDate}
         setValue={setValue}
+        selectedDate={data?.dateOfBirth}
       />
       <PrimaryButton
         onPress={handleSubmit(onSubmit)}

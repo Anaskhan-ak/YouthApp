@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 
@@ -9,15 +9,14 @@ import {
   FileImport,
   GalleryIcon,
   MomentsIcon,
-  Plus,
-  WhiteLeftArrow,
+  WhiteLeftArrow
 } from '../../assets/images/svgs';
 
 import { pick } from '@react-native-documents/picker';
+import { ActivityIndicator } from 'react-native';
 import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
 import EditProfile from './compoents/editProfile';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
@@ -41,7 +40,8 @@ const Profile = () => {
 
   const [editProfile, setEditProfile] = useState(false);
   const [qr, setQr] = useState(false);
-  const qrRef = useRef(null)
+  const qrRef = useRef(null);
+  const focus = useIsFocused()
 
   const getUserData = async () => {
     const localUserData = await getDataLocally();
@@ -55,7 +55,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [focus]);
 
   // console.log('User data', userhandleProfilePictureData);
 
@@ -115,7 +115,13 @@ const Profile = () => {
           setUser={setUserData}
           setEditProfile={setEditProfile}
         />
-        {editProfile ? (
+
+        {!userData ? (
+          <View
+            style={styles?.indicator}>
+            <ActivityIndicator size={'large'} />
+          </View>
+        ) : editProfile ? (
           <EditProfile
             data={userData}
             setData={setUserData}
@@ -139,20 +145,8 @@ const Profile = () => {
               <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
             </View>
             {/* <Stories /> */}
-            <View style={styles?.postModal}>
-              <PostContentModal options={options} setOptions={setOptions} />
-            </View>
-            <TouchableOpacity onPress={()=>navigation?.navigate('CreateStory', {isHighlight : true})} style={{
-              width : width * 0.1,
-              height : width * 0.1,
-              borderRadius : width * 0.1,
-              backgroundColor : colors?.gray,
-              alignItems : "center",
-              justifyContent : 'center'
-            }}>
-              <Plus width={20} height={20}/>
-            </TouchableOpacity>
-            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef}/>}
+            <PostContentModal options={options} setOptions={setOptions} />
+            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
           </>
         )}
       </View>

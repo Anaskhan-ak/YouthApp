@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts?.montserratBold,
   },
   suggestions: {
-    transform: [{scale: 0.5}, {translateX: -width * 0.4}, {translateY: -height * 0.13}],
-    width  : width * 1,
+    // transform: [{scale: 0.5}, {translateX: -width * 0.4}, {translateY: -height * 0.13}],
+    // width  : width * ,
   },
 });

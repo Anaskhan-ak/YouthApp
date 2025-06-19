@@ -1,11 +1,11 @@
-import { BlurView } from '@react-native-community/blur';
-import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {BlurView} from '@react-native-community/blur';
+import {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import VideoPlayer from 'react-native-video-player';
-import { MuteIcon, PlayIcon, UnmuteIcon } from '../../../assets/images/svgs';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {MuteIcon, PlayIcon, UnmuteIcon} from '../../../assets/images/svgs';
+import {height, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 const PostVideo = ({url, isScrolling, isMoment}) => {
   const [pause, setPause] = useState(false);
@@ -104,7 +104,7 @@ const PostVideo = ({url, isScrolling, isMoment}) => {
           style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
           {/* Show play icon only when paused */}
           {pause && (
-            <View style={styles.playButton}>
+            <View style={[styles.playButton, {top: isMoment ? height * 0.22:height * 0.16}]}>
               <BlurView
                 style={[StyleSheet.absoluteFill, {borderRadius: width * 0.2}]}
                 blurType="light"
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: width * 0.15,
     height: width * 0.15,
+    paddingLeft: width * 0.015,
   },
   mediaElements: {
     position: 'absolute',

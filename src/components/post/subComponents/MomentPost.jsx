@@ -138,7 +138,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     zIndex: 20,
-    // top: 40,
   },
   tag: {
     backgroundColor: colors?.black,

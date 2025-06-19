@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { images } from '../../../assets/images';
+import {images} from '../../../assets/images';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {height, Pixels, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 const SuggestedUsers = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const data = [
     {
       name: 'Sannya Wasim',
@@ -49,10 +49,13 @@ const SuggestedUsers = () => {
   ];
   return (
     <View style={styles?.container}>
-      <TouchableOpacity onPress={() => navigation?.navigate('SuggestedContent', {
-        headerTitle : 'Suggested Users',
-        data : data
-      })}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation?.navigate('SuggestedContent', {
+            headerTitle: 'Suggested Users',
+            data: data,
+          })
+        }>
         <Text style={styles?.heading}>See all</Text>
       </TouchableOpacity>
       <FlatList
@@ -63,7 +66,13 @@ const SuggestedUsers = () => {
               <Image source={item?.cover} style={styles?.cover} />
               <Image source={item?.photo} style={styles?.photo} />
               <Text style={styles?.text}>{item?.name}</Text>
-              <PrimaryButton width={width * 0.26} title="Follow" />
+              <PrimaryButton
+                borderRadius={width*0.03}
+                textStyle={styles?.btnTxt}
+                width={width * 0.26}
+                height={height * 0.03}
+                title="Follow"
+              />
             </View>
           );
         }}
@@ -114,7 +123,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.04,
+    fontSize: Pixels(12),
     color: colors?.text,
     alignSelf: 'center',
     marginVertical: height * 0.01,
@@ -122,12 +131,17 @@ const styles = StyleSheet.create({
   list: {
     // marginVertical: height * 0.01,
   },
-  heading : {
+  heading: {
     fontFamily: fonts?.montserratBold,
     fontSize: width * 0.04,
     color: colors?.text,
     alignSelf: 'flex-end',
     marginVertical: height * 0.01,
-    marginRight : width * 0.02
-  }
+    marginRight: width * 0.02,
+  },
+  btn: {
+    fontSize: Pixels(12),
+    color: colors?.white,
+    fontFamily: fonts?.montserratBold,
+  },
 });

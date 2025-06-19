@@ -11,8 +11,8 @@ import {height} from '../../../constant';
 import {colors} from '../../../utils/colors';
 import {styles} from './styles';
 
-const MAX_HEIGHT = Platform?.OS === 'ios' ? height * 0.38 : height * 0.35; // fully expanded
-const MIN_HEIGHT = Platform?.OS === 'ios' ? height * 0.38 : height * 0.35; // minimized
+const MAX_HEIGHT = Platform?.OS === 'ios' ? height * 0.5 : height * 0.5; // fully expanded
+const MIN_HEIGHT = Platform?.OS === 'ios' ? height * 0.4 : height * 0.4; // minimized
 
 const PostModal = ({options, setOptions, content}) => {
   const gestureRef = useRef();

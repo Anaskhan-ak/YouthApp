@@ -35,6 +35,9 @@ const Post = ({post, isScrolling}) => {
       value: post?.comments,
       count: post?.comments?.length,
     },
+     save: {
+      count:  post?._count?.SavedPost,
+    },
   });
   const renderPostContent = (post, modalProps) => {
     const postComponents = {

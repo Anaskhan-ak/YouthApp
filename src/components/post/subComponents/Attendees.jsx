@@ -5,7 +5,6 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const Attendees = ({post}) => {
-    console.log("post in attendees",post?.attendees);
     
   return (
     <View style={styles?.container}>

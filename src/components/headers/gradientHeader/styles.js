@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: width * 0.01,
     paddingHorizontal: width * 0.03,
-    flex: 0.1,
+    flex: 0,
   },
   advancedButton: {
     borderWidth: width * 0.003,
@@ -32,11 +32,11 @@ export const styles = StyleSheet.create({
     padding: width * 0.01,
     alignItems: 'center',
     right: Platform?.OS === 'ios' && 8,
-    flex: 0.2,
+    flex: 0.25,
   },
   advancedButtonText: {
     color: colors?.white,
     fontFamily: fonts?.montserratBold,
-     fontSize: Pixels(10),
+    fontSize: Pixels(10),
   },
 });

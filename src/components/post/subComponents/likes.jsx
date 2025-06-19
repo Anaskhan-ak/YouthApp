@@ -6,7 +6,6 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const Likes = ({actions}) => {
-  // console.log("Post", post)
   return (
     <View style={styles?.container}>
       <FlatList
