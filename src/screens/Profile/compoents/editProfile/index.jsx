@@ -34,7 +34,6 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     control,
     formState: {errors},
     handleSubmit,
-    watch,
     setValue,
   } = useForm({
     defaultValues: {
@@ -51,17 +50,27 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     control,
     name: 'links',
   });
-  const links = watch('links');
 
   const onSubmit = async values => {
-    // console.log('selectedDate',selectedDate?.toISOString());
+    console.log('📝 Form Values:');
+    console.log('firstName:', values?.firstName);
+    console.log('lastName:', values?.lastName);
+    console.log('gender:', gender);
+    console.log('country:', values?.country);
+    console.log('dateOfBirth:', values?.date);
+    console.log('bio:', values?.bio);
+    console.log('links:', values?.links);
+
+    console.log('📸 profilePicture:', data?.profilePicture);
+    console.log('🖼️ coverImage:', data?.coverImage);
+
     setLoading(true);
     const formData = new FormData();
     formData.append('firstName', values?.firstName);
     formData.append('lastName', values?.lastName);
     formData.append('gender', gender);
     formData.append('country', values?.country);
-    formData.append('dateOfBirth', values?.date);
+    formData.append('dateOfBirth', new Date);
     formData.append('bio', values?.bio);
     values?.links.forEach(link => {
       formData.append('links', link);
@@ -335,7 +344,12 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   onChangeText={onChange}
                   inputStyle={[
                     styles?.inputStyle,
-                    {paddingVertical: Platform?.OS==='android'?height * 0.005:height * 0.015},
+                    {
+                      paddingVertical:
+                        Platform?.OS === 'android'
+                          ? height * 0.005
+                          : height * 0.015,
+                    },
                   ]}
                 />
 
