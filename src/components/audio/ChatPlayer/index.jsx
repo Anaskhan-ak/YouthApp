@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,13 +10,18 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
-import Svg, { Rect } from 'react-native-svg';
-import { images } from '../../../assets/images';
-import { ActiveLike, GradientPlayIcon, PauseIcon, PlayIcon } from '../../../assets/images/svgs';
+import Svg, {Rect} from 'react-native-svg';
+import {images} from '../../../assets/images';
+import {
+  ActiveLike,
+  GradientPlayIcon,
+  PauseIcon,
+  PlayIcon,
+} from '../../../assets/images/svgs';
 import GradientText from '../../../components/text/GradientText';
-import { width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 const ChatPlayer = ({audio, user, customWidth, iconType}) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -81,7 +87,12 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
         {width: customWidth ? customWidth : width * 0.8},
       ]}>
       {/* <Image source={{uri: user?.photo}} style={styles?.image} /> */}
-      <Image source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture} style={styles?.image} />
+      <Image
+        source={
+          user?.photo ? {uri: user?.photo} : images?.defaultProfilePicture
+        }
+        style={styles?.image}
+      />
       <View style={styles?.content}>
         <View style={styles?.header}>
           <Text
@@ -202,6 +213,7 @@ const styles = StyleSheet.create({
   },
   waveformContainer: {
     paddingHorizontal: width * 0.03,
+    paddingVertical: Platform?.OS === 'ios' ? 10 : 0,
   },
   timeRow: {
     flexDirection: 'row',
@@ -222,6 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    right: Platform?.OS === 'ios' ? 10 : 0,
   },
   playIcon: {
     marginHorizontal: width * 0.01,

@@ -15,6 +15,7 @@ import EmptyComponent from '../../../../components/empty';
 import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
+import { Platform } from 'react-native';
 
 const EventPosts = ({posts}) => {
     const navigation = useNavigation()
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     padding : width * 0.02,
     flexDirection : 'row',
     alignItems : 'flex-start',
-    justifyContent : 'flex-start'
+    justifyContent : 'flex-start',
   },
   thumbnail: {
     width : width * 0.35,
