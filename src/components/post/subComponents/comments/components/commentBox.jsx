@@ -10,6 +10,7 @@ import {
 } from '../../../../../assets/images/svgs';
 import YudioPlayer from '../../../../../components/audio/YudioPlayer';
 import { toast } from '../../../../../components/toast';
+import { width } from '../../../../../constant';
 import { getDataLocally } from '../../../../../helper';
 import useUser from '../../../../../hooks/user';
 import { apiCall } from '../../../../../services/apiCall';
@@ -42,7 +43,7 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
             comments: {
               ...prev.comments,
               value: prev?.comments?.value?.map(comment => {
-                console.log("Comment", comment)
+                console.log('Comment', comment);
                 if (comment?.id === commentId) {
                   return {
                     ...comment,
@@ -83,7 +84,7 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
                     reactions: [...comment?.reactions, response],
                   };
                 }
-                return comment
+                return comment;
               }),
             },
           }));
@@ -97,7 +98,11 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
 
   return (
     <View key={index} style={styles?.commentBox}>
-      <View style={styles?.header}>
+      <View
+        style={[
+          styles?.header,
+          {justifyContent: item?.commentId ? 'flex-start' : 'space-between'},
+        ]}>
         <LinearGradient
           colors={[colors?.RGB1, colors?.RGB2]}
           style={styles?.gradientBorder}>
@@ -110,7 +115,7 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
             style={styles?.image}
           />
         </LinearGradient>
-        <View style={styles?.textContainer}>
+        <View style={[styles?.textContainer, item?.commentId && {marginLeft : width * 0.02}]}>
           <Text
             style={
               styles?.name
@@ -119,28 +124,32 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
             {moment(item?.createdAt).startOf('hour').fromNow()}
           </Text>
         </View>
-        <View style={styles?.iconContainer}>
-          <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
-            {actions?.comments?.value
-              ?.find(comment => comment?.id === item?.id)
-              ?.reactions?.some(r => r?.userId === user?.id) ? (
-              <ActiveLike />
-            ) : (
-              <InactiveGrayLike />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setReply({
-                userName: `${item?.user?.firstName} ${item?.user?.lastName}`,
-                commentId: item?.id,
-                active: true,
-              });
-              actions?.comments?.ref?.current?.focus();
-            }}>
-            <InactiveGrayCommentIcon />
-          </TouchableOpacity>
-        </View>
+        
+          <View style={styles?.iconContainer}>
+            <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
+              {actions?.comments?.value
+                ?.find(comment => comment?.id === item?.id)
+                ?.reactions?.some(r => r?.userId === user?.id) ? (
+                <ActiveLike />
+              ) : (
+                <InactiveGrayLike />
+              )}
+            </TouchableOpacity>
+            {!item?.commentId && (
+            <TouchableOpacity
+              onPress={() => {
+                setReply({
+                  userName: `${item?.user?.firstName} ${item?.user?.lastName}`,
+                  commentId: item?.id,
+                  active: true,
+                });
+                actions?.comments?.ref?.current?.focus();
+              }}>
+              <InactiveGrayCommentIcon />
+            </TouchableOpacity>
+             )}
+          </View>
+       
       </View>
       {item?.waveform?.length > 0 ? (
         <View style={styles?.yudioPlayer}>
