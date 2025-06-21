@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, TouchableOpacity, View } from 'react-native';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import { WhiteBackArrow, WhiteSettingsIcon } from '../../assets/images/svgs';
+import MomentDetails from './components/MomentDetails';
 import RecordButton from './components/RecordButton';
 import { styles } from './styles';
 
 const CreateMoment = () => {
   const [cameraOpen, setCameraOpen] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
+  const [video, setVideo] = useState('')
   const device = useCameraDevice('front');
   const animatedValue = useRef(new Animated.Value(0)).current;
   const cameraRef = useRef(null);
@@ -39,7 +41,11 @@ const CreateMoment = () => {
     });
 
     cameraRef.current.startRecording({
-      onRecordingFinished: video => console.log(video),
+      onRecordingFinished: video => {
+        console.log(video)
+        setVideo(video)
+        setCameraOpen(false)
+    },
       onRecordingError: error => console.error(error),
     });
   };
@@ -54,7 +60,7 @@ const CreateMoment = () => {
 
   return (
     <View style={styles?.container}>
-      {cameraOpen && (
+      {cameraOpen ? (
         <View>
           {/* Headers */}
           <View style={styles?.heading}>
@@ -79,6 +85,8 @@ const CreateMoment = () => {
             isRecording={isRecording}
           />
         </View>
+      ):(
+        <MomentDetails url={video?.path}/>
       )}
     </View>
   );
