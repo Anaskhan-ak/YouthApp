@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CreateEvent from '../screens/createEvent';
+import CreateMoment from '../screens/CreateMoment';
 import CreatePost from '../screens/createPost';
 import CreateStory from '../screens/createStory';
 import CreateWallet from '../screens/createWallet';
@@ -30,7 +31,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="CreateMoment">
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
@@ -164,6 +165,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="SuggestedContent"
         component={SuggestedContent}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateMoment"
+        component={CreateMoment}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

@@ -115,7 +115,11 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
             style={styles?.image}
           />
         </LinearGradient>
-        <View style={[styles?.textContainer, item?.commentId && {marginLeft : width * 0.02}]}>
+        <View
+          style={[
+            styles?.textContainer,
+            item?.commentId && {marginLeft: width * 0.02},
+          ]}>
           <Text
             style={
               styles?.name
@@ -124,18 +128,23 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
             {moment(item?.createdAt).startOf('hour').fromNow()}
           </Text>
         </View>
-        
-          <View style={styles?.iconContainer}>
-            <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
-              {actions?.comments?.value
-                ?.find(comment => comment?.id === item?.id)
-                ?.reactions?.some(r => r?.userId === user?.id) ? (
-                <ActiveLike />
-              ) : (
-                <InactiveGrayLike />
-              )}
-            </TouchableOpacity>
-            {!item?.commentId && (
+
+        <View style={styles?.iconContainer}>
+          <TouchableOpacity onPress={() => LikeAComment(item?.id)}>
+            {actions?.comments?.value
+              ?.find(comment => comment?.id === item?.id)
+              ?.reactions?.some(r => r?.userId === user?.id) ||
+            actions?.comments?.value?.find(comment =>
+              comment?.replies?.find(reply =>
+                reply?.reactions?.some(react => react?.userId === user?.id),
+              ),
+            ) ? (
+              <ActiveLike />
+            ) : (
+              <InactiveGrayLike />
+            )}
+          </TouchableOpacity>
+          {!item?.commentId && (
             <TouchableOpacity
               onPress={() => {
                 setReply({
@@ -147,9 +156,8 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
               }}>
               <InactiveGrayCommentIcon />
             </TouchableOpacity>
-             )}
-          </View>
-       
+          )}
+        </View>
       </View>
       {item?.waveform?.length > 0 ? (
         <View style={styles?.yudioPlayer}>

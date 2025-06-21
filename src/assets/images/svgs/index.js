@@ -138,10 +138,12 @@ import UserFollow from './user_follow.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
 import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
+import WhiteBackArrow from './WhiteBackArrow.svg';
 import WhiteBackwardAudioIcon from './WhiteBackwardAudioIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
 import WhiteForwardAudioIcon from './WhiteForwardAudioIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
+import WhiteSettingsIcon from './WhiteSettingsIcon.svg';
 import WhiteTick from './WhiteTick.svg';
 import YouthCoin from './youthCoin.svg';
 import YouthIcon from './YouthIcon.svg';
@@ -261,12 +263,10 @@ export {
   UserFollow,
   VideoCallIcon,
   VoiceCallIcon,
-  WhatsappIcon,
-  WhiteBackwardAudioIcon,
+  WhatsappIcon, WhiteBackArrow, WhiteBackwardAudioIcon,
   WhiteCameraIcon,
   WhiteForwardAudioIcon,
-  WhiteLeftArrow,
-  WhiteTick, YouthCoin, YouthIcon, YouthIconWhite, YoutubeIcon,
+  WhiteLeftArrow, WhiteSettingsIcon, WhiteTick, YouthCoin, YouthIcon, YouthIconWhite, YoutubeIcon,
   Yudio
 };
 
