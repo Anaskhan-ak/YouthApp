@@ -8,12 +8,10 @@ import UserInfoHeader from '../../../components/headers/userInfoHeader';
 import MultilineInput from '../../../components/inputs/multilineInput';
 import { toast } from '../../../components/toast';
 import { height, width } from '../../../constant';
-import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 
 const MomentDetails = ({setCameraOpen, url}) => {
-  const user = useUser();
   const [description, setDescription] = useState('');
   const [chars, setChars] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -65,8 +63,8 @@ const MomentDetails = ({setCameraOpen, url}) => {
         type: 'video/quicktime', // Use 'video/quicktime' for MOV files
         name: `${Date.now()}.mov`,
       });
-      console.log("url", url)
-      console.log("formData", formData)
+      // console.log("url", url)
+      // console.log("formData", formData)
       const response = await apiCall?.createNewPost(formData);
       if (response) {
         console.log('::moment created successfully::', response);
@@ -90,8 +88,6 @@ const MomentDetails = ({setCameraOpen, url}) => {
       />
       <View style={styles?.padding}>
         <UserInfoHeader
-          image={user?.photo}
-          userName={`${user?.firstName} ${user?.lastName}`}
           data={metaData}
           setData={setMetaData}
         />

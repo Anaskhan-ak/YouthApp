@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -20,6 +21,7 @@ const CreateMoment = () => {
   const device = useCameraDevice('front');
   const animatedValue = useRef(new Animated.Value(0)).current;
   const cameraRef = useRef(null);
+  const navigation = useNavigation()
 
   const DURATION = 10 * 1000; // 10 seconds
 
@@ -72,7 +74,7 @@ const CreateMoment = () => {
         <View>
           {/* Headers */}
           <View style={styles?.heading}>
-            <TouchableOpacity style={styles?.button}>
+            <TouchableOpacity style={styles?.button} onPress={()=> navigation?.goBack()}>
               <WhiteBackArrow />
             </TouchableOpacity>
             <TouchableOpacity style={styles?.button}>
@@ -101,7 +103,7 @@ const CreateMoment = () => {
           />
         </View>
       ) : (
-        <MomentDetails url={video?.path} />
+        <MomentDetails url={video?.path} setCameraOpen={setCameraOpen}/>
       )}
     </View>
   );

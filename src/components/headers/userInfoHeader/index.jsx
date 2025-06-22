@@ -9,23 +9,25 @@ import {
   TagFriendsIcon,
 } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
+import useUser from '../../../hooks/user';
 import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
 const UserInfoHeader = ({image, userName, data, setData}) => {
+  const user = useUser()
   return (
     <View style={styles?.container}>
       <LinearGradient
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
         <Image
-          source={image ? image : images?.defaultProfilePicture}
+          source={image ? image : user?.photo ? {uri : user?.photo} :  images?.defaultProfilePicture}
           style={styles?.image}
         />
       </LinearGradient>
       <View style={styles?.content}>
         <View style={styles?.nameContainer}>
-          <Text style={styles?.userName}>{userName}</Text>
+          <Text style={styles?.userName}>{userName ? userName : user?.name}</Text>
           <BlueTick />
         </View>
         <View style={styles?.buttons}>
