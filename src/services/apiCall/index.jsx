@@ -66,7 +66,8 @@ export const apiCall = {
   createNewPost: async params => {
     let result = await documentPost(apis?.createPost, params);
     if (result?.status >= 200 && result?.status < 400)
-      return result?.data?.youdio;
+      // return result?.data?.youdio;
+    return result?.data?.data;
     // if (result?.status === 200) return result?.data
     else throw result;
   },

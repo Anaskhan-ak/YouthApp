@@ -129,7 +129,7 @@ export const sideBottomSheetOptions = [
     id: 'moments',
     title: 'Moments',
     desc: 'To make sure your Moments reach the right people...',
-    route:''
+    route:'CreateMoment'
   },
   {
     id: 'yudio',

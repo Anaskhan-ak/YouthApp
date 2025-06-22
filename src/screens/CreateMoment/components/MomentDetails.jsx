@@ -42,7 +42,7 @@ const MomentDetails = ({setCameraOpen, url}) => {
       const formData = new FormData();
       formData.append('type', 'MOMMENTS');
       formData.append('caption', description);
-      // formData.append('isPublic', true);
+      formData.append('isPublic', true);
       formData.append('audience', metaData?.audience?.value);
       formData.append('location', metaData?.location?.value);
       if (
@@ -65,10 +65,11 @@ const MomentDetails = ({setCameraOpen, url}) => {
         type: 'video/quicktime', // Use 'video/quicktime' for MOV files
         name: `${Date.now()}.mov`,
       });
-
+      console.log("url", url)
+      console.log("formData", formData)
       const response = await apiCall?.createNewPost(formData);
       if (response) {
-        console.log('::moment created successfully::');
+        console.log('::moment created successfully::', response);
         setLoading(false);
         toast('success', 'Moment Created Successfully');
       }

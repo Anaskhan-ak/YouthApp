@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Animated,
+  Easing,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Camera, useCameraDevice } from 'react-native-vision-camera';
 import { WhiteBackArrow, WhiteSettingsIcon } from '../../assets/images/svgs';
+import { colors } from '../../utils/colors';
 import MomentDetails from './components/MomentDetails';
 import RecordButton from './components/RecordButton';
 import { styles } from './styles';
@@ -9,7 +16,7 @@ import { styles } from './styles';
 const CreateMoment = () => {
   const [cameraOpen, setCameraOpen] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
-  const [video, setVideo] = useState('')
+  const [video, setVideo] = useState('');
   const device = useCameraDevice('front');
   const animatedValue = useRef(new Animated.Value(0)).current;
   const cameraRef = useRef(null);
@@ -42,10 +49,10 @@ const CreateMoment = () => {
 
     cameraRef.current.startRecording({
       onRecordingFinished: video => {
-        console.log(video)
-        setVideo(video)
-        setCameraOpen(false)
-    },
+        console.log(video);
+        setVideo(video);
+        setCameraOpen(false);
+      },
       onRecordingError: error => console.error(error),
     });
   };
@@ -56,6 +63,7 @@ const CreateMoment = () => {
     animatedValue.setValue(0);
 
     await cameraRef.current.stopRecording();
+    setCameraOpen(false);
   };
 
   return (
@@ -71,22 +79,29 @@ const CreateMoment = () => {
               <WhiteSettingsIcon />
             </TouchableOpacity>
           </View>
-          <Camera
-            ref={cameraRef}
-            style={styles.camera}
-            device={device}
-            isActive={true}
-            video={true}
-            audio={true}
-          />
+          {device ? (
+            <Camera
+              ref={cameraRef}
+              style={styles.camera}
+              device={device}
+              isActive={true}
+              video={true}
+              audio={true}
+            />
+          ) : (
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <ActivityIndicator size={'small'} color={colors?.RGB1} />
+            </View>
+          )}
           <RecordButton
             onPress={handlePress}
             animatedValue={animatedValue}
             isRecording={isRecording}
           />
         </View>
-      ):(
-        <MomentDetails url={video?.path}/>
+      ) : (
+        <MomentDetails url={video?.path} />
       )}
     </View>
   );
