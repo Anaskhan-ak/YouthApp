@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     width: width * 0.95,
     alignSelf : "center",
-    top : height * 0.05
+    top : height * 0.02
   },
   headerIcon: {
     backgroundColor: colors?.gray,

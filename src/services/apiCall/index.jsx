@@ -182,9 +182,15 @@ export const apiCall = {
     if (result?.status) return result?.data?.messages;
     else throw result;
   },
-  getProfileData: async ({userId}) => {
+  getProfileData: async () => {
     let result = await get(`${apis?.getProfile}/${userId}`);
     if (result?.status >= 200 && result?.status < 400) return result?.data;
+    else throw result;
+  },
+
+  getSaved: async () => {
+    let result = await get(apis?.getSavedPosts);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },
   // PATCH API CALL

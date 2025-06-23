@@ -206,4 +206,8 @@ export const albumIds = [
     type : 'EVENT',
     id : 'cm6hvc3lt00091jdq5xgnd47r'
   },
+   {
+    type : 'MOMMENTS',
+    id : 'cmc94gbov000m6uglc4rnmavq'
+  },
 ]

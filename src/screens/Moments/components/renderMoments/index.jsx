@@ -1,6 +1,7 @@
-import { useWindowDimensions, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { BlurView } from '@react-native-community/blur';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Video from 'react-native-video';
+import FeedReactions from '../../../../components/reactions/feedReactions';
 import { styles } from './styles';
 
 const RenderMoments = ({moment, moments, visible, isVisible, isNext}) => {
@@ -21,23 +22,47 @@ const RenderMoments = ({moment, moments, visible, isVisible, isNext}) => {
         ignoreSilentSwitch="ignore"
         // style={videoStyle}
         style={styles?.video}
-        
       />
-      <LinearGradient
-        colors={[
-          '#000000F0',
-          '#000000D0',
-          '#000000A0',
-          '#00000070',
-          '#00000040',
-        ]}
-        start={{x: 0, y: 0}}
-        end={{x: 0, y: 0.5}}
-        style={styles.controlsContainer}
-      />
+      <View style={styles?.reactions}>
+        <FeedReactions post={moment} />
+      </View>
+      <View style={styles?.blurContainer}>
+        <ScrollView
+          style={styles?.scrollContainer}
+          contentContainerStyle={{paddingBottom: 10}} // optional padding
+          scrollEnabled={false} // disable scroll so it expands fully
+        >
+          <Text style={styles?.blurText}>
+            {moment?.Momments?.caption?.length > 100 && !showFullText
+              ? `${moment?.Momments?.caption?.substring(0, 100)}... `
+              : moment?.Momments?.caption + ' '}
+            {moment?.Momments?.caption?.length > 100 && (
+              <Text
+                onPress={() => setShowFullText(prev => !prev)}
+                style={styles?.seeAllText}>
+                {showFullText ? 'See less' : 'Show more'}
+              </Text>
+            )}
+          </Text>
+        </ScrollView>
+
+        <View style={styles?.tagsContainer}>
+          {['#fashion', '#holiday', '#beach'].map(item => (
+            <TouchableOpacity key={item}>
+              <Text style={styles?.tagText}>{item}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <BlurView
+          style={[StyleSheet.absoluteFill, styles.blur]}
+          blurType="light"
+          blurAmount={10}
+          reducedTransparencyFallbackColor="white"
+        />
+      </View>
     </View>
   );
 };
-
 
 export default RenderMoments;

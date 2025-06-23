@@ -27,8 +27,6 @@ const Moments = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const user = useUser();
-
-  //
   const {height} = useWindowDimensions();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [scrollInfo, setScrollInfo] = useState({isViewable: true, index: 0});
@@ -186,7 +184,7 @@ const Moments = () => {
               onViewableItemsChanged={onViewableItemsChanged}
               viewabilityConfig={viewabilityConfig.current}
               onScroll={onScroll}
-              data={moments}
+              data={moments?.slice(0,1)}
               renderItem={renderItem}
               getItemLayout={getItemLayout}
               decelerationRate="fast"

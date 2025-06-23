@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native';
-import {height, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { StyleSheet } from 'react-native';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
@@ -59,5 +59,6 @@ export const styles = StyleSheet.create({
     borderRadius: width * 0.03,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf : "center"
   },
 });
