@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import RNFS from 'react-native-fs';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
 import {
@@ -101,13 +102,46 @@ const FeedReactions = ({post}) => {
           );
         }
       } catch (error) {
-        console.log("Error fetching saved posts", error)
+        console.log('Error fetching saved posts', error);
       }
     };
-    fetchSaved()
+    fetchSaved();
   }, []);
 
-  const handlePress = async icon => {
+  const downloadFile = url => {
+    // console.log("url", url)
+    const filePath = RNFS.DocumentDirectoryPath + `/example.${url?.split('.')?.pop()}`;
+
+    RNFS.downloadFile({
+      fromUrl: url,
+      toFile: filePath,
+      background: true, // Enable downloading in the background (iOS only)
+      discretionary: true, // Allow the OS to control the timing and speed (iOS only)
+      progress: res => {
+        // Handle download progress updates if needed
+        const progress = (res.bytesWritten / res.contentLength) * 100;
+        console.log(`Progress: ${progress.toFixed(2)}%`);
+      },
+    })
+      .promise.then(response => {
+        console.log('File downloaded!', response);
+        setReactions(prev =>
+          prev?.map(react => {
+            if (react?.type === 'download') {
+              return {
+                ...react,
+                active: true,
+              };
+            } else return react;
+          }),
+        );
+      })
+      .catch(err => {
+        console.log('Download error:', err);
+      });
+  };
+
+  const handlePress = async (icon, index) => {
     const userDetails = await getDataLocally();
     switch (icon?.type) {
       case 'like':
@@ -135,16 +169,6 @@ const FeedReactions = ({post}) => {
               };
             }),
           );
-          // setActions(prev => ({
-          //   ...prev,
-          //   likes: {
-          //     ...prev?.likes,
-          //     count: isLiked ? prev?.likes?.count + 1 : prev?.likes?.count - 1,
-          //     value: isLiked
-          //       ? prev?.likes?.value?.filter(res => res?.id !== icon.id) // when unliking
-          //       : [...prev?.likes?.value, response], // when liking
-          //   },
-          // }));
         } catch (error) {
           console.error('Like error:', error);
           toast('error', 'Error processing like');
@@ -168,6 +192,10 @@ const FeedReactions = ({post}) => {
           console.log('Error saving post', error);
           toast('error', 'Error saving post');
         }
+      case 'share':
+        toggleReaction(index)
+      case 'download':
+        downloadFile(post?.type === 'MOMMENTS' && post?.Momments?.url);
       default:
         break;
     }
@@ -219,7 +247,7 @@ const FeedReactions = ({post}) => {
             <View key={index} style={styles?.content}>
               <TouchableOpacity
                 style={styles?.button}
-                onPress={() => handlePress(item)}>
+                onPress={() => handlePress(item, index)}>
                 <View style={item?.active && styles?.buttonView}>
                   {item?.active ? item?.activeSvg : item?.inactiveSvg}
                 </View>
@@ -232,7 +260,9 @@ const FeedReactions = ({post}) => {
                       post?.type === 'MOMMENTS' ? colors?.white : colors?.text,
                   },
                 ]}>
-                {item?.text}
+                {item?.type === 'download' && item?.active === true
+                  ? 'Downloaded'
+                  : item?.text}
               </Text>
             </View>
           );

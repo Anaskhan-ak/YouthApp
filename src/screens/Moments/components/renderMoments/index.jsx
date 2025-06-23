@@ -5,7 +5,7 @@ import FeedReactions from '../../../../components/reactions/feedReactions';
 import { styles } from './styles';
 
 const RenderMoments = ({moment, moments, visible, isVisible, isNext}) => {
-  // console.log('moment', moment);
+  console.log('moment', moment);
   const {height} = useWindowDimensions();
 
   // const videoStyle = useMemo(() => styles.video(height), [height]);
