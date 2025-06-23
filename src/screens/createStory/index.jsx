@@ -1,13 +1,13 @@
-import {useNavigation} from '@react-navigation/native';
-import {useRef, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
-  Platform,
 } from 'react-native';
 import VideoPlayer from 'react-native-video-player';
 import {
@@ -19,11 +19,11 @@ import {
 } from '../../assets/images/svgs';
 import CreateButton from '../../components/buttons/CreateButton';
 import GradientHeader from '../../components/headers/gradientHeader';
-import {toast} from '../../components/toast';
-import {height, width} from '../../constant';
-import {getRealPathFromURI} from '../../helper';
-import {apiCall} from '../../services/apiCall';
-import {colors} from '../../utils/colors';
+import { toast } from '../../components/toast';
+import { height, width } from '../../constant';
+import { getRealPathFromURI } from '../../helper';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
 import Gallery from './components/gallery';
 import Stories from './components/stories';
 
@@ -96,10 +96,17 @@ const CreateStory = ({route}) => {
     <View style={styles?.container}>
       {preview ? (
         <>
-          <GradientHeader
-            storyIcons={<StoryIcons />}
-            backPress={() => setPreview(false)}
-          />
+          {isHighlight ? (
+            <GradientHeader
+              backPress={() => setPreview(false)}
+              title="New Highlight"
+            />
+          ) : (
+            <GradientHeader
+              storyIcons={<StoryIcons />}
+              backPress={() => setPreview(false)}
+            />
+          )}
           {media?.type?.startsWith('image/') ||
           media?.type?.startsWith('image') ? (
             <Image source={{uri: media?.uri}} style={styles?.media} />
@@ -121,10 +128,6 @@ const CreateStory = ({route}) => {
         </>
       ) : (
         <>
-          <GradientHeader
-            backPress={() => setPreview(false)}
-            title="New Highlight"
-          />
           {isHighlight ? (
             <Stories media={media} setMedia={setMedia} />
           ) : (

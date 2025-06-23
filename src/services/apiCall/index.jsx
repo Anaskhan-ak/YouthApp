@@ -96,6 +96,11 @@ export const apiCall = {
     if (result?.status) return result?.data?.data?.posts;
     else throw result;
   },
+  getAllMoments: async params => {
+    let result = await post(apis?.getMoments, params);
+    if (result?.status) return result?.data?.data?.posts;
+    else throw result;
+  },
   getAllUsers : async (params) => {
     let result = await post(apis?.getUsers, params)
     if (result?.status) return result?.data?.data

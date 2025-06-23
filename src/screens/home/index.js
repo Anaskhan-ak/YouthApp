@@ -129,7 +129,7 @@ const Home = () => {
           reducedTransparencyFallbackColor="white"
         />
       )}
-
+  {/* <SuggestedMoments/> */}
       {initialLoader ? (
         <ActivityIndicator size={'large'} color={colors?.RGB1} />
       ) : data?.length === 0 ? (

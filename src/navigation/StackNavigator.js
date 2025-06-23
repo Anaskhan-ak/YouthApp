@@ -14,6 +14,7 @@ import Home from '../screens/home';
 import Interests from '../screens/interest';
 import LandingWidget from '../screens/landingWidget';
 import Login from '../screens/login';
+import Moments from '../screens/Moments';
 import NewChat from '../screens/newChat';
 import NewChatGroup from '../screens/newChatGroup';
 import Onboarding from '../screens/onboarding';
@@ -170,6 +171,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="CreateMoment"
         component={CreateMoment}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Moments"
+        component={Moments}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

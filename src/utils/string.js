@@ -55,7 +55,7 @@ export const gender = [
 export const bottomTabs = [
   {
     screen: 'Moments',
-    route: 'Moment',
+    route: 'Moments',
     icon: <Moment width={24} height={24} />,
   },
   {

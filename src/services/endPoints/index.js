@@ -6,6 +6,7 @@ export const apis = {
   loginWithGoogle: 'api/v1/firebase',
   createPost : 'api/v1/createNewPost',
   getYudios : 'api/v1/getYudio',
+  getMoments : 'api/v1/getMoments',
   getDocuments : 'api/v1/getUserPost',
   forgotPassword : 'api/v1/forgotPassword',
   verifyForgetPassword : 'api/v1/verifyPasswordToken',

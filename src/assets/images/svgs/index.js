@@ -135,6 +135,7 @@ import TwitterIconRound from './TwitterIconRound.svg';
 import UnmuteIcon from './UnmuteIcon.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
 import UserFollow from './user_follow.svg';
+import VerticalWhiteDots from './VerticalWhiteDots.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
 import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
@@ -260,8 +261,7 @@ export {
   TwitterIconRound,
   UnmuteIcon,
   UploadThumbnail,
-  UserFollow,
-  VideoCallIcon,
+  UserFollow, VerticalWhiteDots, VideoCallIcon,
   VoiceCallIcon,
   WhatsappIcon, WhiteBackArrow, WhiteBackwardAudioIcon,
   WhiteCameraIcon,
