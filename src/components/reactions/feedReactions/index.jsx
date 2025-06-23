@@ -27,8 +27,9 @@ import { albumIds } from '../../../utils/string';
 import InviteModal from '../../modals/genderModal/inviteModal';
 import { styles } from './styles';
 
-const FeedReactions = ({post}) => {
+const FeedReactions = ({post, ref, setIsSheetOpen}) => {
   const user = useUser();
+
   const [reactions, setReactions] = useState([
     {
       type: 'like',
@@ -110,7 +111,8 @@ const FeedReactions = ({post}) => {
 
   const downloadFile = url => {
     // console.log("url", url)
-    const filePath = RNFS.DocumentDirectoryPath + `/example.${url?.split('.')?.pop()}`;
+    const filePath =
+      RNFS.DocumentDirectoryPath + `/example.${url?.split('.')?.pop()}`;
 
     RNFS.downloadFile({
       fromUrl: url,
@@ -175,7 +177,9 @@ const FeedReactions = ({post}) => {
         }
         break;
       case 'comment':
-      // actions?.comments?.ref?.current?.focus();
+        ref?.current?.open();
+        setIsSheetOpen(true);
+        break;
       case 'save':
         const albumId = albumIds?.find(album => album?.type === post?.type)?.id;
         console.log('albumID', albumId);
@@ -192,10 +196,13 @@ const FeedReactions = ({post}) => {
           console.log('Error saving post', error);
           toast('error', 'Error saving post');
         }
+        break;
       case 'share':
-        toggleReaction(index)
+        toggleReaction(index);
+        break;
       case 'download':
         downloadFile(post?.type === 'MOMMENTS' && post?.Momments?.url);
+        break;
       default:
         break;
     }

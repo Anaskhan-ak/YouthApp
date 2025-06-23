@@ -113,6 +113,7 @@ import QR from './qr.svg';
 import QRcode from './QRcode.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
+import ReplyArrow from './ReplyArrow.svg';
 import RightArrow from './RightArrow.svg';
 import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
@@ -248,8 +249,7 @@ export {
   PlayIcon,
   Plus,
   PublicIcon, QR, QRcode, RateUs,
-  RedditIcon,
-  RightArrow,
+  RedditIcon, ReplyArrow, RightArrow,
   Search,
   SearchIcon,
   SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
