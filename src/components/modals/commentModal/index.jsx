@@ -30,6 +30,12 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
   const user = useUser();
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
+  const [reply, setReply] = useState({
+    userName: '',
+    commentId: '',
+    active: false,
+  });
+
   const toggleRecording = async () => {
     const userDetails = await getDataLocally();
     if (isRecording) {
@@ -120,6 +126,44 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
       toast('error', 'Error adding comment');
     }
   };
+
+  const CommentReply = async commentId => {
+    const userDetails = await getDataLocally();
+    const body = {
+      userId: userDetails?.id,
+      commentId: commentId,
+      comment: text,
+    };
+    try {
+      const response = await apiCall?.commentReply(body);
+      if (response) {
+        console.log('Successfully replied to comment', response);
+        setReply({
+          userName: '',
+          commentId: '',
+          active: false,
+        });
+        setText('');
+        commentObj?.setComments(prev => ({
+          ...prev,
+          value: prev.value.map(comment => {
+            if (comment.id === commentId) {
+              return {
+                ...comment,
+                replies: [...(comment.replies || []), response],
+              };
+            }
+            return comment;
+          }),
+        }));
+        // actions?.comments?.ref?.current?.blur();
+      }
+    } catch (error) {
+      console.log('Error replying to comment', error);
+      toast('error', 'Error replying to comment');
+    }
+  };
+
   return (
     <BottomSheet
       enablePanDownToClose={true}
@@ -144,9 +188,15 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
         </View>
         <View style={{flex: 1}}>
           <FlatList
-            data={commentObj?.comments?.value}
+            data={commentObj?.comments?.value?.slice(0, 2)}
             renderItem={({item, index}) => (
-              <RenderItem item={item} index={index} />
+              <RenderItem
+                item={item}
+                index={index}
+                reply={reply}
+                setReply={setReply}
+                commentObj={commentObj}
+              />
             )}
             keyExtractor={(item, index) =>
               item?.id?.toString() || index.toString()
@@ -155,6 +205,16 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
             showsVerticalScrollIndicator={false}
           />
         </View>
+        {reply?.active && (
+          <View style={styles?.replyTitle}>
+            <Text style={styles?.replyName}>Replying to {reply?.userName}</Text>
+            <TouchableOpacity
+              style={styles?.cancelReply}
+              onPress={() => setReply(prev => ({...prev, active: false}))}>
+              <Text style={styles?.cancelReplyText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         {/* comment input */}
         <View style={styles?.inputContainer}>
           <Image
@@ -183,10 +243,9 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
             <TouchableOpacity
               style={styles?.button}
               onPress={
-                // reply?.active
-                //   ? () => CommentReply(reply?.commentId)
-                //   :
-                handleComment
+                reply?.active
+                  ? () => CommentReply(reply?.commentId)
+                  : handleComment
               }>
               <SolidMessageSendIcon
                 width={width * 0.04}

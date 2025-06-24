@@ -42,7 +42,7 @@ export const styles = StyleSheet?.create({
     borderColor: colors?.gray11,
     borderRadius: width * 0.065,
     paddingHorizontal: width * 0.01,
-    marginBottom: height * 0.04,
+    marginBottom: height * 0.1,
   },
   input: {
     flex: 0.65,
@@ -79,5 +79,26 @@ export const styles = StyleSheet?.create({
     width : width * 0.1,
     height : width * 0.1,
     borderRadius : width * 0.1
-  }
+  },
+  replyTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  replyName: {
+    fontFamily: fonts?.montserratSemiBold,
+    color: colors?.textGray,
+    fontSize: Pixels(10),
+  },
+  cancelReply: {
+    backgroundColor: colors?.gray,
+    paddingHorizontal: width * 0.01,
+    borderRadius: width * 0.01,
+    marginLeft: width * 0.02,
+  },
+  cancelReplyText: {
+    fontFamily: fonts?.montserratSemiBold,
+    color: colors?.pink,
+    fontSize: Pixels(10),
+  },
 });
