@@ -17,7 +17,7 @@ const UserPostHeader = ({post, user}) => {
     let date = array[0];
     const text = array[1];
     const ago = array[2];
-    if (date === 'a' ){
+    if (date === 'a' || date === 'an' ){
       date = 1
     }
     return `${date}${text} ${ago}`;
