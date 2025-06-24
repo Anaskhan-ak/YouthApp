@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../../constant';
+import { height, Pixels, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
@@ -50,5 +50,17 @@ export const styles = StyleSheet.create({
     flexDirection : "row",
     alignItems : "center",
     justifyContent : "center"
+  },
+  repostButton : {
+    width : width * 0.2,
+    borderRadius : width * 0.04,
+    padding : width * 0.01,
+    alignItems : 'center',
+    justifyContent : 'center'
+  },
+  repostText : {
+    color : colors?.white,
+    fontFamily : fonts?.montserratBlack,
+    fontSize : Pixels(13)
   }
 });

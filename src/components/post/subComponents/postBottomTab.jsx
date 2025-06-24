@@ -60,13 +60,14 @@ const PostBottomTab = ({post, actions, setActions}) => {
     },
     {
       type: 'repost',
-      active: false,
-      count: 0,
+      active: actions?.repost?.value?.some(r => r?.user?.firstName === user?.firstName),
+      count: actions?.repost?.count,
       activeIcon: <ActiveRepost width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
         <InactiveRepost width={width * 0.055} height={width * 0.055} />
       ),
     },
+
     {
       type: 'share',
       active: false,
@@ -183,6 +184,10 @@ const PostBottomTab = ({post, actions, setActions}) => {
           console.log('Error saving post', error);
           toast('error', 'Error saving post');
         }
+        break;
+      case 'repost':
+        actions?.repost?.ref?.current?.snapToIndex(0)
+         break;
       default:
         break;
     }

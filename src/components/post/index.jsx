@@ -18,6 +18,7 @@ import PostModal from './subComponents/Modal';
 import MomentPost from './subComponents/MomentPost';
 import MusicPost from './subComponents/MusicPost';
 import Repost from './subComponents/Repost';
+import RepostModal from './subComponents/RepostModal';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
 
@@ -39,7 +40,12 @@ const Post = ({post, isScrolling}) => {
     save: {
       count: post?._count?.SavedPost,
     },
+    repost: {
+      ref: useRef(null),
+      count: post?.shares?.length,
+    },
   });
+
   const renderPostContent = (post, modalProps) => {
     const postComponents = {
       MEDIA: MediaPost,
@@ -133,6 +139,13 @@ const Post = ({post, isScrolling}) => {
           </TouchableWithoutFeedback>
         </Modal>
       )}
+      {/* {actions?.repost?.sheetOpen && ( */}
+        <RepostModal
+          sheetRef={actions?.repost?.ref}
+          post={post}
+          setActions={setActions}
+        />
+      {/* )} */}
     </View>
   );
 };
