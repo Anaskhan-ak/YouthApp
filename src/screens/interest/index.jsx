@@ -27,7 +27,7 @@ const Interests = () => {
   const getAllnterests = async () => {
     try {
       const response = await apiCall?.getAllInterests();
-      // console.log('ALL INTERESTS', response);
+      console.log('ALL INTERESTS', response);
       setInterests(response);
       setFilteredInterests(response);
     } catch (error) {
