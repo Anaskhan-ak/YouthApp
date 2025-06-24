@@ -17,6 +17,7 @@ import MediaPost from './subComponents/mediaPost';
 import PostModal from './subComponents/Modal';
 import MomentPost from './subComponents/MomentPost';
 import MusicPost from './subComponents/MusicPost';
+import Repost from './subComponents/Repost';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
 
@@ -35,8 +36,8 @@ const Post = ({post, isScrolling}) => {
       value: post?.comments,
       count: post?.comments?.length,
     },
-     save: {
-      count:  post?._count?.SavedPost,
+    save: {
+      count: post?._count?.SavedPost,
     },
   });
   const renderPostContent = (post, modalProps) => {
@@ -47,6 +48,7 @@ const Post = ({post, isScrolling}) => {
       EVENT: EventPost,
       DOCUMENT: DocumentPost,
       MOMMENTS: MomentPost,
+      NORMAL: Repost,
     };
 
     const PostComponent = postComponents[post.type];
@@ -120,8 +122,9 @@ const Post = ({post, isScrolling}) => {
               <View
                 style={[
                   styles?.modal,
-                  {marginVertical: modal?.visible && height * 0.2,
-                    alignSelf :  modal?.isPost && 'flex-start'
+                  {
+                    marginVertical: modal?.visible && height * 0.2,
+                    alignSelf: modal?.isPost && 'flex-start',
                   },
                 ]}>
                 <PostModal post={post} modal={modal} setModal={setModal} />
