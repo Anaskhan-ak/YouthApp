@@ -50,7 +50,6 @@ const RenderItem = ({item, index}) => {
                 ?.replace('second', 's')
                 ?.replace('months', 'mth')
                 ?.replace('month', 'mth')}{' '}
-              ago
             </Text>
           </View>
         </View>

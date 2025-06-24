@@ -5,14 +5,13 @@ import { fonts } from '../../../utils/fonts';
 
 export const styles = StyleSheet?.create({
   contentContainer: {
-    flex: 1,
-    paddingHorizontal: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: colors?.white,
-    height: height * 0.6,
-    // bottom : height * 0.04
-  },
+  flex: 1,
+  paddingHorizontal: 20,
+  borderTopLeftRadius: 30,
+  borderTopRightRadius: 30,
+  backgroundColor: colors?.white,
+},
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -43,7 +42,7 @@ export const styles = StyleSheet?.create({
     borderColor: colors?.gray11,
     borderRadius: width * 0.065,
     paddingHorizontal: width * 0.01,
-    marginVertical: height * 0.005,
+    marginBottom: height * 0.04,
   },
   input: {
     flex: 0.65,

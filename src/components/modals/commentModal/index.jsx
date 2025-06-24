@@ -1,12 +1,23 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
-import { FlatList, Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import AudioRecord from 'react-native-audio-record';
 import { images } from '../../../assets/images';
-import { DropDown, GraySolidMicIcon, SolidMessageSendIcon } from '../../../assets/images/svgs';
+import {
+  DropDown,
+  GraySolidMicIcon,
+  SolidMessageSendIcon,
+} from '../../../assets/images/svgs';
 import RecordingBars from '../../../components/post/subComponents/comments/components/RecordingBars';
 import { toast } from '../../../components/toast';
-import { height, width } from '../../../constant';
+import { width } from '../../../constant';
 import { getDataLocally, getRealPathFromURI } from '../../../helper';
 import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
@@ -14,9 +25,9 @@ import { colors } from '../../../utils/colors';
 import RenderItem from './components/RenderItem';
 import { styles } from './styles';
 
-const CommentModal = ({post, sheetRef, setIsSheetOpen}) => {
+const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
   // console.log("post", post)
-  const user = useUser()
+  const user = useUser();
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const toggleRecording = async () => {
@@ -48,16 +59,16 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen}) => {
             if (response) {
               console.log('Comment added successfully', response);
               setText('');
-            //   setActions(prev => ({
-            //     ...prev,
-            //     comments: {
-            //       ...prev?.comments,
-            //       count: prev?.comments?.count + 1,
-            //       value: [...prev?.comments?.value, response],
-            //     },
-            //   }));
+              //   setActions(prev => ({
+              //     ...prev,
+              //     comments: {
+              //       ...prev?.comments,
+              //       count: prev?.comments?.count + 1,
+              //       value: [...prev?.comments?.value, response],
+              //     },
+              //   }));
 
-            //   actions?.comments?.ref?.current?.blur();
+              //   actions?.comments?.ref?.current?.blur();
             }
           } catch (error) {
             console.log('Error adding comment', error);
@@ -96,14 +107,11 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen}) => {
       if (response) {
         console.log('Comment added successfully', response);
         setText('');
-        // setActions(prev => ({
-        //   ...prev,
-        //   comments: {
-        //     ...prev?.comments,
-        //     count: prev?.comments?.count + 1,
-        //     value: [...prev?.comments?.value, response],
-        //   },
-        // }));
+        commentObj?.setComments(prev => ({
+          ...prev,
+          count: prev.count + 1,
+          value: [...prev.value, response],
+        }));
 
         // actions?.comments?.ref?.current?.blur();
       }
@@ -115,6 +123,9 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen}) => {
   return (
     <BottomSheet
       enablePanDownToClose={true}
+      snapPoints={['60%', '90%']} // Must have snapPoints!
+      keyboardBehavior="interactive"
+      keyboardBlurBehavior="restore"
       ref={sheetRef}
       onClose={() => {
         sheetRef?.current?.close();
@@ -124,27 +135,34 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen}) => {
         {/* header */}
         <View style={styles?.header}>
           <Text style={styles?.commentCount}>
-            {post?.comments?.length} comments
+            {commentObj?.comments?.count} comments
           </Text>
           <TouchableOpacity style={styles?.sortButton}>
             <Text style={styles?.sortText}>Newest</Text>
             <DropDown />
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={post?.comments}
-          renderItem={({item, index}) => {
-            return <RenderItem item={item} index={index} />;
-          }}
-          keyExtractor={(item, index) =>
-            item?.id?.toString() || index.toString()
-          }
-          style={{height : height * 0.45}} // Takes available space
-          contentContainerStyle={{paddingBottom: 20}}
-        />
+        <View style={{flex: 1}}>
+          <FlatList
+            data={commentObj?.comments?.value}
+            renderItem={({item, index}) => (
+              <RenderItem item={item} index={index} />
+            )}
+            keyExtractor={(item, index) =>
+              item?.id?.toString() || index.toString()
+            }
+            contentContainerStyle={{paddingBottom: 100}} // Give space below list
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
         {/* comment input */}
         <View style={styles?.inputContainer}>
-          <Image source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture} style={styles?.image} />
+          <Image
+            source={
+              user?.photo ? {uri: user?.photo} : images?.defaultProfilePicture
+            }
+            style={styles?.image}
+          />
           {isRecording ? (
             <View style={styles?.recordingBars}>
               <RecordingBars isRecording={isRecording} />
@@ -167,10 +185,9 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen}) => {
               onPress={
                 // reply?.active
                 //   ? () => CommentReply(reply?.commentId)
-                //   : 
-                  handleComment
-              }
-              >
+                //   :
+                handleComment
+              }>
               <SolidMessageSendIcon
                 width={width * 0.04}
                 height={width * 0.04}

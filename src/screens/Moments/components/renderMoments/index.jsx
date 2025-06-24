@@ -19,6 +19,10 @@ const RenderMoments = ({moment, moments, visible, isVisible, isNext}) => {
   const ref = useRef();
   const [sheetOpen, setIsSheetOpen] = useState(false);
   // const videoStyle = useMemo(() => styles.video(height), [height]);
+  const [comments, setComments] = useState({
+    count : moment?.comments?.length,
+    value : moment?.comments
+  })
   return (
     <View style={styles?.container}>
       <Video
@@ -38,6 +42,7 @@ const RenderMoments = ({moment, moments, visible, isVisible, isNext}) => {
           post={moment}
           ref={ref}
           setIsSheetOpen={setIsSheetOpen}
+          comments={comments}
         />
       </View>
       {!sheetOpen && (
@@ -82,6 +87,10 @@ const RenderMoments = ({moment, moments, visible, isVisible, isNext}) => {
           post={moment}
           sheetRef={ref}
           setIsSheetOpen={setIsSheetOpen}
+          commentObj={{
+            comments,
+            setComments
+          }}
         />
       )}
     </View>

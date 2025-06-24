@@ -27,7 +27,7 @@ import { albumIds } from '../../../utils/string';
 import InviteModal from '../../modals/genderModal/inviteModal';
 import { styles } from './styles';
 
-const FeedReactions = ({post, ref, setIsSheetOpen}) => {
+const FeedReactions = ({post, ref, setIsSheetOpen, comments}) => {
   const user = useUser();
 
   const [reactions, setReactions] = useState([
@@ -41,7 +41,8 @@ const FeedReactions = ({post, ref, setIsSheetOpen}) => {
     },
     {
       type: 'comment',
-      text: post?.comments?.length,
+      text: comments?.count,
+      value : comments?.value,
       active: false,
       activeSvg: <ActiveComment />,
       inactiveSvg: <InactiveComment />,
@@ -222,6 +223,14 @@ const FeedReactions = ({post, ref, setIsSheetOpen}) => {
       );
     }
   }, [user?.id]);
+
+  useEffect(() => {
+    setReactions(prev => prev.map(item => 
+      item.type === 'comment' 
+        ? {...item, text: comments?.count, value: comments?.value}
+        : item
+    ));
+  }, [comments]);
 
   const HeaderComponent = () => {
     return (
