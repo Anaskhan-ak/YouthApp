@@ -1,3 +1,4 @@
+import { getDataLocally } from '../helper';
 import useUser from './user';
 
 const {useState, useEffect, useCallback} = require('react');
@@ -22,19 +23,21 @@ const usePagination = ({url, body}, dependencies = []) => {
   //   console.log("userID", body?.userId)
 
   const fetchData = async (page, perPage = 10) => {
+    const userDetails = await getDataLocally()
+    // console.log("user", userDetails)
     try {
       const updatedBody = {
         ...body,
         page,
         pageSize: perPage,
       };
-       const updatedBody_2 = {
+      const updatedBody_2 = {
         ...body,
         page,
         pageSize: perPage,
-        userId: body?.userId ? body?.userId : user?.id,
+        userId: userDetails?.id,
       };
-      const response = await url(body?.userId?updatedBody_2:updatedBody);
+      const response = await url(updatedBody_2 );
       const result = {
         data: response?.data?.posts,
         totalResult: response?.data?.metadata?.totalCount,

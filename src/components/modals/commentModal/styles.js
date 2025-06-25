@@ -42,7 +42,7 @@ export const styles = StyleSheet?.create({
     borderColor: colors?.gray11,
     borderRadius: width * 0.065,
     paddingHorizontal: width * 0.01,
-    marginBottom: height * 0.1,
+    // marginBottom: height * 0.2,
   },
   input: {
     flex: 0.65,

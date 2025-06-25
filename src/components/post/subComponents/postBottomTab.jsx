@@ -60,7 +60,9 @@ const PostBottomTab = ({post, actions, setActions}) => {
     },
     {
       type: 'repost',
-      active: actions?.repost?.value?.some(r => r?.user?.firstName === user?.firstName),
+      active: actions?.repost?.value?.some(
+        r => r?.user?.firstName === user?.firstName,
+      ),
       count: actions?.repost?.count,
       activeIcon: <ActiveRepost width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
@@ -124,6 +126,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
   }, []);
 
   const handlePress = async icon => {
+    console.log('icon', icon);
     const userDetails = await getDataLocally();
     switch (icon?.type) {
       case 'like':
@@ -137,7 +140,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
                 postId: post?.id,
                 status: true,
               };
-
+          console.log('body', body);
           const response = await apiCall?.likePost(body);
           setIcons(prev =>
             prev.map(i => {
@@ -186,8 +189,8 @@ const PostBottomTab = ({post, actions, setActions}) => {
         }
         break;
       case 'repost':
-        actions?.repost?.ref?.current?.snapToIndex(0)
-         break;
+        actions?.repost?.ref?.current?.snapToIndex(0);
+        break;
       default:
         break;
     }

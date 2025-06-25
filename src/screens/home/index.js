@@ -18,6 +18,7 @@ import Stories from '../../components/stories';
 import { height } from '../../constant';
 import { getDataLocally } from '../../helper';
 import usePagination from '../../hooks/usePagination';
+import useUser from '../../hooks/user';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
@@ -30,6 +31,7 @@ const Home = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [stories, setStories] = useState([]);
   const isFocus = useIsFocused();
+  const user = useUser()
   const {
     data,
     totalResult,
@@ -42,7 +44,7 @@ const Home = () => {
     {
       url: apiCall?.getAllPosts,
       body: {
-        userId: 'cmbhntz1u000325i4b6291aew',
+        // userId: user?.id,
         page: 1,
         pageSize: 10,
       },
