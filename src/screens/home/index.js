@@ -1,6 +1,6 @@
-import { BlurView } from '@react-native-community/blur';
-import { useIsFocused } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
+import {BlurView} from '@react-native-community/blur';
+import {useIsFocused} from '@react-navigation/native';
+import {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -8,19 +8,19 @@ import {
   RefreshControl,
   StatusBar,
 } from 'react-native';
-import { LinearGradient } from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {LinearGradient} from 'react-native-linear-gradient';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import EmptyComponent from '../../components/empty';
 import HomeHeader from '../../components/headers/homeHeader';
 import Post from '../../components/post';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
-import { height } from '../../constant';
-import { getDataLocally } from '../../helper';
+import {height} from '../../constant';
+import {getDataLocally} from '../../helper';
 import usePagination from '../../hooks/usePagination';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
 
@@ -96,7 +96,6 @@ const Home = () => {
     try {
       const userData = await getDataLocally();
       const stories = await apiCall?.getStories({userId: userData?.id});
-      console.log(userData?.id);
       setStories(stories);
     } catch (e) {
       console.log('e', e);
@@ -105,7 +104,7 @@ const Home = () => {
   };
   useEffect(() => {
     getStories();
-  }, []);
+  }, [isFocus]);
   return (
     <SafeAreaView style={{flex: 1}}>
       <StatusBar translucent backgroundColor={'transparent'}></StatusBar>
@@ -129,7 +128,7 @@ const Home = () => {
           reducedTransparencyFallbackColor="white"
         />
       )}
-
+      {/* <SuggestedMoments/> */}
       {initialLoader ? (
         <ActivityIndicator size={'large'} color={colors?.RGB1} />
       ) : data?.length === 0 ? (

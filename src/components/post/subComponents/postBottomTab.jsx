@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {BlurView} from '@react-native-community/blur';
-import {useEffect, useState} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+import { useEffect, useState } from 'react';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
@@ -15,14 +15,14 @@ import {
   InactiveRepost,
   InactiveSave,
 } from '../../../assets/images/svgs';
-import {toast} from '../../../components/toast';
-import {height, width} from '../../../constant';
-import {getDataLocally} from '../../../helper';
+import { toast } from '../../../components/toast';
+import { height, width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
 import useUser from '../../../hooks/user';
-import {apiCall} from '../../../services/apiCall';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
-import {albumIds} from '../../../utils/string';
+import { apiCall } from '../../../services/apiCall';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
+import { albumIds } from '../../../utils/string';
 
 const PostBottomTab = ({post, actions, setActions}) => {
   const [follow, setFollow] = useState(false);
@@ -60,13 +60,14 @@ const PostBottomTab = ({post, actions, setActions}) => {
     },
     {
       type: 'repost',
-      active: false,
-      count: 0,
+      active: actions?.repost?.value?.some(r => r?.user?.firstName === user?.firstName),
+      count: actions?.repost?.count,
       activeIcon: <ActiveRepost width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
         <InactiveRepost width={width * 0.055} height={width * 0.055} />
       ),
     },
+
     {
       type: 'share',
       active: false,
@@ -183,6 +184,10 @@ const PostBottomTab = ({post, actions, setActions}) => {
           console.log('Error saving post', error);
           toast('error', 'Error saving post');
         }
+        break;
+      case 'repost':
+        actions?.repost?.ref?.current?.snapToIndex(0)
+         break;
       default:
         break;
     }
@@ -217,21 +222,26 @@ const PostBottomTab = ({post, actions, setActions}) => {
         style={styles?.wrapper}>
         <BlurView style={styles.absolute} blurType="light" blurAmount={20} />
         {icons?.map((icon, index) => {
-          return (
-            <View key={index} style={styles?.iconContainer}>
-              <TouchableOpacity
-                style={styles?.iconButton}
-                onPress={() => handlePress(icon)}>
-                {icon?.active ? icon?.activeIcon : icon?.inactiveIcon}
-              </TouchableOpacity>
-              <Text style={styles?.iconText}>{icon?.count}</Text>
-            </View>
-          );
+          if (post?.type === 'NORMAL' && icon?.type === 'repost') {
+            return;
+          } else {
+            return (
+              <View key={index} style={styles?.iconContainer}>
+                <TouchableOpacity
+                  style={styles?.iconButton}
+                  onPress={() => handlePress(icon)}>
+                  {icon?.active ? icon?.activeIcon : icon?.inactiveIcon}
+                </TouchableOpacity>
+                <Text style={styles?.iconText}>{icon?.count}</Text>
+              </View>
+            );
+          }
         })}
         {(post?.type === 'MEDIA' ||
           post?.type === 'MUSIC' ||
           post?.type === 'DOCUMENT' ||
-          post?.type === 'MOMMENTS') && (
+          post?.type === 'MOMMENTS' ||
+          post?.type === 'NORMAL') && (
           <TouchableOpacity style={styles?.pinkButton} onPress={handleFollow}>
             <Text style={styles?.pinkButtonText}>
               {follow ? `Followed` : `Follow`}

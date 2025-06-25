@@ -4,10 +4,10 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
-  Platform,
 } from 'react-native';
 import VideoPlayer from 'react-native-video-player';
 import {
@@ -28,7 +28,7 @@ import Gallery from './components/gallery';
 import Stories from './components/stories';
 
 const CreateStory = ({route}) => {
-  const {isHighlight} = route?.params;
+  const {isHighlight} = route?.params || '';
   const [media, setMedia] = useState({});
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,16 @@ const CreateStory = ({route}) => {
 
   const handleForm = async () => {
     const isImage =
-      media?.type === 'jpg' || media?.type === 'png' || media?.type === 'jpeg';
+      media?.type === 'jpg' ||
+      media?.type === 'png' ||
+      media?.type === 'jpeg' ||
+      media?.type === 'image' ||
+      'gif' ||
+      'webp' ||
+      'bmp' ||
+      'tiff' ||
+      'svg' ||
+      'heic';
     setLoading(true);
     const formData = new FormData();
     formData?.append('type', 'STORY');
@@ -96,10 +105,17 @@ const CreateStory = ({route}) => {
     <View style={styles?.container}>
       {preview ? (
         <>
-          <GradientHeader
-            storyIcons={<StoryIcons />}
-            backPress={() => setPreview(false)}
-          />
+          {isHighlight ? (
+            <GradientHeader
+              backPress={() => setPreview(false)}
+              title="New Highlight"
+            />
+          ) : (
+            <GradientHeader
+              storyIcons={<StoryIcons />}
+              backPress={() => setPreview(false)}
+            />
+          )}
           {media?.type?.startsWith('image/') ||
           media?.type?.startsWith('image') ? (
             <Image source={{uri: media?.uri}} style={styles?.media} />
@@ -121,10 +137,6 @@ const CreateStory = ({route}) => {
         </>
       ) : (
         <>
-          <GradientHeader
-            backPress={() => setPreview(false)}
-            title="New Highlight"
-          />
           {isHighlight ? (
             <Stories media={media} setMedia={setMedia} />
           ) : (

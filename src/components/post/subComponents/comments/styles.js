@@ -1,5 +1,5 @@
 import {
-    StyleSheet
+  StyleSheet
 } from 'react-native';
 import { height, Pixels, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
@@ -18,7 +18,6 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   commentBox: {
     borderWidth: width * 0.002,
@@ -129,7 +128,7 @@ export const styles = StyleSheet.create({
     marginLeft : width * 0.1,
     borderLeftWidth : width * 0.001,
     borderColor : colors?.gray,
-    marginVertical : height * 0.01
+    marginVertical : height * 0.01,
   },
   repliesWrapper : {
     transform : [{scale : 0.9}]

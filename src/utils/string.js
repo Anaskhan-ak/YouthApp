@@ -55,7 +55,7 @@ export const gender = [
 export const bottomTabs = [
   {
     screen: 'Moments',
-    route: 'Moment',
+    route: 'Moments',
     icon: <Moment width={24} height={24} />,
   },
   {
@@ -129,7 +129,7 @@ export const sideBottomSheetOptions = [
     id: 'moments',
     title: 'Moments',
     desc: 'To make sure your Moments reach the right people...',
-    route:''
+    route:'CreateMoment'
   },
   {
     id: 'yudio',
@@ -205,5 +205,9 @@ export const albumIds = [
   {
     type : 'EVENT',
     id : 'cm6hvc3lt00091jdq5xgnd47r'
+  },
+   {
+    type : 'MOMMENTS',
+    id : 'cmc94gbov000m6uglc4rnmavq'
   },
 ]

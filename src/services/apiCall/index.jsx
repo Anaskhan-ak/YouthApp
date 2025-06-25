@@ -71,7 +71,8 @@ export const apiCall = {
   createNewPost: async params => {
     let result = await documentPost(apis?.createPost, params);
     if (result?.status >= 200 && result?.status < 400)
-      return result?.data?.youdio;
+      // return result?.data?.youdio;
+    return result?.data?.data;
     // if (result?.status === 200) return result?.data
     else throw result;
   },
@@ -97,6 +98,11 @@ export const apiCall = {
   },
   getAllYudios: async params => {
     let result = await post(apis?.getYudios, params);
+    if (result?.status) return result?.data?.data?.posts;
+    else throw result;
+  },
+  getAllMoments: async params => {
+    let result = await post(apis?.getMoments, params);
     if (result?.status) return result?.data?.data?.posts;
     else throw result;
   },
@@ -146,6 +152,12 @@ export const apiCall = {
     else throw result
   },
 
+  repost : async (params) => {
+    let result = await post(apis?.repost, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
   //GET API CALL
   getAllDocuments: async params => {
     let result = await post(apis?.getDocuments, params);
@@ -181,9 +193,15 @@ export const apiCall = {
     if (result?.status) return result?.data?.messages;
     else throw result;
   },
-  getProfileData: async ({userId}) => {
+  getProfileData: async () => {
     let result = await get(`${apis?.getProfile}/${userId}`);
     if (result?.status >= 200 && result?.status < 400) return result?.data;
+    else throw result;
+  },
+
+  getSaved: async () => {
+    let result = await get(apis?.getSavedPosts);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },
   // PATCH API CALL

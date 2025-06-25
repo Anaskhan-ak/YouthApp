@@ -7,6 +7,7 @@ export const apis = {
   loginWithGoogle: 'api/v1/firebase',
   createPost : 'api/v1/createNewPost',
   getYudios : 'api/v1/getYudio',
+  getMoments : 'api/v1/getMoments',
   getDocuments : 'api/v1/getUserPost',
   forgotPassword : 'api/v1/forgotPassword',
   verifyForgetPassword : 'api/v1/verifyPasswordToken',
@@ -22,6 +23,7 @@ export const apis = {
   getStories : 'api/v1/getStory',
   updateProfile : 'api/v1/profile/update',
   savePost : "api/v1/post/save",
+  repost : "api/v1/sharePost",
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',
@@ -34,6 +36,7 @@ export const apis = {
   getProfile : 'api/v1/profile',
   getAllInterests : 'api/v1/intrest',
   getOnBoardingContent : 'api/v1/onboarding',
+  getSavedPosts : 'api/v1/post/saved'
   // DELETE ENDPOINTS
   // PATCH ENDPOINTS
 };

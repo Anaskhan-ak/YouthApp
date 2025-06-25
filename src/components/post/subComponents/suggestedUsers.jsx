@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   FlatList,
   Image,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {images} from '../../../assets/images';
+import { images } from '../../../assets/images';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
-import {height, Pixels, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { height, Pixels, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
 const SuggestedUsers = () => {
   const navigation = useNavigation();
@@ -54,6 +54,7 @@ const SuggestedUsers = () => {
           navigation?.navigate('SuggestedContent', {
             headerTitle: 'Suggested Users',
             data: data,
+            type : 'users'
           })
         }>
         <Text style={styles?.heading}>See all</Text>

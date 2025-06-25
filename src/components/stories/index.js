@@ -1,18 +1,19 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import InstagramStories from '@birdwingo/react-native-instagram-stories';
 import {colors} from '../../utils/colors';
 import {Pixels, width} from '../../constant';
 import {Plus} from '../../assets/images/svgs';
 import {fonts} from '../../utils/fonts';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 const avatarSize = width * 0.125;
 const borderRadius = avatarSize / 2;
 
 const Stories = ({stories}) => {
   const ref = useRef(null);
-
+  const navigation = useNavigation()
   const renderAvatar = item => {
     const uri = item?.avatarSource?.uri;
     const avatarImage = <Image source={{uri}} style={styles.avatarImage} />;
@@ -29,12 +30,11 @@ const Stories = ({stories}) => {
 
     return <View style={styles.avatarPlain}>{avatarImage}</View>;
   };
-
   return (
     <View style={styles.container}>
-      <View style={styles.addStory}>
+      <TouchableOpacity onPress={()=>navigation?.navigate('CreateStory')} style={styles.addStory}>
         <Plus width={width * 0.06} height={width * 0.06} />
-      </View>
+      </TouchableOpacity>
       <InstagramStories
         ref={ref}
         stories={stories}
@@ -58,12 +58,13 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:"center"
   },
   addStory: {
-    width: width * 0.145,
-    height: width * 0.145,
+    width: width * 0.155,
+    height: width * 0.155,
     backgroundColor: colors?.ashGrey,
-    borderRadius: width * 0.145,
+    borderRadius: width * 0.155,
     alignItems: 'center',
     justifyContent: 'center',
   },

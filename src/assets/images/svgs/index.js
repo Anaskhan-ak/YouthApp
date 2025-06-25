@@ -113,6 +113,7 @@ import QR from './qr.svg';
 import QRcode from './QRcode.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
+import ReplyArrow from './ReplyArrow.svg';
 import RightArrow from './RightArrow.svg';
 import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
@@ -135,13 +136,16 @@ import TwitterIconRound from './TwitterIconRound.svg';
 import UnmuteIcon from './UnmuteIcon.svg';
 import UploadThumbnail from './UploadThumbnail.svg';
 import UserFollow from './user_follow.svg';
+import VerticalWhiteDots from './VerticalWhiteDots.svg';
 import VideoCallIcon from './VideoCallIcon.svg';
 import VoiceCallIcon from './VoiceCallIcon.svg';
 import WhatsappIcon from './WhatsappIcon.svg';
+import WhiteBackArrow from './WhiteBackArrow.svg';
 import WhiteBackwardAudioIcon from './WhiteBackwardAudioIcon.svg';
 import WhiteCameraIcon from './WhiteCameraIcon.svg';
 import WhiteForwardAudioIcon from './WhiteForwardAudioIcon.svg';
 import WhiteLeftArrow from './WhiteLeftArrow.svg';
+import WhiteSettingsIcon from './WhiteSettingsIcon.svg';
 import WhiteTick from './WhiteTick.svg';
 import YouthCoin from './youthCoin.svg';
 import YouthIcon from './YouthIcon.svg';
@@ -245,8 +249,7 @@ export {
   PlayIcon,
   Plus,
   PublicIcon, QR, QRcode, RateUs,
-  RedditIcon,
-  RightArrow,
+  RedditIcon, ReplyArrow, RightArrow,
   Search,
   SearchIcon,
   SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
@@ -258,15 +261,12 @@ export {
   TwitterIconRound,
   UnmuteIcon,
   UploadThumbnail,
-  UserFollow,
-  VideoCallIcon,
+  UserFollow, VerticalWhiteDots, VideoCallIcon,
   VoiceCallIcon,
-  WhatsappIcon,
-  WhiteBackwardAudioIcon,
+  WhatsappIcon, WhiteBackArrow, WhiteBackwardAudioIcon,
   WhiteCameraIcon,
   WhiteForwardAudioIcon,
-  WhiteLeftArrow,
-  WhiteTick, YouthCoin, YouthIcon, YouthIconWhite, YoutubeIcon,
+  WhiteLeftArrow, WhiteSettingsIcon, WhiteTick, YouthCoin, YouthIcon, YouthIconWhite, YoutubeIcon,
   Yudio
 };
 

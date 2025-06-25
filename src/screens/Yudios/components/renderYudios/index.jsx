@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import YudioReactions from '../../../../components/reactions/yudioReactions';
+import FeedReactions from '../../../../components/reactions/feedReactions';
 import useUser from '../../../../hooks/user';
 import YudioCard from '../yudioCard';
 import { styles } from './styles';
@@ -24,7 +24,7 @@ const RenderYudios = ({yudios, yudio}) => {
       <YudioCard yudio={yudio?.yudios} />
       {/* Reactions */}
       <View style={styles?.reactions}>
-        <YudioReactions />
+        <FeedReactions post={post} />
       </View>
       {/* Suggested Yudios */}
       <View style={styles?.suggestedView}>
