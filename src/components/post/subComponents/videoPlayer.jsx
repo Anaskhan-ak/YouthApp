@@ -1,13 +1,15 @@
-import {BlurView} from '@react-native-community/blur';
-import {useEffect, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+import { useEffect, useRef, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import VideoPlayer from 'react-native-video-player';
-import {MuteIcon, PlayIcon, UnmuteIcon} from '../../../assets/images/svgs';
-import {height, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { MuteIcon, PlayIcon, UnmuteIcon } from '../../../assets/images/svgs';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
-const PostVideo = ({url, isScrolling, isMoment}) => {
+const PostVideo = ({url, isScrolling, isMoment, isRepost}) => {
+  console.log('isRepost', isRepost);
+  console.log('isMoment', isMoment);
   const [pause, setPause] = useState(false);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);
@@ -73,7 +75,13 @@ const PostVideo = ({url, isScrolling, isMoment}) => {
           source={{uri: url}}
           style={[
             styles.mediaImage,
-            {height: isMoment ? height * 0.5 : height * 0.38},
+            {
+              height: (() => {
+                // if (isMoment && isRepost) return height * 0.3;
+                if (isMoment) return height * 0.5;
+                return height * 0.38;
+              })(),
+            },
           ]}
           paused={pause}
           muted={muted}
@@ -104,7 +112,11 @@ const PostVideo = ({url, isScrolling, isMoment}) => {
           style={[StyleSheet.absoluteFill, {zIndex: 10}]}>
           {/* Show play icon only when paused */}
           {pause && (
-            <View style={[styles.playButton, {top: isMoment ? height * 0.22:height * 0.16}]}>
+            <View
+              style={[
+                styles.playButton,
+                {top: isMoment ? height * 0.22 : height * 0.16},
+              ]}>
               <BlurView
                 style={[StyleSheet.absoluteFill, {borderRadius: width * 0.2}]}
                 blurType="light"
