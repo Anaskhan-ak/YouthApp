@@ -1,32 +1,30 @@
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {useEffect, useRef, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useEffect, useRef, useState } from 'react';
+import { Image, TouchableOpacity, View } from 'react-native';
 
-import {images} from '../../assets/images';
+import { images } from '../../assets/images';
 import {
   EventsIcon,
   FileAudio,
   FileImport,
   GalleryIcon,
   MomentsIcon,
-  Plus,
-  WhiteLeftArrow,
+  WhiteLeftArrow
 } from '../../assets/images/svgs';
 
-import {pick} from '@react-native-documents/picker';
-import {height, width} from '../../constant';
-import {getDataLocally} from '../../helper';
-import {apiCall} from '../../services/apiCall';
-import {colors} from '../../utils/colors';
+import { pick } from '@react-native-documents/picker';
+import { ActivityIndicator } from 'react-native';
+import { height, width } from '../../constant';
+import { getDataLocally } from '../../helper';
+import { apiCall } from '../../services/apiCall';
 import EditProfile from './compoents/editProfile';
+import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 import QRSheet from './compoents/qrCode';
-import {styles} from './styles';
-import PostContentModal from './compoents/postContentModal';
-import {ActivityIndicator} from 'react-native';
+import { styles } from './styles';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -135,6 +133,7 @@ const Profile = () => {
               userName={`${userData?.firstName} ${userData?.lastName}`}
               bio={userData?.bio}
               links={userData?.links}
+              setEditProfile={setEditProfile}
             />
             <ProfileStats
               post={userData?.numPosts}

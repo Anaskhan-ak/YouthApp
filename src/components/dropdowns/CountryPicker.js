@@ -31,7 +31,7 @@ const CountryPickerDropDown = ({
       pickerButtonOnPress={item => {
         setCountryDetails(item);
         setShowCountry(false);
-        setValue('country', item?.name?.en)
+        setValue&&setValue('country', item?.name?.en)
       }}
     />
   );

@@ -13,9 +13,9 @@ const DateMonthPicker = ({
     today.getDate(),
   );
   const handleDateConfirm = date => {
-    console.log('Selected date', date?.toString());
-    setSelectedDate(date);
-    setValue('date', date?.toISOString());
+    console.log('Selected date', date?.toISOString());
+    setSelectedDate && setSelectedDate(date);
+    setValue && setValue('date', date?.toISOString());
     setShowDate(false);
   };
 
@@ -27,10 +27,13 @@ const DateMonthPicker = ({
       modal
       open={showDate}
       date={
-        selectedDate !== 'DOB' || selectedDate !== null
+        setValue
+          ? selectedDate !== 'DOB' || selectedDate !== null
+            ? new Date(selectedDate)
+            : new Date()
+          : selectedDate !== 'DOB'
           ? new Date(selectedDate)
-          :
-           new Date()
+          : new Date()
       }
       mode="date"
       onConfirm={handleDateConfirm}

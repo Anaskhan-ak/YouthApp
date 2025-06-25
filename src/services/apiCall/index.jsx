@@ -13,6 +13,11 @@ export const apiCall = {
     if (result?.status == 200) return result.data;
     else throw result;
   },
+  ResendOtp: async obj => {
+    let result = await post(apis?.resendOtp, obj);
+    if (result?.status >= 200 && result?.status < 400) return result.data;
+    else throw result;
+  },
   SignUpWithGoogle: async obj => {
     let result = await post(apis?.loginWithGoogle, obj);
     if (result?.status == 201) return result.data;

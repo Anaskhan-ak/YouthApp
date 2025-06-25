@@ -1,6 +1,6 @@
 import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
-import {height, width} from '../../constant';
+import {height, Pixels, width} from '../../constant';
 import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
@@ -18,14 +18,24 @@ export const styles = StyleSheet.create({
   },
   image: {flex: 1},
   heading: {
-    fontSize: width * 0.05,
+    fontSize: Pixels(21),
     fontFamily: fonts?.montserratExtraBold,
+    // marginTop: 10,
+  },
+  headingWithIconView: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 10,
   },
   title: {
-    fontSize: width * 0.036,
+    fontSize: Pixels(15),
     fontFamily: fonts?.montserratMedium,
-    marginTop: 2,
+    marginTop: 8,
+    marginBottom: 2,
+  },
+   note: {
+    fontSize: Pixels(13),
+    fontFamily: fonts?.montserratMedium,
     marginBottom: 10,
   },
   content: {
@@ -65,6 +75,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 2,
     alignSelf: 'center',
+    flex: 1,
   },
   scrollViewContainer: {
     flexGrow: 1,

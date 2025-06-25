@@ -1,6 +1,6 @@
 import moment from 'moment';
-import {useState} from 'react';
-import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import {
   Platform,
   ScrollView,
@@ -9,18 +9,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DropDown, GradientCross} from '../../../../assets/images/svgs';
+import { DropDown, GradientCross } from '../../../../assets/images/svgs';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
 import CountryPickerDropDown from '../../../../components/dropdowns/CountryPicker';
 import DateMonthPicker from '../../../../components/dropdowns/DatePicker';
 import AuthInput from '../../../../components/inputs/authInput';
 import GenderModal from '../../../../components/modals/genderModal';
 import GradientText from '../../../../components/text/GradientText';
-import {toast} from '../../../../components/toast';
-import {height, width} from '../../../../constant';
-import {apiCall} from '../../../../services/apiCall';
-import {colors} from '../../../../utils/colors';
-import {styles} from './styles';
+import { toast } from '../../../../components/toast';
+import { height, width } from '../../../../constant';
+import { apiCall } from '../../../../services/apiCall';
+import { colors } from '../../../../utils/colors';
+import { styles } from './styles';
 
 const EditProfile = ({data, setData, setEditProfile}) => {
   const [showGender, setShowGender] = useState(false);
@@ -34,7 +34,6 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     control,
     formState: {errors},
     handleSubmit,
-    watch,
     setValue,
   } = useForm({
     defaultValues: {
@@ -51,10 +50,20 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     control,
     name: 'links',
   });
-  const links = watch('links');
 
   const onSubmit = async values => {
-    // console.log('selectedDate',selectedDate?.toISOString());
+    console.log('📝 Form Values:');
+    console.log('firstName:', values?.firstName);
+    console.log('lastName:', values?.lastName);
+    console.log('gender:', gender);
+    console.log('country:', values?.country);
+    console.log('dateOfBirth:', values?.date);
+    console.log('bio:', values?.bio);
+    console.log('links:', values?.links);
+
+    console.log('📸 profilePicture:', data?.profilePicture);
+    console.log('🖼️ coverImage:', data?.coverImage);
+
     setLoading(true);
     const formData = new FormData();
     formData.append('firstName', values?.firstName);
@@ -96,7 +105,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
           lastName: values?.lastName,
           gender: gender,
           country: values?.country,
-          dateOfBirth: values?.date,
+          dateOfBirth: new Date(values?.date),
           links: values?.links,
           profilePicture: data?.profilePicture,
           coverImage: data?.coverImage,
@@ -335,7 +344,12 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   onChangeText={onChange}
                   inputStyle={[
                     styles?.inputStyle,
-                    {paddingVertical: Platform?.OS==='android'?height * 0.005:height * 0.015},
+                    {
+                      paddingVertical:
+                        Platform?.OS === 'android'
+                          ? height * 0.005
+                          : height * 0.015,
+                    },
                   ]}
                 />
 

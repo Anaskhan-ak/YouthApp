@@ -19,8 +19,8 @@ import {PrimaryButton} from '../../components/buttons/PrimaryButton';
 import {SocialButton} from '../../components/buttons/SocialButton';
 import AuthInput from '../../components/inputs/authInput';
 import GradientText from '../../components/text/GradientText';
-import {height, width} from '../../constant';
-import {getFirebaseToken, googleSignIn} from '../../helper';
+import {height, isEmail, isPhoneNumber, width} from '../../constant';
+import {emailValidation, getFirebaseToken, googleSignIn} from '../../helper';
 import {GreenCheckMark} from '../../assets/images/svgs';
 import {apiCall} from '../../services/apiCall';
 import {colors} from '../../utils/colors';
@@ -58,14 +58,19 @@ const Login = () => {
       let result = await apiCall?.Login(obj);
       await AsyncStorage.setItem('token', result?.access_token);
       if (rememberMe) {
-        await AsyncStorage.setItem('rememberMe', "rememberMe");
+        await AsyncStorage.setItem('rememberMe', 'rememberMe');
       }
-
       const jsonValue = JSON.stringify(result?.data);
       await AsyncStorage.setItem('UserLocalData', jsonValue);
+      if(result?.data?.isFirstLogin){
+      navigation?.navigate('Interests');
+      }else{
       navigation?.navigate('LandingWidget');
+      }
     } catch (e) {
-      console.log('e', e);
+      if (e==='User is not verified. Please verify your account.'){
+      VerifyAccount(data?.email)
+      }
       setShowError(true);
       setErrorMessage({
         title: 'Sign Up Error',
@@ -77,6 +82,24 @@ const Login = () => {
   };
   const handleRememberMe = () => {
     setRememberMe(!rememberMe);
+  };
+  const VerifyAccount = async(value) => {
+  const match = value.match(/^\+(\d{1,4})/);
+  const countryCode = match ? `+${match[1]}` : null;
+   try{
+    const obj = {
+    email:isEmail(value)?value:null,
+    phoneNo:isPhoneNumber(value)?value:null
+    }
+    let result = await apiCall?.ResendOtp(obj);
+        navigation?.navigate('Otp', {
+          countryDetails: null,
+          phone: result?.user?.phoneNo,
+        });
+        console.log("res",result)
+   }catch(e){
+
+   }
   };
   const handleSignUp = () => {
     navigation?.navigate('SignUp');
@@ -105,6 +128,7 @@ const Login = () => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
+        setShowError(false)
         setKeyboardVisible(true);
       },
     );
@@ -121,16 +145,32 @@ const Login = () => {
     };
   }, []);
   const clearAsyncStorage = async () => {
-  try {
-    await AsyncStorage.clear();
-    console.log('AsyncStorage has been cleared!');
-  } catch (error) {
-    console.error('Error clearing AsyncStorage:', error);
-  }
-};
-useEffect(()=>{
-clearAsyncStorage()
-},[])
+    try {
+      await AsyncStorage.clear();
+      console.log('AsyncStorage has been cleared!');
+    } catch (error) {
+      console.error('Error clearing AsyncStorage:', error);
+    }
+  };
+  useEffect(() => {
+    clearAsyncStorage();
+  }, []);
+  const onError = errors => {
+    const keys = Object.keys(errors);
+    if (keys.length > 0) {
+      const firstKey = keys[0];
+      const message = errors[firstKey]?.message || 'Validation error';
+      setErrorMessage({
+        title: 'Sign Up Error',
+        message: message,
+      });
+      setShowError(true);
+    } else {
+      setShowError(false);
+    }
+    setKeyboardVisible(false);
+    Keyboard.dismiss();
+  };
   return (
     <SafeAreaView style={styles?.container}>
       <StatusBar
@@ -171,6 +211,7 @@ clearAsyncStorage()
           control={control}
           rules={{
             required: 'email is required',
+            // validate: emailValidation,
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <AuthInput
@@ -203,7 +244,7 @@ clearAsyncStorage()
               onBlur={onBlur}
               value={value}
               error={errors?.password}
-              placeholder={'password'}
+              placeholder={'Password'}
               secureTextEntry
             />
           )}
@@ -242,7 +283,7 @@ clearAsyncStorage()
 
         <PrimaryButton
           isLoading={loading}
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(onSubmit, onError)}
           title="Sign In"
         />
         <SocialButton

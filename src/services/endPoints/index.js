@@ -3,6 +3,7 @@ export const apis = {
   signUp: 'api/v1/signup',
   login: 'api/v1/login',
   otp: 'api/v1/verifyOtp',
+  resendOtp: 'api/v1/resendotp',
   loginWithGoogle: 'api/v1/firebase',
   createPost : 'api/v1/createNewPost',
   getYudios : 'api/v1/getYudio',

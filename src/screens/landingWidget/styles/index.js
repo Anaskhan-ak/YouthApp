@@ -55,9 +55,9 @@ export const styles = StyleSheet.create({
     tintColor: colors?.white,
   },
   timewidget: {
-    height: height * 0.22,
+    height: Platform?.OS==='android'?height * 0.22:height * 0.18,
     width: width * 0.9,
-    backgroundColor: 'rgba(250, 250, 250, 0.75)',
+    backgroundColor: 'rgba(250, 250, 250, 0.5)',
     alignSelf: 'center',
     borderRadius: width * 0.05,
     marginTop: height * 0.025,
@@ -128,10 +128,9 @@ export const styles = StyleSheet.create({
     marginLeft: width * 0.02,
   },
   podcastThumbnail: {
-    width: width * 0.3,
-    height: height * 0.2,
+    width: width * 0.28,
+    height: height * 0.16,
     borderRadius: width * 0.03,
-    marginLeft: width * 0.02,
   },
   reactionButtons: {
     alignSelf: 'flex-end',
@@ -139,7 +138,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginRight: width * 0.035,
     marginTop: width * 0.02,
-    width: width * 0.15,
+    width: width * 0.1,
     // marginBottom: -10,
     // padding : 10
   },

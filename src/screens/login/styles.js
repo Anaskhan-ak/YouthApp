@@ -1,6 +1,6 @@
 import {Dimensions, Platform, StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
-import {height, width} from '../../constant';
+import {height, Pixels, width} from '../../constant';
 import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
@@ -18,11 +18,11 @@ export const styles = StyleSheet.create({
   },
   image: {flex: 1},
   heading: {
-    fontSize: width * 0.055,
+    fontSize: Pixels(21),
     fontFamily: fonts?.montserratExtraBold,
   },
   title: {
-    fontSize: width * 0.05,
+   fontSize: Pixels(21),
     fontFamily: fonts?.montserratMedium,
     marginTop: 2,
     marginBottom: 10,

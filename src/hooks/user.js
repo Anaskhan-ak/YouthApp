@@ -12,8 +12,8 @@ const useUser = () => {
         const result = await apiCall?.getProfileData({userId: getUser?.id});
         setUser({
           id: result.id,
-          name: `${result.firstName} ${result.lastName}`,
-          photo: result.photo,
+          name: `${result?.firstName} ${result?.lastName}`,
+          photo: result?.profilePicture,
         });
       } catch (e) {
         console.error('Failed to fetch profile data', e);
