@@ -8,8 +8,6 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const PostVideo = ({url, isScrolling, isMoment, isRepost}) => {
-  console.log('isRepost', isRepost);
-  console.log('isMoment', isMoment);
   const [pause, setPause] = useState(false);
   const videoRef = useRef(null);
   const [duration, setDuration] = useState(0);

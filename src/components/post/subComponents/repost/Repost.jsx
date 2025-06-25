@@ -7,6 +7,7 @@ import PostBottomTab from '../postBottomTab';
 import UserPostHeader from '../userPostHeader';
 import MediaPost from './mediaPost';
 import MomentPost from './momentPost';
+import YudioPost from './yudioPost';
 // import VideoPlayer from './videoPlayer';
 
 const Repost = ({post, modal, actions, setActions, isScrolling}) => {
@@ -18,14 +19,14 @@ const Repost = ({post, modal, actions, setActions, isScrolling}) => {
     const postComponents = {
       MEDIA: MediaPost,
       // MUSIC: MusicPost,
-      // YUDIO: YudioPost,
+      YUDIO: YudioPost,
       // EVENT: EventPost,
       // DOCUMENT: DocumentPost,
       MOMMENTS: MomentPost,
     };
     if (
       post?.type === 'MUSIC' ||
-      post?.type === 'YUDIO' ||
+      // post?.type === 'YUDIO' ||
       post?.type === 'EVENT' ||
       post?.type === 'DOCUMENT' 
     ) {

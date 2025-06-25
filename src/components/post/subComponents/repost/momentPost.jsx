@@ -6,7 +6,7 @@ import PostVideo from './../videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
 const MomentPost = ({post, modal, isScrolling}) => {
-    console.log("post", post)
+    // console.log("post", post)
   const [mediaLayout, setMediaLayout] = useState(null);
 
   const handleMediaLayout = event => {
