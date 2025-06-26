@@ -54,7 +54,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
     {
       type: 'save',
       active: false,
-      count: post?._count?.SavedPost ? post?._count?.SavedPost : 0,
+      count: actions?.save?.count,
       activeIcon: <ActiveSave width={width * 0.055} height={width * 0.055} />,
       inactiveIcon: (
         <InactiveSave width={width * 0.055} height={width * 0.055} />
@@ -184,6 +184,13 @@ const PostBottomTab = ({post, actions, setActions}) => {
           const response = await apiCall?.savePost(body);
           if (response) {
             console.log('Successfully saved post', response);
+            setActions(prev=>({
+              ...prev,
+              save : {
+                ...prev,
+                count : prev?.count + 1
+              }
+            }))
           }
         } catch (error) {
           console.log('Error saving post', error);

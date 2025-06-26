@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CreateButton from '../../components/buttons/CreateButton';
 import Drawer from '../../components/drawer';
@@ -15,11 +15,11 @@ import MusicPost from '../../components/post/subComponents/repost/musicPost';
 import YudioPost from '../../components/post/subComponents/repost/yudioPost';
 import UserPostHeader from '../../components/post/subComponents/userPostHeader';
 import { toast } from '../../components/toast';
-import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
 import useUser from '../../hooks/user';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
+import { styles } from './styles';
 
 const CreateRepost = ({route}) => {
   const {post, setActions} = route?.params;
@@ -153,23 +153,3 @@ const CreateRepost = ({route}) => {
 
 export default CreateRepost;
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: colors?.white,
-    // alignItems : "center",
-  },
-  userInfoHeader: {
-    marginVertical: height * 0.01,
-    alignSelf: 'center',
-  },
-  input: {
-    margin: width * 0.04,
-  },
-  post: {
-    // alignSelf : "center",
-    marginTop: height * 0.02,
-    padding: width * 0.04,
-    borderRadius: width * 0.03,
-  },
-});
