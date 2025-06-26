@@ -1,12 +1,14 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
 import { useState } from 'react';
 import {
-  FlatList,
   Image,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
 import { images } from '../../../assets/images';
@@ -17,7 +19,7 @@ import {
 } from '../../../assets/images/svgs';
 import RecordingBars from '../../../components/post/subComponents/comments/components/RecordingBars';
 import { toast } from '../../../components/toast';
-import { height, width } from '../../../constant';
+import { width } from '../../../constant';
 import { getDataLocally, getRealPathFromURI } from '../../../helper';
 import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
@@ -167,7 +169,7 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
   return (
     <BottomSheet
       enablePanDownToClose={true}
-      snapPoints={['60%', '90%']} // Must have snapPoints!
+      snapPoints={['25%', '60%', '90%']} // Must have snapPoints!
       keyboardBehavior="interactive"
       keyboardBlurBehavior="restore"
       ref={sheetRef}
@@ -186,25 +188,26 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
             <DropDown />
           </TouchableOpacity>
         </View>
-        <View style={{height : height * 0.5}}>
-          <FlatList
-            data={commentObj?.comments?.value}
-            renderItem={({item, index}) => (
-              <RenderItem
-                item={item}
-                index={index}
-                reply={reply}
-                setReply={setReply}
-                commentObj={commentObj}
-              />
-            )}
-            keyExtractor={(item, index) =>
-              item?.id?.toString() || index.toString()
-            }
-            contentContainerStyle={{paddingBottom: 20,  flexGrow : 1}} // Give space below list
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
+        {/* <View style={{height : height * 0.5}}> */}
+        <BottomSheetFlatList
+          data={commentObj?.comments?.value}
+          renderItem={({item, index}) => (
+            <RenderItem
+              item={item}
+              index={index}
+              reply={reply}
+              setReply={setReply}
+              commentObj={commentObj}
+            />
+          )}
+          keyExtractor={(item, index) =>
+            item?.id?.toString() || index.toString()
+          }
+          // contentContainerStyle={{paddingBottom: 20,  flexGrow : 1}} // Give space below list
+          style={{flex: 1, zIndex: 1}}
+          showsVerticalScrollIndicator={false}
+        />
+        {/* </View> */}
         {reply?.active && (
           <View style={styles?.replyTitle}>
             <Text style={styles?.replyName}>Replying to {reply?.userName}</Text>
