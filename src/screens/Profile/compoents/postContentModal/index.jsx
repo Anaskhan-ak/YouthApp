@@ -10,7 +10,7 @@ import MomentPosts from './MomentPosts';
 import { toast } from '../../../../components/toast';
 import { useIsFocused } from '@react-navigation/native';
 
-const PostContentModal = ({options, setOptions}) => {
+const PostContentModal = ({options, setOptions,fixed}) => {
   const currentType = options.find(opt => opt.active)?.type;
   const [data, setData] = useState([]);
   const [yudios, setYudios] = useState([])
@@ -77,7 +77,7 @@ const PostContentModal = ({options, setOptions}) => {
   }
 
   return (
-    <PostModal options={options} setOptions={setOptions} content={content} />
+    <PostModal fixed options={options} setOptions={setOptions} content={content} />
   );
 };
 

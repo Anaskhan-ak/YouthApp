@@ -1,15 +1,17 @@
-import { Text, TouchableOpacity, View } from 'react-native';
-import { width } from '../../../../constant';
-import { colors } from '../../../../utils/colors';
-import { styles } from './styles';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {width} from '../../../../constant';
+import {colors} from '../../../../utils/colors';
+import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const ProfileStats = ({post, followers, followings, subscribers}) => {
-  const routeToScreen = (screen) =>{
-    
-  } 
+  const navigation = useNavigation();
+  const routeToScreen = screen => {
+    navigation?.navigate('ConnectionListing', {heading: screen});
+  };
   return (
     <View style={styles?.container}>
-     <View
+      <View
         style={[
           styles?.statsView,
           {
@@ -19,9 +21,9 @@ const ProfileStats = ({post, followers, followings, subscribers}) => {
         ]}>
         <Text style={styles?.count}>{post}</Text>
         <Text style={styles?.title}> Posts</Text>
-     </View>
-     <TouchableOpacity
-      onPress={()=>routeToScreen('post')}
+      </View>
+      <TouchableOpacity
+        onPress={() => routeToScreen('Followers')}
         style={[
           styles?.statsView,
           {
@@ -33,7 +35,8 @@ const ProfileStats = ({post, followers, followings, subscribers}) => {
         <Text style={styles?.title}> Followers</Text>
       </TouchableOpacity>
 
-      <View
+      <TouchableOpacity
+        onPress={() => routeToScreen('Following')}
         style={[
           styles?.statsView,
           {
@@ -43,12 +46,14 @@ const ProfileStats = ({post, followers, followings, subscribers}) => {
         ]}>
         <Text style={styles?.count}>{followings}</Text>
         <Text style={styles?.title}> Following</Text>
-      </View>
+      </TouchableOpacity>
 
-      <View style={styles?.statsView}>
+      <TouchableOpacity
+        onPress={() => routeToScreen('Subscribers')}
+        style={styles?.statsView}>
         <Text style={styles?.count}>{subscribers}</Text>
         <Text style={styles?.title}> Subscribers</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

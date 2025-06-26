@@ -38,9 +38,14 @@ export const apiCall = {
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
- getStories: async params => {
+  getStories: async params => {
     let result = await post(apis?.getStories, params);
     if (result?.status >= 200 && result?.status < 400) return result?.data?.data?.posts;
+    else throw result;
+  },
+  getAllHighlight: async params => {
+    let result = await post(apis?.getAllHighlight, params);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },
   getFollower: async params => {

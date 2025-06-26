@@ -3,43 +3,27 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { TagFriends } from '../../../assets/images/svgs';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
-import CircleCounter from '../subComponents/CircleCounter';
-import PostBottomTab from '../subComponents/postBottomTab';
-import PostVideo from './videoPlayer';
+import { height, width } from '../../../../constant';
+import { colors } from '../../../../utils/colors';
+import { fonts } from '../../../../utils/fonts';
+import CircleCounter from '../../subComponents/CircleCounter';
+import PostVideo from './../videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
+const MediaPost = ({post, 
+  // modal,
+   isScrolling}) => {
+    // console.log('Post', post);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [mediaWidth, setMediaWidth] = useState(null);
-  const [showTags, setShowTags] = useState(false);
-  const [mediaLayout, setMediaLayout] = useState(null);
-  const [tagPositions, setTagPositions] = useState([]);
+   const [mediaLayout, setMediaLayout] = useState(null);
 
   const handleMediaLayout = event => {
     const {width, height} = event.nativeEvent.layout;
     setMediaLayout({width, height});
-
-    // Generate tag positions if not already generated
-    if (post?.Tag?.length && tagPositions.length === 0) {
-      const newPositions = post.Tag.map(() => {
-        const padding = 40; // safe zone from edges and top bar
-        return {
-          top: Math.random() * (height - padding * 2) + padding,
-          left: Math.random() * (width - 100), // avoid horizontal overflow
-        };
-      });
-      setTagPositions(newPositions);
-    }
   };
-
   const viewabilityConfig = useRef({
     viewAreaCoveragePercentThreshold: 50,
   }).current;
@@ -50,35 +34,6 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
     }
   }).current;
 
-  const Tags = () => {
-    return (
-      <>
-        {post?.Tag?.map((tag, index) => {
-          const pos = tagPositions[index];
-          if (!pos) return null;
-
-          return (
-            <View
-              style={[
-                styles?.tagContainer,
-                {
-                  top: pos.top,
-                  left: pos.left,
-                },
-              ]}>
-              <View key={index} style={styles.tag}>
-                <Text style={styles.tagText}>
-                  {`@${tag?.user?.firstName} ${tag?.user?.lastName}`}
-                </Text>
-              </View>
-              <View style={styles?.tagPointer} />
-            </View>
-          );
-        })}
-      </>
-    );
-  };
-
   const renderItem = ({item, index}) => {
     const isVideo =
       item?.split('.')?.pop() === 'MOV' ||
@@ -86,13 +41,16 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
       item?.split('.')?.pop() === 'm3u8';
     return (
       <TouchableOpacity
-        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
-        <View onLayout={handleMediaLayout} style={[styles.mediaContainer,!modal?.modal?.isPost &&{borderRadius: width * 0.04}]}>
+        // onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}
+        >
+        <View
+          onLayout={handleMediaLayout}
+          style={[
+            styles.mediaContainer,
+            // !modal?.modal?.isPost && {borderRadius: width * 0.04},
+          ]}>
           {!isVideo && (
             <View style={styles.mediaElements}>
-              <TouchableOpacity onPress={() => setShowTags(!showTags)}>
-                <TagFriends />
-              </TouchableOpacity>
               {post?.media?.url?.length > 1 && (
                 <CircleCounter
                   segments={post?.media?.length}
@@ -106,9 +64,6 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
             </View>
           )}
 
-          {/* Show tags only after layout is measured */}
-          {showTags && mediaLayout && <Tags />}
-
           {isVideo ? (
             <PostVideo url={item} isScrolling={isScrolling} />
           ) : (
@@ -116,10 +71,10 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
               source={{uri: item}}
               style={[
                 styles.mediaImage,
-                modal?.modal?.isPost && {
-                  borderWidth: 3,
-                  borderColor: colors?.white,
-                },
+                // modal?.modal?.isPost && {
+                //   borderWidth: 3,
+                //   borderColor: colors?.white,
+                // },
               ]}
               resizeMode="cover"
             />
@@ -159,15 +114,6 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
           ))}
         </View>
       )}
-      {!modal?.modal?.isPost &&  (
-        <View style={[styles.reactionsTab, {width: mediaWidth}]}>
-          <PostBottomTab
-            post={post}
-            actions={actions}
-            setActions={setActions}
-          />
-        </View>
-      )}
     </View>
   );
 };
@@ -177,7 +123,7 @@ export default MediaPost;
 const styles = StyleSheet.create({
   mediaContainer: {
     backgroundColor: colors?.black,
-    marginHorizontal: height * 0.01,
+    // marginHorizontal: height * 0.01,
     marginTop: height * 0.015,
     overflow: 'hidden',
   },
@@ -194,8 +140,8 @@ const styles = StyleSheet.create({
     padding: width * 0.01,
   },
   mediaImage: {
-    width: width * 0.89,
-    height: height * 0.38,
+    width: width * 0.85,
+    height: height * 0.28,
     resizeMode: 'cover',
   },
   pagination: {

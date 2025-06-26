@@ -21,6 +21,7 @@ export const apis = {
   reactOnComment : 'api/v1/reactoncomment',
   replyOnComment : 'api/v1/replyoncomment',
   getStories : 'api/v1/getStory',
+  getAllHighlight : 'api/v1/post/getAllHighlight',
   updateProfile : 'api/v1/profile/update',
   savePost : "api/v1/post/save",
   repost : "api/v1/sharePost",

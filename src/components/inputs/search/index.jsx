@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
   inputContainerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.gray11,
-    borderRadius: width * 0.4,
+    backgroundColor: colors.searchBg,
+    borderRadius: width * 0.02,
     paddingLeft: width * 0.03,
     borderWidth: width * 0.005,
-    borderColor: colors.gray11,
+    borderColor: colors.searchBg,
     width: '100%',
   },
   textInput: {

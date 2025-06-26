@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 const avatarSize = width * 0.125;
 const borderRadius = avatarSize / 2;
 
-const Stories = ({stories}) => {
+const Stories = ({stories,avatarSize}) => {
   const ref = useRef(null);
   const navigation = useNavigation()
   const renderAvatar = item => {

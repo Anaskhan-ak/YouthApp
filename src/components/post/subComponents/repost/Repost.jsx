@@ -1,26 +1,24 @@
 import { useState } from 'react';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
+import { height, width } from '../../../../constant';
+import { colors } from '../../../../utils/colors';
+import PostBottomTab from '../postBottomTab';
+import UserPostHeader from '../userPostHeader';
 import DocumentPost from './documentPost';
 import EventPost from './eventPost';
 import MediaPost from './mediaPost';
-import MomentPost from './MomentPost';
-import MusicPost from './MusicPost';
-import PostBottomTab from './postBottomTab';
-import UserPostHeader from './userPostHeader';
-import YudioPost from './YudioPost';
+import MomentPost from './momentPost';
+import MusicPost from './musicPost';
+import YudioPost from './yudioPost';
 // import VideoPlayer from './videoPlayer';
 
 const Repost = ({post, modal, actions, setActions, isScrolling}) => {
-    // console.log("post", post)
+  // console.log("post", post)
   const [mediaWidth, setMediaWidth] = useState(null);
 
   const renderPostContent = (post, modalProps) => {
+    // console.log('Post', post);
     const postComponents = {
       MEDIA: MediaPost,
       MUSIC: MusicPost,
@@ -35,20 +33,19 @@ const Repost = ({post, modal, actions, setActions, isScrolling}) => {
       <PostComponent
         post={post}
         modal={modalProps}
-        actions={actions}
-        setActions={setActions}
         isScrolling={isScrolling}
-        isRepost={true}
       />
     );
   };
 
   return (
     <View>
-      <LinearGradient style={styles?.content} colors={[colors?.RGB3, colors?.RGB4]}>        
+      <LinearGradient
+        style={styles?.content}
+        colors={[colors?.RGB5, colors?.white]}>
         <View style={styles?.contentWrapper}>
           <UserPostHeader user={post?.SharePost?.user} post={post?.SharePost} />
-            {renderPostContent(post?.SharePost, modal)}
+          {renderPostContent(post?.SharePost, modal)}
         </View>
       </LinearGradient>
       {!modal?.modal?.isPost && (
@@ -68,14 +65,17 @@ export default Repost;
 
 const styles = StyleSheet.create({
   content: {
-    width : width * 0.9,
-    height : height * 0.38,
+    width: width * 0.9,
+    // height: height * 0.43,
     marginTop: height * 0.02,
-    borderRadius : width * 0.04
+    borderRadius: width * 0.04,
   },
-  contentWrapper : {
-    transform : [{scale : 0.7}],
-    marginTop : -height * 0.06
+  contentWrapper: {
+    transform: [{scale: 0.9}],
+    // marginTop: -height * 0.06,
+    // overflow : 'hidden',
+    padding: width * 0.02,
+    marginBottom : height * 0.03
   },
   reactionsTab: {
     position: 'absolute',

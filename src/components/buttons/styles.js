@@ -18,7 +18,6 @@ export const styles = StyleSheet.create({
   },
   primaryButton: {
     alignSelf: 'center',
-    marginTop: height * 0.012,
     alignItems: 'center',
     justifyContent: 'center',
   },
