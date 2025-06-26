@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
         borderTopLeftRadius: width * 0.04,
         borderTopRightRadius: width * 0.04,
         padding: width * 0.03,
-        bottom: Platform?.OS === 'android' ? height * 0.03 : height * 0.15,
+        bottom: Platform?.OS === 'android' ? 0 : height * 0.15,
         position: 'absolute',
         width: width,
         overflow: 'hidden',
