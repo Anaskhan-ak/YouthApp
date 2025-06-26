@@ -51,6 +51,8 @@ const Stories = ({stories}) => {
         avatarListContainerStyle={styles.avatarListContainer}
         nameTextStyle={styles.nameTextStyle}
         avatarProps={{renderAvatar}}
+        avatarBorderColors={[colors?.RGB1, colors?.RGB2]}
+        avatarSeenBorderColors={[colors?.gray, colors?.gray]}
       />
     </View>
   );
