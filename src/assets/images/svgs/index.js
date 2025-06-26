@@ -117,6 +117,7 @@ import ReplyArrow from './ReplyArrow.svg';
 import RightArrow from './RightArrow.svg';
 import Search from './search.svg';
 import SearchIcon from './SearchIcon.svg';
+import ShareProfileIcon from './ShareProfileIcon.svg';
 import SnapchatIcon from './SnapchatIcon.svg';
 import SolidMessageSendIcon from './SolidMessageSendIcon.svg';
 import Sparkles from './Sparkles.svg';
@@ -251,8 +252,7 @@ export {
   PublicIcon, QR, QRcode, RateUs,
   RedditIcon, ReplyArrow, RightArrow,
   Search,
-  SearchIcon,
-  SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
+  SearchIcon, ShareProfileIcon, SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
   TagFriendsIcon,
   TiktokIcon,
   ToggleCameraIcon,
