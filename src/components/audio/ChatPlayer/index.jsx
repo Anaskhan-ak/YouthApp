@@ -30,7 +30,6 @@ const ChatPlayer = ({
   user,
   customWidth,
   iconType,
-  index,
   currentAudioId,
   setCurrentAudioId,
 }) => {
@@ -104,6 +103,7 @@ const ChatPlayer = ({
         setPlay(false);
         setCurrentTime(0);
         setDuration(0);
+        setCurrentAudioId("")
       },
     );
 
@@ -138,6 +138,15 @@ const ChatPlayer = ({
   const barWidth = waveformWidth / fixedBarsCount - 2;
   const barHeightScale = 90;
   const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
+
+  const RenderIcon = () =>{
+    if (!play || pause)  { //not playing
+      return <PlayIcon height={width * 0.03}/>
+    }
+    if ( play || !pause) { //resume
+      return <PauseIcon height={width * 0.03}/>
+    }
+  }
 
   return (
     <LinearGradient
@@ -181,18 +190,18 @@ const ChatPlayer = ({
         <View style={styles?.playerContainer}>
           <TouchableOpacity
             onPress={() => {
-              !play ? Play() : Pause();
+              if (!play) {
+                Play()
+              } else {
+                Pause()
+              }
             }}>
             <View
               style={[
                 styles.playPauseButton,
                 play ? styles.noPaddingLeft : styles.paddingLeft,
               ]}>
-              {play ? (
-                <PauseIcon height={width * 0.03} />
-              ) : (
-                <PlayIcon height={width * 0.03} />
-              )}
+             <RenderIcon/>
             </View>
           </TouchableOpacity>
           <View style={styles?.player}>

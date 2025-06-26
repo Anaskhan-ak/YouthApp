@@ -26,7 +26,6 @@ const AudioPosts = ({posts}) => {
                 }}
                 customWidth={width * 0.97}
                 iconType={'profile'}
-                index={index}
                 currentAudioId={currentAudioId}
                 setCurrentAudioId={setCurrentAudioId}
               />
