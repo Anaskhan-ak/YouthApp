@@ -22,12 +22,24 @@ import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, setCurrentAudioId}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+// when i pause, it reloads
+// when i replay, it fill completely and then replays
+
+const ChatPlayer = ({
+  audio,
+  user,
+  customWidth,
+  iconType,
+  index,
+  currentAudioId,
+  setCurrentAudioId,
+}) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
-  const isCurrentAudio = currentAudioId === audio?.id
+  const isCurrentAudio = currentAudioId === audio?.id;
+  const [play, setPlay] = useState(false);
+  const [pause, setPause] = useState(false);
 
   // useEffect(() => {
   //   SoundPlayer.loadUrl(audio?.url);
@@ -57,35 +69,39 @@ const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, 
     return () => clearInterval(interval);
   };
 
-  const playPause = () => {
-    if (isPlaying) {
-      SoundPlayer.pause();
-      setIsPlaying(false)
+  const Play = () => {
+    setCurrentAudioId(audio?.id);
+    loadUrl();
+    SoundPlayer?.play();
+    setPlay(true);
+  };
+  const Pause = () => {
+    if (pause) {
+      //already paused
+      SoundPlayer?.resume();
+      setPause(false);
     } else {
-      setCurrentAudioId(audio?.id)
-      loadUrl()
-      SoundPlayer.play();
-      setIsPlaying(true);
+      SoundPlayer?.pause();
+      setPause(true);
     }
   };
 
+  // stop playing when audio reaches end
   useEffect(() => {
-    console.log(`currentTime ${currentTime}        duration ${duration} `);
+    // console.log(`currentTime ${currentTime}        duration ${duration} `);
     if (
       currentTime > 0 &&
       duration > 0 &&
       duration - currentTime <= 0.02 // allows 200ms slack
     ) {
       SoundPlayer?.stop();
-      setIsPlaying(false);
+      setPlay(false);
     }
-  }, [currentTime, duration]);
 
-  useEffect(() => {
     const finishedSubscription = SoundPlayer.addEventListener(
       'FinishedPlaying',
       () => {
-        setIsPlaying(false);
+        setPlay(false);
         setCurrentTime(0);
         setDuration(0);
       },
@@ -94,7 +110,7 @@ const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, 
     return () => {
       finishedSubscription.remove();
     };
-  }, []);
+  }, [currentTime, duration]);
 
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
@@ -121,7 +137,7 @@ const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, 
   const waveformWidth = width - 20;
   const barWidth = waveformWidth / fixedBarsCount - 2;
   const barHeightScale = 90;
- const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
+  const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
 
   return (
     <LinearGradient
@@ -163,13 +179,16 @@ const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, 
         </View>
 
         <View style={styles?.playerContainer}>
-          <TouchableOpacity onPress={playPause}>
+          <TouchableOpacity
+            onPress={() => {
+              !play ? Play() : Pause();
+            }}>
             <View
               style={[
                 styles.playPauseButton,
-                isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
+                play ? styles.noPaddingLeft : styles.paddingLeft,
               ]}>
-              {isPlaying ? (
+              {play ? (
                 <PauseIcon height={width * 0.03} />
               ) : (
                 <PlayIcon height={width * 0.03} />
@@ -185,7 +204,8 @@ const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, 
                   viewBox={`0 0 ${waveformWidth} ${barHeightScale}`}>
                   {mappedWaveform.map((value, index) => {
                     const barHeight = Math.max(value * barHeightScale, 3);
-                    const isFilled = isCurrentAudio && index / fixedBarsCount <= progress;
+                    const isFilled =
+                      isCurrentAudio && index / fixedBarsCount <= progress;
                     return (
                       <Rect
                         key={index}
