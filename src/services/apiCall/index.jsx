@@ -153,6 +153,12 @@ export const apiCall = {
     else throw result
   },
 
+   createHighlight : async (params) => {
+    let result = await post(apis?.createNewHighlight, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
   //GET API CALL
   getAllDocuments: async params => {
     let result = await post(apis?.getDocuments, params);

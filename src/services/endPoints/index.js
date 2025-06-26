@@ -23,6 +23,7 @@ export const apis = {
   updateProfile : 'api/v1/profile/update',
   savePost : "api/v1/post/save",
   repost : "api/v1/sharePost",
+  createNewHighlight : 'api/v1/post/createHighlight',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

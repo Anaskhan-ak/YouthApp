@@ -1,5 +1,13 @@
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import GradientHeader from '../../../components/headers/gradientHeader';
 import { toast } from '../../../components/toast';
 import { height, width } from '../../../constant';
 import { getDataLocally } from '../../../helper';
@@ -10,6 +18,7 @@ import { colors } from '../../../utils/colors';
 const Stories = ({media, setMedia}) => {
   const [stories, setStories] = useState([]);
   const user = useUser();
+  const navigation = useNavigation();
   useEffect(() => {
     const getStories = async () => {
       const userDetails = await getDataLocally();
@@ -35,25 +44,26 @@ const Stories = ({media, setMedia}) => {
   }, []);
 
   const renderItem = ({item, index}) => {
+    // console.log("Item", item)
+    const mediaType = item?.source?.uri?.split('.')?.pop()
     return (
       <TouchableOpacity
         style={index === 0 && styles?.button}
         onPress={() => {
-          
-            setMedia({
-              uri: item?.source?.uri,
-              name: `${item?.node?.id}.${item?.node?.type?.split('/')?.pop()}`,
-              type: item?.stories?.mediaType,
-            });
-        }}
-      >
+          setMedia({
+            uri: item?.source?.uri,
+            name: `Story.${item?.source?.uri?.split('.')?.pop()}`,
+            type: mediaType === 'jpeg' || mediaType === 'jpg' || mediaType === 'png' ? 'image' : 'video',
+            storyId : item?.storyId
+          });
+        }}>
         <>
           <View
             style={[
               styles.selectToggle,
-              //   media?.uri === item?.node?.image?.uri && {
-              //     backgroundColor: colors?.RGB1,
-              //   },
+              media?.uri === item?.source?.uri && {
+                backgroundColor: colors?.RGB1,
+              },
             ]}
           />
           <Image source={{uri: item?.source?.uri}} style={styles?.image} />
@@ -63,6 +73,10 @@ const Stories = ({media, setMedia}) => {
   };
   return (
     <View>
+      <GradientHeader
+        title="New Highlight"
+        backPress={() => navigation?.goBack()}
+      />
       <FlatList
         data={stories}
         renderItem={renderItem}
