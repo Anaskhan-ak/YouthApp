@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
-    StyleSheet,
-    View
+  StyleSheet,
+  View
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { height, width } from '../../../constant';
@@ -12,6 +12,7 @@ import MediaPost from './mediaPost';
 import MomentPost from './MomentPost';
 import MusicPost from './MusicPost';
 import PostBottomTab from './postBottomTab';
+import UserPostHeader from './userPostHeader';
 import YudioPost from './YudioPost';
 // import VideoPlayer from './videoPlayer';
 
@@ -37,14 +38,16 @@ const Repost = ({post, modal, actions, setActions, isScrolling}) => {
         actions={actions}
         setActions={setActions}
         isScrolling={isScrolling}
+        isRepost={true}
       />
     );
   };
 
   return (
     <View>
-      <LinearGradient style={styles?.content} colors={[colors?.RGB3, colors?.RGB4]}>
+      <LinearGradient style={styles?.content} colors={[colors?.RGB3, colors?.RGB4]}>        
         <View style={styles?.contentWrapper}>
+          <UserPostHeader user={post?.SharePost?.user} post={post?.SharePost} />
             {renderPostContent(post?.SharePost, modal)}
         </View>
       </LinearGradient>
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
   },
   contentWrapper : {
     transform : [{scale : 0.7}],
-    // marginTop : height * 0.01
+    marginTop : -height * 0.06
   },
   reactionsTab: {
     position: 'absolute',

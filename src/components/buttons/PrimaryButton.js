@@ -18,15 +18,15 @@ export const PrimaryButton = props => {
         colors={[colors.primary, colors.RGB2]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        style={StyleSheet.flatten([
+        style={[
           {
+            height : props?.height || height * 0.05,
             width: props?.width || width * 0.69,
             borderRadius: props?.borderRadius ||  5,
-            height : props?.height || height * 0.05
           },
           styles.primaryButton,
           props?.style, 
-        ])}>
+        ]}>
         {!props?.isLoading ? (
           <Text
             style={props?.textStyle ? props?.textStyle : styles.primaryText}>

@@ -142,7 +142,7 @@ const Profile = () => {
               subscribers={50}
             />
             <View style={styles?.icons}>
-              <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
+              <ProfileOption getUserData={getUserData} setEditProfile={setEditProfile} setQr={setQr} />
             </View>
             {/* <Stories /> */}
             <PostContentModal options={options} setOptions={setOptions} />

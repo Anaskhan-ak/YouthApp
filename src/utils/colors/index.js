@@ -26,7 +26,8 @@ export const colors = {
   extraLightGrey:'rgba(234, 234, 234, 1)',
   red:'rgba(255, 9, 9, 1)',
   ashGrey:'#D9D9D9',
-  lightGreen:'#0FB700'
+  lightGreen:'#0FB700',
+  extraLightGrey_1:'#e8e8e9'
 };
 
 // Dark theme colors

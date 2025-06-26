@@ -1,12 +1,13 @@
-import { StyleSheet } from 'react-native';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
+import {StyleSheet} from 'react-native';
+import {height, width} from '../../constant';
+import {colors} from '../../utils/colors';
+import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: colors?.white,
     flex: 1,
+    marginTop: -height * 0.08,
   },
   image: {
     width: width,
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    marginVertical: 10,
+    marginVertical: height * 0.05,
     padding: 15,
     height: height * 0.3,
   },
@@ -72,10 +73,10 @@ export const styles = StyleSheet.create({
     color: colors?.gray,
     fontFamily: fonts?.montserratRegular,
     fontSize: width * 0.04,
-    marginBottom : height * 0.015
+    marginBottom: height * 0.015,
   },
-  scrollContent : {
-    paddingBottom : height * 0.01
+  scrollContent: {
+    paddingBottom: height * 0.01,
   },
   contentItem: {
     flexDirection: 'row',
@@ -83,9 +84,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     margin: width * 0.02,
   },
-  itemLeftContent : {
-    flexDirection : 'row',
-    alignItems : 'center'
+  itemLeftContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   itemImage: {
     width: width * 0.085,
@@ -98,7 +99,7 @@ export const styles = StyleSheet.create({
     marginLeft: width * 0.02,
   },
   gradientButton: {
-    width: width * 0.18,
+    width: width * 0.12,
     height: height * 0.04,
     alignItems: 'center',
     justifyContent: 'center',
@@ -109,21 +110,21 @@ export const styles = StyleSheet.create({
     color: colors?.white,
   },
   grayButton: {
-    width: width * 0.18,
-    height: height * 0.04,
+    width: width * 0.2,
+    height: height * 0.035,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor : colors?.gray,
-    borderRadius : width * 0.02
+    backgroundColor: colors?.gray,
+    borderRadius: width * 0.02,
   },
   grayButtonText: {
     fontFamily: fonts?.montserratBold,
     textAlign: 'center',
     color: colors?.text,
   },
-  list : {
+  list: {
     height: height * 0.85,
-    padding : width * 0.03
+    padding: width * 0.03,
     // paddingBottom : height * 0.1
-  }
+  },
 });

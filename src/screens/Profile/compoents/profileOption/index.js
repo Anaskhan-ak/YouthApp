@@ -5,7 +5,7 @@ import { width } from '../../../../constant';
 import { profileOptions } from '../../../../utils/string';
 import { styles } from './styles';
 
-const ProfileOption = ({setEditProfile, setQr}) => {
+const ProfileOption = ({setEditProfile, setQr,getUserData}) => {
   const [suggestedUsers, setSuggestedUsers] = useState(false);
   const handlePress = async id => {
     switch (id) {
@@ -43,7 +43,7 @@ const ProfileOption = ({setEditProfile, setQr}) => {
       {suggestedUsers && (
       //  <View style={{width : width * 2}}>
          <View style={styles?.suggestions}>
-          <SuggestedUsers />
+          <SuggestedUsers getUserData={getUserData}/>
         {/* </View> */}
         </View>
       )}

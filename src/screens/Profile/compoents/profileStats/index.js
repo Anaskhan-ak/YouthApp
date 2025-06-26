@@ -1,12 +1,15 @@
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
 const ProfileStats = ({post, followers, followings, subscribers}) => {
+  const routeToScreen = (screen) =>{
+    
+  } 
   return (
     <View style={styles?.container}>
-      <View
+     <View
         style={[
           styles?.statsView,
           {
@@ -16,9 +19,9 @@ const ProfileStats = ({post, followers, followings, subscribers}) => {
         ]}>
         <Text style={styles?.count}>{post}</Text>
         <Text style={styles?.title}> Posts</Text>
-      </View>
-
-      <View
+     </View>
+     <TouchableOpacity
+      onPress={()=>routeToScreen('post')}
         style={[
           styles?.statsView,
           {
@@ -28,7 +31,7 @@ const ProfileStats = ({post, followers, followings, subscribers}) => {
         ]}>
         <Text style={styles?.count}>{followers}</Text>
         <Text style={styles?.title}> Followers</Text>
-      </View>
+      </TouchableOpacity>
 
       <View
         style={[

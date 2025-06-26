@@ -17,7 +17,7 @@ import {
 } from '../../../assets/images/svgs';
 import RecordingBars from '../../../components/post/subComponents/comments/components/RecordingBars';
 import { toast } from '../../../components/toast';
-import { width } from '../../../constant';
+import { height, width } from '../../../constant';
 import { getDataLocally, getRealPathFromURI } from '../../../helper';
 import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
@@ -186,9 +186,9 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
             <DropDown />
           </TouchableOpacity>
         </View>
-        <View style={{flex: 1}}>
+        <View style={{height : height * 0.5}}>
           <FlatList
-            data={commentObj?.comments?.value?.slice(0, 2)}
+            data={commentObj?.comments?.value}
             renderItem={({item, index}) => (
               <RenderItem
                 item={item}
@@ -201,7 +201,7 @@ const CommentModal = ({post, sheetRef, setIsSheetOpen, commentObj}) => {
             keyExtractor={(item, index) =>
               item?.id?.toString() || index.toString()
             }
-            contentContainerStyle={{paddingBottom: 100}} // Give space below list
+            contentContainerStyle={{paddingBottom: 20,  flexGrow : 1}} // Give space below list
             showsVerticalScrollIndicator={false}
           />
         </View>

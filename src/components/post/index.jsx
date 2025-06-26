@@ -65,6 +65,7 @@ const Post = ({post, isScrolling}) => {
         actions={actions}
         setActions={setActions}
         isScrolling={isScrolling}
+        isRepost={false}
       />
     );
   };

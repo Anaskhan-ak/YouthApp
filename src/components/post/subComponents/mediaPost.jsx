@@ -16,7 +16,7 @@ import PostBottomTab from '../subComponents/postBottomTab';
 import PostVideo from './videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
+const MediaPost = ({post, modal, actions, setActions, isScrolling, isRepost}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mediaWidth, setMediaWidth] = useState(null);
   const [showTags, setShowTags] = useState(false);
@@ -159,7 +159,7 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
           ))}
         </View>
       )}
-      {!modal?.modal?.isPost && (
+      {!modal?.modal?.isPost && !isRepost && (
         <View style={[styles.reactionsTab, {width: mediaWidth}]}>
           <PostBottomTab
             post={post}

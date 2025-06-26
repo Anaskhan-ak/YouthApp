@@ -18,6 +18,7 @@ import Stories from '../../components/stories';
 import {height} from '../../constant';
 import {getDataLocally} from '../../helper';
 import usePagination from '../../hooks/usePagination';
+import useUser from '../../hooks/user';
 import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import {apiCall} from '../../services/apiCall';
 import {colors} from '../../utils/colors';
@@ -30,6 +31,7 @@ const Home = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [stories, setStories] = useState([]);
   const isFocus = useIsFocused();
+  const user = useUser()
   const {
     data,
     totalResult,
@@ -42,51 +44,13 @@ const Home = () => {
     {
       url: apiCall?.getAllPosts,
       body: {
-        userId: 'cmbhntz1u000325i4b6291aew',
+        // userId: user?.id,
         page: 1,
         pageSize: 10,
       },
     },
     [isFocus],
   );
-  // const fetchPostsAndYudios = async () => {
-  //   setLoading(true);
-  //   const userDetails = await getDataLocally();
-  //   const body = {
-  //     userId: userDetails?.id,
-  //     page: 1,
-  //     pageSize: 8,
-  //   };
-
-  //   try {
-  //     const [postsResponse, yudiosResponse] = await Promise.all([
-  //       apiCall?.getAllPosts(body),
-  //       apiCall?.getAllYudios(body),
-  //     ]);
-
-  //     // console.log('yudiosResponse', yudiosResponse);
-
-  //     const postsData = postsResponse?.data?.posts || [];
-  //     const yudiosData = yudiosResponse?.data?.posts || [];
-
-  //     // Inject yudios randomly into posts
-  //     const combined = [...postsData];
-  //     for (let i = 0; i < yudiosData.length; i++) {
-  //       const randomIndex = Math.floor(Math.random() * (combined.length + 1));
-  //       console.log('Random Index', randomIndex);
-  //       combined.splice(randomIndex, 0, yudiosData[i]);
-  //     }
-
-  //     // console.log('Combined feed:', combined);
-  //     setPosts(combined || []);
-  //   } catch (error) {
-  //     console.error('Error fetching posts/yudios', error);
-  //     setPosts([]);
-  //     toast('error', 'Error fetching posts');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const renderFooter = () => {
     if (!loadingMore || data?.length < 8) return null; //show footer only for subsequent pages
