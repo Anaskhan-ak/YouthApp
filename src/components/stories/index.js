@@ -1,19 +1,19 @@
-import React, {useRef} from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import InstagramStories from '@birdwingo/react-native-instagram-stories';
-import {colors} from '../../utils/colors';
-import {Pixels, width} from '../../constant';
-import {Plus} from '../../assets/images/svgs';
-import {fonts} from '../../utils/fonts';
-import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { useRef } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { Plus } from '../../assets/images/svgs';
+import { height, Pixels, width } from '../../constant';
+import { colors } from '../../utils/colors';
+import { fonts } from '../../utils/fonts';
 
 const avatarSize = width * 0.125;
 const borderRadius = avatarSize / 2;
 
-const Stories = ({stories,avatarSize}) => {
+const Stories = ({stories}) => {
   const ref = useRef(null);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const renderAvatar = item => {
     const uri = item?.avatarSource?.uri;
     const avatarImage = <Image source={{uri}} style={styles.avatarImage} />;
@@ -32,8 +32,12 @@ const Stories = ({stories,avatarSize}) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={()=>navigation?.navigate('CreateStory')} style={styles.addStory}>
-        <Plus width={width * 0.06} height={width * 0.06} />
+      <TouchableOpacity style={styles?.addStoryBorder}>
+        <View
+          onPress={() => navigation?.navigate('CreateStory')}
+          style={styles.addStory}>
+          <Plus width={width * 0.06} height={width * 0.06} />
+        </View>
       </TouchableOpacity>
       <InstagramStories
         ref={ref}
@@ -58,15 +62,27 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:"center"
+    justifyContent: 'center',
   },
-  addStory: {
-    width: width * 0.155,
-    height: width * 0.155,
-    backgroundColor: colors?.ashGrey,
-    borderRadius: width * 0.155,
+  addStoryBorder: {
+    width: width * 0.15,
+    height: width * 0.15,
+    borderRadius: width * 0.15,
+    backgroundColor: colors?.white,
+    borderWidth: 3,
+    borderColor: colors?.gray,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: -height * 0.014,
+  },
+  addStory: {
+    backgroundColor: colors?.ashGrey,
+    width: width * 0.12,
+    height: width * 0.12,
+    borderRadius: width * 0.12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // marginTop : -15
   },
   avatarText: {
     fontSize: 12,
