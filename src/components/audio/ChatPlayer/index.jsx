@@ -11,19 +11,39 @@ import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
 import { images } from '../../../assets/images';
-import { ActiveLike, GradientPlayIcon, PauseIcon, PlayIcon } from '../../../assets/images/svgs';
+import {
+  ActiveLike,
+  GradientPlayIcon,
+  PauseIcon,
+  PlayIcon,
+} from '../../../assets/images/svgs';
 import GradientText from '../../../components/text/GradientText';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
-const ChatPlayer = ({audio, user, customWidth, iconType}) => {
+const ChatPlayer = ({audio, user, customWidth, iconType, index, currentAudioId, setCurrentAudioId}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
+  const isCurrentAudio = currentAudioId === audio?.id
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   SoundPlayer.loadUrl(audio?.url);
+  //   const interval = setInterval(() => {
+  //     SoundPlayer.getInfo()
+  //       .then(info => {
+  //         setCurrentTime(info.currentTime);
+  //         setDuration(info.duration);
+  //       })
+  //       .catch(() => {});
+  //   }, 500);
+
+  //   return () => clearInterval(interval);
+  // }, [audio?.url]);
+
+  const loadUrl = () => {
     SoundPlayer.loadUrl(audio?.url);
     const interval = setInterval(() => {
       SoundPlayer.getInfo()
@@ -35,16 +55,46 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
     }, 500);
 
     return () => clearInterval(interval);
-  }, [audio?.url]);
+  };
 
   const playPause = () => {
     if (isPlaying) {
       SoundPlayer.pause();
+      setIsPlaying(false)
     } else {
+      setCurrentAudioId(audio?.id)
+      loadUrl()
       SoundPlayer.play();
+      setIsPlaying(true);
     }
-    setIsPlaying(!isPlaying);
   };
+
+  useEffect(() => {
+    console.log(`currentTime ${currentTime}        duration ${duration} `);
+    if (
+      currentTime > 0 &&
+      duration > 0 &&
+      duration - currentTime <= 0.02 // allows 200ms slack
+    ) {
+      SoundPlayer?.stop();
+      setIsPlaying(false);
+    }
+  }, [currentTime, duration]);
+
+  useEffect(() => {
+    const finishedSubscription = SoundPlayer.addEventListener(
+      'FinishedPlaying',
+      () => {
+        setIsPlaying(false);
+        setCurrentTime(0);
+        setDuration(0);
+      },
+    );
+
+    return () => {
+      finishedSubscription.remove();
+    };
+  }, []);
 
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
@@ -71,7 +121,7 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
   const waveformWidth = width - 20;
   const barWidth = waveformWidth / fixedBarsCount - 2;
   const barHeightScale = 90;
-  const progress = currentTime / duration;
+ const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
 
   return (
     <LinearGradient
@@ -81,7 +131,12 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
         {width: customWidth ? customWidth : width * 0.8},
       ]}>
       {/* <Image source={{uri: user?.photo}} style={styles?.image} /> */}
-      <Image source={user?.photo ? {uri : user?.photo} : images?.defaultProfilePicture} style={styles?.image} />
+      <Image
+        source={
+          user?.photo ? {uri: user?.photo} : images?.defaultProfilePicture
+        }
+        style={styles?.image}
+      />
       <View style={styles?.content}>
         <View style={styles?.header}>
           <Text
@@ -130,7 +185,7 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
                   viewBox={`0 0 ${waveformWidth} ${barHeightScale}`}>
                   {mappedWaveform.map((value, index) => {
                     const barHeight = Math.max(value * barHeightScale, 3);
-                    const isFilled = index / fixedBarsCount <= progress;
+                    const isFilled = isCurrentAudio && index / fixedBarsCount <= progress;
                     return (
                       <Rect
                         key={index}
