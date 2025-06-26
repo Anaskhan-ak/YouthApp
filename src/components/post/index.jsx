@@ -98,9 +98,6 @@ const Post = ({post, isScrolling}) => {
       {(modal?.visible || modal?.isPost) && (
         <Modal animationType="slide" transparent statusBarTranslucent>
           <TouchableWithoutFeedback
-            style={{
-              backgroundColor: 'red',
-            }}
             onPress={() =>
               setModal({
                 isPost: false,
@@ -112,7 +109,6 @@ const Post = ({post, isScrolling}) => {
                 styles?.modalBg,
                 {
                   justifyContent: modal?.isPost && 'center',
-                  alignItems: modal?.visible && 'flex-start',
                 },
               ]}>
               {modal?.isPost && (
@@ -130,7 +126,7 @@ const Post = ({post, isScrolling}) => {
                   styles?.modal,
                   {
                     marginVertical: modal?.visible && height * 0.2,
-                    alignSelf: modal?.isPost && 'flex-start',
+                    alignSelf: modal?.isPost ? 'flex-start' : 'center',
                   },
                 ]}>
                 <PostModal post={post} modal={modal} setModal={setModal} />

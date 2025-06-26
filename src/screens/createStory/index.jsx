@@ -42,7 +42,7 @@ const CreateStory = ({route}) => {
     {type: 'friends', icon: <StoryIconFriends />},
   ];
 
-  const handleForm = async () => {
+  const createStory = async () => {
     const isImage =
       media?.type === 'jpg' ||
       media?.type === 'png' ||
@@ -82,6 +82,25 @@ const CreateStory = ({route}) => {
     }
   };
 
+  const createNewHighlight = async () => {
+    try {
+      setLoading(true);
+      const body = {
+        name: 'Demo Highlight',
+        storyId: media?.storyId,
+      };
+      const response = await apiCall?.createHighlight(body);
+      if (response) {
+        console.log('Successfully created highlight', response);
+        setLoading(false);
+        navigation?.navigate("Home")
+      }
+    } catch (error) {
+      console.log('Error creating highlight', error);
+      toast('error', 'Error creating highlight');
+    }
+  };
+
   const StoryIcons = () => {
     return (
       <FlatList
@@ -100,6 +119,10 @@ const CreateStory = ({route}) => {
       />
     );
   };
+
+  const loader = loading && (
+    <ActivityIndicator size="small" color={colors?.RGB1} animating />
+  );
 
   return (
     <View style={styles?.container}>
@@ -147,18 +170,12 @@ const CreateStory = ({route}) => {
       {preview ? (
         <CreateButton
           title="Add to Story"
-          onPress={handleForm}
-          loader={
-            loading && (
-              <ActivityIndicator
-                size={'small'}
-                color={colors?.RGB1}
-                animating
-              />
-            )
-          }
+          onPress={isHighlight ? createNewHighlight : createStory}
+          loader={loader}
           secondButton={{
             title: 'Add to Highlights',
+            loader: loader,
+            onPress: createNewHighlight,
           }}
         />
       ) : (

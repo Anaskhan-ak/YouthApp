@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
-import Svg, {Rect} from 'react-native-svg';
-import {images} from '../../../assets/images';
+import Svg, { Rect } from 'react-native-svg';
+import { images } from '../../../assets/images';
 import {
   ActiveLike,
   GradientPlayIcon,
@@ -23,13 +23,39 @@ import {width} from '../../../constant';
 import {colors} from '../../../utils/colors';
 import {fonts} from '../../../utils/fonts';
 
-const ChatPlayer = ({audio, user, customWidth, iconType}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+// when i pause, it reloads
+// when i replay, it fill completely and then replays
+
+const ChatPlayer = ({
+  audio,
+  user,
+  customWidth,
+  iconType,
+  currentAudioId,
+  setCurrentAudioId,
+}) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
+  const isCurrentAudio = currentAudioId === audio?.id;
+  const [play, setPlay] = useState(false);
+  const [pause, setPause] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   SoundPlayer.loadUrl(audio?.url);
+  //   const interval = setInterval(() => {
+  //     SoundPlayer.getInfo()
+  //       .then(info => {
+  //         setCurrentTime(info.currentTime);
+  //         setDuration(info.duration);
+  //       })
+  //       .catch(() => {});
+  //   }, 500);
+
+  //   return () => clearInterval(interval);
+  // }, [audio?.url]);
+
+  const loadUrl = () => {
     SoundPlayer.loadUrl(audio?.url);
     const interval = setInterval(() => {
       SoundPlayer.getInfo()
@@ -41,16 +67,51 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
     }, 500);
 
     return () => clearInterval(interval);
-  }, [audio?.url]);
-
-  const playPause = () => {
-    if (isPlaying) {
-      SoundPlayer.pause();
-    } else {
-      SoundPlayer.play();
-    }
-    setIsPlaying(!isPlaying);
   };
+
+  const Play = () => {
+    setCurrentAudioId(audio?.id);
+    loadUrl();
+    SoundPlayer?.play();
+    setPlay(true);
+  };
+  const Pause = () => {
+    if (pause) {
+      //already paused
+      SoundPlayer?.resume();
+      setPause(false);
+    } else {
+      SoundPlayer?.pause();
+      setPause(true);
+    }
+  };
+
+  // stop playing when audio reaches end
+  useEffect(() => {
+    // console.log(`currentTime ${currentTime}        duration ${duration} `);
+    if (
+      currentTime > 0 &&
+      duration > 0 &&
+      duration - currentTime <= 0.02 // allows 200ms slack
+    ) {
+      SoundPlayer?.stop();
+      setPlay(false);
+    }
+
+    const finishedSubscription = SoundPlayer.addEventListener(
+      'FinishedPlaying',
+      () => {
+        setPlay(false);
+        setCurrentTime(0);
+        setDuration(0);
+        setCurrentAudioId("")
+      },
+    );
+
+    return () => {
+      finishedSubscription.remove();
+    };
+  }, [currentTime, duration]);
 
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
@@ -77,7 +138,16 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
   const waveformWidth = width - 20;
   const barWidth = waveformWidth / fixedBarsCount - 2;
   const barHeightScale = 90;
-  const progress = currentTime / duration;
+  const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
+
+  const RenderIcon = () =>{
+    if (!play || pause)  { //not playing
+      return <PlayIcon height={width * 0.03}/>
+    }
+    if ( play || !pause) { //resume
+      return <PauseIcon height={width * 0.03}/>
+    }
+  }
 
   return (
     <LinearGradient
@@ -119,17 +189,20 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
         </View>
 
         <View style={styles?.playerContainer}>
-          <TouchableOpacity onPress={playPause}>
+          <TouchableOpacity
+            onPress={() => {
+              if (!play) {
+                Play()
+              } else {
+                Pause()
+              }
+            }}>
             <View
               style={[
                 styles.playPauseButton,
-                isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
+                play ? styles.noPaddingLeft : styles.paddingLeft,
               ]}>
-              {isPlaying ? (
-                <PauseIcon height={width * 0.03} />
-              ) : (
-                <PlayIcon height={width * 0.03} />
-              )}
+             <RenderIcon/>
             </View>
           </TouchableOpacity>
           <View style={styles?.player}>
@@ -141,7 +214,8 @@ const ChatPlayer = ({audio, user, customWidth, iconType}) => {
                   viewBox={`0 0 ${waveformWidth} ${barHeightScale}`}>
                   {mappedWaveform.map((value, index) => {
                     const barHeight = Math.max(value * barHeightScale, 3);
-                    const isFilled = index / fixedBarsCount <= progress;
+                    const isFilled =
+                      isCurrentAudio && index / fixedBarsCount <= progress;
                     return (
                       <Rect
                         key={index}

@@ -1,16 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import ChatPlayer from '../../../../components/audio/ChatPlayer';
 import { width } from '../../../../constant';
 
 const AudioPosts = ({posts}) => {
   const navigation = useNavigation();
-  console.log("Yudios", posts)
+  const [currentAudioId, setCurrentAudioId] = useState('')
+  // console.log("Yudios", posts)
   return (
     <View style={styles?.container}>
       <FlatList
         data={posts}
-        renderItem={({item}) => {
+        renderItem={({item, index}) => {
           return (
             <TouchableOpacity
               onPress={() => navigation?.navigate('PostDetails', {post: item})}
@@ -20,9 +22,12 @@ const AudioPosts = ({posts}) => {
                 audio={{
                   url: item?.yudios?.url,
                   waveform: item?.yudios?.waveform,
+                  id : index
                 }}
                 customWidth={width * 0.97}
                 iconType={'profile'}
+                currentAudioId={currentAudioId}
+                setCurrentAudioId={setCurrentAudioId}
               />
             </TouchableOpacity>
           );
