@@ -6,27 +6,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { colors } from '../../utils/colors';
-import { styles } from './styles';
+import {colors} from '../../utils/colors';
+import {styles} from './styles';
 
 const {height, width} = Dimensions.get('window');
 
 export const PrimaryButton = props => {
   return (
-    <TouchableOpacity {...props} onPress={props.onPress} disabled={props?.disable ? props?.disable : false}>
+    <TouchableOpacity
+      {...props}
+      onPress={props.onPress}
+      disabled={props?.disable ? props?.disable : false}>
       <LinearGradient
         colors={[colors.primary, colors.RGB2]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        style={StyleSheet.flatten([
+        style={[
           {
+            height: props?.height || height * 0.05,
             width: props?.width || width * 0.69,
-            borderRadius: props?.borderRadius ||  5,
-            height : props?.height || height * 0.05
+            marginTop: props?.marginTop || height * 0.012,
+            borderRadius: props?.borderRadius || 5,
           },
           styles.primaryButton,
-          props?.style, 
-        ])}>
+          props?.style,
+        ]}>
         {!props?.isLoading ? (
           <Text
             style={props?.textStyle ? props?.textStyle : styles.primaryText}>

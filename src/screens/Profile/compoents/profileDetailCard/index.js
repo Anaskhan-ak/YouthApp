@@ -8,7 +8,7 @@ import { height } from '../../../../constant';
 import { styles } from './styles';
 
 const ProfileDetailCard = ({userName, bio, links, setEditProfile}) => {
-  // console.log("LInks", links)
+  console.log("LInks", bio)
   return (
     <View style={styles?.container}>
       <View style={styles?.profileView}>

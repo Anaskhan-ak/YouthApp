@@ -20,11 +20,9 @@ const usePagination = ({url, body}, dependencies = []) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const user = useUser();
-  //   console.log("userID", body?.userId)
 
   const fetchData = async (page, perPage = 10) => {
     const userDetails = await getDataLocally()
-    // console.log("user", userDetails)
     try {
       const updatedBody = {
         ...body,

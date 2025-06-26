@@ -5,6 +5,7 @@ import {
   StatusBar,
   Platform,
   Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -92,11 +93,28 @@ const ForgetPassword = () => {
   const handleLogin = () => {
     navigation?.navigate('Login');
   };
+    const onError = errors => {
+    const keys = Object.keys(errors);
+    if (keys.length > 0) {
+      const firstKey = keys[0];
+      const message = errors[firstKey]?.message || 'Validation error';
+      setErrorMessage({
+        title: 'Sign Up Error',
+        message: message,
+      });
+      setShowError(true);
+    } else {
+      setShowError(false);
+    }
+    setKeyboardVisible(false);
+    Keyboard.dismiss();
+  };
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
         setKeyboardVisible(true);
+        setShowError(false);
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
@@ -118,110 +136,137 @@ const ForgetPassword = () => {
         barStyle={'dark-content'}
         backgroundColor={'transparent'}
       />
-      <View style={[styles?.imageView, {flex: !isKeyboardVisible ? 1.2 : 0.3}]}>
-        <ImageBackground
-          borderBottomLeftRadius={width * 0.1}
-          borderBottomRightRadius={width * 0.1}
-          style={styles.image}
-          source={images?.login}>
-          {showError && (
-            <View style={styles?.authView}>
-              <AuthError
-                title={errorMessage?.title}
-                message={errorMessage?.message}
-                setShowError={setShowError}
-                style={{
-                  marginTop:
-                    Platform?.OS === 'ios' ? height * 0.35 : height * 0.25,
-                }}
-              />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{flex: 1}}>
+          <View
+            style={[styles?.imageView, {flex: !isKeyboardVisible ? 1.2 : 0.3}]}>
+            <ImageBackground
+              borderBottomLeftRadius={width * 0.1}
+              borderBottomRightRadius={width * 0.1}
+              style={styles.image}
+              source={images?.login}>
+              {showError && (
+                <View style={styles?.authView}>
+                  <AuthError
+                    title={errorMessage?.title}
+                    message={errorMessage?.message}
+                    setShowError={setShowError}
+                    style={{
+                      marginTop:
+                        Platform?.OS === 'ios' ? height * 0.35 : height * 0.25,
+                    }}
+                  />
+                </View>
+              )}
+            </ImageBackground>
+          </View>
+          <View style={styles?.contentView}>
+            {/* <Text style={styles?.heading}>
+              With <YouthIcon width={width * 0.18} /> You got covered!
+            </Text> */}
+            <View style={styles?.headingWithIconView}>
+              <Text style={styles?.heading}>With </Text>
+              <YouthIcon width={width * 0.2} />
+              <Text style={styles?.heading}> You got covered! </Text>
             </View>
-          )}
-        </ImageBackground>
-      </View>
-      <View style={styles?.contentView}>
-        <Text style={styles?.heading}>
-          With <YouthIcon width={width * 0.18} /> You got covered!
-        </Text>
-        <Text style={styles?.title}>
-          Give us your account email or Phone number!
-        </Text>
-        <View style={{marginTop: 10}} />
-        {step == 0 || step == 1 ? (
-          <Controller
-            control={control}
-            rules={{
-              required: 'email is required',
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <AuthInput
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                error={errors?.email}
-                disable={step === 1 ? true : false}
-                placeholder={'Email or Phone number'}
-              />
+            <Text style={styles?.title}>
+              {step === 0
+                ? 'Give us your account email or Phone number!'
+                : step === 1
+                ? 'We’ve sent you a one time Login link to the following email!'
+                : 'Create a new password!'}
+            </Text>
+            {step === 2 && (
+              <Text style={styles?.note}>
+                Note: Do not share your password with anyone
+              </Text>
             )}
-            name="email"
-          />
-        ) : (
-          <>
-            <Controller
-              control={control}
-              rules={{
-                required: 'Password is required',
-                pattern: {
-                  value:
-                    /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
-                  message:
-                    'Password must be at least 8 characters long, include one uppercase letter, and one special character',
-                },
-              }}
-              render={({field: {onChange, onBlur, value}}) => (
-                <AuthInput
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  placeholder={'Password'}
-                  secureTextEntry
-                  error={errors?.password?.message}
-                />
-              )}
-              name="password"
-            />
             <View style={{marginTop: 10}} />
-            <Controller
-              control={control}
-              rules={{
-                required: 'confirm password is required',
-                validate: value =>
-                  value === watch('password') || 'Passwords do not match',
-              }}
-              render={({field: {onChange, onBlur, value}}) => (
-                <AuthInput
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  placeholder={'Confirm Password'}
-                  secureTextEntry
-                  error={errors?.confirmPassword}
+            {step == 0 || step == 1 ? (
+              <Controller
+                control={control}
+                rules={{
+                  required: 'email is required',
+                }}
+                render={({field: {onChange, onBlur, value}}) => (
+                  <AuthInput
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    value={value}
+                    error={errors?.email}
+                    disable={step === 1 ? true : false}
+                    placeholder={'Email or Phone number'}
+                  />
+                )}
+                name="email"
+              />
+            ) : (
+              <>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: 'Password is required',
+                    pattern: {
+                      value:
+                        /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/,
+                      message:
+                        'Password must be at least 8 characters long, include one uppercase letter, and one special character',
+                    },
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <AuthInput
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      placeholder={'Create a new Password'}
+                      secureTextEntry
+                      error={errors?.password?.message}
+                    />
+                  )}
+                  name="password"
                 />
+                <View style={{marginTop: 10}} />
+                <Controller
+                  control={control}
+                  rules={{
+                    required: 'confirm password is required',
+                    validate: value =>
+                      value === watch('password') || 'Passwords do not match',
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <AuthInput
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      placeholder={'Confirm the new Password'}
+                      secureTextEntry
+                      error={errors?.confirmPassword}
+                    />
+                  )}
+                  name="confirmPassword"
+                />
+              </>
+            )}
+            {step === 1 && <OtpInput setOtp={setOtp} />}
+            <View style={styles?.bottomContentView}>
+              <PrimaryButton
+                isLoading={loading}
+                onPress={handleSubmit(onSubmit, onError)}
+                title={
+                  step == 0
+                    ? 'Send a one time code'
+                    : step == 1
+                    ? 'Reset my Password'
+                    : 'Create my new Password'
+                }
+              />
+              {step == 0 && (
+                <SocialButton onPress={handleLogin} title="Sign In" />
               )}
-              name="confirmPassword"
-            />
-          </>
-        )}
-        {step === 1 && <OtpInput setOtp={setOtp} />}
-        <View style={styles?.bottomContentView}>
-          <PrimaryButton
-            isLoading={loading}
-            onPress={handleSubmit(onSubmit)}
-            title={step == 0 ? 'Send a one time code' : 'Continue'}
-          />
-          {step == 0 && <SocialButton onPress={handleLogin} title="Sign In" />}
+            </View>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };

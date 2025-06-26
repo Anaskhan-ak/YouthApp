@@ -29,6 +29,7 @@ import SuggestedContent from '../screens/suggestions';
 import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
+import ConnectionListing from '../screens/connectionListing';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -182,6 +183,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="CreateRepost"
         component={CreateRepost}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="ConnectionListing"
+        component={ConnectionListing}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

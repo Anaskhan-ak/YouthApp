@@ -1,6 +1,6 @@
 import Slider from '@react-native-community/slider';
-import { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import {
@@ -10,14 +10,16 @@ import {
   PinkRewindAUdioButton,
   PinkVolume,
 } from '../../../assets/images/svgs';
-import { colors } from '../../../utils/colors/index';
-import { styles } from '../styles/AudioPlayer';
+import {colors} from '../../../utils/colors/index';
+import {styles} from '../styles/AudioPlayer';
+import {useFocusEffect} from '@react-navigation/native';
 
-const LandingWidgetAudioPlayer = ({  pink }) => {
+const LandingWidgetAudioPlayer = ({pink}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+  const audioURL =
+    'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
   // useEffect(() => {
   //   console.log("********* AUDIO URL **********", audioURL);
   //   console.log("SOUND", SoundPlayer)
@@ -36,6 +38,18 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
   //     console.log('Cannot load sound file', e);
   //   }
   // }, [audioURL]);
+  useFocusEffect(
+    React.useCallback(() => {
+      // When screen is focused (optionally resume if needed)
+
+      return () => {
+        // When screen is unfocused (navigated away)
+        SoundPlayer.stop(); // Stop audio
+        setIsPlaying(false); // Reset state
+        setPosition(0);
+      };
+    }, []),
+  );
 
   const playPauseHandler = () => {
     try {
@@ -143,7 +157,4 @@ const LandingWidgetAudioPlayer = ({  pink }) => {
   );
 };
 
-
-
 export default LandingWidgetAudioPlayer;
-

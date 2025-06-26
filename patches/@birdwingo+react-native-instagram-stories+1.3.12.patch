@@ -1,26 +1,290 @@
 diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx
-index 66de125..952b820 100644
+index 66de125..9ca3939 100644
 --- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx
 +++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Avatar/index.tsx
-@@ -60,7 +60,7 @@ const StoryAvatar: FC<StoryAvatarProps> = ( {
-   }
+@@ -13,9 +13,9 @@ import { AVATAR_OFFSET } from '../../core/constants';
+ const AnimatedImage = Animated.createAnimatedComponent( Image );
  
+ const StoryAvatar: FC<StoryAvatarProps> = ( {
+-  id,
++  userid,
+   avatarSource,
+-  name,
++  firstName,
+   stories,
+   loadingStory,
+   seenStories,
+@@ -31,9 +31,9 @@ const StoryAvatar: FC<StoryAvatarProps> = ( {
+ } ) => {
+ 
+   const loaded = useSharedValue( false );
+-  const isLoading = useDerivedValue( () => loadingStory.value === id || !loaded.value );
++  const isLoading = useDerivedValue( () => loadingStory.value === userid || !loaded.value );
+   const seen = useDerivedValue(
+-    () => seenStories.value[id] === stories[stories.length - 1]?.id,
++    () => seenStories.value[userid] === stories[stories.length - 1]?.id,
+   );
+   const loaderColor = useDerivedValue( () => ( seen.value ? seenColors : colors ) );
+ 
+@@ -62,7 +62,7 @@ const StoryAvatar: FC<StoryAvatarProps> = ( {
    return (
--    <View style={AvatarStyles.name}>
-+    <View style={[AvatarStyles.name,{marginLeft:5}]}>
+     <View style={AvatarStyles.name}>
        <View style={AvatarStyles.container}>
-         <TouchableOpacity activeOpacity={0.6} onPress={onPress} testID={`${id}StoryAvatar${stories.length}Story`}>
+-        <TouchableOpacity activeOpacity={0.6} onPress={onPress} testID={`${id}StoryAvatar${stories.length}Story`}>
++        <TouchableOpacity activeOpacity={0.6} onPress={onPress} testID={`${userid}StoryAvatar${stories.length}Story`}>
            <Loader loading={isLoading} color={loaderColor} size={size + AVATAR_OFFSET * 2} />
+           <AnimatedImage
+             source={avatarSource}
+@@ -81,7 +81,7 @@ const StoryAvatar: FC<StoryAvatarProps> = ( {
+           {...nameTextProps}
+           style={[ { width: size + AVATAR_OFFSET * 2 }, nameTextStyle ]}
+         >
+-          {name}
++          {firstName}
+         </Text>
+       )}
+     </View>
 diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx
-index b1154e0..87767c7 100644
+index b1154e0..cbdef07 100644
 --- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx
 +++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/AvatarList/index.tsx
-@@ -49,7 +49,7 @@ const StoryAvatarList: FC<StoryAvatarListProps> = ( {
+@@ -28,7 +28,7 @@ const StoryAvatarList: FC<StoryAvatarListProps> = ( {
+       {...story}
+       loadingStory={loadingStory}
+       seenStories={seenStories}
+-      onPress={() => onPress( story.id )}
++      onPress={() => onPress( story.userid )}
+       colors={colors}
+       seenColors={seenColors}
+       size={size}
+@@ -36,7 +36,7 @@ const StoryAvatarList: FC<StoryAvatarListProps> = ( {
+       nameTextStyle={nameTextStyle}
+       nameTextProps={nameTextProps}
+       avatarBorderRadius={avatarBorderRadius}
+-      key={`avatar${story.id}`}
++      key={`avatar${story.userid}`}
+     />
+   );
+ 
+@@ -48,7 +48,7 @@ const StoryAvatarList: FC<StoryAvatarListProps> = ( {
+         {...avatarListContainerProps}
          data={stories}
          renderItem={( { item } : { item: InstagramStoryProps } ) => renderItem( item )}
-         keyExtractor={( item: InstagramStoryProps ) => item.id}
--        contentContainerStyle={avatarListContainerStyle}
-+        contentContainerStyle={[avatarListContainerStyle]}
+-        keyExtractor={( item: InstagramStoryProps ) => item.id}
++        keyExtractor={( item: InstagramStoryProps ) => item.userid}
+         contentContainerStyle={avatarListContainerStyle}
          testID="storiesList"
        />
-     );
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Header/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Header/index.tsx
+index 32010ab..26886e5 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Header/index.tsx
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Header/index.tsx
+@@ -9,7 +9,7 @@ import { StoryHeaderProps } from '../../core/dto/componentsDTO';
+ import Close from '../Icon/close';
+ 
+ const StoryHeader: FC<StoryHeaderProps> = ( {
+-  avatarSource, name, onClose, avatarSize, textStyle, closeColor, headerStyle,
++  avatarSource, firstName, onClose, avatarSize, textStyle, closeColor, headerStyle,
+   headerContainerStyle, renderStoryHeader, onStoryHeaderPress,
+ } ) => {
+ 
+@@ -40,7 +40,7 @@ const StoryHeader: FC<StoryHeaderProps> = ( {
+             <Image source={avatarSource!} style={styles} />
+           </View>
+         )}
+-        {Boolean( name ) && <Text style={textStyle}>{name}</Text>}
++        {Boolean( firstName ) && <Text style={textStyle}>{firstName}</Text>}
+       </Pressable>
+       <TouchableOpacity
+         onPress={onClose}
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/InstagramStories/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/InstagramStories/index.tsx
+index 7d2d3f0..58f6bb8 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/InstagramStories/index.tsx
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/InstagramStories/index.tsx
+@@ -70,7 +70,7 @@ const InstagramStories = forwardRef<InstagramStoriesPublicMethods, InstagramStor
+     const promises = stories.map( ( story ) => {
+ 
+       const seenStoryIndex = story.stories.findIndex(
+-        ( item ) => item.id === seenStories.value[story.id],
++        ( item ) => item.id === seenStories.value[story.userid],
+       );
+       const seenStory = story.stories[seenStoryIndex + 1] || story.stories[0];
+ 
+@@ -106,7 +106,7 @@ const InstagramStories = forwardRef<InstagramStoriesPublicMethods, InstagramStor
+ 
+     if ( seenStories.value[user] ) {
+ 
+-      const userData = data.find( ( story ) => story.id === user );
++      const userData = data.find( ( story ) => story.userid === user );
+       const oldIndex = userData?.stories.findIndex(
+         ( story ) => story.id === seenStories.value[user],
+       );
+@@ -144,7 +144,7 @@ const InstagramStories = forwardRef<InstagramStoriesPublicMethods, InstagramStor
+       },
+       spliceUserStories: ( newStories, user, index ) => {
+ 
+-        const userData = data.find( ( story ) => story.id === user );
++        const userData = data.find( ( story ) => story.userid === user );
+ 
+         if ( !userData ) {
+ 
+@@ -162,7 +162,7 @@ const InstagramStories = forwardRef<InstagramStoriesPublicMethods, InstagramStor
+ 
+         }
+ 
+-        setData( data.map( ( value ) => ( value.id === user ? {
++        setData( data.map( ( value ) => ( value.userid === user ? {
+           ...value,
+           stories: newData,
+         } : value ) ) );
+@@ -182,9 +182,9 @@ const InstagramStories = forwardRef<InstagramStoriesPublicMethods, InstagramStor
+ 
+           onPress( id );
+ 
+-        } else if ( data[0]?.id ) {
++        } else if ( data[0]?.userid ) {
+ 
+-          onPress( data[0]?.id );
++          onPress( data[0]?.userid );
+ 
+         }
+ 
+@@ -212,9 +212,9 @@ const InstagramStories = forwardRef<InstagramStoriesPublicMethods, InstagramStor
+ 
+   useEffect( () => {
+ 
+-    if ( isVisible && data[0]?.id ) {
++    if ( isVisible && data[0]?.userid ) {
+ 
+-      modalRef.current?.show( data[0]?.id );
++      modalRef.current?.show( data[0]?.userid );
+ 
+     } else {
+ 
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/List/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/List/index.tsx
+index 0e7e533..8638197 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/List/index.tsx
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/List/index.tsx
+@@ -13,14 +13,14 @@ import StoryContent from '../Content';
+ import StoryFooter from '../Footer';
+ 
+ const StoryList: FC<StoryListProps> = ( {
+-  id, stories, index, x, activeUser, activeStory, progress, seenStories, paused,
++  userid, stories, index, x, activeUser, activeStory, progress, seenStories, paused,
+   onLoad, videoProps, progressColor, progressActiveColor, mediaContainerStyle, imageStyles,
+   imageProps, progressContainerStyle, imageOverlayView, hideElements, hideOverlayViewOnLongPress,
+   videoDuration, ...props
+ } ) => {
+ 
+   const imageHeight = useSharedValue( HEIGHT );
+-  const isActive = useDerivedValue( () => activeUser.value === id );
++  const isActive = useDerivedValue( () => activeUser.value === userid );
+ 
+   const activeStoryIndex = useDerivedValue(
+     () => stories.findIndex( ( item ) => item.id === activeStory.value ),
+@@ -38,7 +38,7 @@ const StoryList: FC<StoryListProps> = ( {
+   };
+ 
+   const lastSeenIndex = stories.findIndex(
+-    ( item ) => item.id === seenStories.value[id],
++    ( item ) => item.id === seenStories.value[userid],
+   );
+ 
+   return (
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Modal/index.tsx b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Modal/index.tsx
+index 24fb110..5c4de7b 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/components/Modal/index.tsx
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/components/Modal/index.tsx
+@@ -40,9 +40,9 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>( ( {
+   const storyIndex = useDerivedValue( () => stories[userIndex.value]?.stories.findIndex(
+     ( story ) => story.id === currentStory.value,
+   ) );
+-  const userId = useDerivedValue( () => stories[userIndex.value]?.id );
+-  const previousUserId = useDerivedValue( () => stories[userIndex.value - 1]?.id );
+-  const nextUserId = useDerivedValue( () => stories[userIndex.value + 1]?.id );
++  const userId = useDerivedValue( () => stories[userIndex.value]?.userid );
++  const previousUserId = useDerivedValue( () => stories[userIndex.value - 1]?.userid );
++  const nextUserId = useDerivedValue( () => stories[userIndex.value + 1]?.userid );
+   const previousStory = useDerivedValue( () => ( storyIndex.value !== undefined
+     ? stories[userIndex.value]?.stories[storyIndex.value - 1]?.id
+     : undefined ) );
+@@ -128,7 +128,7 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>( ( {
+ 
+     'worklet';
+ 
+-    const newUserIndex = stories.findIndex( ( story ) => story.id === id );
++    const newUserIndex = stories.findIndex( ( story ) => story.userid === id );
+     const newX = newUserIndex * WIDTH;
+ 
+     x.value = animated ? withTiming( newX, { duration: storyAnimationDuration } ) : newX;
+@@ -180,9 +180,9 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>( ( {
+ 
+         scrollTo( nextUserId.value );
+ 
+-      } else if ( stories[0]?.id && loopingStories === 'all' ) {
++      } else if ( stories[0]?.userid && loopingStories === 'all' ) {
+ 
+-        scrollTo( stories[0].id, false );
++        scrollTo( stories[0].userid, false );
+ 
+       } else if ( userId.value && loopingStories === 'onlyLast' ) {
+ 
+@@ -301,7 +301,7 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>( ( {
+           if ( e.translationY < -100 && onSwipeUp ) {
+ 
+             runOnJS( onSwipeUp )(
+-              stories[userIndex.value]?.id,
++              stories[userIndex.value]?.userid,
+               stories[userIndex.value]?.stories[storyIndex.value ?? 0]?.id,
+             );
+ 
+@@ -329,7 +329,7 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>( ( {
+ 
+         }
+ 
+-        const newUserId = stories[Math.round( newX / WIDTH )]?.id;
++        const newUserId = stories[Math.round( newX / WIDTH )]?.userid;
+         if ( newUserId !== undefined ) {
+ 
+           scrollTo( newUserId, true, newUserId === ctx.userId, ctx.userId );
+@@ -498,7 +498,7 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>( ( {
+                   closeColor={closeIconColor}
+                   hideElements={hideElements}
+                   videoDuration={videoDuration}
+-                  key={story.id}
++                  key={story.userid}
+                   {...props}
+                 />
+               ) )}
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/componentsDTO.ts b/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/componentsDTO.ts
+index 434f9cd..def1533 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/componentsDTO.ts
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/componentsDTO.ts
+@@ -132,7 +132,7 @@ export interface StoryProgressItemProps extends Omit<StoryProgressProps, 'length
+ 
+ export interface StoryHeaderProps {
+   avatarSource: ImageProps['source'];
+-  name?: string;
++  firstName?: string;
+   avatarSize: number;
+   textStyle?: TextStyle;
+   closeColor: string;
+diff --git a/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/instagramStoriesDTO.ts b/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/instagramStoriesDTO.ts
+index a04cc33..9918537 100644
+--- a/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/instagramStoriesDTO.ts
++++ b/node_modules/@birdwingo/react-native-instagram-stories/src/core/dto/instagramStoriesDTO.ts
+@@ -16,12 +16,12 @@ export interface StoryItemProps {
+ }
+ 
+ export interface InstagramStoryProps {
+-  id: string;
++  userid: string;
+   avatarSource: ImageProps['source'];
+   renderAvatar?: ( seen: boolean ) => ReactNode;
+   renderStoryHeader?: () => ReactNode;
+   onStoryHeaderPress?: () => void;
+-  name?: string;
++  firstName?: string;
+   stories: StoryItemProps[];
+ }
+ 

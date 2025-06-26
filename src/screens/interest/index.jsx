@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -9,21 +9,22 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { GradientCross } from '../../assets/images/svgs';
+import {GradientCross} from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
 import GradientText from '../../components/text/GradientText';
-import { width } from '../../constant';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
-import { styles } from './styles';
+import {width} from '../../constant';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
+import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const Interests = () => {
   const [interests, setInterests] = useState([]);
   const [filteredInterests, setFilteredInterests] = useState([]);
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [search, setSearch] = useState('');
-
+  const navigation = useNavigation();
   const getAllnterests = async () => {
     try {
       const response = await apiCall?.getAllInterests();
@@ -38,6 +39,7 @@ const Interests = () => {
     getAllnterests();
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleSearch = useCallback(
     _.debounce(query => {
       setSearch(query);
@@ -78,6 +80,7 @@ const Interests = () => {
         console.log('Payload', payload);
         const response = await apiCall?.addInterest(payload);
         console.log('Interests added successfully', response);
+        navigation?.navigate('Home');
       }
     } catch (error) {
       console.log('Error adding interests:', error);
@@ -94,7 +97,7 @@ const Interests = () => {
       <View style={styles?.header}>
         <View style={styles?.heading}>
           <GradientText style={styles?.gradientHeading}>Interests</GradientText>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation?.navigate('Home')}>
             <GradientCross />
           </TouchableOpacity>
         </View>

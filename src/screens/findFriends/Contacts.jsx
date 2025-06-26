@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { BackArrow } from '../../assets/images/svgs';
+import {BackArrow} from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
 import InviteModal from '../../components/modals/genderModal/inviteModal';
 import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
-import { styles } from './styles';
+import {height, width} from '../../constant';
+import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const ContactsList = ({
   modal,
@@ -28,6 +29,7 @@ const ContactsList = ({
 }) => {
   const [inviteModal, setInviteModal] = useState(false);
   const [selectedContact, setSelectedContact] = useState();
+  const navigation = useNavigation();
   return (
     <Modal animationType="slide" visible={modal} statusBarTranslucent>
       <View style={styles?.modalContent}>
@@ -38,13 +40,19 @@ const ContactsList = ({
             <BackArrow />
           </TouchableOpacity>
           <Text style={styles?.headerText}>Find Friends</Text>
-          <GradientText style={styles?.gradientText}>Next</GradientText>
+          <TouchableOpacity
+            onPress={() => {
+              setModal(false);
+              navigation?.navigate('Home');
+            }}>
+            <GradientText style={styles?.gradientText}>Next</GradientText>
+          </TouchableOpacity>
         </View>
         <CustomSearchBar
           search={search}
           setSearch={handleSearch}
           func={getYouthappContacts}
-          marginHorizontal ={width * 0.06}
+          marginHorizontal={width * 0.06}
         />
         <FlatList
           data={users}
@@ -73,6 +81,8 @@ const ContactsList = ({
                 </View>
                 {isFollowing ? (
                   <PrimaryButton
+                    width={width * 0.2}
+                    height={height * 0.035}
                     title="Followed"
                     styles={styles?.gradientButton}
                     textStyle={styles?.gradientButtonText}

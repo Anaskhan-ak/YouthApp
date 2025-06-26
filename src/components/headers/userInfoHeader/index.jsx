@@ -21,7 +21,7 @@ const UserInfoHeader = ({image, userName, data, setData}) => {
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
         <Image
-          source={image ? image : user?.photo ? {uri : user?.photo} :  images?.defaultProfilePicture}
+          source={image ? {uri: image} : images?.defaultProfilePicture}
           style={styles?.image}
         />
       </LinearGradient>

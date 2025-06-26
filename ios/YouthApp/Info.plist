@@ -9,8 +9,8 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-		<key>LSHandlerRank</key>
-<string>Alternate</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 			<key>CFBundleTypeName</key>
 			<string>MKDirectionsRequest</string>
 			<key>LSItemContentTypes</key>
@@ -20,11 +20,11 @@
 		</dict>
 	</array>
 	<key>NSContactsUsageDescription</key>
-<string>This app requires access to your contacts to help you connect with friends and share content easily.</string>
-<key>LSSupportsOpeningDocumentsInPlace</key>
-<true/>
-<key>UISupportsDocumentBrowser</key>
-<true/>
+	<string>This app requires access to your contacts to help you connect with friends and share content easily.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -51,20 +51,19 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>20</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true />
+	<true/>
 	<key>NSCameraUsageDescription</key>
-<string>We need access to your camera so you can take photos and videos to share in the app.</string>
-
-<key>NSPhotoLibraryUsageDescription</key>
-<string>We need access to your photo library so you can select a photo to use as your profile picture.</string>
-
-<key>NSPhotoLibraryAddUsageDescription</key>
-<string>We need access to your photo library so you can upload a post or a story in the app.</string>
-
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>We need access to your location to provide map-based features and nearby content.</string>
+	<string>We need access to your camera so you can take photos and videos to share in the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library so you can select a photo to use as your profile picture.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library so you can upload a post or a story in the app.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to provide map-based features and nearby content.</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>This app requires microphone access to record audio or interact with voice-enabled features.</string>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array>
 		<string>MKDirectionsModeBike</string>
@@ -79,9 +78,9 @@
 			<key>54.90.193.246</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true />
+				<true/>
 				<key>NSIncludesSubdomains</key>
-				<true />
+				<true/>
 			</dict>
 		</dict>
 	</dict>
@@ -133,6 +132,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false />
+	<false/>
 </dict>
 </plist>

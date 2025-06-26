@@ -22,6 +22,7 @@ const OtpInput = ({inputCount = 6, setOtp, otp}) => {
         containerStyle={styles?.otpContainer}
         textInputStyle={styles?.otpInput}
         handleTextChange={setOtp}
+        placeholder='-'
       />
     </View>
   );

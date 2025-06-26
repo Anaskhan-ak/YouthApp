@@ -79,7 +79,6 @@ const CreatePost = () => {
   ]);
 
   const handleForm = async () => {
-    setLoading(true);
     const formData = new FormData();
     formData.append('location', 'Pakistan');
     formData.append('audience', metaData?.audience?.value);
@@ -189,8 +188,7 @@ const CreatePost = () => {
       }
     }
     try {
-      // console.log("media", media)
-      // console.log("Form data", formData)
+      setLoading(true);
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
       navigation?.navigate('Home')

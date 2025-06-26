@@ -30,7 +30,7 @@ const UserPostHeader = ({post, user}) => {
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
         <Image
-          source={user?.photo ? user?.photo : images?.defaultProfilePicture}
+          source={user?.photo ? {uri:user?.photo} : images?.defaultProfilePicture}
           style={styles?.image}
         />
       </LinearGradient>

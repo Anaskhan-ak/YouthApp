@@ -17,9 +17,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   primaryButton: {
-    height: height * 0.05,
     alignSelf: 'center',
-    marginTop: height * 0.012,
     alignItems: 'center',
     justifyContent: 'center',
   },

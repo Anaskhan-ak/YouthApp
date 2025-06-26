@@ -86,10 +86,18 @@ export const styles = StyleSheet.create({
     borderRadius: 9,
     backgroundColor: colors?.white,
   },
-  authView: {marginTop: height * 0.16},
+  authView: {marginTop: height * 0.02},
   resendBtn: {
     marginTop: 0,
-    height: Platform?.OS === 'android' ? height * 0.045 : height * 0.0325,
+    height: Platform?.OS === 'android' ? height * 0.045 : height * 0.04,
+  },
+  backBtn: {
+    width: 50,
+    height: 50,
+    marginTop: height * 0.08,
+    left: 20,
+    alignItems:"center",
+    justifyContent:"center"
   },
   titleContainer: {
     marginVertical: 20,
@@ -101,7 +109,7 @@ export const styles = StyleSheet.create({
   btnText: {
     color: 'white',
     fontSize: width * 0.03,
-    fontFamily: fonts?.montserratMedium,
+    fontFamily: fonts?.montserratExtraBold,
   },
   headingWithIconView: {
     flexDirection: 'row',

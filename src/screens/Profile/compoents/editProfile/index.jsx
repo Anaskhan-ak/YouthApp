@@ -70,7 +70,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
     formData.append('lastName', values?.lastName);
     formData.append('gender', gender);
     formData.append('country', values?.country);
-    formData.append('dateOfBirth', new Date);
+    formData.append('dateOfBirth', values?.date);
     formData.append('bio', values?.bio);
     values?.links.forEach(link => {
       formData.append('links', link);
@@ -105,7 +105,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
           lastName: values?.lastName,
           gender: gender,
           country: values?.country,
-          dateOfBirth: values?.date,
+          dateOfBirth: new Date(values?.date),
           links: values?.links,
           profilePicture: data?.profilePicture,
           coverImage: data?.coverImage,

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 
@@ -50,5 +50,6 @@ export const styles = StyleSheet.create({
       color: 'white',
       alignItems : 'center',
       justifyContent : 'center',
+      paddingTop:Platform?.OS==='ios'&&1
     },
   });

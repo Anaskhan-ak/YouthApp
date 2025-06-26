@@ -4,6 +4,7 @@ import {
 import { height, Pixels, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
+import { Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -55,7 +56,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 0.3,
     justifyContent: 'space-evenly',
-    right: -width * 0.03,
+    right: Platform?.OS==='android'?-width * 0.03:-width * 0.06,
   },
   commentText: {
     fontFamily: fonts?.montserratMedium,
@@ -77,11 +78,13 @@ export const styles = StyleSheet.create({
   input: {
     flex: 0.65,
     color: colors?.text,
-    left:10
+    left:10,
+    paddingVertical:Platform?.OS==='ios'&&height*0.0125
   },
   button: {
     padding: width * 0.01,
     // marginHorizontal: width * 0.005,
+    zIndex:999
   },
   recordingBars: {
     marginHorizontal: width * 0.05,

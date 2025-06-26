@@ -10,7 +10,12 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {images} from '../../assets/images';
-import {DropDown, YouthIcon} from '../../assets/images/svgs';
+import {
+  BackArrow,
+  DropDown,
+  WhiteLeftArrow,
+  YouthIcon,
+} from '../../assets/images/svgs';
 import AuthError from '../../components/authErrorPopup';
 import {PrimaryButton} from '../../components/buttons/PrimaryButton';
 import AuthInput from '../../components/inputs/authInput';
@@ -29,14 +34,16 @@ const Otp = ({route}) => {
 
   const onSubmit = async () => {
     const obj = {
-      phoneNo: countryDetails?.dial_code + phone,
+      phoneNo: countryDetails ? countryDetails?.dial_code + phone : phone,
       otp: otp,
     };
+    console.log('obj', obj);
     try {
       setLoading(true);
       let result = await apiCall?.VerifyOtp(obj);
       navigation?.navigate('EmailVerification');
     } catch (e) {
+      console.log('e', e);
       setShowError(true);
       setErrorMessage({
         title: 'Sign Up Error',
@@ -62,6 +69,11 @@ const Otp = ({route}) => {
             borderBottomRightRadius={width * 0.1}
             style={styles.image}
             source={images?.otp}>
+            <TouchableOpacity
+              onPress={() => navigation?.goBack()}
+              style={styles?.backBtn}>
+              <WhiteLeftArrow />
+            </TouchableOpacity>
             {showError && (
               <View style={styles?.authView}>
                 <AuthError
@@ -75,40 +87,44 @@ const Otp = ({route}) => {
         </View>
         <View style={styles?.contentView}>
           <View style={styles?.titleContainer}>
-
-
-
- <View style={styles?.headingWithIconView}>
-          <Text style={styles?.heading}>Allow </Text>
-          <YouthIcon width={width * 0.2} />
-          <Text style={styles?.heading}> to verify you!</Text>
-        </View>
+            <View style={styles?.headingWithIconView}>
+              <Text style={styles?.heading}>Allow </Text>
+              <YouthIcon width={width * 0.2} />
+              <Text style={styles?.heading}> to verify you!</Text>
+            </View>
             <Text style={styles?.title}>
-              We've sent a 4 digit code to your phone number. Please enter the
+              We've sent a 6 digit code to your phone number. Please enter the
               verification code.
             </Text>
           </View>
           <View style={styles?.textContainer}>
-            <View style={[styles?.textView, {width: '28%'}]}>
-              <TouchableOpacity disabled style={styles?.phoneContainer}>
-                <Text style={styles?.phoneText}>
-                  {countryDetails
-                    ? `${countryDetails?.flag} ${countryDetails?.dial_code}`
-                    : 'Country'}
-                </Text>
-                <View>
-                  <DropDown height={height * 0.02} width={width * 0.035} />
-                </View>
-              </TouchableOpacity>
-            </View>
+            {
+              <View style={[styles?.textView, {width: '28%'}]}>
+                <TouchableOpacity disabled style={styles?.phoneContainer}>
+                  <Text style={styles?.phoneText}>
+                    {countryDetails
+                      ? `${countryDetails?.flag} ${countryDetails?.dial_code}`
+                      : 'Country'}
+                  </Text>
+                  <View>
+                    <DropDown height={height * 0.02} width={width * 0.035} />
+                  </View>
+                </TouchableOpacity>
+              </View>
+            }
             <View style={[styles?.textView, {width: '50%'}]}>
-              <AuthInput value={phone} placeholder={'Phone'} disable />
+              <AuthInput
+                inputStyle={{paddingVertical: height * 0.014}}
+                value={phone}
+                placeholder={'Phone'}
+                disable
+              />
             </View>
             <PrimaryButton
               width={'116%'}
               style={styles?.resendBtn}
               // isLoading={loading}
-              // onPress={handleSubmit(onSubmit)}
+              onPress={onSubmit}
               title="Re-send"
               textStyle={styles?.btnText}
             />

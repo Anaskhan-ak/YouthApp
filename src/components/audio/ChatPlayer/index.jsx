@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,9 +19,9 @@ import {
   PlayIcon,
 } from '../../../assets/images/svgs';
 import GradientText from '../../../components/text/GradientText';
-import { width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 // when i pause, it reloads
 // when i replay, it fill completely and then replays
@@ -286,6 +287,7 @@ const styles = StyleSheet.create({
   },
   waveformContainer: {
     paddingHorizontal: width * 0.03,
+    paddingVertical: Platform?.OS === 'ios' ? 10 : 0,
   },
   timeRow: {
     flexDirection: 'row',
@@ -306,6 +308,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    right: Platform?.OS === 'ios' ? 10 : 0,
   },
   playIcon: {
     marginHorizontal: width * 0.01,

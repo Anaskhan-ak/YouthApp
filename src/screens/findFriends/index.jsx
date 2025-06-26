@@ -1,62 +1,62 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import _ from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   BackHandler,
   Image,
   PermissionsAndroid,
-  SafeAreaView,
+  Platform,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
-import { Cross } from '../../assets/images/svgs';
-import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
+import {Cross} from '../../assets/images/svgs';
+import {GradientBorderButton} from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import { width } from '../../constant';
-import { apiCall } from '../../services/apiCall';
+import {width} from '../../constant';
+import {apiCall} from '../../services/apiCall';
 import ContactsList from './Contacts';
-import { styles } from './styles';
+import {styles} from './styles';
+import {getDataLocally} from '../../helper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const FindFriends = () => {
   const [modal, setModal] = useState(false);
   const [search, setSearch] = useState();
   const [phoneNos, setPhoneNos] = useState([]);
-  const [filteredNos, setFilteredNos] = useState([])
+  const [filteredNos, setFilteredNos] = useState([]);
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([])
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [following, setFollowing] = useState([]);
   const navigation = useNavigation();
 
   const handleSearch = useCallback(
-    _.debounce((query) => {
+    _.debounce(query => {
       setSearch(query);
       if (query.trim() === '') {
         setFilteredUsers(users);
         // setFilteredContacts(phoneNumbers);
       } else {
         const lowerCaseQuery = query.toLowerCase();
-        const searchedContacts = phoneNos.filter(
-          (contact) =>
-            contact?.fullName?.toLowerCase().includes(lowerCaseQuery)
+        const searchedContacts = phoneNos.filter(contact =>
+          contact?.fullName?.toLowerCase().includes(lowerCaseQuery),
         );
         setFilteredNos(searchedContacts);
-  
-        const searchedUsers = users.filter(
-          (user) =>
-            user?.fullName?.toLowerCase().includes(lowerCaseQuery)
+
+        const searchedUsers = users.filter(user =>
+          user?.fullName?.toLowerCase().includes(lowerCaseQuery),
         );
         setFilteredUsers(searchedUsers);
       }
     }, 500),
-    [users, phoneNos]
+    [users, phoneNos],
   );
 
-  const onChangeSearchText = (text) => {
-    setSearch(text);           // Immediate UI update
-    handleSearch(text);        // Debounced filtering
+  const onChangeSearchText = text => {
+    setSearch(text); // Immediate UI update
+    handleSearch(text); // Debounced filtering
   };
 
   const getYouthappContacts = async numbers => {
@@ -77,7 +77,7 @@ const FindFriends = () => {
         fullName: `${u?.firstName} ${u?.lastName}`,
         photo: u?.photo,
       })),
-    )
+    );
   };
   const getContacts = async () => {
     try {
@@ -116,7 +116,7 @@ const FindFriends = () => {
         .filter(Boolean); // Remove null/undefined/short values
       getYouthappContacts(extractedNumbers);
       setPhoneNos(formattedContacts);
-      setFilteredNos(formattedContacts)
+      setFilteredNos(formattedContacts);
     } catch (error) {
       console.log('Error fetching contacts', error);
     }
@@ -124,8 +124,9 @@ const FindFriends = () => {
   };
 
   const getFollowing = async () => {
+    const user = await getDataLocally();
     try {
-      const result = await apiCall?.getFollowing('cm60ql39f003l91r8l18bd80z');
+      const result = await apiCall?.getFollowing();
       setFollowing(result);
     } catch (error) {
       console.log('error fetching following', error);
@@ -133,17 +134,16 @@ const FindFriends = () => {
   };
 
   const toggleFollow = async followingId => {
-    // setLoadingStates(prevState => ({
-    //   ...prevState,
-    //   [followingId]: true,
-    // }));
     try {
-      const isAlreadyFollowing = following.some(f => f.followingId === followingId);
+      const user = await getDataLocally();
+      const isAlreadyFollowing = following.some(
+        f => f.followingId === followingId,
+      );
       let response;
 
       if (!isAlreadyFollowing) {
         response = await apiCall?.follow({
-          followerId: 'cm60ql39f003l91r8l18bd80z',
+          followerId: user?.id,
           followingId: followingId,
         });
         console.log('User successfully followed', response);
@@ -153,13 +153,15 @@ const FindFriends = () => {
         }
       } else {
         response = await apiCall?.unfollow({
-          followerId: 'cm60ql39f003l91r8l18bd80z',
+          followerId: user?.id,
           followingId: followingId,
         });
         console.log('User successfully unfollowed', response);
 
         if (response === 200) {
-          setFollowing(prev => prev.filter(f => f?.followingId !== followingId)); // Remove from state
+          setFollowing(prev =>
+            prev.filter(f => f?.followingId !== followingId),
+          ); // Remove from state
         }
       }
     } catch (error) {
@@ -217,6 +219,7 @@ const FindFriends = () => {
         <GradientBorderButton
           title={'Skip'}
           width={width * 0.75}
+          onPress={() => navigation?.navigate('Home')}
         />
       </View>
       {modal && (

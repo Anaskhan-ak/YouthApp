@@ -11,10 +11,10 @@ import {height} from '../../../constant';
 import {colors} from '../../../utils/colors';
 import {styles} from './styles';
 
-const MAX_HEIGHT = Platform?.OS === 'ios' ? height * 0.5 : height * 0.5; // fully expanded
-const MIN_HEIGHT = Platform?.OS === 'ios' ? height * 0.4 : height * 0.4; // minimized
+const PostModal = ({options, setOptions, content, fixed}) => {
+  const MAX_HEIGHT = fixed ? height * 0.35 : height * 0.5; // fully expanded
+  const MIN_HEIGHT = Platform?.OS === 'ios' ? height * 0.4 : height * 0.4; // minimized
 
-const PostModal = ({options, setOptions, content}) => {
   const gestureRef = useRef();
   const modalHeight = useSharedValue(MAX_HEIGHT); // Start expanded
 

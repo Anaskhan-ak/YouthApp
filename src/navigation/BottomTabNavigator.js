@@ -44,7 +44,7 @@ const BottomTabNavigator = () => {
         />
         <Svg
           width={Platform?.OS === 'android' ? width * 0.7 : width * 0.72}
-          height={64}
+          height={height * 0.072}
           viewBox="0 0 307 66"
           fill="none"
           style={StyleSheet.absoluteFill}>

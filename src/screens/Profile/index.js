@@ -1,22 +1,22 @@
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useEffect, useRef, useState} from 'react';
+import {Image, TouchableOpacity, View} from 'react-native';
 
-import { images } from '../../assets/images';
+import {images} from '../../assets/images';
 import {
   EventsIcon,
   FileAudio,
   FileImport,
   GalleryIcon,
   MomentsIcon,
-  WhiteLeftArrow
+  WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
-import { pick } from '@react-native-documents/picker';
-import { ActivityIndicator } from 'react-native';
-import { height, width } from '../../constant';
-import { getDataLocally } from '../../helper';
-import { apiCall } from '../../services/apiCall';
+import {pick} from '@react-native-documents/picker';
+import {ActivityIndicator} from 'react-native';
+import {height, width} from '../../constant';
+import {getDataLocally} from '../../helper';
+import {apiCall} from '../../services/apiCall';
 import EditProfile from './compoents/editProfile';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
@@ -24,11 +24,13 @@ import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 import QRSheet from './compoents/qrCode';
-import { styles } from './styles';
+import {styles} from './styles';
+import Stories from '../../components/stories';
 
 const Profile = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
+  const [stories, setStories] = useState([]);
   const [options, setOptions] = useState([
     {type: 'gallery', icon: <GalleryIcon />, active: true},
     {type: 'audios', icon: <FileAudio />, active: false},
@@ -36,13 +38,43 @@ const Profile = () => {
     {type: 'files', icon: <FileImport />, active: false},
     {type: 'events', icon: <EventsIcon />, active: false},
   ]);
-  // const isFocus = useIsFocused()
-
   const [editProfile, setEditProfile] = useState(false);
   const [qr, setQr] = useState(false);
   const qrRef = useRef(null);
-  const focus = useIsFocused()
+  const focus = useIsFocused();
+  const getStories = async () => {
+    try {
+      const userData = await getDataLocally();
+      const highlight = await apiCall?.getAllHighlight({userId: userData?.id});
+      const transformed = await highlight?.map(item => {
+        const post = item?.story;
+        return {
+          userid: item?.userId,
+          firstName: item?.name,
+          lastName: null,
+          avatarSource: {
+            uri: post?.url,
+          },
+          stories: [
+            {
+              id: post?.id,
+              userId: post?.userId,
+              storyId: item?.storyId,
+              source: {
+                uri: post?.url,
+              },
+              mediaType: post?.mediaType,
+            },
+          ],
+        };
+      });
 
+      setStories(transformed);
+    } catch (e) {
+      console.log('e', e);
+    } finally {
+    }
+  };
   const getUserData = async () => {
     const localUserData = await getDataLocally();
     try {
@@ -55,6 +87,7 @@ const Profile = () => {
 
   useEffect(() => {
     getUserData();
+    getStories();
   }, [focus]);
 
   // console.log('User data', userhandleProfilePictureData);
@@ -117,8 +150,7 @@ const Profile = () => {
         />
 
         {!userData ? (
-          <View
-            style={styles?.indicator}>
+          <View style={styles?.indicator}>
             <ActivityIndicator size={'large'} />
           </View>
         ) : editProfile ? (
@@ -142,10 +174,14 @@ const Profile = () => {
               subscribers={50}
             />
             <View style={styles?.icons}>
-              <ProfileOption setEditProfile={setEditProfile} setQr={setQr} />
+              <ProfileOption
+                getUserData={getUserData}
+                setEditProfile={setEditProfile}
+                setQr={setQr}
+              />
             </View>
-            {/* <Stories /> */}
-            <PostContentModal options={options} setOptions={setOptions} />
+            {<Stories avatarSize={width * 0.1} stories={stories} />}
+            <PostContentModal fixed options={options} setOptions={setOptions} />
             {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
           </>
         )}

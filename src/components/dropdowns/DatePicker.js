@@ -27,10 +27,13 @@ const DateMonthPicker = ({
       modal
       open={showDate}
       date={
-        selectedDate !== 'DOB' || selectedDate !== null
+        setValue
+          ? selectedDate !== 'DOB' || selectedDate !== null
+            ? new Date(selectedDate)
+            : new Date()
+          : selectedDate !== 'DOB'
           ? new Date(selectedDate)
-          :
-           new Date()
+          : new Date()
       }
       mode="date"
       onConfirm={handleDateConfirm}

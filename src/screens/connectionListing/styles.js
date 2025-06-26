@@ -1,13 +1,16 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {height, width} from '../../constant';
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
-  container: {
+  contentView: {
     backgroundColor: colors?.white,
     flex: 1,
-    marginTop: -height * 0.08,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    alignItems: 'center',
   },
   image: {
     width: width,
@@ -43,16 +46,15 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     padding: 15,
   },
-  modalContent: {
+  container: {
     flex: 1,
     backgroundColor: colors?.white,
+    paddingHorizontal: 10,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: height * 0.055,
-    paddingHorizontal: width * 0.08,
   },
   backButton: {
     padding: 10,
@@ -61,6 +63,7 @@ export const styles = StyleSheet.create({
     color: colors?.black,
     fontFamily: fonts?.montserratBold,
     fontSize: width * 0.045,
+    right: Platform?.OS === 'ios' && width * 0.04,
   },
   gradientText: {
     fontFamily: fonts?.montserratBold,
@@ -110,12 +113,12 @@ export const styles = StyleSheet.create({
     color: colors?.white,
   },
   grayButton: {
-    width: width * 0.2,
-    height: height * 0.035,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors?.gray,
-    borderRadius: width * 0.02,
+    height: height * 0.035,
+    width: width * 0.2,
+    borderRadius: 5,
   },
   grayButtonText: {
     fontFamily: fonts?.montserratBold,

@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import { useRef, useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -19,16 +19,16 @@ import {
 } from '../../assets/images/svgs';
 import CreateButton from '../../components/buttons/CreateButton';
 import GradientHeader from '../../components/headers/gradientHeader';
-import { toast } from '../../components/toast';
-import { height, width } from '../../constant';
-import { getRealPathFromURI } from '../../helper';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {toast} from '../../components/toast';
+import {height, width} from '../../constant';
+import {getRealPathFromURI} from '../../helper';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import Gallery from './components/gallery';
 import Stories from './components/stories';
 
 const CreateStory = ({route}) => {
-  const {isHighlight} = route?.params;
+  const {isHighlight} = route?.params || '';
   const [media, setMedia] = useState({});
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,16 @@ const CreateStory = ({route}) => {
 
   const createStory = async () => {
     const isImage =
-      media?.type === 'jpg' || media?.type === 'png' || media?.type === 'jpeg';
+      media?.type === 'jpg' ||
+      media?.type === 'png' ||
+      media?.type === 'jpeg' ||
+      media?.type === 'image' ||
+      'gif' ||
+      'webp' ||
+      'bmp' ||
+      'tiff' ||
+      'svg' ||
+      'heic';
     setLoading(true);
     const formData = new FormData();
     formData?.append('type', 'STORY');
