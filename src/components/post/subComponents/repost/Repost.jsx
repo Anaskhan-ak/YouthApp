@@ -5,8 +5,11 @@ import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import PostBottomTab from '../postBottomTab';
 import UserPostHeader from '../userPostHeader';
+import DocumentPost from './documentPost';
+import EventPost from './eventPost';
 import MediaPost from './mediaPost';
 import MomentPost from './momentPost';
+import MusicPost from './musicPost';
 import YudioPost from './yudioPost';
 // import VideoPlayer from './videoPlayer';
 
@@ -18,20 +21,12 @@ const Repost = ({post, modal, actions, setActions, isScrolling}) => {
     // console.log('Post', post);
     const postComponents = {
       MEDIA: MediaPost,
-      // MUSIC: MusicPost,
+      MUSIC: MusicPost,
       YUDIO: YudioPost,
-      // EVENT: EventPost,
-      // DOCUMENT: DocumentPost,
+      EVENT: EventPost,
+      DOCUMENT: DocumentPost,
       MOMMENTS: MomentPost,
     };
-    if (
-      post?.type === 'MUSIC' ||
-      // post?.type === 'YUDIO' ||
-      post?.type === 'EVENT' ||
-      post?.type === 'DOCUMENT' 
-    ) {
-      return null;
-    }
 
     const PostComponent = postComponents[post.type];
     return (

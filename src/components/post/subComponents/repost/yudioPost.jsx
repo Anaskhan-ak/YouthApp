@@ -3,11 +3,14 @@ import YudioPlayer from '../../../../components/audio/YudioPlayer';
 import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 
-const YudioPost = ({post, modal}) => {
+const YudioPost = ({post, 
+  // modal
+}) => {
   return (
     <View>
       <TouchableOpacity
-        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        // onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}
+        >
         <View style={styles?.player}>
           <YudioPlayer
             audio={{uri: post?.yudios?.url, waveform: post?.yudios?.waveform}}

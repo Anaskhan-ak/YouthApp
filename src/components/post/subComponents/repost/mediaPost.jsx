@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { height, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
@@ -13,7 +13,9 @@ import CircleCounter from '../../subComponents/CircleCounter';
 import PostVideo from './../videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MediaPost = ({post, modal, isScrolling}) => {
+const MediaPost = ({post, 
+  // modal,
+   isScrolling}) => {
     // console.log('Post', post);
   const [activeIndex, setActiveIndex] = useState(0);
    const [mediaLayout, setMediaLayout] = useState(null);
@@ -39,12 +41,13 @@ const MediaPost = ({post, modal, isScrolling}) => {
       item?.split('.')?.pop() === 'm3u8';
     return (
       <TouchableOpacity
-        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        // onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}
+        >
         <View
           onLayout={handleMediaLayout}
           style={[
             styles.mediaContainer,
-            !modal?.modal?.isPost && {borderRadius: width * 0.04},
+            // !modal?.modal?.isPost && {borderRadius: width * 0.04},
           ]}>
           {!isVideo && (
             <View style={styles.mediaElements}>
@@ -68,10 +71,10 @@ const MediaPost = ({post, modal, isScrolling}) => {
               source={{uri: item}}
               style={[
                 styles.mediaImage,
-                modal?.modal?.isPost && {
-                  borderWidth: 3,
-                  borderColor: colors?.white,
-                },
+                // modal?.modal?.isPost && {
+                //   borderWidth: 3,
+                //   borderColor: colors?.white,
+                // },
               ]}
               resizeMode="cover"
             />

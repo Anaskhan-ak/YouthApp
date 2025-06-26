@@ -1,7 +1,5 @@
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import { Sparkles } from '../../../assets/images/svgs';
-import { colors } from '../../../utils/colors';
 import { styles } from './styles';
 
 const MultilineInput = ({
@@ -17,7 +15,6 @@ const MultilineInput = ({
   scrollEnabled,
   value,
   onChangeText,
-  repostPress
 }) => {
 
   const handleInput = (text) => {
@@ -51,22 +48,6 @@ const MultilineInput = ({
           </TouchableOpacity>
           </View>
           <Text style={styles?.character}>{`${chars}/${maxChars}`}</Text>
-        </View>
-      )}
-
-      {postType === 'repost' && (
-        <View style={styles?.footer}>
-          <View style={styles?.row}>
-            <TouchableOpacity style={styles?.button}>
-            <Sparkles width={10} height={10}/>
-            <Text style={styles?.buttonText}>Rewrite with AI</Text>
-          </TouchableOpacity>
-          </View>
-          <TouchableOpacity onPress={repostPress}>
-            <LinearGradient style={styles?.repostButton} colors={[colors?.RGB1, colors?.RGB2]}>
-              <Text style={styles?.repostText}>Repost</Text>
-            </LinearGradient>
-          </TouchableOpacity>
         </View>
       )}
     </View>

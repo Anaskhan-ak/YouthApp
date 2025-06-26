@@ -41,7 +41,7 @@ const Post = ({post, isScrolling}) => {
       count: post?._count?.SavedPost,
     },
     repost: {
-      ref: useRef(null),
+      // ref: useRef(null),
       count: post?.shares?.length,
     },
   });

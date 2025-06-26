@@ -4,6 +4,7 @@ import ChatInbox from '../screens/ChatInbox';
 import CreateEvent from '../screens/createEvent';
 import CreateMoment from '../screens/CreateMoment';
 import CreatePost from '../screens/createPost';
+import CreateRepost from '../screens/CreateRepost';
 import CreateStory from '../screens/createStory';
 import CreateWallet from '../screens/createWallet';
 import CreateYudio from '../screens/createYudio';
@@ -176,6 +177,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Moments"
         component={Moments}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CreateRepost"
+        component={CreateRepost}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

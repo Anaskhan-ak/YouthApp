@@ -5,7 +5,9 @@ import { colors } from '../../../../utils/colors';
 import PostVideo from './../videoPlayer';
 // import VideoPlayer from './videoPlayer';
 
-const MomentPost = ({post, modal, isScrolling}) => {
+const MomentPost = ({post, 
+  // modal, 
+  isScrolling}) => {
     // console.log("post", post)
   const [mediaLayout, setMediaLayout] = useState(null);
 
@@ -17,7 +19,8 @@ const MomentPost = ({post, modal, isScrolling}) => {
   return (
     <View>
       <TouchableOpacity
-        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
+        // onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}
+        >
         <View onLayout={handleMediaLayout} style={styles.mediaContainer}>
           <PostVideo url={post?.Momments?.url} isScrolling={isScrolling} isMoment={true} isRepost={true}/>
         </View>

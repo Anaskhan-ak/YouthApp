@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BlurView } from '@react-native-community/blur';
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -27,6 +28,7 @@ import { albumIds } from '../../../utils/string';
 const PostBottomTab = ({post, actions, setActions}) => {
   const [follow, setFollow] = useState(false);
   const user = useUser();
+  const navigation = useNavigation()
   const [icons, setIcons] = useState([
     {
       type: 'like',
@@ -126,7 +128,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
   }, []);
 
   const handlePress = async icon => {
-    console.log('icon', icon);
+    // console.log('icon', icon);
     const userDetails = await getDataLocally();
     switch (icon?.type) {
       case 'like':
@@ -140,7 +142,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
                 postId: post?.id,
                 status: true,
               };
-          console.log('body', body);
+          // console.log('body', body);
           const response = await apiCall?.likePost(body);
           setIcons(prev =>
             prev.map(i => {
@@ -189,7 +191,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
         }
         break;
       case 'repost':
-        actions?.repost?.ref?.current?.snapToIndex(0);
+        navigation?.navigate("CreateRepost", {post:post, setActions : setActions})
         break;
       default:
         break;
