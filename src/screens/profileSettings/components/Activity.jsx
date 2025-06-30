@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     fontFamily: fonts?.montserratSemiBold,
     fontSize: Pixels(12),
     color: colors?.text,
-    marginBlock: height * 0.01,
-    textAlign : 'center'
+    textAlign : 'center',
+    marginBottom : height * 0.01
   },
   button: {
     backgroundColor: colors?.greyBackground,

@@ -25,6 +25,7 @@ import OtpVerification from '../screens/otpVerification';
 import PostDetails from '../screens/postDetails';
 import Profile from '../screens/Profile';
 import ProfileSettingsActivity from '../screens/profileSettings';
+import SavedArchived from '../screens/savedArchived';
 import SignUp from '../screens/signup';
 import Splash from '../screens/splash';
 import SuggestedContent from '../screens/suggestions';
@@ -194,6 +195,11 @@ const StackNavigator = () => {
        <Stack.Screen
         name="ConnectionListing"
         component={ConnectionListing}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="SavedArchived"
+        component={SavedArchived}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

@@ -366,7 +366,7 @@ const CreateYudio = () => {
               }
             />
             <Text style={styles?.recordedPlayerHeading}>{title}</Text>
-            <Text style={styles?.recordedPlayerName}>Sannya Wasim</Text>
+            <Text style={styles?.recordedPlayerName}>{`${user?.firstName} ${user?.lastName}`}</Text>
             <View style={styles?.recordedPlayer}>
               <RecordedAudioPlayer audioURL={yudio} />
               <TouchableOpacity

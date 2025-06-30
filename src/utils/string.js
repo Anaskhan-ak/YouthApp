@@ -234,10 +234,12 @@ export const profileSettingsOptions = [
   {
     id: 'saved',
     title: 'Saved',
+    route : 'SavedArchived'
   },
   {
     id: 'archive',
     title: 'Archive',
+    route : 'SavedArchived'
   },
   {
     id: 'closeFriends',

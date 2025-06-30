@@ -215,6 +215,18 @@ export const apiCall = {
     if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },
+
+  getSaved: async () => {
+    let result = await get(apis?.getSavedPosts);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
+    else throw result;
+  },
+
+  getAlbums: async () => {
+    let result = await get(apis?.getAlbums);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
+    else throw result;
+  },
   // PATCH API CALL
   gatePassStatus: async obj => {
     let result = await patch(Apis.gatePassStatus, obj);

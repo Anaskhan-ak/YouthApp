@@ -38,7 +38,8 @@ export const apis = {
   getProfile : 'api/v1/profile',
   getAllInterests : 'api/v1/intrest',
   getOnBoardingContent : 'api/v1/onboarding',
-  getSavedPosts : 'api/v1/post/saved'
+  getSavedPosts : 'api/v1/post/saved',
+  getAlbums : 'api/v1/post/album',
   // DELETE ENDPOINTS
   // PATCH ENDPOINTS
 };
