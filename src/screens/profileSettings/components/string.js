@@ -76,3 +76,61 @@ export const supportOptions = [
         route : ''
     },
 ]
+
+export const activityOptions = [
+    {
+        id : 'time',
+        title : "Time Spent",
+        route : ''
+    },
+    {
+        id : 'rewards',
+        title : "My Rewards",
+        route : ''
+    },
+    {
+        id : 'media',
+        title : "Photos, Videos, Music and Causes",
+        route : ''
+    },
+    {
+        id : 'interactions',
+        title : "Interactions",
+        route : ''
+    },
+    {
+        id : 'history',
+        title : "Account History",
+        route : ''
+    },
+    {
+        id : 'searches',
+        title : "Recent Searches",
+        route : ''
+    },
+     {
+        id : 'linksVisited',
+        title : "Links you've Visited",
+        route : ''
+    },
+     {
+        id : 'archived',
+        title : "Archived",
+        route : ''
+    },
+     {
+        id : 'downloads',
+        title : "Downloads",
+        route : ''
+    },
+     {
+        id : 'deleted',
+        title : "Deleted Posts",
+        route : ''
+    },
+     {
+        id : 'donwloadInfo',
+        title : "Download your information",
+        route : ''
+    },
+]
