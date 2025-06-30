@@ -169,14 +169,14 @@ const CreateStory = ({route}) => {
       )}
       {preview ? (
         <CreateButton
-          title="Add to Story"
+          title={isHighlight?"Add to Highlights":"Add to Story"}
           onPress={isHighlight ? createNewHighlight : createStory}
           loader={loader}
-          secondButton={{
-            title: 'Add to Highlights',
-            loader: loader,
-            onPress: createNewHighlight,
-          }}
+          // secondButton={{
+          //   title: 'Add to Highlights',
+          //   loader: loader,
+          //   onPress: createNewHighlight,
+          // }}
         />
       ) : (
         <CreateButton

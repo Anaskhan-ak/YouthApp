@@ -180,7 +180,7 @@ const Profile = () => {
                 setQr={setQr}
               />
             </View>
-            {<Stories  stories={stories} />}
+            {<Stories isHighlight stories={stories} />}
             <PostContentModal fixed options={options} setOptions={setOptions} />
             {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
           </>
