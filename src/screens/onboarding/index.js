@@ -10,6 +10,7 @@ import {
   View,
   ScrollView,
   Platform,
+  BackHandler,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {styles} from './styles';
@@ -52,6 +53,19 @@ const Onboarding = ({navigation, route}) => {
   const handleSkip = () => {
     flatListRef.current?.goToSlide(4, true);
   };
+   useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar

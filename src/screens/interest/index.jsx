@@ -80,7 +80,7 @@ const Interests = () => {
         console.log('Payload', payload);
         const response = await apiCall?.addInterest(payload);
         console.log('Interests added successfully', response);
-        navigation?.navigate('Home');
+        navigation?.navigate('FindFriends');
       }
     } catch (error) {
       console.log('Error adding interests:', error);
@@ -97,7 +97,7 @@ const Interests = () => {
       <View style={styles?.header}>
         <View style={styles?.heading}>
           <GradientText style={styles?.gradientHeading}>Interests</GradientText>
-          <TouchableOpacity onPress={()=>navigation?.navigate('Home')}>
+          <TouchableOpacity onPress={()=>navigation?.navigate('FindFriends')}>
             <GradientCross />
           </TouchableOpacity>
         </View>

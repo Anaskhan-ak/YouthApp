@@ -3,15 +3,15 @@ import { RateUs } from '../../../assets/images/svgs';
 import GradientText from '../../text/GradientText';
 import { styles } from './styles';
 
-const RateModal = props => {
+const RateModal = ({setIsModal,isModal}) => {
   const handleClose = () => {
-    setModal(false);
+    setIsModal(false);
   };
   return (
     <View style={styles?.container}>
       <Modal
         animationType="slide"
-        visible={props?.visible}
+        visible={isModal}
         transparent
         statusBarTranslucent>
         <Pressable style={styles.modalBackground} onPress={handleClose}>

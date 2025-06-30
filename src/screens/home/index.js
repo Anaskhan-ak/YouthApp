@@ -24,11 +24,13 @@ import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import CategorySelector from './components/categorySelector/Index';
 import SideBar from './components/sideBar';
+import RateModal from '../../components/modals/rate';
 
 const Home = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const refRBSheet = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isRateModal, setIsRateModal] = useState(true);
   const [stories, setStories] = useState([]);
   const isFocus = useIsFocused();
   const user = useUser()
@@ -121,6 +123,7 @@ const Home = () => {
           }}
         />
       )}
+      {/* <RateModal setIsModal={setIsRateModal} isModal={isRateModal}/> */}
       <SideBar refRBSheet={refRBSheet} />
       <RNBottomSheet setIsSheetOpen={setIsSheetOpen} sheetRef={refRBSheet} />
       <BottomTabNavigator />
