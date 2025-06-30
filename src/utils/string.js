@@ -229,6 +229,7 @@ export const profileSettingsOptions = [
   {
     id: 'activity',
     title: 'Your Activity',
+    route : 'ProfileSettingsActivity'
   },
   {
     id: 'saved',
