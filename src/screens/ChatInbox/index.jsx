@@ -6,6 +6,7 @@ import SocialButton from '../../components/buttons/SocialButton';
 import InboxHeader from '../../components/headers/chat/inbox';
 import CustomSearchBar from '../../components/inputs/search';
 import { width } from '../../constant';
+import BottomTabNavigator from '../../navigation/BottomTabNavigator';
 import Calls from './components/calls';
 import Chats from './components/chats';
 import { styles } from './styles';
@@ -41,6 +42,7 @@ const ChatInbox = () => {
         setSearch={setSearch}
       />
       {toggleChatsCalls === 'chats' ? <Chats /> : <Calls />}
+    <BottomTabNavigator/>
     </View>
   );
 };

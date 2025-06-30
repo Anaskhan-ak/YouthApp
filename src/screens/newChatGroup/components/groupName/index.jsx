@@ -2,10 +2,10 @@ import { pick } from '@react-native-documents/picker';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
-    Image,
-    TextInput,
-    TouchableOpacity,
-    View
+  Image,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../../assets/images';
@@ -16,7 +16,7 @@ import { width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
-const GroupName = () => {
+const GroupName = ({setNext}) => {
   const [disable, setDisable] = useState(true);
   const [info, setInfo] = useState({
     image: '',
@@ -44,7 +44,7 @@ const GroupName = () => {
   },[info])
   return (
     <View style={styles?.container}>
-      <InboxHeader title="Group Name" />
+      <InboxHeader title="Group Name" backPress={()=>setNext(false)}/>
       <View style={styles?.content}>
         <Image
           source={
@@ -56,7 +56,7 @@ const GroupName = () => {
           <LinearGradient
             colors={[colors?.RGB1, colors?.RGB2]}
             style={styles?.plusButton}>
-            <Plus width={width * 0.07} height={width * 0.07} />
+            <Plus width={width * 0.04} height={width * 0.04} />
           </LinearGradient>
         </TouchableOpacity>
         <TextInput

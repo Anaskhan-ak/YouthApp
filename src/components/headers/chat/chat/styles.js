@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../../../constant';
+import { height, Pixels, width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { fonts } from '../../../../utils/fonts';
 
@@ -18,12 +18,14 @@ export const styles = StyleSheet.create({
     // backgroundColor : 'red',
     paddingVertical: width * 0.01,
     paddingHorizontal: width * 0.03,
+    flex:0.2
   },
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft : width * 0.1,
+    flex:0.2
   },
   button: {
     borderWidth: width * 0.003,
@@ -37,6 +39,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    flex:0.6
   },
   image: {
     width: width * 0.1,
@@ -47,11 +50,12 @@ export const styles = StyleSheet.create({
     marginLeft: width * 0.02,
   },
   title: {
-    fontFamily : fonts?.montserratBold
+    fontFamily : fonts?.montserratSemiBold,
+    fontSize : Pixels(14)
   },
   lastOnline: {
     fontFamily : fonts?.montserratRegular,
-    fontSize : width * 0.025,
+    fontSize : Pixels(8),
     color : colors?.textGray
   },
 });

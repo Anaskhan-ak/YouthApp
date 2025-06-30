@@ -144,6 +144,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
               };
           // console.log('body', body);
           const response = await apiCall?.likePost(body);
+          console.error(isLiked?'Successfully uniked post':'Successfully liked post', response);
           setIcons(prev =>
             prev.map(i => {
               if (i.type !== 'like') return i;

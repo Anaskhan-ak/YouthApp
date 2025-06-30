@@ -14,6 +14,7 @@ const AddMembers = ({
   phoneContacts,
   setPhoneContacts,
   setNext,
+  navigation
 }) => {
   const [search, setSearch] = useState('');
 
@@ -149,6 +150,7 @@ const AddMembers = ({
         title="Group Chat"
         onCancelIconPress={() => navigation?.goBack()}
         onGroupIconPress={() => navigation?.goBack()}
+        backPress={() => navigation?.goBack()}
       />
       <View style={styles?.search}>
         <CustomSearchBar search={search} setSearch={setSearch} />
