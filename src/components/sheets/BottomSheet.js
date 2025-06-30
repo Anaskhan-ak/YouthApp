@@ -33,25 +33,24 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
   );
   const navigation = useNavigation();
   const handlePress = () => {
-    console.log("selected?.route", selected?.route)
-      navigation?.navigate(selected?.route);
-      if (selected?.id === 'story') {
-        navigation?.navigate(selected?.route, {isHighlight: false});
-      }
+    console.log('selected?.route', selected?.route);
+    navigation?.navigate(selected?.route);
+    if (selected?.id === 'story') {
+      navigation?.navigate(selected?.route, {isHighlight: false});
+    }
   };
 
-  const handleNavigation = (item) => {
+  const handleNavigation = item => {
     // console.log("item", item)
-    if (item?.id === 'settings' || item?.id === 'activity'){
-      const isSettings = item?.id === 'settings' ? true : false
-      navigation?.navigate(item?.route,{isSettings : isSettings})
+    if (item?.id === 'settings' || item?.id === 'activity') {
+      const isSettings = item?.id === 'settings' ? true : false;
+      navigation?.navigate(item?.route, {isSettings: isSettings});
     }
-    if (item?.id === 'saved' || item?.id === 'archive'){
-      const isSaved = item?.id === 'saved' ? true : false
-      navigation?.navigate(item?.route,{isSaved : isSaved})
+    if (item?.id === 'saved' || item?.id === 'archive') {
+      const isSaved = item?.id === 'saved' ? true : false;
+      navigation?.navigate(item?.route, {isSaved: isSaved});
     }
   };
-
 
   const handleLogout = async () => {
     await AsyncStorage.setItem('token', '');
