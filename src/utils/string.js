@@ -216,46 +216,38 @@ export const profileSettingsOptions = [
   {
     id: 'wallet',
     title: 'My Wallet',
-    route:''
   },
   {
     id: 'rewards',
     title: 'My Rewards',
-    route:''
   },
   {
     id: 'settings',
     title: 'Settings and Privacy',
-    route:''
+    route : 'ProfileSettingsActivity'
   },
   {
     id: 'activity',
     title: 'Your Activity',
-    route:''
   },
   {
     id: 'saved',
     title: 'Saved',
-    route:''
   },
   {
     id: 'archive',
     title: 'Archive',
-    route:''
   },
   {
     id: 'closeFriends',
     title: 'Close Friends',
-    route:''
   },
   {
     id: 'favorites',
     title: 'Favorites',
-    route:''
   },
   {
     id: 'subscriptions',
     title: 'Subscriptions',
-    route:''
   },
 ];

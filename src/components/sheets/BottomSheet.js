@@ -33,16 +33,16 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
   );
   const navigation = useNavigation();
   const handlePress = () => {
-    navigation?.navigate(selected?.route);
-    if (selected?.id === 'story') {
-      navigation?.navigate(selected?.route, {isHighlight: false});
-    }
+      navigation?.navigate(selected?.route);
+      if (selected?.id === 'story') {
+        navigation?.navigate(selected?.route, {isHighlight: false});
+      }
   };
 
   const handleLogout = async () => {
-    await AsyncStorage.setItem('token', "");
-    await AsyncStorage.setItem('UserLocalData', "");
-    navigation?.navigate("Login")
+    await AsyncStorage.setItem('token', '');
+    await AsyncStorage.setItem('UserLocalData', '');
+    navigation?.navigate('Login');
   };
   return (
     <BottomSheet

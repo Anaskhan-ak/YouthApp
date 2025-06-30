@@ -126,8 +126,6 @@ const Profile = () => {
         </TouchableOpacity>
         <View style={styles?.headerIcons}>
           <TouchableOpacity onPress={()=> {
-            // setSettingsSheet(prev => !prev)
-            console.log(":::::::::")
             settingsSheetRef?.current?.snapToIndex(0);
             }} style={styles?.headerIcon}>
             <ProfileSettingsIcon/>
