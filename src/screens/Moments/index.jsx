@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
-  Animated,
+  FlatList,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -28,7 +28,6 @@ const Moments = () => {
   const navigation = useNavigation();
   const user = useUser();
   const {height} = useWindowDimensions();
-  const scrollY = useRef(new Animated.Value(0)).current;
   const [scrollInfo, setScrollInfo] = useState({isViewable: true, index: 0});
   const refFlatList = useRef(null);
 
@@ -53,14 +52,6 @@ const Moments = () => {
   );
 
   const keyExtractor = useCallback(item => `${item.id}`, []);
-
-  const onScroll = useCallback(
-    Animated.event([{nativeEvent: {contentOffset: {y: scrollY}}}], {
-      useNativeDriver: true,
-    }),
-    [],
-  );
-
   const renderItem = useCallback(
     ({item, index}) => {
       const {index: scrollIndex} = scrollInfo;
@@ -125,79 +116,62 @@ const Moments = () => {
   };
   return (
     <SafeAreaView style={styles?.container}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={'black'}
+        // translucent
+      />
       {loading ? (
         <Loader /> // Full-screen loader while fetching
       ) : moments?.length === 0 ? (
         <EmptyComponent text="Failed to load moments" />
       ) : (
-        <>
-          {/* <FlatList
-            data={moments}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => (
-              <RenderMoments moment={item} moments={moments} isVisible={true} />
-            )}
+        <View style={styles.flexContainer}>
+          {/* Header */}
+          <View style={styles?.header}>
+            <TouchableOpacity
+              onPress={() => navigation?.goBack()}
+              style={styles?.headerIcon}>
+              <WhiteBackArrow />
+            </TouchableOpacity>
+            {['For You', 'Following', 'Trending']?.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => navigation?.navigate('Home')}>
+                  <Text style={[styles?.headerText, {color: colors?.gray}]}>
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+            <TouchableOpacity
+              style={styles?.headerIcon}
+              onPress={() => navigation?.navigate('Home')}>
+              <VerticalWhiteDots />
+            </TouchableOpacity>
+          </View>
+          <FlatList
             pagingEnabled
             showsVerticalScrollIndicator={false}
+            ref={refFlatList}
+            automaticallyAdjustContentInsets
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig.current}
             onScroll={handleScroll}
-            scrollEventThrottle={16}
+            data={moments?.slice(0, 1)}
+            renderItem={renderItem}
+            getItemLayout={getItemLayout}
             decelerationRate="fast"
+            keyExtractor={keyExtractor}
+            onEndReachedThreshold={0.2}
+            removeClippedSubviews
+            bounces={false}
+            scrollEventThrottle={16}
             snapToInterval={height}
             snapToAlignment="start"
-          /> */}
-
-          <SafeAreaView style={styles.flexContainer}>
-            <StatusBar
-              barStyle="light-content"
-              backgroundColor={'black'}
-                // translucent
-            />
-            {/* Header */}
-            <View style={styles?.header}>
-              <TouchableOpacity
-                onPress={() => navigation?.goBack()}
-                style={styles?.headerIcon}>
-                <WhiteBackArrow />
-              </TouchableOpacity>
-              {['For You', 'Following', 'Trending']?.map((item, index) => {
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => navigation?.navigate('Home')}>
-                    <Text style={[styles?.headerText, {color: colors?.gray}]}>
-                      {item}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-              <TouchableOpacity
-                style={styles?.headerIcon}
-                onPress={() => navigation?.navigate('Home')}>
-                <VerticalWhiteDots />
-              </TouchableOpacity>
-            </View>
-            <Animated.FlatList
-              pagingEnabled
-              showsVerticalScrollIndicator={false}
-              ref={refFlatList}
-              automaticallyAdjustContentInsets
-              onViewableItemsChanged={onViewableItemsChanged}
-              viewabilityConfig={viewabilityConfig.current}
-              onScroll={onScroll}
-              data={moments?.slice(0,1)}
-              renderItem={renderItem}
-              getItemLayout={getItemLayout}
-              decelerationRate="fast"
-              keyExtractor={keyExtractor}
-              onEndReachedThreshold={0.2}
-              removeClippedSubviews
-              bounces={false}
-              scrollEventThrottle={16}
-              snapToInterval={height}
-              snapToAlignment="start"
-            />
-          </SafeAreaView>
-        </>
+          />
+        </View>
       )}
     </SafeAreaView>
   );

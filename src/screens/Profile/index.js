@@ -1,8 +1,8 @@
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {useEffect, useRef, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useEffect, useRef, useState } from 'react';
+import { Image, TouchableOpacity, View } from 'react-native';
 
-import {images} from '../../assets/images';
+import { images } from '../../assets/images';
 import {
   EventsIcon,
   FileAudio,
@@ -12,11 +12,12 @@ import {
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
-import {pick} from '@react-native-documents/picker';
-import {ActivityIndicator} from 'react-native';
-import {height, width} from '../../constant';
-import {getDataLocally} from '../../helper';
-import {apiCall} from '../../services/apiCall';
+import { pick } from '@react-native-documents/picker';
+import { ActivityIndicator } from 'react-native';
+import Stories from '../../components/stories';
+import { height, width } from '../../constant';
+import { getDataLocally } from '../../helper';
+import { apiCall } from '../../services/apiCall';
 import EditProfile from './compoents/editProfile';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
@@ -24,8 +25,7 @@ import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 import QRSheet from './compoents/qrCode';
-import {styles} from './styles';
-import Stories from '../../components/stories';
+import { styles } from './styles';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -180,7 +180,7 @@ const Profile = () => {
                 setQr={setQr}
               />
             </View>
-            {<Stories avatarSize={width * 0.1} stories={stories} />}
+            {<Stories  stories={stories} />}
             <PostContentModal fixed options={options} setOptions={setOptions} />
             {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
           </>

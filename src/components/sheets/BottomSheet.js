@@ -32,6 +32,7 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen}) {
       }}
       index={-1}
       enablePanDownToClose={true}
+      snapPoints={['25%', '60%', '90%']}
       ref={sheetRef}>
       <BottomSheetView style={styles.contentContainer}>
         <GradientText style={styles.heading}>
