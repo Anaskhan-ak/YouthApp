@@ -13,7 +13,7 @@ import { styles } from './styles';
 const HomeHeader = () => {
   const navigation = useNavigation()
   const user = useUser()
-  console.log("user",user)
+  // console.log("user",user)
   return (
     <LinearGradient
       colors={[colors?.RGB1, colors?.RGB2]}

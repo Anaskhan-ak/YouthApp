@@ -1,7 +1,7 @@
-import {StyleSheet, Platform} from 'react-native';
-import {height, width} from '../../constant';
-import {fonts} from '../../utils/fonts';
-import {colors} from '../../utils/colors';
+import { Platform, StyleSheet } from 'react-native';
+import { height, Pixels, width } from '../../constant';
+import { colors } from '../../utils/colors';
+import { fonts } from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   contentContainer: {
@@ -24,6 +24,24 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     marginVertical: 6,
     padding: 1.5,
+  },
+  optionsButton : {
+    alignItems: 'center',
+    backgroundColor: colors?.white,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.05,
+    shadowRadius: 1,
+    marginVertical : width * 0.02,
+    borderRadius : width * 0.02,
+    paddingVertical : height * 0.013,
+    marginHorizontal : width * 0.11
+  },
+  optionsButtonText:{
+    fontFamily: fonts?.montserratSemiBold,
+    fontSize: Pixels(14),
+    color: colors?.text,
   },
   cardInner: {
     flex: Platform?.OS === 'android' && 1,

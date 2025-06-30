@@ -13,6 +13,7 @@ export default function QRSheet({sheetRef, setVisible}) {
       //   }
       //   index={1}
       enablePanDownToClose={true}
+      snapPoints={['55%']}
       ref={sheetRef}>
       <BottomSheetView style={styles?.contentContainer}>
           <QRcode />

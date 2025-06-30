@@ -8,12 +8,15 @@ import {
   FileAudio,
   FileImport,
   GalleryIcon,
+  Menu,
   MomentsIcon,
+  ProfileSettingsIcon,
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
 import { pick } from '@react-native-documents/picker';
 import { ActivityIndicator } from 'react-native';
+import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
 import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
@@ -42,6 +45,8 @@ const Profile = () => {
   const [qr, setQr] = useState(false);
   const qrRef = useRef(null);
   const focus = useIsFocused();
+  const settingsSheetRef = useRef(null)
+  const [settingsSheet, setSettingsSheet] = useState(false)
   const getStories = async () => {
     try {
       const userData = await getDataLocally();
@@ -119,6 +124,18 @@ const Profile = () => {
           style={styles.backButton}>
           <WhiteLeftArrow />
         </TouchableOpacity>
+        <View style={styles?.headerIcons}>
+          <TouchableOpacity onPress={()=> {
+            // setSettingsSheet(prev => !prev)
+            console.log(":::::::::")
+            settingsSheetRef?.current?.snapToIndex(0);
+            }} style={styles?.headerIcon}>
+            <ProfileSettingsIcon/>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles?.headerIcon}>
+            <Menu width={width * 0.07} height={width * 0.07} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <TouchableOpacity
@@ -183,6 +200,7 @@ const Profile = () => {
             {<Stories  stories={stories} />}
             <PostContentModal fixed options={options} setOptions={setOptions} />
             {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
+            <RNBottomSheet setIsSheetOpen={setSettingsSheet} sheetRef={settingsSheetRef} isProfile={true}/>
           </>
         )}
       </View>
