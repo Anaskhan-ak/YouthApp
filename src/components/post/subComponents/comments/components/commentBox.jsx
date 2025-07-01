@@ -20,6 +20,7 @@ import { styles } from '../styles';
 const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
   const [showAll, setShowAll] = useState(false);
   const user = useUser();
+
   const LikeAComment = async commentId => {
     const userDetails = await getDataLocally();
     const isLiked = actions?.comments?.value
@@ -96,6 +97,9 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
     }
   };
 
+  console.log("current comment", actions?.comments?.value
+              ?.find(comment => comment?.id === item?.id))
+
   return (
     <View key={index} style={styles?.commentBox}>
       <View
@@ -125,7 +129,7 @@ const CommentBox = ({item, index, actions, setActions, reply, setReply}) => {
               styles?.name
             }>{`${item?.user?.firstName} ${item?.user?.lastName}`}</Text>
           <Text style={styles?.time}>
-            {moment(item?.createdAt).startOf('hour').fromNow()}
+            {moment(item?.createdAt).startOf('second').fromNow()}
           </Text>
         </View>
 

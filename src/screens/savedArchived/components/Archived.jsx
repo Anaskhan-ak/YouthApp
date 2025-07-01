@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import InboxHeader from '../../../components/headers/chat/inbox';
 import { toast } from '../../../components/toast';
@@ -17,6 +17,7 @@ import { fonts } from '../../../utils/fonts';
 const Archived = ({navigation}) => {
   const [saved, setSaved] = useState([]);
   const [albums, setAlbums] = useState([]);
+  const [media, setMedia] = useState(null);
   useEffect(() => {
     const fetchSaved = async () => {
       try {
@@ -47,17 +48,19 @@ const Archived = ({navigation}) => {
     fetchAlbums();
   }, []);
 
-  const RenderItem = ({item, index}) => {
+  const RenderAlbums = ({item, index}) => {
     const images = saved
       ?.filter(s => s?.albumID === item?.id)
       ?.slice(0, 4)
       ?.map(s => s?.post?.media?.url[0])
       ?.filter(Boolean); // remove null/undefined
 
-
     return (
       <View style={styles?.gridView}>
-        <TouchableOpacity key={index} style={styles?.grid}>
+        <TouchableOpacity
+          key={index}
+          style={styles?.grid}
+          onPress={() => setMedia(item)}>
           {images.map((img, i) => {
             return img ? (
               <Image
@@ -88,14 +91,42 @@ const Archived = ({navigation}) => {
     );
   };
 
+  const RenderPosts = ({item, index}) => {
+      return (
+        <TouchableOpacity
+          key={index}
+          onPress={() => navigation?.navigate('PostDetails', {post: item?.post})}>
+          <Image source={{uri:item?.post?.media?.url[0]}} style={styles?.postImage} />
+        </TouchableOpacity>
+      );
+    };
+
   return (
     <View style={styles?.container}>
-      <InboxHeader title="Archived" backPress={() => navigation?.goBack()} />
-      <FlatList
-        data={albums}
-        renderItem={({item, index}) => <RenderItem item={item} index={index} />}
-        numColumns={2}
+      <InboxHeader
+        title={media ? `Archived ${media?.name}` : 'Archived'}
+        backPress={() => navigation?.goBack()}
       />
+      {media ? (
+        <FlatList
+          key={'media'}
+          data={media?.SavedPost}
+          renderItem={({item, index}) => (
+            <RenderPosts item={item} index={index} />
+          )}
+          numColumns={3}
+          contentContainerStyle={styles?.list}
+        />
+      ) : (
+        <FlatList
+          key={'albums'}
+          data={albums}
+          renderItem={({item, index}) => (
+            <RenderAlbums item={item} index={index} />
+          )}
+          numColumns={2}
+        />
+      )}
     </View>
   );
 };
@@ -128,5 +159,15 @@ const styles = StyleSheet.create({
     fontFamily: fonts?.montserratBold,
     fontSize: Pixels(18),
     marginVertical: height * 0.01,
+  },
+   list:{
+    padding : width * 0.02,
+    justifyContent : 'center'
+  },
+  postImage: {
+    width: width * 0.3,
+    height: width * 0.3,
+    borderRadius: width * 0.02,
+    margin: width * 0.005,
   },
 });
