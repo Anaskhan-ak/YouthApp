@@ -4,7 +4,13 @@ import SuggestedUsers from '../../../../components/post/subComponents/suggestedU
 import { profileOptions } from '../../../../utils/string';
 import { styles } from './styles';
 
-const ProfileOption = ({setEditProfile, setQr,getUserData, sheetRef}) => {
+const ProfileOption = ({
+  setEditProfile,
+  setQr,
+  getUserData,
+  qrRef,
+  accountsRef,
+}) => {
   const [suggestedUsers, setSuggestedUsers] = useState(false);
   const handlePress = async id => {
     switch (id) {
@@ -13,8 +19,12 @@ const ProfileOption = ({setEditProfile, setQr,getUserData, sheetRef}) => {
         break;
       case 'editProfile':
         setEditProfile(prev => !prev);
+        break;
       case 'qr':
-        sheetRef?.current?.snapToIndex(0)
+        qrRef?.current?.snapToIndex(0);
+        break;
+      case 'changeAcc':
+        accountsRef?.current?.snapToIndex(0);
       default:
         break;
     }
@@ -40,10 +50,10 @@ const ProfileOption = ({setEditProfile, setQr,getUserData, sheetRef}) => {
       </View>
 
       {suggestedUsers && (
-      //  <View style={{width : width * 2}}>
-         <View style={styles?.suggestions}>
-          <SuggestedUsers getUserData={getUserData}/>
-        {/* </View> */}
+        //  <View style={{width : width * 2}}>
+        <View style={styles?.suggestions}>
+          <SuggestedUsers getUserData={getUserData} />
+          {/* </View> */}
         </View>
       )}
     </View>

@@ -412,7 +412,7 @@ const CreateYudio = () => {
           ) : null
         }
         onPress={handleForm}
-        disabled={waveform?.length > 0 && yudio ? true : false}
+        disabled={waveform?.length > 0 && yudio ? false : true}
       />
       {metaData?.audience?.active && (
         <Audience

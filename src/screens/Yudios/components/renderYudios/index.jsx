@@ -24,7 +24,7 @@ const RenderYudios = ({yudios, yudio}) => {
       <YudioCard yudio={yudio?.yudios} />
       {/* Reactions */}
       <View style={styles?.reactions}>
-        <FeedReactions post={post} />
+        <FeedReactions post={yudio} />
       </View>
       {/* Suggested Yudios */}
       <View style={styles?.suggestedView}>
