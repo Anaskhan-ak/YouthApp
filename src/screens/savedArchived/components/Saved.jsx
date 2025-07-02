@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import PrimaryButton from '../../../components/buttons/PrimaryButton';
 import InboxHeader from '../../../components/headers/chat/inbox';
+import AuthInput from '../../../components/inputs/authInput';
 import { toast } from '../../../components/toast';
 import { height, Pixels, width } from '../../../constant';
 import { apiCall } from '../../../services/apiCall';
@@ -18,6 +20,10 @@ const Saved = ({navigation}) => {
   const [saved, setSaved] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [media, setMedia] = useState(null);
+  const [newAlbum, setNewAlbum] = useState({
+    active: false,
+    name: '',
+  });
   useEffect(() => {
     const fetchSaved = async () => {
       try {
@@ -62,7 +68,7 @@ const Saved = ({navigation}) => {
           key={index}
           style={styles?.grid}
           onPress={() => {
-            setMedia(item)
+            setMedia(item);
           }}>
           {images.map((img, i) => {
             return img ? (
@@ -99,9 +105,27 @@ const Saved = ({navigation}) => {
       <TouchableOpacity
         key={index}
         onPress={() => navigation?.navigate('PostDetails', {post: item?.post})}>
-        <Image source={{uri:item?.post?.media?.url[0]}} style={styles?.postImage} />
+        <Image
+          source={{uri: item?.post?.media?.url[0]}}
+          style={styles?.postImage}
+        />
       </TouchableOpacity>
     );
+  };
+
+  const createNewAlbum = async () => {
+    try {
+      const body = {
+        name: newAlbum?.name,
+      };
+      const response = await apiCall?.createNewAlbum(body);
+      if (response) {
+        console.log('New album created', response);
+        setNewAlbum(prev => ({...prev, active : false}))
+      }
+    } catch (error) {
+      console.log('Error creating new album', error);
+    }
   };
 
   return (
@@ -110,15 +134,22 @@ const Saved = ({navigation}) => {
         title={media ? `Saved ${media?.name}` : 'Saved'}
         backPress={() => {
           if (media) {
-            setMedia(null)
+            setMedia(null);
           } else {
-            navigation?.goBack()
+            if (newAlbum?.active) {
+              setNewAlbum({name : '', active: false});
+            } else {
+              navigation?.goBack();
+            }
           }
         }}
+        onNewChatIconPress={() =>
+          setNewAlbum(prev => ({...prev, active: true}))
+        }
       />
       {media ? (
         <FlatList
-        key={'media'}
+          key={'media'}
           data={media?.SavedPost}
           renderItem={({item, index}) => (
             <RenderPosts item={item} index={index} />
@@ -127,14 +158,31 @@ const Saved = ({navigation}) => {
           contentContainerStyle={styles?.list}
         />
       ) : (
-        <FlatList
-        key={'albums'}
-          data={albums}
-          renderItem={({item, index}) => (
-            <RenderAlbums item={item} index={index} />
+        <>
+          {newAlbum?.active ? (
+            <View style={styles?.category}>
+              <View style={styles?.categoryInput}>
+                <AuthInput
+                  placeholder={'New category name'}
+                  value={newAlbum?.name}
+                  onChangeText={text =>
+                    setNewAlbum(prev => ({...prev, name: text}))
+                  }
+                />
+              </View>
+              <PrimaryButton title="Add Category" onPress={createNewAlbum} />
+            </View>
+          ) : (
+            <FlatList
+              key={'albums'}
+              data={albums}
+              renderItem={({item, index}) => (
+                <RenderAlbums item={item} index={index} />
+              )}
+              numColumns={2}
+            />
           )}
-          numColumns={2}
-        />
+        </>
       )}
     </View>
   );
@@ -169,14 +217,22 @@ const styles = StyleSheet.create({
     fontSize: Pixels(18),
     marginVertical: height * 0.01,
   },
-  list:{
-    padding : width * 0.02,
-    justifyContent : 'center'
+  list: {
+    padding: width * 0.02,
+    justifyContent: 'center',
   },
   postImage: {
     width: width * 0.3,
     height: width * 0.3,
     borderRadius: width * 0.02,
     margin: width * 0.005,
+  },
+  category: {
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: height * 0.05,
+  },
+  categoryInput: {
+    // margin : width * 0.1
   },
 });
