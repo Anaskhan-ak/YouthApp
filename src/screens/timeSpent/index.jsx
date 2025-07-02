@@ -16,42 +16,9 @@ import {
 import InboxHeader from '../../components/headers/chat/inbox';
 import { width } from '../../constant';
 import { colors } from '../../utils/colors';
+import DropdownTabs from './components/DropdownTabs';
 import { styles } from './styles';
 
-const DropdownTabs = () => {
-  return (
-    <View style={{marginBottom: 10}}>
-      <TouchableOpacity style={styles.tab}>
-        <Text style={styles.tabText}>PHILSocial</Text>
-        <View style={styles.buttonDropdown}>
-          <Text style={styles.gradientText}>8 hr 8 min</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.tab}>
-        <Text style={styles.tabText}>PHILStream</Text>
-        <View style={styles.buttonDropdown}>
-          <Text style={styles.gradientText}>8 hr 8 min</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.tab}>
-        <Text style={styles.tabText}>PHILGaming</Text>
-        <View style={styles.buttonDropdown}>
-          <Text style={styles.gradientText}>8 hr 8 min</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[
-          styles.tab,
-          {borderBottomLeftRadius: 8, borderBottomRightRadius: 8},
-        ]}>
-        <Text style={styles.tabText}>PHILEducation</Text>
-        <View style={styles.buttonDropdown}>
-          <Text style={styles.gradientText}>8 hr 8 min</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 const TimeSpent = () => {
   const [graph, setGraph] = useState(false);
@@ -69,10 +36,10 @@ const TimeSpent = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <InboxHeader title="Time Spent" backPress={() => navigation.goBack()} />
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <Text style={styles.heading}>2 hr 15 min is your daily average</Text>
         <View
           style={{flexDirection: 'row', marginTop: 5, alignItems: 'center'}}>
@@ -135,8 +102,8 @@ const TimeSpent = () => {
           The more you spend time within our Eco-system, the more rewards you
           get. <Text style={styles.gradientText}>Learn more!</Text>
         </Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
