@@ -1,0 +1,238 @@
+import { useEffect, useState } from 'react';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import PrimaryButton from '../../../components/buttons/PrimaryButton';
+import InboxHeader from '../../../components/headers/chat/inbox';
+import AuthInput from '../../../components/inputs/authInput';
+import { toast } from '../../../components/toast';
+import { height, Pixels, width } from '../../../constant';
+import { apiCall } from '../../../services/apiCall';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
+
+const Saved = ({navigation}) => {
+  const [saved, setSaved] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const [media, setMedia] = useState(null);
+  const [newAlbum, setNewAlbum] = useState({
+    active: false,
+    name: '',
+  });
+  useEffect(() => {
+    const fetchSaved = async () => {
+      try {
+        const response = await apiCall?.getSaved();
+        if (response) {
+          //   console.log('Successfully fetched saved posts', response);
+          setSaved(response);
+        }
+      } catch (error) {
+        console.log('Error fetching saved', error);
+        toast('error', 'Error fetching saved posts');
+      }
+    };
+
+    const fetchAlbums = async () => {
+      try {
+        const response = await apiCall?.getAlbums();
+        if (response) {
+          // console.log("Successfully fetched albums", response)
+          setAlbums(response);
+        }
+      } catch (error) {
+        console.log('Error fetching albums', response);
+        toast('error', 'Error fetching albums');
+      }
+    };
+    fetchSaved();
+    fetchAlbums();
+  }, []);
+
+  const RenderAlbums = ({item, index}) => {
+    const images = saved
+      ?.filter(s => s?.albumID === item?.id)
+      ?.slice(0, 4)
+      ?.map(s => s?.post?.media?.url[0])
+      ?.filter(Boolean); // remove null/undefined
+
+    // console.log('Images', images);
+    return (
+      <View style={styles?.gridView}>
+        <TouchableOpacity
+          key={index}
+          style={styles?.grid}
+          onPress={() => {
+            setMedia(item);
+          }}>
+          {images.map((img, i) => {
+            return img ? (
+              <Image
+                key={i}
+                source={{uri: img}}
+                style={styles?.image}
+                resizeMode="cover"
+              />
+            ) : (
+              <View
+                key={i}
+                style={[styles?.image, {backgroundColor: colors?.gray}]}
+              />
+            );
+          })}
+          {images?.length === 0 &&
+            [1, 2, 3, 4]?.map((obj, index) => {
+              return (
+                <View
+                  key={index}
+                  style={[styles?.image, {backgroundColor: colors?.gray}]}
+                />
+              );
+            })}
+        </TouchableOpacity>
+        <Text style={styles?.title}>{item?.name}</Text>
+      </View>
+    );
+  };
+
+  const RenderPosts = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        key={index}
+        onPress={() => navigation?.navigate('PostDetails', {post: item?.post})}>
+        <Image
+          source={{uri: item?.post?.media?.url[0]}}
+          style={styles?.postImage}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const createNewAlbum = async () => {
+    try {
+      const body = {
+        name: newAlbum?.name,
+      };
+      const response = await apiCall?.createNewAlbum(body);
+      if (response) {
+        console.log('New album created', response);
+        setNewAlbum(prev => ({...prev, active : false}))
+      }
+    } catch (error) {
+      console.log('Error creating new album', error);
+    }
+  };
+
+  return (
+    <View style={styles?.container}>
+      <InboxHeader
+        title={media ? `Saved ${media?.name}` : 'Saved'}
+        backPress={() => {
+          if (media) {
+            setMedia(null);
+          } else {
+            if (newAlbum?.active) {
+              setNewAlbum({name : '', active: false});
+            } else {
+              navigation?.goBack();
+            }
+          }
+        }}
+        onNewChatIconPress={() =>
+          setNewAlbum(prev => ({...prev, active: true}))
+        }
+      />
+      {media ? (
+        <FlatList
+          key={'media'}
+          data={media?.SavedPost}
+          renderItem={({item, index}) => (
+            <RenderPosts item={item} index={index} />
+          )}
+          numColumns={3}
+          contentContainerStyle={styles?.list}
+        />
+      ) : (
+        <>
+          {newAlbum?.active ? (
+            <View style={styles?.category}>
+              <View style={styles?.categoryInput}>
+                <AuthInput
+                  placeholder={'New category name'}
+                  value={newAlbum?.name}
+                  onChangeText={text =>
+                    setNewAlbum(prev => ({...prev, name: text}))
+                  }
+                />
+              </View>
+              <PrimaryButton title="Add Category" onPress={createNewAlbum} />
+            </View>
+          ) : (
+            <FlatList
+              key={'albums'}
+              data={albums}
+              renderItem={({item, index}) => (
+                <RenderAlbums item={item} index={index} />
+              )}
+              numColumns={2}
+            />
+          )}
+        </>
+      )}
+    </View>
+  );
+};
+
+export default Saved;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors?.white,
+  },
+  gridView: {
+    margin: width * 0.02,
+    alignItems: 'flex-start',
+    padding: width * 0.02,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: width * 0.4,
+  },
+  image: {
+    width: (width * 0.4 - 6) / 2, // 2 images per row with spacing
+    height: height * 0.1,
+    borderRadius: width * 0.02,
+    margin: width * 0.003,
+  },
+  title: {
+    fontFamily: fonts?.montserratBold,
+    fontSize: Pixels(18),
+    marginVertical: height * 0.01,
+  },
+  list: {
+    padding: width * 0.02,
+    justifyContent: 'center',
+  },
+  postImage: {
+    width: width * 0.3,
+    height: width * 0.3,
+    borderRadius: width * 0.02,
+    margin: width * 0.005,
+  },
+  category: {
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: height * 0.05,
+  },
+  categoryInput: {
+    // margin : width * 0.1
+  },
+});

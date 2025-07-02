@@ -229,14 +229,17 @@ export const profileSettingsOptions = [
   {
     id: 'activity',
     title: 'Your Activity',
+    route : 'ProfileSettingsActivity'
   },
   {
     id: 'saved',
     title: 'Saved',
+    route : 'SavedArchived'
   },
   {
     id: 'archive',
     title: 'Archive',
+    route : 'SavedArchived'
   },
   {
     id: 'closeFriends',

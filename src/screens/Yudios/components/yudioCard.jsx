@@ -1,11 +1,11 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {height, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { height, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 import YudioPlayer from './yudioPlayer';
 
-const YudioCard = ({yudio}) => {
+const YudioCard = ({yudio, currentAudioId, setCurrentAudioId, index}) => {
   return (
     <LinearGradient
       colors={['#A9F5FF', colors?.white]}
@@ -21,13 +21,12 @@ const YudioCard = ({yudio}) => {
       />
       <View style={styles?.player}>
         <YudioPlayer
-          audioUrl={
-            yudio?.url
-              ? yudio?.url
-              : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-          }
+          audioUrl={yudio?.url}
           waveform={yudio?.waveform}
+          id={index}
           showBackground={false}
+          currentAudioId={currentAudioId}
+          setCurrentAudioId={setCurrentAudioId}
         />
       </View>
     </LinearGradient>

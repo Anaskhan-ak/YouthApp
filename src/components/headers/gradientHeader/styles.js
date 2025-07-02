@@ -5,38 +5,47 @@ import {fonts} from '../../../utils/fonts';
 
 export const styles = StyleSheet.create({
   container: {
-    height: Platform?.OS === 'android' ? height * 0.12 : height * 0.1,
+    height: Platform.OS === 'android' ? height * 0.12 : height * 0.1,
     flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    paddingHorizontal: Platform?.OS === 'android' && width * 0.05,
-    paddingVertical: Platform?.OS === 'android' && height * 0.02,
-  },
-  title: {
-    fontFamily: fonts?.montserratExtraBold,
-    color: colors?.white,
-    fontSize: Pixels(20),
-    flex: 0.7,
-    textAlign: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: Platform.OS === 'android' ? width * 0.05 : 0,
+    paddingVertical: Platform.OS === 'android' ? height * 0.02 : 0,
   },
   backButton: {
+    flex: 1,
+    paddingLeft: 20,
+    paddingBottom: 10,
+    zIndex:999
+  },
+  titleContainer: {
+    flex: 1,
     alignItems: 'center',
-    paddingVertical: width * 0.01,
-    paddingHorizontal: width * 0.03,
-    flex: 0,
+    paddingBottom: 10,
+  },
+  title: {
+    fontFamily: fonts.montserratExtraBold,
+    color: colors.white,
+    fontSize: Pixels(20),
+  },
+  rightContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    paddingRight: 10,
+    paddingBottom: 10,
   },
   advancedButton: {
     borderWidth: width * 0.003,
-    borderColor: colors?.white,
+    borderColor: colors.white,
     borderRadius: width * 0.01,
-    padding: width * 0.01,
+    padding: width * 0.008,
     alignItems: 'center',
-    right: Platform?.OS === 'ios' && 8,
-    flex: 0.25,
+    justifyContent: 'center',
+    width: width * 0.2,
   },
   advancedButtonText: {
-    color: colors?.white,
-    fontFamily: fonts?.montserratBold,
+    color: colors.white,
+    fontFamily: fonts.montserratBold,
     fontSize: Pixels(10),
   },
 });

@@ -1,6 +1,6 @@
-import { pick } from '@react-native-documents/picker';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
+import {pick} from '@react-native-documents/picker';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -15,8 +15,8 @@ import {
 import AudioRecord from 'react-native-audio-record';
 import RNFS from 'react-native-fs';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {images} from '../../assets/images';
 import {
   Cross,
   GradientBlueMic,
@@ -33,13 +33,13 @@ import UserInfoHeader from '../../components/headers/userInfoHeader';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
-import { toast } from '../../components/toast';
+import {toast} from '../../components/toast';
 import useUser from '../../hooks/user';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import AudioBars from './components/audioBars';
 import RecordedAudioPlayer from './components/recordedAudioPlayer';
-import { styles } from './styles';
+import {styles} from './styles';
 
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -76,7 +76,7 @@ const CreateYudio = () => {
       toast('error', 'User not found. Please log in again.');
       return;
     }
- 
+
     const formData = new FormData();
     formData.append('type', 'YUDIO');
     formData.append('caption', description);
@@ -119,7 +119,7 @@ const CreateYudio = () => {
     try {
       setLoading(true);
       const result = await apiCall?.createNewPost(formData);
-        navigation.navigate('Yudios', {yudio: result?.yudios});
+      navigation.navigate('Yudios', {yudio: result?.yudios});
     } catch (error) {
       console.log('Error creating yudio', error);
       toast('error', 'Error creating yudio');
@@ -274,7 +274,7 @@ const CreateYudio = () => {
   };
 
   return (
-    <SafeAreaView style={styles?.container}>
+    <View style={styles?.container}>
       <GradientHeader
         title="New Yudio"
         backPress={() => navigation?.goBack()}
@@ -360,7 +360,10 @@ const CreateYudio = () => {
               }
             />
             <Text style={styles?.recordedPlayerHeading}>{title}</Text>
-            <Text style={styles?.recordedPlayerName}>Sannya Wasim</Text>
+            <Text
+              style={
+                styles?.recordedPlayerName
+              }>{`${user?.firstName} ${user?.lastName}`}</Text>
             <View style={styles?.recordedPlayer}>
               <RecordedAudioPlayer audioURL={yudio} />
               <TouchableOpacity
@@ -429,7 +432,7 @@ const CreateYudio = () => {
           setTagFriends={setMetaData}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

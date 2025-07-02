@@ -39,6 +39,18 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
     }
   };
 
+  const handleNavigation = item => {
+    // console.log("item", item)
+    if (item?.id === 'settings' || item?.id === 'activity') {
+      const isSettings = item?.id === 'settings' ? true : false;
+      navigation?.navigate(item?.route, {isSettings: isSettings});
+    }
+    if (item?.id === 'saved' || item?.id === 'archive') {
+      const isSaved = item?.id === 'saved' ? true : false;
+      navigation?.navigate(item?.route, {isSaved: isSaved});
+    }
+  };
+
   const handleLogout = async () => {
     await AsyncStorage.setItem('token', '');
     await AsyncStorage.setItem('UserLocalData', '');
@@ -66,11 +78,8 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
-                    key={item.id}
-                    onPress={() => {
-                      // console.log('Item', item?.route);
-                      setSelected(item);
-                    }}>
+                    key={index}
+                    onPress={() => handleNavigation(item)}>
                     <View style={styles.optionsButton}>
                       <Text style={styles.optionsButtonText}>
                         {item?.title}

@@ -93,7 +93,7 @@ const CreateStory = ({route}) => {
       if (response) {
         console.log('Successfully created highlight', response);
         setLoading(false);
-        navigation?.navigate("Home")
+        navigation?.navigate('Home');
       }
     } catch (error) {
       console.log('Error creating highlight', error);
@@ -169,7 +169,7 @@ const CreateStory = ({route}) => {
       )}
       {preview ? (
         <CreateButton
-          title={isHighlight?"Add to Highlights":"Add to Story"}
+          title={isHighlight ? 'Add to Highlights' : 'Add to Story'}
           onPress={isHighlight ? createNewHighlight : createStory}
           loader={loader}
           // secondButton={{
@@ -203,12 +203,13 @@ const styles = StyleSheet.create({
   },
   icon: {
     backgroundColor: colors?.white,
-    width: width * 0.09,
-    height: width * 0.09,
-    borderRadius: width * 0.09,
+    width: width * 0.08,
+    height: width * 0.08,
+    borderRadius: width * 0.08,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: width * 0.01,
+    marginBottom: 5,
   },
   iconList: {
     // flex : 1,

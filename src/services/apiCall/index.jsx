@@ -169,6 +169,12 @@ export const apiCall = {
     else throw result
   },
 
+  createNewAlbum : async (params) => {
+    let result = await post(apis?.createCategory, params)
+    if (result?.status) return result?.data?.data
+    else throw result
+  },
+
   //GET API CALL
   getAllDocuments: async params => {
     let result = await post(apis?.getDocuments, params);
@@ -212,6 +218,18 @@ export const apiCall = {
 
   getSaved: async () => {
     let result = await get(apis?.getSavedPosts);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
+    else throw result;
+  },
+
+  getSaved: async () => {
+    let result = await get(apis?.getSavedPosts);
+    if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
+    else throw result;
+  },
+
+  getAlbums: async () => {
+    let result = await get(apis?.getAlbums);
     if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },

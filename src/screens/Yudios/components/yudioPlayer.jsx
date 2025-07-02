@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import {
-  DeviceEventEmitter,
   Dimensions,
   Text,
   TouchableOpacity,
@@ -15,17 +14,54 @@ import {
   PauseIcon,
   PlayIcon,
 } from '../../../assets/images/svgs';
+import { width } from '../../../constant';
 import { styles } from './yudioPlayerStyles';
 
-const YudioPlayer = ({ audioUrl, waveform }) => {
+const YudioPlayer = ({
+  audioUrl,
+  waveform,
+  id,
+  currentAudioId,
+  setCurrentAudioId,
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
+  const isCurrentAudio = currentAudioId === id;
+  const [play, setPlay] = useState(false);
+  const [pause, setPause] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   SoundPlayer.loadUrl(audioUrl);
+
+  //   const interval = setInterval(() => {
+  //     SoundPlayer.getInfo()
+  //       .then(info => {
+  //         setCurrentTime(info.currentTime);
+  //         setDuration(info.duration);
+  //       })
+  //       .catch(() => {});
+  //   }, 500);
+
+  //   const onFinished = () => {
+  //     setIsPlaying(false);
+  //     setCurrentTime(0);
+  //   };
+
+  //   const subscription = DeviceEventEmitter.addListener(
+  //     'FinishedPlaying',
+  //     onFinished,
+  //   );
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     subscription.remove();
+  //   };
+  // }, [audioUrl]);
+
+  const loadUrl = () => {
     SoundPlayer.loadUrl(audioUrl);
-
     const interval = setInterval(() => {
       SoundPlayer.getInfo()
         .then(info => {
@@ -35,30 +71,62 @@ const YudioPlayer = ({ audioUrl, waveform }) => {
         .catch(() => {});
     }, 500);
 
-    const onFinished = () => {
-      setIsPlaying(false);
-      setCurrentTime(0);
-    };
+    return () => clearInterval(interval);
+  };
 
-    const subscription = DeviceEventEmitter.addListener(
+  const Play = () => {
+    setCurrentAudioId(id);
+    loadUrl();
+    SoundPlayer?.play();
+    setPlay(true);
+  };
+  const Pause = () => {
+    if (pause) {
+      //already paused
+      SoundPlayer?.resume();
+      setPause(false);
+    } else {
+      SoundPlayer?.pause();
+      setPause(true);
+    }
+  };
+
+  // stop playing when audio reaches end
+  useEffect(() => {
+    // console.log(`currentTime ${currentTime}        duration ${duration} `);
+    if (
+      currentTime > 0 &&
+      duration > 0 &&
+      duration - currentTime <= 0.02 // allows 200ms slack
+    ) {
+      SoundPlayer?.stop();
+      setPlay(false);
+    }
+
+    const finishedSubscription = SoundPlayer.addEventListener(
       'FinishedPlaying',
-      onFinished
+      () => {
+        setPlay(false);
+        setCurrentTime(0);
+        setDuration(0);
+        setCurrentAudioId('');
+      },
     );
 
     return () => {
-      clearInterval(interval);
-      subscription.remove();
+      finishedSubscription.remove();
     };
-  }, [audioUrl]);
+  }, [currentTime, duration]);
 
-  const playPause = () => {
-    if (isPlaying) {
-      SoundPlayer.pause();
-    } else {
-      SoundPlayer.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
+  // const playPause = () => {
+  //   console.log('audio url', audioUrl);
+  //   if (isPlaying) {
+  //     SoundPlayer.pause();
+  //   } else {
+  //     SoundPlayer.play();
+  //   }
+  //   setIsPlaying(!isPlaying);
+  // };
 
   const forwardHandler = async () => {
     try {
@@ -88,7 +156,7 @@ const YudioPlayer = ({ audioUrl, waveform }) => {
 
   const mappedWaveform =
     waveform && waveform.length > 0
-      ? Array.from({ length: fixedBarsCount }, (_, i) => {
+      ? Array.from({length: fixedBarsCount}, (_, i) => {
           const start = Math.floor((i / fixedBarsCount) * waveform.length);
           const end = Math.floor(((i + 1) / fixedBarsCount) * waveform.length);
           const segment = waveform.slice(start, end);
@@ -101,7 +169,18 @@ const YudioPlayer = ({ audioUrl, waveform }) => {
   const waveformWidth = Dimensions.get('window').width - 20;
   const barWidth = waveformWidth / fixedBarsCount - 2;
   const barHeightScale = 100;
-  const progress = currentTime / duration;
+  const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
+
+  const RenderIcon = () => {
+    if (!play || pause) {
+      //not playing
+      return <PlayIcon height={width * 0.03} />;
+    }
+    if (play || !pause) {
+      //resume
+      return <PauseIcon height={width * 0.03} />;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -139,16 +218,23 @@ const YudioPlayer = ({ audioUrl, waveform }) => {
         <TouchableOpacity onPress={backwardHandler}>
           <BlackRewindAUdioButton />
         </TouchableOpacity>
-        <TouchableOpacity onPress={playPause}>
+        <TouchableOpacity
+          onPress={() => {
+            if (!play) {
+              Play();
+            } else {
+              Pause();
+            }
+          }}>
           <LinearGradient
             colors={['#478FE4', '#5CD3C6']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
             style={[
               styles.playPauseButton,
-              isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
+              play ? styles.noPaddingLeft : styles.paddingLeft,
             ]}>
-            {isPlaying ? <PauseIcon height={20} /> : <PlayIcon height={20} />}
+            <RenderIcon/>
           </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity onPress={forwardHandler}>

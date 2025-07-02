@@ -22,6 +22,7 @@ import { height, width } from '../../constant';
 import { getDataLocally } from '../../helper';
 import { apiCall } from '../../services/apiCall';
 import EditProfile from './compoents/editProfile';
+import MultipleAccountsModal from './compoents/multipleAccountModal';
 import PostContentModal from './compoents/postContentModal';
 import ProfileDetailCard from './compoents/profileDetailCard';
 import ProfileOption from './compoents/profileOption';
@@ -44,6 +45,7 @@ const Profile = () => {
   const [editProfile, setEditProfile] = useState(false);
   const [qr, setQr] = useState(false);
   const qrRef = useRef(null);
+  const multipleAccountsRef = useRef(null)
   const focus = useIsFocused();
   const settingsSheetRef = useRef(null)
   const [settingsSheet, setSettingsSheet] = useState(false)
@@ -193,11 +195,14 @@ const Profile = () => {
                 getUserData={getUserData}
                 setEditProfile={setEditProfile}
                 setQr={setQr}
+                qrRef={qrRef}
+                accountsRef={multipleAccountsRef}
               />
             </View>
-            {<Stories isHighlight stories={stories} />}
+            {<Stories stories={stories} />}
             <PostContentModal fixed options={options} setOptions={setOptions} />
-            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
+            <QRSheet setVisible={setQr} sheetRef={qrRef} />
+            <MultipleAccountsModal ref={multipleAccountsRef}/>
             <RNBottomSheet setIsSheetOpen={setSettingsSheet} sheetRef={settingsSheetRef} isProfile={true}/>
           </>
         )}

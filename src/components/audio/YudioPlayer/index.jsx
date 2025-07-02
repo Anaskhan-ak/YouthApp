@@ -11,90 +11,76 @@ import LinearGradient from 'react-native-linear-gradient';
 import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
 import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
-import { width } from '../../../constant';
+import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
-const YudioPlayer = ({audio, bg}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+
+const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const fixedBarsCount = 35;
+  const isCurrentAudio = currentAudioId === audio?.id;
+  const [play, setPlay] = useState(false);
+  const [pause, setPause] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('Audio', audio);
-  //   const loadWaveform = async () => {
-  //     if (!audio || !audio.uri) return;
-
-  //     try {
-  //       // Optional: add small delay to let state fully update
-  //       await new Promise(resolve => setTimeout(resolve, 50));
-
-  //       const result = await generateAudioWaveforms(audio);
-  //       setWaveform(result);
-  //     } catch (err) {
-  //       console.error('Waveform generation error:', err);
-  //     }
-  //   };
-
-  //   loadWaveform();
-  // }, [audio]);
-
-  useEffect(() => {
-    let interval;
-
-    if (audio?.uri) {
-      SoundPlayer.loadUrl(audio.uri);
-
-      interval = setInterval(() => {
-        SoundPlayer.getInfo()
-          .then(info => {
-            setCurrentTime(info.currentTime);
-            setDuration(info.duration);
-
-            // When audio ends
-            if (info.currentTime >= info.duration && info.duration !== 0) {
-              setIsPlaying(false);
-              setCurrentTime(0); // reset time
-              SoundPlayer.seek(0); // reset player to beginning
-              clearInterval(interval);
-            }
-          })
-          .catch(e => {
-            console.log('getInfo error:', e);
-          });
-      }, 500);
-    }
+  const loadUrl = () => {
+    console.log("audio url", audio?.uri)
+    SoundPlayer.loadUrl(audio?.uri);
+    const interval = setInterval(() => {
+      SoundPlayer.getInfo()
+        .then(info => {
+          setCurrentTime(info.currentTime);
+          setDuration(info.duration);
+        })
+        .catch(() => {});
+    }, 500);
 
     return () => clearInterval(interval);
-  }, [audio?.uri]);
+  };
 
-  const playPause = () => {
-    if (isPlaying) {
-      SoundPlayer.pause();
+  const Play = () => {
+    setCurrentAudioId(audio?.id);
+    loadUrl();
+    SoundPlayer?.play();
+    setPlay(true);
+  };
+  const Pause = () => {
+    if (pause) {
+      //already paused
+      SoundPlayer?.resume();
+      setPause(false);
     } else {
-      SoundPlayer.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const forwardHandler = async () => {
-    try {
-      const info = await SoundPlayer.getInfo();
-      let newTime = Math.min(info.currentTime + 5, info.duration);
-      SoundPlayer.seek(newTime);
-    } catch (e) {
-      console.log('Error in forwardHandler:', e);
+      SoundPlayer?.pause();
+      setPause(true);
     }
   };
 
-  const backwardHandler = async () => {
-    try {
-      const info = await SoundPlayer.getInfo();
-      let newTime = Math.max(info.currentTime - 5, 0);
-      SoundPlayer.seek(newTime);
-    } catch (e) {
-      console.log('Error in backwardHandler:', e);
+  // stop playing when audio reaches end
+  useEffect(() => {
+    // console.log(`currentTime ${currentTime}        duration ${duration} `);
+    if (
+      currentTime > 0 &&
+      duration > 0 &&
+      duration - currentTime <= 0.02 // allows 200ms slack
+    ) {
+      SoundPlayer?.stop();
+      setPlay(false);
     }
-  };
+
+    const finishedSubscription = SoundPlayer.addEventListener(
+      'FinishedPlaying',
+      () => {
+        setPlay(false);
+        setCurrentTime(0);
+        setDuration(0);
+        setCurrentAudioId('');
+      },
+    );
+
+    return () => {
+      finishedSubscription.remove();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTime, duration]);
 
   const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
@@ -117,7 +103,18 @@ const YudioPlayer = ({audio, bg}) => {
   const waveformWidth = Dimensions.get('window').width - 20;
   const barWidth = waveformWidth / fixedBarsCount - 2;
   const barHeightScale = 100;
-  const progress = currentTime / duration;
+  const progress = isCurrentAudio && duration > 0 ? currentTime / duration : 0;
+
+  const RenderIcon = () => {
+    if (!play || pause) {
+      //not playing
+      return <PlayIcon height={width * 0.03} />;
+    }
+    if (play || !pause) {
+      //resume
+      return <PauseIcon height={width * 0.03} />;
+    }
+  };
 
   return (
     <View
@@ -125,16 +122,22 @@ const YudioPlayer = ({audio, bg}) => {
         styles.container,
         bg && {backgroundColor: colors?.extraLightGrey},
       ]}>
-      <TouchableOpacity onPress={playPause}>
+      <TouchableOpacity
+        onPress={() => {
+          if (!play) {
+            Play();
+          } else {
+            Pause();
+          }
+        }}>
         <LinearGradient
           colors={['#478FE4', '#5CD3C6']}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           style={[
             styles.playPauseButton,
-            isPlaying ? styles.noPaddingLeft : styles.paddingLeft,
           ]}>
-          {isPlaying ? <PauseIcon height={20} /> : <PlayIcon height={20} />}
+          <RenderIcon/>
         </LinearGradient>
       </TouchableOpacity>
       <View style={styles.flex1}>
@@ -150,7 +153,8 @@ const YudioPlayer = ({audio, bg}) => {
               viewBox={`0 0 ${waveformWidth} ${barHeightScale}`}>
               {mappedWaveform.map((value, index) => {
                 const barHeight = Math.max(value * barHeightScale, 3);
-                const isFilled = index / fixedBarsCount <= progress;
+                const isFilled =
+                      isCurrentAudio && index / fixedBarsCount <= progress;
                 return (
                   <Rect
                     key={index}
@@ -183,23 +187,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: width * 0.04,
     borderRadius: width * 0.02,
+    
   },
   playPauseButton: {
-    marginTop: 12,
-    width: 36,
-    height: 36,
-    borderRadius: 36,
+    marginTop: height * 0.012,
+    width: width * 0.08,
+    height: width * 0.08,
+    borderRadius: width * 0.08,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  paddingLeft: {
-    paddingLeft: 4,
-  },
-  noPaddingLeft: {
-    paddingLeft: 0,
-  },
   flex1: {
     flex: 1,
+    // alignItems : 'center',
+    justifyContent : 'center',
   },
   timeRow: {
     flexDirection: 'row',
@@ -212,6 +213,7 @@ const styles = StyleSheet.create({
   },
   waveformContainer: {
     width: '100%',
+    
   },
 });
 

@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -8,17 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {BlackBackArrow, BlackYouthLogo} from '../../assets/images/svgs';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BlackBackArrow, BlackYouthLogo } from '../../assets/images/svgs';
 import EmptyComponent from '../../components/empty';
-import {toast} from '../../components/toast';
-import {height} from '../../constant';
-import {getDataLocally} from '../../helper';
+import { toast } from '../../components/toast';
+import { height } from '../../constant';
+import { getDataLocally } from '../../helper';
 import useUser from '../../hooks/user';
-import {apiCall} from '../../services/apiCall';
-import {colors} from '../../utils/colors';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
 import RenderYudios from './components/renderYudios';
-import {styles} from './styles';
+import { styles } from './styles';
 
 const Yudios = () => {
   const [yudios, setYudios] = useState([]);
@@ -27,6 +27,7 @@ const Yudios = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const user = useUser();
+  const [currentAudioId, setCurrentAudioId] = useState('');
   useEffect(() => {
     const fetchYudios = async () => {
       setLoading(true);
@@ -110,7 +111,15 @@ const Yudios = () => {
         <FlatList
           data={yudios}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => <RenderYudios yudio={item} yudios={yudios} />}
+          renderItem={({item, index}) => (
+            <RenderYudios
+              yudio={item}
+              yudios={yudios}
+              index={index}
+              currentAudioId={currentAudioId}
+              setCurrentAudioId={setCurrentAudioId}
+            />
+          )}
           pagingEnabled
           showsVerticalScrollIndicator={false}
           onScroll={handleScroll}

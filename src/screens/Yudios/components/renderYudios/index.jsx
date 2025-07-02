@@ -14,14 +14,20 @@ import useUser from '../../../../hooks/user';
 import YudioCard from '../yudioCard';
 import { styles } from './styles';
 
-const RenderYudios = ({yudios, yudio}) => {
+const RenderYudios = ({yudios, yudio, currentAudioId, setCurrentAudioId,index}) => {
   const [showFullText, setShowFullText] = useState(false);
   const user = useUser();
-  console.log('Yudio', yudio);
+
+  // console.log('Yudio', yudio?.yudios);
   return (
     <View style={styles?.renderItem}>
       {/* Yudio Card */}
-      <YudioCard yudio={yudio?.yudios} />
+      <YudioCard
+        yudio={yudio?.yudios}
+        currentAudioId={currentAudioId}
+        setCurrentAudioId={setCurrentAudioId}
+        index={index}
+      />
       {/* Reactions */}
       <View style={styles?.reactions}>
         <FeedReactions post={yudio} />

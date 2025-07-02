@@ -1,26 +1,27 @@
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { RightArrow } from '../../../assets/images/svgs';
-import AlertButton from '../../../components/buttons/AlertButton';
-import PrimaryButton from '../../../components/buttons/PrimaryButton';
 import InboxHeader from '../../../components/headers/chat/inbox';
 import CustomSearchBar from '../../../components/inputs/search';
+import GradientText from '../../../components/text/GradientText';
 import { height, Pixels, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
-import { accountSettingsOptions, supportOptions, visibilityOptions } from './string';
+import {
+  activityOptions
+} from './string';
 
-const SettingsPrivacy = ({navigation}) => {
+const Activity = ({navigation}) => {
   const RenderItem = ({item, index}) => {
     return (
       <TouchableOpacity
         key={index}
-        onPress={() => navigation?.navigation(item?.route)}
+        onPress={() => navigation?.navigate(item?.route)}
         style={styles?.button}>
         <Text style={styles?.text}>{item?.title}</Text>
         <RightArrow />
@@ -28,13 +29,18 @@ const SettingsPrivacy = ({navigation}) => {
     );
   };
 
-  const Header = ({title}) => {
-    return <Text style={styles?.heading}>{title}</Text>;
+  const Header = () => {
+    return (
+      <GradientText style={styles?.heading}>
+        Review and manage your Photos, Videos, Yudios, Events and your account
+        activity on one place{' '}
+      </GradientText>
+    );
   };
   return (
     <View style={styles?.container}>
       <InboxHeader
-        title={'Settings and Privacy'}
+        title={'Your Activity'}
         backPress={() => navigation?.goBack()}
       />
       <View style={styles?.search}>
@@ -42,25 +48,15 @@ const SettingsPrivacy = ({navigation}) => {
       </View>
       <ScrollView contentContainerStyle={styles?.content}>
         <Header title="Account Settings" />
-        {accountSettingsOptions?.map((item, index) => (
+        {activityOptions?.map((item, index) => (
           <RenderItem item={item} index={index} />
         ))}
-        <Header title="Who can see your content" />
-        {visibilityOptions?.map((item, index) => (
-          <RenderItem item={item} index={index} />
-        ))}
-        <Header title="More info and support" />
-        {supportOptions?.map((item, index) => (
-          <RenderItem item={item} index={index} />
-        ))}
-        <PrimaryButton title='Log out'/>
-        <AlertButton title='Delete My Account'/>
       </ScrollView>
     </View>
   );
 };
 
-export default SettingsPrivacy;
+export default Activity;
 
 const styles = StyleSheet.create({
   container: {
@@ -72,13 +68,14 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: width * 0.06,
-    paddingBottom : height * 0.05
+    paddingBottom: height * 0.05,
   },
   heading: {
-    fontFamily: fonts?.montserratBold,
-    fontSize: Pixels(11),
+    fontFamily: fonts?.montserratSemiBold,
+    fontSize: Pixels(12),
     color: colors?.text,
-    marginBlock: height * 0.01,
+    textAlign : 'center',
+    marginBottom : height * 0.01
   },
   button: {
     backgroundColor: colors?.greyBackground,

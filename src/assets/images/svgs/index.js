@@ -13,6 +13,7 @@ import BlackBackArrow from './BlackBackArrow.svg';
 import BlackForwardAudioButton from './BlackBackwardButton.svg';
 import BlackCameraIcon from './BlackCameraIcon.svg';
 import BlackDropdown from './BlackDropdown.svg';
+import BlackDroprightIcon from './BlackDroprightIcon.svg';
 import BlackRewindAUdioButton from './BlackForwardButton.svg';
 import BlackLike from './BlackLike.svg';
 import BlackMultipleSelection from './BlackMultipleSelection.svg';
@@ -114,6 +115,7 @@ import QR from './qr.svg';
 import QRcode from './QRcode.svg';
 import RateUs from './RateUs.svg';
 import RedditIcon from './RedditIcon.svg';
+import RedDropdown from './RedDropdown.svg';
 import ReplyArrow from './ReplyArrow.svg';
 import RightArrow from './RightArrow.svg';
 import Search from './search.svg';
@@ -167,8 +169,7 @@ export {
   BackArrow,
   BlackBackArrow,
   BlackCameraIcon,
-  BlackDropdown,
-  BlackForwardAudioButton,
+  BlackDropdown, BlackDroprightIcon, BlackForwardAudioButton,
   BlackLike,
   BlackMultipleSelection,
   BlackRewindAUdioButton,
@@ -250,7 +251,7 @@ export {
   PinterestIcon,
   PlayIcon,
   Plus, ProfileSettingsIcon, PublicIcon, QR, QRcode, RateUs,
-  RedditIcon, ReplyArrow, RightArrow,
+  RedditIcon, RedDropdown, ReplyArrow, RightArrow,
   Search,
   SearchIcon, ShareProfileIcon, SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
   TagFriendsIcon,

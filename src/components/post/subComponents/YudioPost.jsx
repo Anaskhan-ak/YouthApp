@@ -4,14 +4,20 @@ import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import PostBottomTab from '../subComponents/postBottomTab';
 
-const YudioPost = ({post, modal}) => {
+const YudioPost = ({post, modal, index, currentAudioId, setCurrentAudioId}) => {
   return (
     <View>
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
         <View style={styles?.player}>
           <YudioPlayer
-            audio={{uri: post?.yudios?.url, waveform: post?.yudios?.waveform}}
+            audio={{
+              uri: post?.yudios?.url,
+              waveform: post?.yudios?.waveform,
+              id: index,
+            }}
+            currentAudioId={currentAudioId}
+            setCurrentAudioId={setCurrentAudioId}
           />
           {!modal?.modal?.isPost && <PostBottomTab post={post} />}
         </View>
