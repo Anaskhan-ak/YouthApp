@@ -29,6 +29,7 @@ import SavedArchived from '../screens/savedArchived';
 import SignUp from '../screens/signup';
 import Splash from '../screens/splash';
 import SuggestedContent from '../screens/suggestions';
+import TimeSpent from '../screens/timeSpent';
 import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
@@ -200,6 +201,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="SavedArchived"
         component={SavedArchived}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="TimeSpent"
+        component={TimeSpent}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
     </Stack.Navigator>

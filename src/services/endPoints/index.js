@@ -26,6 +26,7 @@ export const apis = {
   savePost : "api/v1/post/save",
   repost : "api/v1/sharePost",
   createNewHighlight : 'api/v1/post/createHighlight',
+  createCategory : 'api/v1/post/album',
   //GET ENDPOINTS
   getNotification:'api/v1/notification',
   getContactSuggestions : 'api/v1/contactSuggetion',

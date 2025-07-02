@@ -81,7 +81,7 @@ export const activityOptions = [
     {
         id : 'time',
         title : "Time Spent",
-        route : ''
+        route : 'TimeSpent'
     },
     {
         id : 'rewards',

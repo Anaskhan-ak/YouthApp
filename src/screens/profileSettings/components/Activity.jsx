@@ -1,9 +1,9 @@
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { RightArrow } from '../../../assets/images/svgs';
 import InboxHeader from '../../../components/headers/chat/inbox';
@@ -13,7 +13,7 @@ import { height, Pixels, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import {
-    activityOptions
+  activityOptions
 } from './string';
 
 const Activity = ({navigation}) => {
@@ -21,7 +21,7 @@ const Activity = ({navigation}) => {
     return (
       <TouchableOpacity
         key={index}
-        onPress={() => navigation?.navigation(item?.route)}
+        onPress={() => navigation?.navigate(item?.route)}
         style={styles?.button}>
         <Text style={styles?.text}>{item?.title}</Text>
         <RightArrow />
