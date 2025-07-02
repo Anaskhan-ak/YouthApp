@@ -31,7 +31,8 @@ const Home = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [stories, setStories] = useState([]);
   const isFocus = useIsFocused();
-  const user = useUser()
+  const user = useUser();
+  const [currentAudioId, setCurrentAudioId] = useState('');
   const {
     data,
     totalResult,
@@ -102,8 +103,14 @@ const Home = () => {
           ListHeaderComponent={<Stories stories={stories} />}
           data={data}
           // keyExtractor={item => item?._id.toString()}
-          renderItem={({item}) => (
-            <Post post={item} isScrolling={isScrolling} />
+          renderItem={({item, index}) => (
+            <Post
+              post={item}
+              isScrolling={isScrolling}
+              index={index}
+              currentAudioId={currentAudioId}
+              setCurrentAudioId={setCurrentAudioId}
+            />
           )}
           contentContainerStyle={{paddingBottom: height * 0.1}}
           // ListFooterComponent={<SuggestedUsers />}

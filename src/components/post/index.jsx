@@ -21,7 +21,13 @@ import Repost from './subComponents/repost/Repost';
 import UserPostHeader from './subComponents/userPostHeader';
 import YudioPost from './subComponents/YudioPost';
 
-const Post = ({post, isScrolling}) => {
+const Post = ({
+  post,
+  isScrolling,
+  index,
+  currentAudioId,
+  setCurrentAudioId,
+}) => {
   const [modal, setModal] = useState({
     isPost: false,
     visible: false,
@@ -57,16 +63,32 @@ const Post = ({post, isScrolling}) => {
     };
 
     const PostComponent = postComponents[post.type];
-    return (
-      <PostComponent
-        post={post}
-        modal={modalProps}
-        actions={actions}
-        setActions={setActions}
-        isScrolling={isScrolling}
-        isRepost={false}
-      />
-    );
+    if (post?.type === 'YUDIO') {
+      return (
+        <PostComponent
+          post={post}
+          modal={modalProps}
+          actions={actions}
+          setActions={setActions}
+          isScrolling={isScrolling}
+          isRepost={false}
+          index={index}
+          currentAudioId={currentAudioId}
+          setCurrentAudioId={setCurrentAudioId}
+        />
+      );
+    } else {
+      return (
+        <PostComponent
+          post={post}
+          modal={modalProps}
+          actions={actions}
+          setActions={setActions}
+          isScrolling={isScrolling}
+          isRepost={false}
+        />
+      );
+    }
   };
 
   return (
