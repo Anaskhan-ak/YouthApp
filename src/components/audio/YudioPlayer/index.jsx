@@ -12,6 +12,7 @@ import SoundPlayer from 'react-native-sound-player';
 import Svg, { Rect } from 'react-native-svg';
 import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
+import { generateAudioWaveforms } from '../../../helper';
 import { colors } from '../../../utils/colors';
 
 const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
@@ -23,8 +24,24 @@ const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
   const [play, setPlay] = useState(false);
   const [pause, setPause] = useState(false);
 
+  useEffect(()=>{
+    const generateWaveforms = async()=>{
+      try {
+        const response = await generateAudioWaveforms(audio)
+        if (response){
+          setWaveform(response)
+        }
+      } catch (error) {
+        console.log("error generating wavforms", error)
+      }
+    }
+    if (!audio?.waveform){
+      generateWaveforms()
+    }
+  },[])
+
   const loadUrl = () => {
-    console.log("audio url", audio?.uri)
+    // console.log("audio url", audio?.uri)
     SoundPlayer.loadUrl(audio?.uri);
     const interval = setInterval(() => {
       SoundPlayer.getInfo()
@@ -39,7 +56,7 @@ const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
   };
 
   const Play = () => {
-    setCurrentAudioId(audio?.id);
+    if (audio?.id) {setCurrentAudioId(audio?.id);}
     loadUrl();
     SoundPlayer?.play();
     setPlay(true);

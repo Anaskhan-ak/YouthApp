@@ -3,19 +3,19 @@ import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
-    GradientPauseIcon,
-    GradientPlayIcon,
-    WhiteBackwardAudioIcon,
-    WhiteForwardAudioIcon
+  GradientPauseIcon,
+  GradientPlayIcon,
+  WhiteBackwardAudioIcon,
+  WhiteForwardAudioIcon
 } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors/index';
 
-const MusicPlayer = () => {
+const MusicPlayer = ({audioURL}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+  // const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
 
   const playPauseHandler = () => {
     try {

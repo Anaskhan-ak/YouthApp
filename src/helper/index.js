@@ -6,8 +6,8 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { Platform } from 'react-native';
-import { apiCall } from "services/apiCall";
 import RNFS from 'react-native-fs';
+import { apiCall } from "../services/apiCall";
 
 export const emailValidation = value => {
   const trimmedValue = value.trim();
@@ -65,9 +65,10 @@ export const getFirebaseToken = async () => {
     }
 
     await new Promise(resolve => setTimeout(resolve, 50)); // prevent premature API call
-
+    console.log("audio", audio)
     const formData = new FormData();
     formData.append('audio', audio);
+    console.log("formData", formData)
 
     const audioMetaDataPayload = await apiCall?.generateWaveforms(formData);
     return audioMetaDataPayload;
