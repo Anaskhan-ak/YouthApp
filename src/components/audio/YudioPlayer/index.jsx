@@ -21,6 +21,8 @@ const YudioPlayer = ({audio, bg}) => {
   const [waveform, setWaveform] = useState(audio?.waveform);
   const fixedBarsCount = 35;
 
+  // console.log("audio", audio?.uri)
+
   // useEffect(() => {
   //   console.log('Audio', audio);
   //   const loadWaveform = async () => {
