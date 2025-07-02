@@ -25,6 +25,7 @@ const ProfileOption = ({
         break;
       case 'changeAcc':
         accountsRef?.current?.snapToIndex(0);
+        break;
       default:
         break;
     }

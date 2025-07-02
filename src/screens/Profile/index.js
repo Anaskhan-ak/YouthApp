@@ -46,6 +46,7 @@ const Profile = () => {
   const [qr, setQr] = useState(false);
   const qrRef = useRef(null);
   const multipleAccountsRef = useRef(null)
+  const [multipleAcc, setMultipleAcc] = useState(false)
   const focus = useIsFocused();
   const settingsSheetRef = useRef(null)
   const [settingsSheet, setSettingsSheet] = useState(false)
@@ -202,7 +203,7 @@ const Profile = () => {
             {<Stories stories={stories} />}
             <PostContentModal fixed options={options} setOptions={setOptions} />
             <QRSheet setVisible={setQr} sheetRef={qrRef} />
-            <MultipleAccountsModal ref={multipleAccountsRef}/>
+            <MultipleAccountsModal ref={multipleAccountsRef} setVisible={setMultipleAcc}/>
             <RNBottomSheet setIsSheetOpen={setSettingsSheet} sheetRef={settingsSheetRef} isProfile={true}/>
           </>
         )}

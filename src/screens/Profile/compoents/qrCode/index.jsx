@@ -10,10 +10,10 @@ import { styles } from './styles';
 export default function QRSheet({sheetRef, setVisible}) {
   return (
     <BottomSheet
-      //   onChange={
-      //     setVisible(prev)
-      //   }
-      //   index={1}
+        onChange={index => 
+          setVisible(index >= 0)
+        }
+      index={-1}
       enablePanDownToClose={true}
       snapPoints={['55%']}
       ref={sheetRef}>
