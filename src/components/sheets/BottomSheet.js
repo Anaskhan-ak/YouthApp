@@ -74,7 +74,7 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
-                    key={item.id}
+                    key={index}
                     onPress={() => handleNavigation(item)}>
                     <View style={styles.optionsButton}>
                       <Text style={styles.optionsButtonText}>

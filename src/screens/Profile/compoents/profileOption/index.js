@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import SuggestedUsers from '../../../../components/post/subComponents/suggestedUsers';
-import { width } from '../../../../constant';
 import { profileOptions } from '../../../../utils/string';
 import { styles } from './styles';
 
-const ProfileOption = ({setEditProfile, setQr,getUserData}) => {
+const ProfileOption = ({setEditProfile, setQr,getUserData, sheetRef}) => {
   const [suggestedUsers, setSuggestedUsers] = useState(false);
   const handlePress = async id => {
     switch (id) {
@@ -15,7 +14,7 @@ const ProfileOption = ({setEditProfile, setQr,getUserData}) => {
       case 'editProfile':
         setEditProfile(prev => !prev);
       case 'qr':
-        setQr(prev => !prev)
+        sheetRef?.current?.snapToIndex(0)
       default:
         break;
     }

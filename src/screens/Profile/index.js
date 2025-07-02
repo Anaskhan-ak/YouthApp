@@ -193,11 +193,12 @@ const Profile = () => {
                 getUserData={getUserData}
                 setEditProfile={setEditProfile}
                 setQr={setQr}
+                sheetRef={qrRef}
               />
             </View>
-            {<Stories  stories={stories} />}
+            {<Stories stories={stories} />}
             <PostContentModal fixed options={options} setOptions={setOptions} />
-            {qr && <QRSheet setVisible={setQr} sheetRef={qrRef} />}
+            <QRSheet setVisible={setQr} sheetRef={qrRef} />
             <RNBottomSheet setIsSheetOpen={setSettingsSheet} sheetRef={settingsSheetRef} isProfile={true}/>
           </>
         )}
