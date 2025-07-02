@@ -1,6 +1,6 @@
 import Slider from '@react-native-community/slider';
 import { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
   PinkPauseAudioButton,
@@ -15,20 +15,21 @@ const RecordedAudioPlayer = ({audioURL}) => {
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const playPauseHandler = () => {
-    try {
-      if (isPlaying) {
-        SoundPlayer.pause();
-        setIsPlaying(false);
-      } else {
-        SoundPlayer.playUrl(audioURL);
-        setIsPlaying(true);
-      }
-      //   setIsPlaying(!isPlaying);
-    } catch (e) {
-      console.log('Error in playPauseHandler:', e);
+const playPauseHandler = () => {
+  try {
+    if (isPlaying) {
+      SoundPlayer.pause();
+      setIsPlaying(false);
+    } else {
+      const localPath = Platform.OS === 'ios' ? `file://${audioURL}` : audioURL;
+      console.log('Playing path:', localPath);
+      SoundPlayer.play(localPath);
+      setIsPlaying(true);
     }
-  };
+  } catch (e) {
+    console.log('Error in playPauseHandler:', e);
+  }
+};
 
   useEffect(() => {
     let interval = null;
@@ -78,7 +79,7 @@ const RecordedAudioPlayer = ({audioURL}) => {
       <View style={styles?.sliderContainer}>
         <TouchableOpacity onPress={playPauseHandler}>
           {isPlaying ? (
-            <PinkPauseAudioButton width={width * 0.1} height={width * 0.1} />
+            <PinkPauseAudioButton width={width * 0.08} height={width * 0.08} />
           ) : (
             <PinkPlayAudioButton width={width * 0.1} height={width * 0.1} />
           )}

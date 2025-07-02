@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.searchBg,
-    borderRadius: width * 0.02,
+    borderRadius: width * 0.1,
     paddingLeft: width * 0.03,
     borderWidth: width * 0.005,
     borderColor: colors.searchBg,

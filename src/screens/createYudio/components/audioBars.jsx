@@ -15,9 +15,10 @@ import { colors } from '../../../utils/colors';
 const BAR_COUNT = 100;
 
 const AudioBars = ({ isRecording }) => {
-  const user = useUser()
+  const user = useUser();
   const bars = Array.from({ length: BAR_COUNT }, (_, i) => ({
     rotate: (360 / BAR_COUNT) * i,
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     scale: useSharedValue(1),
   }));
 
@@ -35,6 +36,7 @@ const AudioBars = ({ isRecording }) => {
         bar.scale.value = withTiming(1);
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRecording]);
 
   return (

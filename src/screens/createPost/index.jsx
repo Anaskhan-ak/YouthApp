@@ -58,7 +58,7 @@ const CreatePost = () => {
   const [options, setOptions] = useState([
     {
       type: 'gallery',
-      icon: <GalleryIcon />,
+      icon: <GalleryIcon/>,
       active: true,
     },
     {

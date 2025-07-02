@@ -11,6 +11,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {config} from './src/environment';
 import Toast from 'react-native-toast-message';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import { requestNotificationPermission } from './src/helper';
 
 const App = () => {
   const linking = {
@@ -42,9 +43,13 @@ const App = () => {
     offlineAccess: true,
   });
   useEffect(() => {
+    getNotificationPermission()
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
   }, []);
+  const getNotificationPermission = async ()  =>{
+     const getNotificationPermission = await requestNotificationPermission()
+  }
   return (
     <NavigationContainer linking={linking}>
       <GestureHandlerRootView style={{flex: 1}}>

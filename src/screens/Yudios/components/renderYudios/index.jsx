@@ -17,14 +17,14 @@ import { styles } from './styles';
 const RenderYudios = ({yudios, yudio}) => {
   const [showFullText, setShowFullText] = useState(false);
   const user = useUser();
-  // console.log('Yudio', yudio?.yudios);
+  console.log('Yudio', yudio);
   return (
     <View style={styles?.renderItem}>
       {/* Yudio Card */}
       <YudioCard yudio={yudio?.yudios} />
       {/* Reactions */}
       <View style={styles?.reactions}>
-        <FeedReactions post={post} />
+        <FeedReactions post={yudio} />
       </View>
       {/* Suggested Yudios */}
       <View style={styles?.suggestedView}>

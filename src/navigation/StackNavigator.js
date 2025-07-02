@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
+import ConnectionListing from '../screens/connectionListing';
 import CreateEvent from '../screens/createEvent';
 import CreateMoment from '../screens/CreateMoment';
 import CreatePost from '../screens/createPost';
@@ -23,13 +24,13 @@ import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
 import PostDetails from '../screens/postDetails';
 import Profile from '../screens/Profile';
+// import ProfileSettingsActivity from '../screens/profileSettings';
 import SignUp from '../screens/signup';
 import Splash from '../screens/splash';
 import SuggestedContent from '../screens/suggestions';
 import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
-import ConnectionListing from '../screens/connectionListing';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -75,6 +76,11 @@ const StackNavigator = () => {
         component={Profile}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
+      {/* <Stack.Screen
+        name="ProfileSettingsActivity"
+        component={ProfileSettingsActivity}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      /> */}
       <Stack.Screen
         name="CreateWallet"
         component={CreateWallet}

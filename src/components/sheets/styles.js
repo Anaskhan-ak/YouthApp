@@ -1,14 +1,14 @@
-import {StyleSheet, Platform} from 'react-native';
-import {height, width} from '../../constant';
-import {fonts} from '../../utils/fonts';
-import {colors} from '../../utils/colors';
+import { Platform, StyleSheet } from 'react-native';
+import { height, Pixels, width } from '../../constant';
+import { colors } from '../../utils/colors';
+import { fonts } from '../../utils/fonts';
 
 export const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     paddingHorizontal: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: 80,
+    borderTopRightRadius: 80,
     backgroundColor: colors?.white,
   },
   heading: {
@@ -20,14 +20,32 @@ export const styles = StyleSheet.create({
     marginVertical: 12,
   },
   cardContainer: {
-    height: height * 0.08,
+    height: height * 0.064,
     borderRadius: 16,
     marginVertical: 6,
     padding: 1.5,
   },
+  optionsButton : {
+    alignItems: 'center',
+    backgroundColor: colors?.white,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.05,
+    shadowRadius: 1,
+    marginVertical : width * 0.02,
+    borderRadius : width * 0.02,
+    paddingVertical : height * 0.013,
+    marginHorizontal : width * 0.11
+  },
+  optionsButtonText:{
+    fontFamily: fonts?.montserratSemiBold,
+    fontSize: Pixels(15),
+    color: colors?.text,
+  },
   cardInner: {
     flex: Platform?.OS === 'android' && 1,
-    height: height * 0.073,
+    height: height * 0.058,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors?.white,
@@ -52,12 +70,12 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontFamily: fonts?.montserratExtraBold,
-    fontSize: width * 0.04,
+    fontSize: Pixels(15),
     color: '#000',
   },
   desc: {
     fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.028,
+    fontSize: Pixels(9),
     color: '#666',
     marginTop: 2,
   },

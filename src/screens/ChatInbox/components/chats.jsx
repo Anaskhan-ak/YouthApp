@@ -12,7 +12,9 @@ import { images } from '../../../assets/images';
 import { EmptyCallsInboxIcon } from '../../../assets/images/svgs';
 import EmptyComponent from '../../../components/empty';
 import GradientText from '../../../components/text/GradientText';
-import { height, width } from '../../../constant';
+import { height, Pixels, width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
+import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
@@ -20,11 +22,12 @@ import { fonts } from '../../../utils/fonts';
 const Chats = () => {
   const navigation = useNavigation();
   const [chats, setChats] = useState([]);
-  const userID = 'cm60ql39f003l91r8l18bd80z';
+  const user = useUser()
   useEffect(() => {
     const getAllChats = async () => {
       try {
-        const response = await apiCall?.getChats({userId: userID});
+        const userDetails = await getDataLocally()
+        const response = await apiCall?.getChats({userId: userDetails?.id});
         console.log('Successfully fetched chats');
         console.log('Response', response);
         setChats(response);
@@ -38,7 +41,7 @@ const Chats = () => {
   const renderItem = ({item}) => {
     const isGroup = item?.isGroup;
     const otherParticipant = item?.participants?.find(
-      pt => pt?.userId !== userID,
+      pt => pt?.userId !== user?.id,
     );
     return (
       <TouchableOpacity
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   mainText: {
     color: colors?.text,
     fontFamily: fonts?.montserratSemiBold,
-    fontSize: width * 0.037,
+    fontSize: Pixels(14),
   },
   subTextContainer: {
     flexDirection: 'row',
@@ -126,17 +129,17 @@ const styles = StyleSheet.create({
   message: {
     color: colors?.textGray,
     fontFamily: fonts?.montserratSemiBold,
-    fontSize: width * 0.027,
+    fontSize: Pixels(10),
   },
   time: {
     fontFamily: fonts?.montserratBold,
-    fontSize: width * 0.027,
+    fontSize: Pixels(9),
   },
   itemRight: {
     backgroundColor: colors?.RGB1,
     color: colors?.white,
-    fontSize: width * 0.02,
-    fontFamily: fonts?.montserratBold,
+    fontSize: Pixels(7.5),
+    fontFamily: fonts?.montserratSemiBold,
     padding: width * 0.01,
     borderRadius: width * 0.05,
     width: width * 0.05,

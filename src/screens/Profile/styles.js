@@ -7,10 +7,15 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    padding: 16,
+    // padding: 16,
     position: 'absolute',
     top: height * 0.04,
     zIndex: 999,
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between',
+    width : width * 0.9,
+    alignSelf : 'center'
   },
   backButton: {
     width: 40,
@@ -41,5 +46,14 @@ export const styles = StyleSheet.create({
   icons: {
     marginVertical: height * 0.008,
   },
-  indicator:{flex: 1, alignItems: 'center', justifyContent: 'center'}
+  indicator:{flex: 1, alignItems: 'center', justifyContent: 'center'},
+  headerIcons : {
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between',
+  },
+  headerIcon : {
+    padding : width * 0.02,
+    margin : width * 0.01,
+  }
 });

@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     marginHorizontal : width * 0.01
   }, 
   buttonText : {
-    fontSize : width * 0.015,
+    fontSize : Pixels(9),
     fontFamily : fonts?.montserratBold,
     marginLeft : width * 0.01,
     color : colors?.textGray

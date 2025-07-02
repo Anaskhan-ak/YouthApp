@@ -13,12 +13,10 @@ import Svg, { Rect } from 'react-native-svg';
 import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import { width } from '../../../constant';
 import { colors } from '../../../utils/colors';
-
 const YudioPlayer = ({audio, bg}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [waveform, setWaveform] = useState(audio?.waveform);
   const fixedBarsCount = 35;
 
   // useEffect(() => {
@@ -105,11 +103,11 @@ const YudioPlayer = ({audio, bg}) => {
   };
 
   const mappedWaveform =
-    waveform && waveform.length > 0
+    audio?.waveform && audio?.waveform?.length > 0
       ? Array.from({length: fixedBarsCount}, (_, i) => {
-          const start = Math.floor((i / fixedBarsCount) * waveform.length);
-          const end = Math.floor(((i + 1) / fixedBarsCount) * waveform.length);
-          const segment = waveform.slice(start, end);
+          const start = Math.floor((i / fixedBarsCount) * audio?.waveform?.length);
+          const end = Math.floor(((i + 1) / fixedBarsCount) * audio?.waveform?.length);
+          const segment = audio?.waveform?.slice(start, end);
           return (
             segment.reduce((sum, val) => sum + val, 0) / segment.length || 0
           );
@@ -144,7 +142,7 @@ const YudioPlayer = ({audio, bg}) => {
           <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
           <Text style={styles.timeText}>{formatTime(duration)}</Text>
         </View>
-        {waveform?.length > 0 ? (
+        {audio?.waveform?.length > 0 ? (
           <View style={styles.waveformContainer}>
             <Svg
               height={barHeightScale - 30}

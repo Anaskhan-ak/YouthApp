@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
-import messaging from '@react-native-firebase/messaging';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { Platform } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+import { PermissionsAndroid, Platform } from 'react-native';
 import { apiCall } from "services/apiCall";
 import RNFS from 'react-native-fs';
 
@@ -113,3 +113,33 @@ export const getFileNameWithExtension = (uri, type) => {
     }
     return uri; // Return the uri as-is for file URLs
 };
+export const requestNotificationPermission = async () => {
+  try {
+    if (Platform.OS === 'ios') {
+      // iOS permission request
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (!enabled) {
+        console.warn('Notification permission not granted on iOS');
+        return null;
+      }
+    }
+
+    if (Platform.OS === 'android') {
+      // Android 13+ needs runtime POST_NOTIFICATIONS permission
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      );
+
+      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+        console.warn('Notification permission not granted on Android');
+        return null;
+      }
+    }
+  }catch(e){
+
+  }
+}

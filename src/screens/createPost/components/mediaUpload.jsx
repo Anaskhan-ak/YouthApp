@@ -20,7 +20,9 @@ const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
     if (
       media?.some(m => m?.type === 'video/mp4') ||
       media?.some(m => m.type === 'image/jpeg') ||
-      media?.some(m => m.type === 'image')
+      media?.some(m => m.type === 'image') ||
+      media?.some(m => m?.type === 'video') ||
+      media?.some(m => m.type === 'image/png')
     ) {
       return (
         <FlatList

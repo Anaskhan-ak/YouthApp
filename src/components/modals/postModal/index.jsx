@@ -48,7 +48,7 @@ const PostModal = ({options, setOptions, content, fixed}) => {
               key={index}
               simultaneousHandlers={gestureRef}
               activeOpacity={0.7}
-              style={{opacity: opt?.active ? 1 : 0.5}}
+              style={{opacity: opt?.active ? 1 : 0.4}}
               onPress={() => {
                 setOptions(prev =>
                   prev.map((item, i) => ({

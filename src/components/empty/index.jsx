@@ -8,7 +8,7 @@ const {View} = require('react-native');
 const EmptyComponent = ({Icon, text, subtext}) => {
   return (
     <View style={styles?.container}>
-      <View style={{backgroundColor : 'red'}}>{Icon}</View>
+      <View>{Icon}</View>
       
       <Text style={styles?.text}>{text}</Text>
       <Text style={styles?.subText}>{subtext}</Text>

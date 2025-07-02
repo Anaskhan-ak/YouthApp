@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
+import RNFS from 'react-native-fs';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../assets/images';
@@ -47,7 +48,7 @@ const CreateYudio = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState('');
-  const [yudio, setYudio] = useState();
+  const [yudio, setYudio] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
@@ -75,7 +76,7 @@ const CreateYudio = () => {
       toast('error', 'User not found. Please log in again.');
       return;
     }
-    setLoading(true);
+ 
     const formData = new FormData();
     formData.append('type', 'YUDIO');
     formData.append('caption', description);
@@ -115,17 +116,12 @@ const CreateYudio = () => {
     } else {
       console.error('Audio source is missing for YUDIO');
     }
-    // console.log('Form Data', formData);
     try {
+      setLoading(true);
       const result = await apiCall?.createNewPost(formData);
-      console.log('Successfully created Yudio', result?.yudios);
-      if (result) {
-        setLoading(false);
         navigation.navigate('Yudios', {yudio: result?.yudios});
-      }
     } catch (error) {
       console.log('Error creating yudio', error);
-      setLoading(false);
       toast('error', 'Error creating yudio');
     } finally {
       setLoading(false);
@@ -151,7 +147,7 @@ const CreateYudio = () => {
           clearTimeout(recordingTimer.current); // Clear the timer when recording is stopped
         }
         setIsRecording(false);
-        const audioFile = await AudioRecord.stop();
+        const audioFile = await AudioRecord?.stop();
         setYudio(audioFile);
         console.log('Recorded file:', audioFile);
       } catch (error) {
@@ -161,7 +157,6 @@ const CreateYudio = () => {
       // Start recording
       try {
         setIsRecording(true);
-
         AudioRecord.init({
           sampleRate: 16000,
           channels: 1,
@@ -170,7 +165,6 @@ const CreateYudio = () => {
           wavFile: `recording-${Date.now()}.wav`,
         });
         AudioRecord.start();
-
         // Set a timer to stop recording after 10 minutes
         recordingTimer.current = setTimeout(() => {
           console.log('Recording time limit reached, stopping recording...');
@@ -200,7 +194,7 @@ const CreateYudio = () => {
   }, []);
 
   const getRealPathFromURI = async uri => {
-    if (uri.startsWith('content://')) {
+    if (uri?.startsWith('content://')) {
       try {
         if (Platform.OS === 'ios') {
           const realPath = await RNFS.copyAssetsFileIOS(
@@ -412,7 +406,7 @@ const CreateYudio = () => {
           ) : null
         }
         onPress={handleForm}
-        disabled={waveform?.length > 0 && yudio ? true : false}
+        disabled={waveform?.length > 0 && yudio ? false : true}
       />
       {metaData?.audience?.active && (
         <Audience

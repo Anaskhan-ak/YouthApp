@@ -122,37 +122,37 @@ export const sideBottomSheetOptions = [
   {
     id: 'post',
     title: 'Post',
-    desc: 'To make sure your post reaches the right people...',
+    desc: 'To make sure your post reaches the right people,\n only post a relevant content, topics, etc...',
     route:'CreatePost'
   },
   {
     id: 'moments',
     title: 'Moments',
-    desc: 'To make sure your Moments reach the right people...',
+    desc: 'To make sure your Moments reaches the right \n people, only post a relevant content, topics, etc...',
     route:'CreateMoment'
   },
   {
     id: 'yudio',
     title: 'Yudio',
-    desc: 'To make sure your Yudio reaches the right people...',
+    desc: 'To make sure your Yudio reaches the right \n people, only post a relevant content, topics, etc...',
     route:'CreateYudio'
   },
   {
     id: 'story',
     title: 'Story',
-    desc: 'Share your Daily best moments with the friends...',
+    desc: 'Share your Daily best moments with the frieds,\nchoose between Photos, Videos, Songs &\nYodios...',
     route:'CreateStory'
   },
   {
     id: 'live',
     title: 'Live',
-    desc: 'Go live and share more moments and values...',
+    desc: 'Go live and share more moments and values\n with your friends and folowers...',
     route:''
   },
   {
     id: 'event',
     title: 'Event',
-    desc: 'Arrange an event with friends in your city...',
+    desc: 'Arrange an event with friends in your city and do\nmore together',
     route:''
   },
 ];
@@ -211,3 +211,43 @@ export const albumIds = [
     id : 'cmc94gbov000m6uglc4rnmavq'
   },
 ]
+
+export const profileSettingsOptions = [
+  {
+    id: 'wallet',
+    title: 'My Wallet',
+  },
+  {
+    id: 'rewards',
+    title: 'My Rewards',
+  },
+  {
+    id: 'settings',
+    title: 'Settings and Privacy',
+    route : 'ProfileSettingsActivity'
+  },
+  {
+    id: 'activity',
+    title: 'Your Activity',
+  },
+  {
+    id: 'saved',
+    title: 'Saved',
+  },
+  {
+    id: 'archive',
+    title: 'Archive',
+  },
+  {
+    id: 'closeFriends',
+    title: 'Close Friends',
+  },
+  {
+    id: 'favorites',
+    title: 'Favorites',
+  },
+  {
+    id: 'subscriptions',
+    title: 'Subscriptions',
+  },
+];

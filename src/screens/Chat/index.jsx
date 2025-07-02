@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { images } from '../../assets/images';
 import ChatHeader from '../../components/headers/chat/chat';
+import useUser from '../../hooks/user';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
 import ChatDetails from './components/chatDetails';
@@ -17,11 +18,11 @@ import SentMessage from './components/sentMessage';
 import { styles } from './styles';
 
 const Chat = ({route}) => {
-  // const {chatID, receiver} = route?.params;
+  const {chatID, receiver} = route?.params;
   const [messages, setMessages] = useState([]);
   const [chatDetails, setChatDetails] = useState(false);
   const navigation = useNavigation();
-  const userID = 'cm60ql39f003l91r8l18bd80z';
+  const user = useUser()
   useEffect(() => {
     const getAllChatMessages = async () => {
       try {
@@ -50,10 +51,10 @@ const Chat = ({route}) => {
               source={images?.chatBackground}>
               <ChatHeader
                 user={{
-                  title: 'Sannya Wasim',
+                  title: `${receiver?.firstName} ${receiver?.lastName}`,
                   // `${receiver?.firstName} ${receiver?.lastName}`,
                   image:
-                    // receiver?.photo ? {uri : receiver?.photo} :
+                    receiver?.photo ? {uri : receiver?.photo} :
                     images?.defaultProfilePicture,
                   lastOnline: 'Last seen today at 1:39 PM',
                 }}
@@ -66,7 +67,7 @@ const Chat = ({route}) => {
                 data={messages}
                 renderItem={({item}) => {
                   // console.log("Item", item)
-                  if (item?.senderId === userID) {
+                  if (item?.senderId === user?.id) {
                     return <SentMessage message={item} />;
                   } else {
                     return <ReceivedMessage message={item} />;

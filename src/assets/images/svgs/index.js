@@ -108,6 +108,7 @@ import PinkVolume from './PinkVolume.svg';
 import PinterestIcon from './PinterestIcon.svg';
 import PlayIcon from './PlayIcon.svg';
 import Plus from './plus.svg';
+import ProfileSettingsIcon from './ProfileSettingsIcon.svg';
 import PublicIcon from './PublicIcon.svg';
 import QR from './qr.svg';
 import QRcode from './QRcode.svg';
@@ -248,8 +249,7 @@ export {
   PinkVolume,
   PinterestIcon,
   PlayIcon,
-  Plus,
-  PublicIcon, QR, QRcode, RateUs,
+  Plus, ProfileSettingsIcon, PublicIcon, QR, QRcode, RateUs,
   RedditIcon, ReplyArrow, RightArrow,
   Search,
   SearchIcon, ShareProfileIcon, SnapchatIcon, SolidMessageSendIcon, Sparkles, StoryIconFilters, StoryIconFriends, StoryIconMusic, StoryIconSticker, StoryIconText, SwitchAcc, TagFriends,
