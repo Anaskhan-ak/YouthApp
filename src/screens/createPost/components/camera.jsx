@@ -87,7 +87,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: height * 0.008,
-    overflow : "hidden"
+    overflow : "hidden",
+    alignItems : 'center',
+    justifyContent : 'center'
   },
   camera: {
     borderRadius: width * 0.03,

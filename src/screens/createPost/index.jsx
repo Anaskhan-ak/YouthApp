@@ -1,9 +1,9 @@
-import {pick} from '@react-native-documents/picker';
-import {useNavigation} from '@react-navigation/native';
-import {useRef, useState} from 'react';
-import {ActivityIndicator, Platform, ScrollView, View} from 'react-native';
+import { pick } from '@react-native-documents/picker';
+import { useNavigation } from '@react-navigation/native';
+import { useRef, useState } from 'react';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   CameraIcon,
   FileAudio,
@@ -18,15 +18,14 @@ import MultilineInput from '../../components/inputs/multilineInput';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
-import {toast} from '../../components/toast';
+import { toast } from '../../components/toast';
 import useUser from '../../hooks/user';
-import {apiCall} from '../../services/apiCall';
-import {colors} from '../../utils/colors';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
 import MediaUploader from './components/mediaUpload';
 import PostContentModal from './components/postContentModal';
-import {styles} from './styles';
-import {getFileNameWithExtension} from '../../helper';
+import { styles } from './styles';
 
 const CreatePost = () => {
   const [drawer, setDrawer] = useState(false);
@@ -79,6 +78,7 @@ const CreatePost = () => {
   ]);
 
   const handleForm = async () => {
+    console.log("media", media)
     const formData = new FormData();
     formData.append('location', 'Pakistan');
     formData.append('audience', metaData?.audience?.value);
@@ -187,6 +187,8 @@ const CreatePost = () => {
         });
       }
     }
+
+    console.log("formData", formData)
     try {
       setLoading(true);
       const result = await apiCall?.createNewPost(formData);
