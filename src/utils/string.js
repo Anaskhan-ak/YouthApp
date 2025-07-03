@@ -153,7 +153,7 @@ export const sideBottomSheetOptions = [
     id: 'event',
     title: 'Event',
     desc: 'Arrange an event with friends in your city...',
-    route:''
+    route:'CreateEvent'
   },
 ];
 export const profileOptions = [

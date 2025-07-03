@@ -85,6 +85,7 @@ const CreateEvent = () => {
     try {
       const response = await apiCall?.createNewPost(formData);
       console.log('Successfully created event post', response);
+      navigation?.navigate('Home')
     } catch (error) {
       console.log('Error creating event post', error);
     }
