@@ -60,7 +60,7 @@ export default function Location({sheetRef, location, setLocation}) {
     );
   };
   return (
-    <BottomSheet index={0} enablePanDownToClose={true} ref={sheetRef}>
+    <BottomSheet index={0} snapPoints={['75%']} enablePanDownToClose={true} ref={sheetRef}>
       <BottomSheetView style={styles.contentContainer}>
         <GradientText style={styles.heading}>Location</GradientText>
         <View style={styles?.search}>

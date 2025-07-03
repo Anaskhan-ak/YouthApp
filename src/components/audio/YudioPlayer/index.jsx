@@ -90,7 +90,7 @@ const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
         setPlay(false);
         setCurrentTime(0);
         setDuration(0);
-        setCurrentAudioId('');
+        if (audio?.id){setCurrentAudioId('');}
       },
     );
 

@@ -86,7 +86,7 @@ export default function TagFriends({sheetRef, tagFriends, setTagFriends}) {
     );
   };
   return (
-    <BottomSheet index={0} enablePanDownToClose={true} ref={sheetRef}>
+    <BottomSheet index={0} enablePanDownToClose={true} ref={sheetRef} snapPoints={['75%']}>
       <BottomSheetView style={styles.contentContainer}>
         <GradientText style={styles.heading}>Tag Friends</GradientText>
         <View style={styles?.search}>

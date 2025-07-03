@@ -93,7 +93,7 @@ const Moments = ({route}) => {
         if (route?.params?.moment) {
         newMoments = [route.params.moment, ...newMoments];
       }
-        setMoments(result || []);
+        setMoments(newMoments || []);
       } catch (error) {
         console.log('Error fetching all moments', error);
         toast('error', 'Error fetching moments');
