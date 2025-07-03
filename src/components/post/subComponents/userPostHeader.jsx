@@ -1,6 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
-import { Image, PixelRatio, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  PixelRatio,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../../assets/images';
 import { BlueTick } from '../../../assets/images/svgs';
@@ -17,8 +24,8 @@ const UserPostHeader = ({post, user}) => {
     let date = array[0];
     const text = array[1];
     const ago = array[2];
-    if (date === 'a' || date === 'an' ){
-      date = 1
+    if (date === 'a' || date === 'an') {
+      date = 1;
     }
     return `${date}${text} ${ago}`;
   };
@@ -30,7 +37,9 @@ const UserPostHeader = ({post, user}) => {
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
         <Image
-          source={user?.photo ? {uri:user?.photo} : images?.defaultProfilePicture}
+          source={
+            user?.photo ? {uri: user?.photo} : images?.defaultProfilePicture
+          }
           style={styles?.image}
         />
       </LinearGradient>
@@ -42,20 +51,10 @@ const UserPostHeader = ({post, user}) => {
             <BlueTick />
           </View>
         </View>
-        <View style={[styles?.row,{marginTop : -height * 0.005}]}>
+        <View style={styles?.buttonrow}>
           <PrimaryButton
-            style={{
-              alignSelf: 'center',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: width * 0.14,
-              height: height * 0.024,
-            }}
-            textStyle={{
-              fontFamily: fonts?.montserratSemiBold,
-              fontSize: Pixels(10),
-              color: colors?.white,
-            }}
+            style={styles?.tag}
+            textStyle={styles?.tagText}
             title={formatDate(
               moment(post?.createdAt)
                 .startOf('hour')
@@ -74,25 +73,19 @@ const UserPostHeader = ({post, user}) => {
           />
           {post?.location && (
             <PrimaryButton
-              style={{
-                alignSelf: 'center',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: width * 0.16,
-                height: height * 0.024,
-                marginLeft: width * 0.01,
-              }}
-              textStyle={{
-                fontFamily: fonts?.montserratSemiBold,
-                fontSize: Pixels(10),
-                color: colors?.white,
-              }}
+              style={[styles?.tag,{marginLeft : 3}]}
+              textStyle={styles?.tagText}
               title={
                 post?.location?.length > 7
                   ? `${post?.location?.slice(0, 7)}...`
                   : post?.location
               }
             />
+          )}
+          {post?.type === 'EVENT' && (
+            <View style={styles?.eventTag}>
+              <Text style={styles?.tagText}>Event</Text>
+            </View>
           )}
         </View>
       </View>
@@ -126,10 +119,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: fonts?.montserratExtraBold,
-    fontSize: PixelRatio.getFontScale()*14,
+    fontSize: PixelRatio.getFontScale() * 14,
     color: colors?.text,
-    lineHeight : PixelRatio.getFontScale()*25,
-    letterSpacing : PixelRatio.getFontScale()*0.5
+    lineHeight: PixelRatio.getFontScale() * 25,
+    letterSpacing: PixelRatio.getFontScale() * 0.5,
   },
   row: {
     flexDirection: 'row',
@@ -139,4 +132,31 @@ const styles = StyleSheet.create({
   tick: {
     marginLeft: width * 0.06,
   },
+  buttonrow:{
+    flexDirection : 'row',
+    alignItems: 'start',
+    justifyContent: 'lex-start',
+    overflow : 'hidden',
+  },
+  tag: {
+    // alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.14,
+    height: height * 0.024,
+  },
+  tagText: {
+    fontFamily: fonts?.montserratSemiBold,
+    fontSize: Pixels(10),
+    color: colors?.white,
+  },
+  eventTag:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.12,
+    padding: height * 0.003,
+    backgroundColor : colors?.pink,
+    borderRadius : width * 0.015,
+    marginLeft : 5
+  }
 });

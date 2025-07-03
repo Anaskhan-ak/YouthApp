@@ -1,6 +1,8 @@
 import moment from 'moment';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { height, width } from '../../../constant';
+import { BlackLocationIcon } from '../../../assets/images/svgs';
+import GradientText from '../../../components/text/GradientText';
+import { height, Pixels, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import Attendees from '../subComponents/Attendees';
@@ -25,14 +27,20 @@ const EventPost = ({post, modal, actions, setActions}) => {
       <View style={styles?.reactionsTab}>
         <View style={styles?.bottomTab}>
           <View style={styles?.eventTextConatiner}>
-            <Text style={styles?.eventLocation}>{`${
-              post?.event?.eventDay
-            } ${moment(post?.event?.eventTime)?.format('hh:mm')} ${
-              post?.event?.locations
-            }`}</Text>
+            <View style={styles?.row}>
+              <Text style={[styles?.eventLocation,{marginRight : 5}]}>{`${
+                post?.event?.eventDay
+              } ${moment(post?.event?.eventTime)?.format('hh:mm')}`}</Text>
+              <BlackLocationIcon />
+              <GradientText style={[styles?.eventLocation,{marginLeft : 5}]}>
+                {post?.event?.locations?.length > 5
+                  ? post?.event?.locations?.slice(0, 5)
+                  : post?.event?.locations}
+              </GradientText>
+            </View>
             <Text style={styles?.eventCaption}>
-              {post?.caption?.length > 18
-                ? `${post?.caption?.slice(0, 18)}...`
+              {post?.caption?.length > 10
+                ? `${post?.caption?.slice(0, 10)}...`
                 : post?.caption}
             </Text>
           </View>
@@ -120,19 +128,19 @@ const styles = StyleSheet.create({
   },
   eventLocation: {
     fontFamily: fonts?.montserratSemiBold,
-    fontSize: width * 0.03,
+    fontSize: Pixels(14),
     color: colors?.text,
   },
   eventCaption: {
     fontFamily: fonts?.montserratExtraBold,
-    fontSize: width * 0.03,
+    fontSize: Pixels(18),
     color: colors?.text,
   },
   eventHost: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginHorizontal: width * 0.01,
+    marginHorizontal: width * 0.02,
   },
   hostImage: {
     width: width * 0.08,
@@ -154,5 +162,10 @@ const styles = StyleSheet.create({
   },
   attendees: {
     marginBottom: -height * 0.01,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 });

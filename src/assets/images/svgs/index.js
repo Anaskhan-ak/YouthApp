@@ -16,6 +16,7 @@ import BlackDropdown from './BlackDropdown.svg';
 import BlackDroprightIcon from './BlackDroprightIcon.svg';
 import BlackRewindAUdioButton from './BlackForwardButton.svg';
 import BlackLike from './BlackLike.svg';
+import BlackLocationIcon from './BlackLocationIcon.svg';
 import BlackMultipleSelection from './BlackMultipleSelection.svg';
 import BlackShare from './BlackShare.svg';
 import BlackYouthLogo from './BlackYouthLogo.svg';
@@ -170,8 +171,7 @@ export {
   BlackBackArrow,
   BlackCameraIcon,
   BlackDropdown, BlackDroprightIcon, BlackForwardAudioButton,
-  BlackLike,
-  BlackMultipleSelection,
+  BlackLike, BlackLocationIcon, BlackMultipleSelection,
   BlackRewindAUdioButton,
   BlackShare,
   BlackYouthLogo,
