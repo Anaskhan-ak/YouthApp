@@ -33,6 +33,7 @@ export const PrimaryButton = props => {
         ]}>
         {!props?.isLoading ? (
           <Text
+          numberOfLines={1}
             style={props?.textStyle ? props?.textStyle : styles.primaryText}>
             {props?.title}
           </Text>

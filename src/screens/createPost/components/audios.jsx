@@ -13,6 +13,7 @@ import SoundPlayer from 'react-native-sound-player';
 import { PauseIcon, PlayIcon } from '../../../assets/images/svgs';
 import EmptyComponent from '../../../components/empty';
 import { height, width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
 import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
@@ -24,38 +25,37 @@ const AudioComponent = ({media, setMedia}) => {
   const user = useUser();
   useEffect(() => {
     const fetchYudios = async () => {
-      
-      if (user) {
-        setLoading(true);
-        try {
-          const result = await apiCall?.getAllYudios({
-            userId: user?.id,
-            page: 1,
-            pageSize: 6,
-          });
-          console.log("Result", result)
-          if (result) {
-            setLoading(false);
-          }
-          setYudios(
-            result?.map(yudio => ({
-              id: yudio?.yudios?.id,
-              thumbnail: yudio?.yudios?.thumbnail,
-              title: yudio?.yudios?.title,
-              caption: yudio?.yudios?.caption,
-              url: yudio?.yudios?.url,
-              type: 'audio/wav',
-              isPlaying: false,
-            })),
-          );
-        } catch (error) {
-          console.log('Error fetching yudios', error);
-          setLoading(false);
-        } finally {
+      try {
+        const userDetails = await getDataLocally()
+        setLoading(false)
+        const result = await apiCall?.getAllYudios({
+          userId: userDetails?.id,
+          page: 1,
+          pageSize: 6,
+        });
+        console.log('Result', result);
+        if (result) {
           setLoading(false);
         }
+        setYudios(
+          result?.map(yudio => ({
+            id: yudio?.yudios?.id,
+            thumbnail: yudio?.yudios?.thumbnail,
+            title: yudio?.yudios?.title,
+            caption: yudio?.yudios?.caption,
+            url: yudio?.yudios?.url,
+            type: 'audio/wav',
+            isPlaying: false,
+          })),
+        );
+      } catch (error) {
+        console.log('Error fetching yudios', error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchYudios();
   }, []);
 
@@ -181,7 +181,13 @@ const AudioComponent = ({media, setMedia}) => {
           renderItem={renderItem}
           ListEmptyComponent={<EmptyComponent text="No yudios to show" />}
           ListHeaderComponent={yudios?.length !== 0 && <HeaderComponent />}
-          contentContainerStyle={yudios?.length === 0 && {alignItems :"center", justifyContent : 'center', flex : 1}}
+          contentContainerStyle={
+            yudios?.length === 0 && {
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+            }
+          }
         />
       )}
     </>

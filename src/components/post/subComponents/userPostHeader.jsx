@@ -1,13 +1,20 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import { Image, PixelRatio, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  PixelRatio,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { images } from '../../../assets/images';
-import { BlueTick } from '../../../assets/images/svgs';
+import {images} from '../../../assets/images';
+import {BlueTick} from '../../../assets/images/svgs';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
-import { height, Pixels, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {height, Pixels, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
 
 const UserPostHeader = ({post, user}) => {
   const navigation = useNavigation();
@@ -17,8 +24,8 @@ const UserPostHeader = ({post, user}) => {
     let date = array[0];
     const text = array[1];
     const ago = array[2];
-    if (date === 'a' || date === 'an' ){
-      date = 1
+    if (date === 'a' || date === 'an') {
+      date = 1;
     }
     return `${date}${text} ${ago}`;
   };
@@ -30,7 +37,9 @@ const UserPostHeader = ({post, user}) => {
         colors={[colors?.RGB1, colors?.RGB2]}
         style={styles?.imageBorder}>
         <Image
-          source={user?.photo ? {uri:user?.photo} : images?.defaultProfilePicture}
+          source={
+            user?.photo ? {uri: user?.photo} : images?.defaultProfilePicture
+          }
           style={styles?.image}
         />
       </LinearGradient>
@@ -42,7 +51,7 @@ const UserPostHeader = ({post, user}) => {
             <BlueTick />
           </View>
         </View>
-        <View style={[styles?.row,{marginTop : -height * 0.005}]}>
+        <View style={[styles?.row, {marginTop: -height * 0.005}]}>
           <PrimaryButton
             style={{
               alignSelf: 'center',
@@ -86,6 +95,7 @@ const UserPostHeader = ({post, user}) => {
                 fontFamily: fonts?.montserratSemiBold,
                 fontSize: Pixels(10),
                 color: colors?.white,
+                paddingHorizontal: 2,
               }}
               title={
                 post?.location?.length > 20
@@ -126,10 +136,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: fonts?.montserratExtraBold,
-    fontSize: PixelRatio.getFontScale()*14,
+    fontSize: PixelRatio.getFontScale() * 14,
     color: colors?.text,
-    lineHeight : PixelRatio.getFontScale()*25,
-    letterSpacing : PixelRatio.getFontScale()*0.5
+    lineHeight: PixelRatio.getFontScale() * 25,
+    letterSpacing: PixelRatio.getFontScale() * 0.5,
   },
   row: {
     flexDirection: 'row',

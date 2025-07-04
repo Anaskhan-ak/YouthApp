@@ -83,6 +83,7 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
     const isVideo =
       item?.split('.')?.pop() === 'MOV' ||
       item?.split('.')?.pop() === 'mp4' ||
+      item?.split('.')?.pop() === 'video' ||
       item?.split('.')?.pop() === 'm3u8';
     return (
       <TouchableOpacity

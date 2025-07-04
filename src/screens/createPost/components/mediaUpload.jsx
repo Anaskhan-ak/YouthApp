@@ -15,7 +15,8 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
-  console.log("media",media)
+  // console.log("media upload", media)
+  
   if (media) {
     if (
       media?.some(m => m?.type === 'video/mp4') ||
@@ -59,10 +60,12 @@ const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
           </TouchableOpacity>
           <YudioPlayer
             audio={{
-              uri: media[0]?.uri,
+              // uri: `file://${media[0]?.uri}`,
+              uri : media[0]?.uri,
               type: media[0]?.type,
               name: media[0]?.name ? media[0]?.name : 'audio.wav',
             }}
+            bg={true}
           />
         </View>
       );

@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BlurView } from '@react-native-community/blur';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {BlurView} from '@react-native-community/blur';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
@@ -16,19 +16,19 @@ import {
   InactiveRepost,
   InactiveSave,
 } from '../../../assets/images/svgs';
-import { toast } from '../../../components/toast';
-import { height, width } from '../../../constant';
-import { getDataLocally } from '../../../helper';
+import {toast} from '../../../components/toast';
+import {height, width} from '../../../constant';
+import {getDataLocally} from '../../../helper';
 import useUser from '../../../hooks/user';
-import { apiCall } from '../../../services/apiCall';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
-import { albumIds } from '../../../utils/string';
+import {apiCall} from '../../../services/apiCall';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
+import {albumIds} from '../../../utils/string';
 
 const PostBottomTab = ({post, actions, setActions}) => {
   const [follow, setFollow] = useState(false);
   const user = useUser();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [icons, setIcons] = useState([
     {
       type: 'like',
@@ -144,7 +144,10 @@ const PostBottomTab = ({post, actions, setActions}) => {
               };
           // console.log('body', body);
           const response = await apiCall?.likePost(body);
-          console.error(isLiked?'Successfully uniked post':'Successfully liked post', response);
+          console.error(
+            isLiked ? 'Successfully uniked post' : 'Successfully liked post',
+            response,
+          );
           setIcons(prev =>
             prev.map(i => {
               if (i.type !== 'like') return i;
@@ -185,13 +188,13 @@ const PostBottomTab = ({post, actions, setActions}) => {
           const response = await apiCall?.savePost(body);
           if (response) {
             console.log('Successfully saved post', response);
-            setActions(prev=>({
+            setActions(prev => ({
               ...prev,
-              save : {
+              save: {
                 ...prev,
-                count : prev?.count + 1
-              }
-            }))
+                count: prev?.count + 1,
+              },
+            }));
           }
         } catch (error) {
           console.log('Error saving post', error);
@@ -199,7 +202,10 @@ const PostBottomTab = ({post, actions, setActions}) => {
         }
         break;
       case 'repost':
-        navigation?.navigate("CreateRepost", {post:post, setActions : setActions})
+        navigation?.navigate('CreateRepost', {
+          post: post,
+          setActions: setActions,
+        });
         break;
       default:
         break;

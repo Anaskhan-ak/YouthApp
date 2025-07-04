@@ -174,11 +174,11 @@ const YudioPlayer = ({
   const RenderIcon = () => {
     if (!play || pause) {
       //not playing
-      return <PlayIcon height={width * 0.03} />;
+      return <PlayIcon height={width * 0.05} />;
     }
     if (play || !pause) {
       //resume
-      return <PauseIcon height={width * 0.03} />;
+      return <PauseIcon height={width * 0.05} />;
     }
   };
 
@@ -232,7 +232,6 @@ const YudioPlayer = ({
             end={{x: 1, y: 0}}
             style={[
               styles.playPauseButton,
-              play ? styles.noPaddingLeft : styles.paddingLeft,
             ]}>
             <RenderIcon/>
           </LinearGradient>

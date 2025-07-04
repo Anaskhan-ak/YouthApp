@@ -3,26 +3,29 @@ import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import {
-    GradientPauseIcon,
-    GradientPlayIcon,
-    WhiteBackwardAudioIcon,
-    WhiteForwardAudioIcon
+  GradientPauseIcon,
+  GradientPlayIcon,
+  WhiteBackwardAudioIcon,
+  WhiteForwardAudioIcon,
 } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors/index';
 
-const MusicPlayer = () => {
+const MusicPlayer = ({audioURL}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioURL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
 
   const playPauseHandler = () => {
     try {
       if (isPlaying) {
         SoundPlayer.pause();
       } else {
-        SoundPlayer.playUrl(audioURL);
+        SoundPlayer.playUrl(
+          audioURL
+            ? audioURL
+            : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+        );
       }
       setIsPlaying(!isPlaying);
     } catch (e) {
@@ -79,8 +82,7 @@ const MusicPlayer = () => {
   };
 
   return (
-    <View
-      style={styles?.container}>
+    <View style={styles?.container}>
       <View style={styles?.sliderContainer}>
         <Text style={styles?.timeText}>{formatTime(position)}</Text>
         <Slider
@@ -97,14 +99,15 @@ const MusicPlayer = () => {
           thumbTintColor="transparent"
         />
         <Text style={styles?.timeText}>{formatTime(duration)}</Text>
-        
       </View>
 
       <View style={styles?.controls}>
         <TouchableOpacity onPress={backwardHandler}>
           <WhiteBackwardAudioIcon />
         </TouchableOpacity>
-        <TouchableOpacity style={styles?.playPauseButton} onPress={playPauseHandler}>
+        <TouchableOpacity
+          style={styles?.playPauseButton}
+          onPress={playPauseHandler}>
           {isPlaying ? (
             <GradientPauseIcon />
           ) : (
@@ -119,8 +122,6 @@ const MusicPlayer = () => {
   );
 };
 
-
-
 export default MusicPlayer;
 
 export const styles = StyleSheet.create({
@@ -132,7 +133,7 @@ export const styles = StyleSheet.create({
     marginVertical: 5,
     width: width * 0.5,
     height: Platform?.OS === 'ios' ? height * 0.08 : height * 0.06,
-    backgroundColor : colors?.blackTransparent
+    backgroundColor: colors?.blackTransparent,
   },
   sliderContainer: {
     flexDirection: 'row',
@@ -165,6 +166,4 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: 2,
   },
-  
 });
-
