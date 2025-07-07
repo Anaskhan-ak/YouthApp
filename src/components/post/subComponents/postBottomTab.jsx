@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {BlurView} from '@react-native-community/blur';
-import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { BlurView } from '@react-native-community/blur';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   ActiveComment,
@@ -16,14 +16,14 @@ import {
   InactiveRepost,
   InactiveSave,
 } from '../../../assets/images/svgs';
-import {toast} from '../../../components/toast';
-import {height, width} from '../../../constant';
-import {getDataLocally} from '../../../helper';
+import { toast } from '../../../components/toast';
+import { height, width } from '../../../constant';
+import { getDataLocally } from '../../../helper';
 import useUser from '../../../hooks/user';
-import {apiCall} from '../../../services/apiCall';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
-import {albumIds} from '../../../utils/string';
+import { apiCall } from '../../../services/apiCall';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
+import { albumIds } from '../../../utils/string';
 
 const PostBottomTab = ({post, actions, setActions}) => {
   const [follow, setFollow] = useState(false);
@@ -112,12 +112,15 @@ const PostBottomTab = ({post, actions, setActions}) => {
 
   useEffect(() => {
     const getFollowing = async () => {
-      const userDetails = await getDataLocally();
       try {
-        const response = await apiCall?.getFollower(userDetails?.id);
+        const page = 1;
+        const limit = 10;
+        const response = await apiCall?.getFollowing(page, limit);
         if (response) {
-          // console.log('Following fetched successfully', response)
-          setFollow(response?.some(f => f?.followingId === post?.userId));
+          console.log('Following fetched successfully', response?.results);
+          setFollow(
+            response?.results?.find(f => f?.id === post?.userId)?.isFollowing,
+          );
         }
       } catch (error) {
         console.log('Error fetching following', error);
@@ -218,12 +221,20 @@ const PostBottomTab = ({post, actions, setActions}) => {
       toast('error', 'You cant follow yourself!');
     } else {
       try {
-        const body = {
-          followerId: userDetails?.id,
-          followingId: post?.userId,
-        };
-        const response = await apiCall?.follow(body);
-        if (response) {
+        if (follow) {
+          const body = {
+            followerId: userDetails?.id,
+            followingId: post?.userId,
+          };
+          const response = await apiCall?.unfollow(body);
+          console.log('Unfollowed successfully', response);
+          setFollow(false);
+        } else {
+          const body = {
+            followerId: userDetails?.id,
+            followingId: post?.userId,
+          };
+          const response = await apiCall?.follow(body);
           console.log('Followed successfully', response);
           setFollow(true);
         }
@@ -260,13 +271,15 @@ const PostBottomTab = ({post, actions, setActions}) => {
           post?.type === 'MUSIC' ||
           post?.type === 'DOCUMENT' ||
           post?.type === 'MOMMENTS' ||
-          post?.type === 'NORMAL') && (
-          <TouchableOpacity style={styles?.pinkButton} onPress={handleFollow}>
-            <Text style={styles?.pinkButtonText}>
-              {follow ? `Followed` : `Follow`}
-            </Text>
-          </TouchableOpacity>
-        )}
+          post?.type === 'NORMAL' ||
+          post?.type === 'YUDIO') &&
+          post?.userId !== user?.id && (
+            <TouchableOpacity style={styles?.pinkButton} onPress={handleFollow}>
+              <Text style={styles?.pinkButtonText}>
+                {follow ? `Followed` : `Follow`}
+              </Text>
+            </TouchableOpacity>
+          )}
         {post?.type === 'EVENT' && (
           <TouchableOpacity style={styles?.pinkButton}>
             <Text style={styles?.pinkButtonText}>Attend</Text>

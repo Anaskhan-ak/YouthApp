@@ -1,6 +1,6 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
-import {useCallback, useEffect, useState} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   BackHandler,
   Image,
@@ -12,15 +12,15 @@ import {
   View,
 } from 'react-native';
 import Contacts from 'react-native-contacts';
-import {Cross} from '../../assets/images/svgs';
-import {GradientBorderButton} from '../../components/buttons/GradientBorderButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Cross } from '../../assets/images/svgs';
+import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {width} from '../../constant';
-import {apiCall} from '../../services/apiCall';
+import { width } from '../../constant';
+import { getDataLocally } from '../../helper';
+import { apiCall } from '../../services/apiCall';
 import ContactsList from './Contacts';
-import {styles} from './styles';
-import {getDataLocally} from '../../helper';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { styles } from './styles';
 
 const FindFriends = () => {
   const [modal, setModal] = useState(false);
@@ -60,25 +60,31 @@ const FindFriends = () => {
   };
 
   const getYouthappContacts = async numbers => {
-    const response = await apiCall?.getContactSuggestions({
-      contacts: numbers,
-      // name: value ? value : null,
-    });
-    setUsers(
-      response?.user?.map(u => ({
-        id: u?.id,
-        fullName: `${u?.firstName} ${u?.lastName}`,
-        photo: u?.photo,
-      })),
-    );
-    setFilteredUsers(
-      response?.user?.map(u => ({
-        id: u?.id,
-        fullName: `${u?.firstName} ${u?.lastName}`,
-        photo: u?.photo,
-      })),
-    );
+    try {
+      const response = await apiCall?.getContactSuggestions({
+        contacts: ['03368214535'],
+        // name: value ? value : null,
+      });
+      console.log('response', response);
+      setUsers(
+        response?.user?.map(u => ({
+          id: u?.id,
+          fullName: `${u?.firstName} ${u?.lastName}`,
+          photo: u?.photo,
+        })),
+      );
+      setFilteredUsers(
+        response?.user?.map(u => ({
+          id: u?.id,
+          fullName: `${u?.firstName} ${u?.lastName}`,
+          photo: u?.photo,
+        })),
+      );
+    } catch (error) {
+      console.log('Error fetching contacts', error);
+    }
   };
+
   const getContacts = async () => {
     try {
       if (Platform.OS === 'android') {
@@ -114,7 +120,8 @@ const FindFriends = () => {
       const extractedNumbers = results
         ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
         .filter(Boolean); // Remove null/undefined/short values
-      getYouthappContacts(extractedNumbers);
+      console.log('extractedNumbers', extractedNumbers);
+      // getYouthappContacts(extractedNumbers);
       setPhoneNos(formattedContacts);
       setFilteredNos(formattedContacts);
     } catch (error) {
@@ -124,10 +131,12 @@ const FindFriends = () => {
   };
 
   const getFollowing = async () => {
-    const user = await getDataLocally();
     try {
-      const result = await apiCall?.getFollowing();
-      setFollowing(result);
+      const page = 1;
+      const limit = 10;
+      const response = await apiCall?.getFollowing(page, limit);
+      // console.log("result", response?.results)
+      setFollowing(response?.results);
     } catch (error) {
       console.log('error fetching following', error);
     }
@@ -136,9 +145,9 @@ const FindFriends = () => {
   const toggleFollow = async followingId => {
     try {
       const user = await getDataLocally();
-      const isAlreadyFollowing = following.some(
-        f => f.followingId === followingId,
-      );
+      const isAlreadyFollowing = following.find(
+        f => f.id === followingId,
+      )?.isFollowing;
       let response;
 
       if (!isAlreadyFollowing) {
@@ -160,7 +169,7 @@ const FindFriends = () => {
 
         if (response === 200) {
           setFollowing(prev =>
-            prev.filter(f => f?.followingId !== followingId),
+            prev.filter(f => f?.id !== followingId),
           ); // Remove from state
         }
       }
@@ -184,6 +193,7 @@ const FindFriends = () => {
   useEffect(() => {
     getFollowing();
     getContacts();
+    getYouthappContacts()
     const backHandler = BackHandler?.addEventListener(
       'hardwareBackPress',
       handleBack,

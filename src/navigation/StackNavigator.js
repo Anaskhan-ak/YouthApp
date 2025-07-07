@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
+import CloseFriends from '../screens/closeFriends';
 import ConnectionListing from '../screens/connectionListing';
 import CreateEvent from '../screens/createEvent';
 import CreateMoment from '../screens/CreateMoment';
@@ -10,6 +11,7 @@ import CreateStory from '../screens/createStory';
 import CreateWallet from '../screens/createWallet';
 import CreateYudio from '../screens/createYudio';
 import EmailVerification from '../screens/emailVerification';
+import Favorites from '../screens/favorites';
 import FindFriends from '../screens/findFriends';
 import ForgetPassword from '../screens/forgetPassword';
 import Home from '../screens/home';
@@ -29,14 +31,12 @@ import ProfileSettingsActivity from '../screens/profileSettings';
 import SavedArchived from '../screens/savedArchived';
 import SignUp from '../screens/signup';
 import Splash from '../screens/splash';
+import Subscriptions from '../screens/subscriptions';
 import SuggestedContent from '../screens/suggestions';
 import TimeSpent from '../screens/timeSpent';
 import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
-import CloseFriends from '../screens/closeFriends';
-import Favorites from '../screens/favorites';
-import Subscriptions from '../screens/subscriptions';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
