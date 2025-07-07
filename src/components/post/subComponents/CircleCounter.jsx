@@ -33,7 +33,7 @@ const CircleCounter = ({
   centerText = '4',
   centerTextColor = '#fff',
 }) => {
-  console.log("segments", segments)
+  // console.log("segments", segments)
   const radius = (size - strokeWidth) / 2;
   const anglePerSegment = 360 / segments;
   const usableAngle = anglePerSegment - gapDegrees;
