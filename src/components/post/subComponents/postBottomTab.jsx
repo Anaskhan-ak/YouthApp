@@ -117,7 +117,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
         const limit = 10;
         const response = await apiCall?.getFollowing(page, limit);
         if (response) {
-          console.log('Following fetched successfully', response?.results);
+          // console.log('Following fetched successfully', response?.results);
           setFollow(
             response?.results?.find(f => f?.id === post?.userId)?.isFollowing,
           );
