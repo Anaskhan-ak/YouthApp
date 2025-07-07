@@ -280,7 +280,7 @@ const PostBottomTab = ({post, actions, setActions}) => {
               </Text>
             </TouchableOpacity>
           )}
-        {post?.type === 'EVENT' && (
+        {post?.type === 'EVENT' && post?.userId !== user?.id && (
           <TouchableOpacity style={styles?.pinkButton}>
             <Text style={styles?.pinkButtonText}>Attend</Text>
           </TouchableOpacity>
