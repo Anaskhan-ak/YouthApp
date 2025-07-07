@@ -63,7 +63,7 @@ export default function Audience({sheetRef, audience, setAudience}) {
     );
   };
   return (
-    <BottomSheet index={0} enablePanDownToClose={true} ref={sheetRef}>
+    <BottomSheet index={0} enablePanDownToClose={true} ref={sheetRef} snapPoints={['75%']}>
       <BottomSheetView style={styles.contentContainer}>
         <GradientText style={styles.heading}>Audience</GradientText>
         <View style={styles?.search}><CustomSearchBar search={search} setSearch={setSearch}/></View>

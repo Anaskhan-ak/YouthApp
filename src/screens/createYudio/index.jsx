@@ -119,7 +119,8 @@ const CreateYudio = () => {
     try {
       setLoading(true);
       const result = await apiCall?.createNewPost(formData);
-      navigation.navigate('Yudios', {yudio: result?.yudios});
+      console.log('Successfully created Yudio', result?.yudios);
+        navigation.navigate('Yudios', {yudio: result?.yudios});
     } catch (error) {
       console.log('Error creating yudio', error);
       toast('error', 'Error creating yudio');
@@ -344,6 +345,7 @@ const CreateYudio = () => {
                 uri: yudio,
                 waveform: waveform,
               }}
+              bg={true}
             />
           </View>
         ) : yudio ? (
@@ -360,10 +362,7 @@ const CreateYudio = () => {
               }
             />
             <Text style={styles?.recordedPlayerHeading}>{title}</Text>
-            <Text
-              style={
-                styles?.recordedPlayerName
-              }>{`${user?.firstName} ${user?.lastName}`}</Text>
+            <Text style={styles?.recordedPlayerName}>{user?.name}</Text>
             <View style={styles?.recordedPlayer}>
               <RecordedAudioPlayer audioURL={yudio} />
               <TouchableOpacity

@@ -47,7 +47,7 @@ const Yudios = () => {
       try {
         const result = await apiCall?.getAllYudios(data);
         console.log('yudios fetched successfully', result);
-        setYudios(result || []);
+        setYudios(result || [])
       } catch (error) {
         console.log('Error fetching all yudios', error);
         toast('error', 'Error fetching yudios');
@@ -82,7 +82,7 @@ const Yudios = () => {
       {/* Header */}
       <View style={styles?.header}>
         <TouchableOpacity
-          onPress={() => navigation?.goBack()}
+          onPress={() => navigation?.navigate('Home')}
           style={styles?.headerIcon}>
           <BlackBackArrow />
         </TouchableOpacity>
@@ -106,7 +106,7 @@ const Yudios = () => {
       {loading ? (
         <Loader /> // Full-screen loader while fetching
       ) : yudios?.length === 0 ? (
-        <EmptyComponent text="Failed to load yudios" />
+        <EmptyComponent text="No yudios yet" />
       ) : (
         <FlatList
           data={yudios}

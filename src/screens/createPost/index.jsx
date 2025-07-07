@@ -1,9 +1,9 @@
-import { pick } from '@react-native-documents/picker';
-import { useNavigation } from '@react-navigation/native';
-import { useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import {pick} from '@react-native-documents/picker';
+import {useNavigation} from '@react-navigation/native';
+import {useRef, useState} from 'react';
+import {ActivityIndicator, ScrollView, View} from 'react-native';
 import RNBlobUtil from 'react-native-blob-util';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   CameraIcon,
   FileAudio,
@@ -18,14 +18,15 @@ import MultilineInput from '../../components/inputs/multilineInput';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
-import { toast } from '../../components/toast';
+import {toast} from '../../components/toast';
 import useUser from '../../hooks/user';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import FileSelectorButtons from './components/fileSelectors';
 import MediaUploader from './components/mediaUpload';
 import PostContentModal from './components/postContentModal';
-import { styles } from './styles';
+import {styles} from './styles';
+import CameraComponent from './components/camera';
 
 const CreatePost = () => {
   const [drawer, setDrawer] = useState(false);
@@ -57,7 +58,7 @@ const CreatePost = () => {
   const [options, setOptions] = useState([
     {
       type: 'gallery',
-      icon: <GalleryIcon/>,
+      icon: <GalleryIcon />,
       active: true,
     },
     {
@@ -78,7 +79,6 @@ const CreatePost = () => {
   ]);
 
   const handleForm = async () => {
-    console.log("media", media)
     const formData = new FormData();
     formData.append('location', 'Pakistan');
     formData.append('audience', metaData?.audience?.value);
@@ -86,15 +86,18 @@ const CreatePost = () => {
     formData.append('isPublic', 'true');
     if (
       metaData?.tagFriends?.value &&
-      metaData?.tagFriends?.value?.filter(item => item !== undefined && item !== '').length >
-        0
+      metaData?.tagFriends?.value?.filter(
+        item => item !== undefined && item !== '',
+      ).length > 0
     ) {
-    formData.append(
-      'Tag',
-      JSON.stringify(
-        metaData?.tagFriends?.value?.filter(item => item !== undefined && item !== ''),
-      ),
-    );
+      formData.append(
+        'Tag',
+        JSON.stringify(
+          metaData?.tagFriends?.value?.filter(
+            item => item !== undefined && item !== '',
+          ),
+        ),
+      );
     }
     if (
       media?.some(m => m?.type === 'video/mp4') ||
@@ -188,20 +191,19 @@ const CreatePost = () => {
       }
     }
 
-    console.log("formData", formData)
     try {
       setLoading(true);
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Post', result?.data);
-      navigation?.navigate('Home')
+      navigation?.navigate('Home');
     } catch (error) {
       console.log('Error creating post', error);
       toast('error', 'Error creating post');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
-
+  console.log('media', media);
   const pickFiles = async type => {
     if (type === 'audio') {
       const [res] = await pick({
@@ -252,9 +254,7 @@ const CreatePost = () => {
       ]);
     }
   };
-
   // console.log('metaData', metaData)
-
   return (
     <SafeAreaView style={styles?.container}>
       <GradientHeader
@@ -262,61 +262,79 @@ const CreatePost = () => {
         backPress={() => navigation?.goBack()}
         advancedButtonPress={() => setDrawer(!drawer)}
       />
-      <ScrollView style={styles?.content}>
-        <View style={styles?.userInfoHeader}>
-          <UserInfoHeader
-            userName={user?.name}
-            image={user?.photo}
-            data={metaData}
-            setData={setMetaData}
-          />
-        </View>
-        <MultilineInput
-          placeholder="Say something about this..."
-          placeholderTextColor={colors?.gray}
-          editable={true}
-          multiline={true}
-          numberOfLines={5}
-          scrollEnabled={true}
-          value={description}
-          onChangeText={setDescription}
-          chars={chars}
-          setChars={setChars}
-          maxChars={maxChars}
-          postType={'post'}
-        />
-        <FileSelectorButtons
-          type={options.find(opt => opt.active)?.type}
-          onPickFile={pickFiles}
+
+      {options.find(item => item.type === 'camera' && item.active) ? (
+        <CameraComponent
           media={media}
-          thumbnail={thumbnail}
-          pickFiles={pickFiles}
-        />
-        <MediaUploader
-          media={media}
-          thumbnail={thumbnail}
           setMedia={setMedia}
-          setThumbnail={setThumbnail}
-        />
-        {drawer && <Drawer />}
-      </ScrollView>
-      {!drawer && (
-        <PostContentModal
-          options={options}
           setOptions={setOptions}
-          setMedia={setMedia}
-          media={media}
         />
+      ) : (
+        <>
+          <ScrollView style={styles?.content}>
+            <View style={styles?.userInfoHeader}>
+              <UserInfoHeader
+                userName={user?.name}
+                image={user?.photo}
+                data={metaData}
+                setData={setMetaData}
+              />
+            </View>
+
+            <MultilineInput
+              placeholder="Say something about this..."
+              placeholderTextColor={colors?.gray}
+              editable={true}
+              multiline={true}
+              numberOfLines={5}
+              scrollEnabled={true}
+              value={description}
+              onChangeText={setDescription}
+              chars={chars}
+              setChars={setChars}
+              maxChars={maxChars}
+              postType={'post'}
+            />
+
+            <FileSelectorButtons
+              type={options.find(opt => opt.active)?.type}
+              onPickFile={pickFiles}
+              media={media}
+              thumbnail={thumbnail}
+              pickFiles={pickFiles}
+            />
+
+            <MediaUploader
+              media={media}
+              thumbnail={thumbnail}
+              setMedia={setMedia}
+              setThumbnail={setThumbnail}
+            />
+
+            {drawer && <Drawer />}
+          </ScrollView>
+
+          {!drawer && (
+            <PostContentModal
+              options={options}
+              setOptions={setOptions}
+              setMedia={setMedia}
+              media={media}
+            />
+          )}
+
+          <CreateButton
+            title="Create New Post"
+            loader={
+              loading ? (
+                <ActivityIndicator size={'small'} color={colors?.RGB1} />
+              ) : null
+            }
+            onPress={handleForm}
+          />
+        </>
       )}
-      <CreateButton
-        title="Create New Post"
-        loader={
-          loading ? (
-            <ActivityIndicator size={'small'} color={colors?.RGB1} />
-          ) : null
-        }
-        onPress={handleForm}
-      />
+
       {metaData?.audience?.active && (
         <Audience
           sheetRef={metaData?.audience?.ref}
@@ -324,6 +342,7 @@ const CreatePost = () => {
           setAudience={setMetaData}
         />
       )}
+
       {metaData?.location?.active && (
         <Location
           sheetRef={metaData?.location?.ref}
@@ -331,6 +350,7 @@ const CreatePost = () => {
           setLocation={setMetaData}
         />
       )}
+
       {metaData?.tagFriends?.active && (
         <TagFriends
           sheetRef={metaData?.tagFriends?.ref}

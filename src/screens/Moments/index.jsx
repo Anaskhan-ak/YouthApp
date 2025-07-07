@@ -20,7 +20,7 @@ import { colors } from '../../utils/colors';
 import RenderMoments from './components/renderMoments';
 import { styles } from './styles';
 
-const Moments = () => {
+const Moments = ({route}) => {
   const [moments, setMoments] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -89,7 +89,11 @@ const Moments = () => {
       try {
         const result = await apiCall?.getAllMoments(data);
         // console.log('moments fetched successfully', result);
-        setMoments(result || []);
+        let newMoments = result || [];
+        if (route?.params?.moment) {
+        newMoments = [route.params.moment, ...newMoments];
+      }
+        setMoments(newMoments || []);
       } catch (error) {
         console.log('Error fetching all moments', error);
         toast('error', 'Error fetching moments');
@@ -99,7 +103,7 @@ const Moments = () => {
       }
     };
     fetchMoments();
-  }, []);
+  }, [route?.params?.moment]);
 
   const handleScroll = event => {
     const x = event.nativeEvent.contentOffset.x;
@@ -130,7 +134,7 @@ const Moments = () => {
           {/* Header */}
           <View style={styles?.header}>
             <TouchableOpacity
-              onPress={() => navigation?.goBack()}
+              onPress={() => navigation?.navigate('Home')}
               style={styles?.headerIcon}>
               <WhiteBackArrow />
             </TouchableOpacity>

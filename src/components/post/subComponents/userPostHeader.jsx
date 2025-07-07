@@ -98,8 +98,8 @@ const UserPostHeader = ({post, user}) => {
                 paddingHorizontal: 2,
               }}
               title={
-                post?.location?.length > 20
-                  ? `${post?.location?.slice(0, 20)}...`
+                post?.location?.length > 7
+                  ? `${post?.location?.slice(0, 7)}...`
                   : post?.location
               }
             />

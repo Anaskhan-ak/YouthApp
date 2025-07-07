@@ -46,7 +46,6 @@ const Saved = ({navigation}) => {
           setAlbums(response);
         }
       } catch (error) {
-        console.log('Error fetching albums', response);
         toast('error', 'Error fetching albums');
       }
     };

@@ -4,7 +4,15 @@ import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
 import PostBottomTab from '../subComponents/postBottomTab';
 
-const YudioPost = ({post, modal, index, currentAudioId, setCurrentAudioId}) => {
+const YudioPost = ({
+  post,
+  modal,
+  actions,
+  setActions,
+  index,
+  currentAudioId,
+  setCurrentAudioId,
+}) => {
   return (
     <View>
       <TouchableOpacity
@@ -19,7 +27,13 @@ const YudioPost = ({post, modal, index, currentAudioId, setCurrentAudioId}) => {
             currentAudioId={currentAudioId}
             setCurrentAudioId={setCurrentAudioId}
           />
-          {!modal?.modal?.isPost && <PostBottomTab post={post} />}
+          {!modal?.modal?.isPost && (
+            <PostBottomTab
+              post={post}
+              actions={actions}
+              setActions={setActions}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </View>

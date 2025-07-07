@@ -48,6 +48,8 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
     if (item?.id === 'saved' || item?.id === 'archive') {
       const isSaved = item?.id === 'saved' ? true : false;
       navigation?.navigate(item?.route, {isSaved: isSaved});
+    }else{
+       navigation?.navigate(item?.route);
     }
   };
 

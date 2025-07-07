@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { height, width } from '../../../constant';
 import { colors } from '../../../utils/colors';
@@ -5,15 +6,18 @@ import { fonts } from '../../../utils/fonts';
 import Attendees from '../subComponents/Attendees';
 import PostBottomTab from '../subComponents/postBottomTab';
 
-const EventPost = ({post, modal}) => {
+const EventPost = ({post, modal, actions, setActions}) => {
+  // console.log("post",post);
+
   return (
     <View>
-      <TouchableOpacity onLongPress={() => modal?.setModal(prev => ({...prev, isPost : true}))}>
+      <TouchableOpacity
+        onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
         <View style={styles.mediaContainer}>
           <Image
-            source={post?.event?.thumbnail}
+            source={{uri: post?.event?.thumbnail}}
             style={styles.mediaImage}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
       </TouchableOpacity>
@@ -21,15 +25,26 @@ const EventPost = ({post, modal}) => {
       <View style={styles?.reactionsTab}>
         <View style={styles?.bottomTab}>
           <View style={styles?.eventTextConatiner}>
-            <Text style={styles?.eventLocation}>{post?.event?.location}</Text>
-            <Text style={styles?.eventCaption}>{post?.event?.caption}</Text>
+            <Text style={styles?.eventLocation}>{`${
+              post?.event?.eventDay
+            } ${moment(post?.event?.eventTime)?.format('hh:mm')} ${
+              post?.event?.locations
+            }`}</Text>
+            <Text style={styles?.eventCaption}>
+              {post?.caption?.length > 18
+                ? `${post?.caption?.slice(0, 18)}...`
+                : post?.caption}
+            </Text>
           </View>
           <View style={styles?.eventElements}>
             <View style={styles?.attendees}>
               <Attendees post={post} />
             </View>
             <View style={styles?.eventHost}>
-              <Image source={post?.user?.photo} style={styles?.hostImage} />
+              <Image
+                source={{uri: post?.user?.photo}}
+                style={styles?.hostImage}
+              />
               <Text
                 style={
                   styles?.hostName
@@ -37,7 +52,13 @@ const EventPost = ({post, modal}) => {
             </View>
           </View>
         </View>
-        {!modal?.modal?.isPost && <PostBottomTab post={post} />}
+        {!modal?.modal?.isPost && (
+          <PostBottomTab
+            post={post}
+            actions={actions}
+            setActions={setActions}
+          />
+        )}
       </View>
     </View>
   );
@@ -62,6 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.04,
     marginTop: height * 0.015,
     width: width * 0.89,
+    overflow: 'hidden',
   },
   mediaImage: {
     width: width * 0.89,
@@ -71,7 +93,7 @@ const styles = StyleSheet.create({
   bottomTab: {
     backgroundColor: colors?.gray11,
     height: height * 0.08,
-    width: width * 0.88,
+    width: width * 0.89,
     borderTopLeftRadius: width * 0.03,
     borderTopRightRadius: width * 0.03,
     flexDirection: 'row',

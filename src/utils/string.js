@@ -244,13 +244,16 @@ export const profileSettingsOptions = [
   {
     id: 'closeFriends',
     title: 'Close Friends',
+    route : 'CloseFriends'
   },
   {
     id: 'favorites',
     title: 'Favorites',
+    route : 'Favorites'
   },
   {
     id: 'subscriptions',
     title: 'Subscriptions',
+    route : 'Subscriptions'
   },
 ];

@@ -13,7 +13,7 @@ import {styles} from './styles';
 
 const PostModal = ({options, setOptions, content, fixed}) => {
   const MAX_HEIGHT = fixed ? height * 0.35 : height * 0.5; // fully expanded
-  const MIN_HEIGHT = Platform?.OS === 'ios' ? height * 0.4 : height * 0.4; // minimized
+  const MIN_HEIGHT = Platform?.OS === 'ios' ? height * 0.38 : height * 0.4; // minimized
 
   const gestureRef = useRef();
   const modalHeight = useSharedValue(MAX_HEIGHT); // Start expanded

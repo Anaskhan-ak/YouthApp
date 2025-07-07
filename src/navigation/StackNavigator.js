@@ -19,6 +19,7 @@ import Login from '../screens/login';
 import Moments from '../screens/Moments';
 import NewChat from '../screens/newChat';
 import NewChatGroup from '../screens/newChatGroup';
+import Notifications from '../screens/notifications';
 import Onboarding from '../screens/onboarding';
 import Otp from '../screens/otp';
 import OtpVerification from '../screens/otpVerification';
@@ -33,6 +34,9 @@ import TimeSpent from '../screens/timeSpent';
 import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
+import CloseFriends from '../screens/closeFriends';
+import Favorites from '../screens/favorites';
+import Subscriptions from '../screens/subscriptions';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -41,6 +45,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Onboarding"
         component={Onboarding}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={Notifications}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
@@ -69,6 +78,11 @@ const StackNavigator = () => {
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
+        name="CloseFriends"
+        component={CloseFriends}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
         name="Otp"
         component={Otp}
         options={{headerShown: false, animation: 'slide_from_left'}}
@@ -78,11 +92,11 @@ const StackNavigator = () => {
         component={Profile}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="ProfileSettingsActivity"
         component={ProfileSettingsActivity}
         options={{headerShown: false, animation: 'slide_from_left'}}
-      /> */}
+      />
       <Stack.Screen
         name="CreateWallet"
         component={CreateWallet}
@@ -196,6 +210,16 @@ const StackNavigator = () => {
        <Stack.Screen
         name="ConnectionListing"
         component={ConnectionListing}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="Subscriptions"
+        component={Subscriptions}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen

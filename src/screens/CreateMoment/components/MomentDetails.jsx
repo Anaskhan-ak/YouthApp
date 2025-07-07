@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import Video from 'react-native-video';
 import CreateButton from '../../../components/buttons/CreateButton';
 import Drawer from '../../../components/drawer';
@@ -8,6 +9,7 @@ import UserInfoHeader from '../../../components/headers/userInfoHeader';
 import MultilineInput from '../../../components/inputs/multilineInput';
 import { toast } from '../../../components/toast';
 import { height, width } from '../../../constant';
+import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 
@@ -16,6 +18,8 @@ const MomentDetails = ({setCameraOpen, url}) => {
   const [chars, setChars] = useState(0);
   const [loading, setLoading] = useState(false);
   const maxChars = 350;
+  const user = useUser();
+  const navigation = useNavigation()
   const [metaData, setMetaData] = useState({
     audience: {
       active: false,
@@ -70,6 +74,7 @@ const MomentDetails = ({setCameraOpen, url}) => {
         console.log('::moment created successfully::', response);
         setLoading(false);
         toast('success', 'Moment Created Successfully');
+        navigation?.navigate("Moments",{moment:response})
       }
     } catch (error) {
       console.log('::moment creation failed::', error);
@@ -90,6 +95,7 @@ const MomentDetails = ({setCameraOpen, url}) => {
         <UserInfoHeader
           data={metaData}
           setData={setMetaData}
+          image={user?.photo}
         />
         <View style={styles?.content}>
           <MultilineInput
@@ -110,7 +116,13 @@ const MomentDetails = ({setCameraOpen, url}) => {
         </View>
         <Drawer />
       </View>
-      <CreateButton title="Create New Moment" onPress={createMoment} />
+      <CreateButton
+        title="Create New Moment"
+        onPress={createMoment}
+        loader={
+          loading && <ActivityIndicator size={'small'} color={colors?.RGB1} />
+        }
+      />
     </View>
   );
 };
@@ -132,9 +144,9 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: width * 0.7,
     height: height * 0.18,
-    marginHorizontal: width * 0.02,
+    // marginHorizontal: width * 0.02,
     marginVertical: width * 0.01,
-    flex: 0.8,
+    flex: 0.7,
     borderRadius: width * 0.02,
     overflow: 'hidden',
   },
