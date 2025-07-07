@@ -101,7 +101,7 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
               </TouchableOpacity>
               {post?.media?.url?.length > 1 && (
                 <CircleCounter
-                  segments={post?.media?.length}
+                  segments={post?.media?.url?.length}
                   filled={index + 1}
                   centerText={index + 1}
                   activeColor={colors?.white}
