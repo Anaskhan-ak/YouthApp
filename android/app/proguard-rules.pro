@@ -10,3 +10,5 @@
 # Add any project specific keep options here:
 -keep class com.rt2zz.reactnativecontacts.** {*;}
 -keepclassmembers class com.rt2zz.reactnativecontacts.** {*;}
+-keep class **.zego.**  { *; }
+-keep class **.**.zego_zpns.** { *; }

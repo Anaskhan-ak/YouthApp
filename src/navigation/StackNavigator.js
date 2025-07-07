@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as ZegoUIKitCall from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CloseFriends from '../screens/closeFriends';
@@ -40,199 +41,221 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
+  const {
+    ZegoCallInvitationDialog,
+    ZegoUIKitPrebuiltCallWaitingScreen,
+    ZegoUIKitPrebuiltCallInCallScreen,
+    ZegoUIKitPrebuiltCallFloatingMinimizedView,
+  } = ZegoUIKitCall;
   return (
-    <Stack.Navigator initialRouteName="Splash">
-      <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Notifications"
-        component={Notifications}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Splash"
-        component={Splash}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="LandingWidget"
-        options={{headerShown: false, animation: 'slide_from_left'}}
-        component={LandingWidget}
-      />
-      <Stack.Screen
-        name="OtpVerification"
-        options={{headerShown: false, animation: 'slide_from_left'}}
-        component={OtpVerification}
-      />
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CloseFriends"
-        component={CloseFriends}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Otp"
-        component={Otp}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="ProfileSettingsActivity"
-        component={ProfileSettingsActivity}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreateWallet"
-        component={CreateWallet}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="EmailVerification"
-        component={EmailVerification}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="FindFriends"
-        component={FindFriends}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="ForgetPassword"
-        component={ForgetPassword}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Interests"
-        component={Interests}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="BottomTab"
-        component={BottomTabNavigator}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreateYudio"
-        component={CreateYudio}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Yudios"
-        component={Yudios}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreatePost"
-        component={CreatePost}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreateEvent"
-        component={CreateEvent}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreateStory"
-        component={CreateStory}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="ChatInbox"
-        component={ChatInbox}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Chat"
-        component={Chat}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="NewChat"
-        component={NewChat}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="NewChatGroup"
-        component={NewChatGroup}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Wallet"
-        component={Wallet}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="PostDetails"
-        component={PostDetails}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="SuggestedContent"
-        component={SuggestedContent}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreateMoment"
-        component={CreateMoment}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Moments"
-        component={Moments}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="CreateRepost"
-        component={CreateRepost}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-       <Stack.Screen
-        name="ConnectionListing"
-        component={ConnectionListing}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="Favorites"
-        component={Favorites}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-       <Stack.Screen
-        name="Subscriptions"
-        component={Subscriptions}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="SavedArchived"
-        component={SavedArchived}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-      <Stack.Screen
-        name="TimeSpent"
-        component={TimeSpent}
-        options={{headerShown: false, animation: 'slide_from_left'}}
-      />
-    </Stack.Navigator>
+    <>
+      <ZegoCallInvitationDialog />
+      <Stack.Navigator initialRouteName="Splash">
+        <Stack.Screen
+          options={{headerShown: false}}
+          // DO NOT change the name
+          name="ZegoUIKitPrebuiltCallWaitingScreen"
+          component={ZegoUIKitPrebuiltCallWaitingScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          // DO NOT change the name
+          name="ZegoUIKitPrebuiltCallInCallScreen"
+          component={ZegoUIKitPrebuiltCallInCallScreen}
+        />
+
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Splash"
+          component={Splash}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="LandingWidget"
+          options={{headerShown: false, animation: 'slide_from_left'}}
+          component={LandingWidget}
+        />
+        <Stack.Screen
+          name="OtpVerification"
+          options={{headerShown: false, animation: 'slide_from_left'}}
+          component={OtpVerification}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CloseFriends"
+          component={CloseFriends}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Otp"
+          component={Otp}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="ProfileSettingsActivity"
+          component={ProfileSettingsActivity}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreateWallet"
+          component={CreateWallet}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="EmailVerification"
+          component={EmailVerification}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="FindFriends"
+          component={FindFriends}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Interests"
+          component={Interests}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="BottomTab"
+          component={BottomTabNavigator}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreateYudio"
+          component={CreateYudio}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Yudios"
+          component={Yudios}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreatePost"
+          component={CreatePost}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreateEvent"
+          component={CreateEvent}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreateStory"
+          component={CreateStory}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="ChatInbox"
+          component={ChatInbox}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={Chat}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="NewChat"
+          component={NewChat}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="NewChatGroup"
+          component={NewChatGroup}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Wallet"
+          component={Wallet}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="PostDetails"
+          component={PostDetails}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="SuggestedContent"
+          component={SuggestedContent}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreateMoment"
+          component={CreateMoment}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Moments"
+          component={Moments}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="CreateRepost"
+          component={CreateRepost}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="ConnectionListing"
+          component={ConnectionListing}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Favorites"
+          component={Favorites}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="Subscriptions"
+          component={Subscriptions}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="SavedArchived"
+          component={SavedArchived}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+        <Stack.Screen
+          name="TimeSpent"
+          component={TimeSpent}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
+      </Stack.Navigator>
+    </>
   );
 };
 

@@ -1,12 +1,13 @@
+import { ZegoSendCallInvitationButton } from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import { Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import {
   BackArrow,
-  VideoCallIcon,
   VoiceCallIcon
 } from '../../../../assets/images/svgs';
 import { styles } from './styles';
 
 const ChatHeader = ({user, backPress, onChatDetailsPress}) => {
+  console.log("user", user)
   return (
     <View style={styles?.container}>
       <StatusBar
@@ -25,9 +26,15 @@ const ChatHeader = ({user, backPress, onChatDetailsPress}) => {
         </View>
       </TouchableOpacity>
       <View style={styles?.buttonContainer}>
-        <TouchableOpacity style={styles?.button}>
+        {/* <TouchableOpacity style={styles?.button}>
           <VideoCallIcon />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <ZegoSendCallInvitationButton
+          invitees={[{userID: user?.id, userName: user?.title}]}
+          isVideoCall={false}
+          resourceID={'youth_data'} // Please fill in the resource ID name that has been configured in the ZEGOCLOUD's console here.
+        />
+
         <TouchableOpacity style={styles?.button}>
           <VoiceCallIcon />
         </TouchableOpacity>
