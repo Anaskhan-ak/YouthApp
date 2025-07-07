@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -18,6 +19,7 @@ import { colors } from '../../../utils/colors';
 const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [waveform, setWaveform] = useState(audio?.waveform);
   const fixedBarsCount = 35;
   const isCurrentAudio = currentAudioId === audio?.id;
   const [play, setPlay] = useState(false);
@@ -96,7 +98,6 @@ const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
     return () => {
       finishedSubscription.remove();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTime, duration]);
 
   const formatTime = seconds => {
@@ -106,11 +107,11 @@ const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
   };
 
   const mappedWaveform =
-    audio?.waveform && audio?.waveform?.length > 0
+    waveform && waveform.length > 0
       ? Array.from({length: fixedBarsCount}, (_, i) => {
-          const start = Math.floor((i / fixedBarsCount) * audio?.waveform?.length);
-          const end = Math.floor(((i + 1) / fixedBarsCount) * audio?.waveform?.length);
-          const segment = audio?.waveform?.slice(start, end);
+          const start = Math.floor((i / fixedBarsCount) * waveform.length);
+          const end = Math.floor(((i + 1) / fixedBarsCount) * waveform.length);
+          const segment = waveform.slice(start, end);
           return (
             segment.reduce((sum, val) => sum + val, 0) / segment.length || 0
           );
@@ -162,7 +163,7 @@ const YudioPlayer = ({audio, bg, currentAudioId, setCurrentAudioId}) => {
           <Text style={styles.timeText}>{formatTime(currentTime)}</Text>
           <Text style={styles.timeText}>{formatTime(duration)}</Text>
         </View>
-        {audio?.waveform?.length > 0 ? (
+        {waveform?.length > 0 ? (
           <View style={styles.waveformContainer}>
             <Svg
               height={barHeightScale - 30}
