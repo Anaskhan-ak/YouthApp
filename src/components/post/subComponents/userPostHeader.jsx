@@ -57,7 +57,7 @@ const UserPostHeader = ({post, user}) => {
             textStyle={styles?.tagText}
             title={formatDate(
               moment(post?.createdAt)
-                .startOf('hour')
+                .startOf('seconds')
                 .fromNow()
                 ?.replace('days', 'd')
                 ?.replace('day', 'd')
@@ -68,7 +68,8 @@ const UserPostHeader = ({post, user}) => {
                 ?.replace('seconds', 's')
                 ?.replace('second', 's')
                 ?.replace('months', 'mth')
-                ?.replace('month', 'mth'),
+                ?.replace('month', 'mth')
+                ?.replace("few", ""),
             )}
           />
           {post?.location && (
@@ -76,8 +77,8 @@ const UserPostHeader = ({post, user}) => {
               style={[styles?.tag,{marginLeft : 3}]}
               textStyle={styles?.tagText}
               title={
-                post?.location?.length > 7
-                  ? `${post?.location?.slice(0, 7)}...`
+                post?.location?.length > 8
+                  ? `${post?.location?.slice(0, 8)}...`
                   : post?.location
               }
             />
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width * 0.14,
+    width: width * 0.16,
     height: height * 0.024,
   },
   tagText: {
