@@ -1,4 +1,4 @@
-import { BlurView } from '@react-native-community/blur';
+import {BlurView} from '@react-native-community/blur';
 import {
   FlatList,
   Image,
@@ -8,20 +8,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Cross } from '../../../assets/images/svgs';
+import {Cross} from '../../../assets/images/svgs';
 import YudioPlayer from '../../../components/audio/YudioPlayer';
-import { height, width } from '../../../constant';
-import { colors } from '../../../utils/colors';
-import { fonts } from '../../../utils/fonts';
+import {height, width} from '../../../constant';
+import {colors} from '../../../utils/colors';
+import {fonts} from '../../../utils/fonts';
+import Video from 'react-native-video';
 
 const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
   // console.log("media upload", media)
-  
+
   if (media) {
     if (
       media?.some(m => m?.type === 'video/mp4') ||
       media?.some(m => m.type === 'image/jpeg') ||
-      media?.some(m => m.type === 'image')
+      media?.some(m => m.type === 'image') ||
+      media?.some(m => m?.type === 'video') ||
+      media?.some(m => m.type === 'image/png') ||
+      media?.some(m => m.type === 'video/mp4')
     ) {
       return (
         <FlatList
@@ -35,7 +39,19 @@ const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
                 }>
                 <Cross width={width * 0.02} height={width * 0.02} />
               </TouchableOpacity>
-              <Image source={{uri: item?.uri}} style={styles.mediaImage} />
+              {item?.type?.includes('video') ? (
+                <View style={styles.videoWrapper}>
+                  <Video
+                    source={{uri: item?.uri}}
+                    style={[styles.mediaImage, {margin: 0}]}
+                    resizeMode="cover"
+                    repeat={true}
+                    muted={true}
+                  />
+                </View>
+              ) : (
+                <Image source={{uri: item?.uri}} style={styles.mediaImage} />
+              )}
             </View>
           )}
           numColumns={4}
@@ -59,7 +75,7 @@ const MediaUploader = ({media, thumbnail, setMedia, setThumbnail}) => {
           <YudioPlayer
             audio={{
               // uri: `file://${media[0]?.uri}`,
-              uri : media[0]?.uri,
+              uri: media[0]?.uri,
               type: media[0]?.type,
               name: media[0]?.name ? media[0]?.name : 'audio.wav',
             }}
@@ -154,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: width * 0.935,
-    marginTop : height * 0.02
+    marginTop: height * 0.02,
   },
   thumbnailBackground: {
     width: width * 0.4,
@@ -189,5 +205,10 @@ const styles = StyleSheet.create({
     fontSize: width * 0.035,
     fontFamily: fonts?.montserratRegular,
     color: colors?.textGray,
+  },
+  videoWrapper: {
+    borderRadius: width * 0.01,
+    overflow: 'hidden',
+    margin: width * 0.01,
   },
 });

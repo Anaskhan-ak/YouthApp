@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors?.white,
-    marginTop: Platform?.OS === 'android' ? -width * 0.08 : -width * 0.2,
+   
   },
   userInfoHeader: {
     marginVertical: width * 0.03,

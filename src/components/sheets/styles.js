@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     paddingHorizontal: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: 80,
+    borderTopRightRadius: 80,
     backgroundColor: colors?.white,
   },
   heading: {
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     marginVertical: 12,
   },
   cardContainer: {
-    height: height * 0.08,
+    height: height * 0.064,
     borderRadius: 16,
     marginVertical: 6,
     padding: 1.5,
@@ -40,12 +40,12 @@ export const styles = StyleSheet.create({
   },
   optionsButtonText:{
     fontFamily: fonts?.montserratSemiBold,
-    fontSize: Pixels(14),
+    fontSize: Pixels(15),
     color: colors?.text,
   },
   cardInner: {
     flex: Platform?.OS === 'android' && 1,
-    height: height * 0.073,
+    height: height * 0.058,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors?.white,
@@ -70,12 +70,12 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontFamily: fonts?.montserratExtraBold,
-    fontSize: width * 0.04,
+    fontSize: Pixels(15),
     color: '#000',
   },
   desc: {
     fontFamily: fonts?.montserratMedium,
-    fontSize: width * 0.028,
+    fontSize: Pixels(9),
     color: '#666',
     marginTop: 2,
   },

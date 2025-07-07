@@ -83,6 +83,7 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
     const isVideo =
       item?.split('.')?.pop() === 'MOV' ||
       item?.split('.')?.pop() === 'mp4' ||
+      item?.split('.')?.pop() === 'video' ||
       item?.split('.')?.pop() === 'm3u8';
     return (
       <TouchableOpacity
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     marginHorizontal: height * 0.01,
     marginTop: height * 0.015,
     overflow: 'hidden',
+    borderRadius:20
   },
   mediaElements: {
     flexDirection: 'row',
@@ -197,6 +199,7 @@ const styles = StyleSheet.create({
     width: width * 0.89,
     height: height * 0.38,
     resizeMode: 'cover',
+    borderRadius:20
   },
   pagination: {
     flexDirection: 'row',

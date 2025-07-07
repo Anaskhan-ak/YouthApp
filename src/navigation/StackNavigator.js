@@ -34,6 +34,9 @@ import TimeSpent from '../screens/timeSpent';
 import Wallet from '../screens/wallet';
 import Yudios from '../screens/Yudios';
 import BottomTabNavigator from './BottomTabNavigator';
+import CloseFriends from '../screens/closeFriends';
+import Favorites from '../screens/favorites';
+import Subscriptions from '../screens/subscriptions';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -72,6 +75,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="CloseFriends"
+        component={CloseFriends}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen
@@ -202,6 +210,16 @@ const StackNavigator = () => {
        <Stack.Screen
         name="ConnectionListing"
         component={ConnectionListing}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+      <Stack.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{headerShown: false, animation: 'slide_from_left'}}
+      />
+       <Stack.Screen
+        name="Subscriptions"
+        component={Subscriptions}
         options={{headerShown: false, animation: 'slide_from_left'}}
       />
       <Stack.Screen

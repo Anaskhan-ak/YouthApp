@@ -1,20 +1,20 @@
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useState} from 'react';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { BlueTick, Gallery } from '../../assets/images/svgs';
-import { NextButton } from '../../components/buttons/NextButton';
+import {BlueTick, Gallery} from '../../assets/images/svgs';
+import {NextButton} from '../../components/buttons/NextButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import GradientText from '../../components/text/GradientText';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
+import {height, width} from '../../constant';
+import {colors} from '../../utils/colors';
 import {
   profileSettingsOptions,
   sideBottomSheetOptions,
 } from '../../utils/string';
-import { styles } from './styles';
+import {styles} from './styles';
 
 export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
   const [selected, setSelected] = useState(
@@ -27,13 +27,12 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
       : {
           id: 'post',
           title: 'Post',
-          desc: 'To make sure your post reaches the right people...',
+          desc: 'To make sure your post reaches the right people, only post a relevant content, topics, etc...',
           route: 'CreatePost',
         },
   );
   const navigation = useNavigation();
   const handlePress = () => {
-    console.log('selected?.route', selected?.route);
     navigation?.navigate(selected?.route);
     if (selected?.id === 'story') {
       navigation?.navigate(selected?.route, {isHighlight: false});
@@ -49,6 +48,8 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
     if (item?.id === 'saved' || item?.id === 'archive') {
       const isSaved = item?.id === 'saved' ? true : false;
       navigation?.navigate(item?.route, {isSaved: isSaved});
+    }else{
+       navigation?.navigate(item?.route);
     }
   };
 
@@ -64,12 +65,17 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
       }}
       index={-1}
       enablePanDownToClose={true}
-      snapPoints={['95%']}
-      ref={sheetRef}>
+      snapPoints={['75']}
+      ref={sheetRef}
+      backgroundStyle={{
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+      }}>
       <BottomSheetView style={styles.contentContainer}>
         {isProfile ? (
           <View>
             <FlatList
+              ListFooterComponentStyle={{paddingBottom: 20}}
               data={profileSettingsOptions}
               renderItem={({item, index}) => {
                 return (

@@ -42,9 +42,6 @@ const styles = StyleSheet.create({
     margin: width * 0.02,
     borderRadius: width * 0.04,
   },
-  content: {
-    // backgroundColor : 'yellow'
-  },
   player: {
     flexDirection: 'row',
     alignItems: 'flex-start',

@@ -63,7 +63,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need access to your location to provide map-based features and nearby content.</string>
 	<key>NSMicrophoneUsageDescription</key>
-    <string>This app requires microphone access to record audio or interact with voice-enabled features.</string>
+    <string>We need access to your microphone to record audio.</string>
+	<key>NSAppleMusicUsageDescription</key>
+    <string>This app needs access to your media library.</string>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array>
 		<string>MKDirectionsModeBike</string>

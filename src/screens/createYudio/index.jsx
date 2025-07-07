@@ -1,6 +1,6 @@
-import { pick } from '@react-native-documents/picker';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
+import {pick} from '@react-native-documents/picker';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -13,9 +13,10 @@ import {
   View,
 } from 'react-native';
 import AudioRecord from 'react-native-audio-record';
+import RNFS from 'react-native-fs';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {images} from '../../assets/images';
 import {
   Cross,
   GradientBlueMic,
@@ -32,13 +33,13 @@ import UserInfoHeader from '../../components/headers/userInfoHeader';
 import Audience from '../../components/sheets/audience';
 import Location from '../../components/sheets/location';
 import TagFriends from '../../components/sheets/tagFriends';
-import { toast } from '../../components/toast';
+import {toast} from '../../components/toast';
 import useUser from '../../hooks/user';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import AudioBars from './components/audioBars';
 import RecordedAudioPlayer from './components/recordedAudioPlayer';
-import { styles } from './styles';
+import {styles} from './styles';
 
 const CreateYudio = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -47,7 +48,7 @@ const CreateYudio = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState('');
-  const [yudio, setYudio] = useState();
+  const [yudio, setYudio] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const recordingTimer = useRef(null);
@@ -75,7 +76,7 @@ const CreateYudio = () => {
       toast('error', 'User not found. Please log in again.');
       return;
     }
-    setLoading(true);
+
     const formData = new FormData();
     formData.append('type', 'YUDIO');
     formData.append('caption', description);
@@ -115,14 +116,13 @@ const CreateYudio = () => {
     } else {
       console.error('Audio source is missing for YUDIO');
     }
-    // console.log('Form Data', formData);
     try {
+      setLoading(true);
       const result = await apiCall?.createNewPost(formData);
       console.log('Successfully created Yudio', result?.yudios);
         navigation.navigate('Yudios', {yudio: result?.yudios});
     } catch (error) {
       console.log('Error creating yudio', error);
-      setLoading(false);
       toast('error', 'Error creating yudio');
     } finally {
       setLoading(false);
@@ -148,7 +148,7 @@ const CreateYudio = () => {
           clearTimeout(recordingTimer.current); // Clear the timer when recording is stopped
         }
         setIsRecording(false);
-        const audioFile = await AudioRecord.stop();
+        const audioFile = await AudioRecord?.stop();
         setYudio(audioFile);
         console.log('Recorded file:', audioFile);
       } catch (error) {
@@ -158,7 +158,6 @@ const CreateYudio = () => {
       // Start recording
       try {
         setIsRecording(true);
-
         AudioRecord.init({
           sampleRate: 16000,
           channels: 1,
@@ -167,7 +166,6 @@ const CreateYudio = () => {
           wavFile: `recording-${Date.now()}.wav`,
         });
         AudioRecord.start();
-
         // Set a timer to stop recording after 10 minutes
         recordingTimer.current = setTimeout(() => {
           console.log('Recording time limit reached, stopping recording...');
@@ -197,7 +195,7 @@ const CreateYudio = () => {
   }, []);
 
   const getRealPathFromURI = async uri => {
-    if (uri.startsWith('content://')) {
+    if (uri?.startsWith('content://')) {
       try {
         if (Platform.OS === 'ios') {
           const realPath = await RNFS.copyAssetsFileIOS(
@@ -277,7 +275,7 @@ const CreateYudio = () => {
   };
 
   return (
-    <SafeAreaView style={styles?.container}>
+    <View style={styles?.container}>
       <GradientHeader
         title="New Yudio"
         backPress={() => navigation?.goBack()}
@@ -433,7 +431,7 @@ const CreateYudio = () => {
           setTagFriends={setMetaData}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

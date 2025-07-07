@@ -1,17 +1,17 @@
 import InstagramStories from '@birdwingo/react-native-instagram-stories';
-import { useNavigation } from '@react-navigation/native';
-import { useRef } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useRef} from 'react';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Plus } from '../../assets/images/svgs';
-import { height, Pixels, width } from '../../constant';
-import { colors } from '../../utils/colors';
-import { fonts } from '../../utils/fonts';
+import {Plus} from '../../assets/images/svgs';
+import {height, Pixels, width} from '../../constant';
+import {colors} from '../../utils/colors';
+import {fonts} from '../../utils/fonts';
 
 const avatarSize = width * 0.125;
 const borderRadius = avatarSize / 2;
 
-const Stories = ({stories}) => {
+const Stories = ({stories, isHighlight}) => {
   const ref = useRef(null);
   const navigation = useNavigation();
   const renderAvatar = item => {
@@ -32,10 +32,14 @@ const Stories = ({stories}) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles?.addStoryBorder}>
-        <View
-          onPress={() => navigation?.navigate('CreateStory')}
-          style={styles.addStory}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation?.navigate('CreateStory', {
+            isHighlight: isHighlight ? true : false,
+          })
+        }
+        style={styles?.addStoryBorder}>
+        <View style={styles.addStory}>
           <Plus width={width * 0.06} height={width * 0.06} />
         </View>
       </TouchableOpacity>
