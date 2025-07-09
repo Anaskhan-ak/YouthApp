@@ -1,5 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as ZegoUIKitCall from '@zegocloud/zego-uikit-prebuilt-call-rn';
+// import * as ZegoUIKitCall from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import {
+  ZegoCallInvitationDialog,
+  ZegoUIKitPrebuiltCallInCallScreen,
+  ZegoUIKitPrebuiltCallWaitingScreen
+} from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CloseFriends from '../screens/closeFriends';
@@ -41,12 +46,12 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
-  const {
-    ZegoCallInvitationDialog,
-    ZegoUIKitPrebuiltCallWaitingScreen,
-    ZegoUIKitPrebuiltCallInCallScreen,
-    ZegoUIKitPrebuiltCallFloatingMinimizedView,
-  } = ZegoUIKitCall;
+  // const {
+  //   ZegoCallInvitationDialog,
+  //   ZegoUIKitPrebuiltCallWaitingScreen,
+  //   ZegoUIKitPrebuiltCallInCallScreen,
+  //   ZegoUIKitPrebuiltCallFloatingMinimizedView,
+  // } = ZegoUIKitCall;
   return (
     <>
       <ZegoCallInvitationDialog />
