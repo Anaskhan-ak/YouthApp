@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {images} from '../../assets/images';
 import ChatHeader from '../../components/headers/chat/chat';
+import { getDataLocally } from '../../helper';
 import useUser from '../../hooks/user';
 import {apiCall} from '../../services/apiCall';
 import {colors} from '../../utils/colors';
@@ -20,6 +21,7 @@ import {styles} from './styles';
 
 const Chat = ({route}) => {
   const {chatID, receiver} = route?.params;
+  // console.log("receiver", receiver);
   const [messages, setMessages] = useState([]);
   const [chatDetails, setChatDetails] = useState(false);
   const navigation = useNavigation();
@@ -87,7 +89,7 @@ const Chat = ({route}) => {
               />
               {/* </View> */}
 
-              <ChatFooter />
+              <ChatFooter receiver={receiver}/>
             </ImageBackground>
           </KeyboardAvoidingView>
         )}

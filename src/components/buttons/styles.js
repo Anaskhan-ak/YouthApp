@@ -56,7 +56,6 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginTop: height * 0.01,
     flexDirection: 'row',
   },
   socialButtonImage: {

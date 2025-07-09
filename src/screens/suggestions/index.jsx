@@ -1,5 +1,7 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -8,25 +10,37 @@ import {
   View,
 } from 'react-native';
 import Video from 'react-native-video';
-import {InactiveLike, Plus} from '../../assets/images/svgs';
+import { images } from '../../assets/images';
+import { InactiveLike, Plus } from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import InboxHeader from '../../components/headers/chat/inbox';
 import UserPostHeader from '../../components/post/subComponents/userPostHeader';
-import {height, Pixels, width} from '../../constant';
-import {colors} from '../../utils/colors';
-import {fonts} from '../../utils/fonts';
-import {images} from '../../assets/images';
-import {useEffect, useState} from 'react';
-import {apiCall} from '../../services/apiCall';
-import {ActivityIndicator} from 'react-native';
-import {toast} from '../../components/toast';
-import {getDataLocally} from '../../helper';
+import { height, Pixels, width } from '../../constant';
+import useUser from '../../hooks/user';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
+import { fonts } from '../../utils/fonts';
 
 const SuggestedContent = ({route}) => {
   const [users, setUsers] = useState([]);
   const [loader, setLoader] = useState([]);
+  const [following, setFollowing] = useState([]);
   const {headerTitle, type} = route?.params;
   const navigation = useNavigation();
+  const user = useUser()
+
+  const getFollowers = async () => {
+    try {
+      const page = 1;
+      const limit = 20;
+      const response = await apiCall?.getFollowing(page, limit);
+      console.log('response', response?.results);
+      setFollowing(response?.results);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   const getUsers = async () => {
     try {
       setLoader(true);
@@ -40,21 +54,37 @@ const SuggestedContent = ({route}) => {
       setLoader(false);
     }
   };
+
   useEffect(() => {
     getUsers();
+    getFollowers();
   }, []);
+
   const toggleFollow = async followingId => {
+    // console.log("following id", followingId)
     try {
-      const user = await getDataLocally();
-      const response = await apiCall?.follow({
+      const body = {
         followerId: user?.id,
         followingId: followingId,
-      });
-      toast('success', 'follow request successfully');
+      };
+      let response;
+      if (following?.find(f => f?.id === followingId)?.isFollowing) {
+        response = await apiCall?.unfollow(body);
+        setFollowing(prev=>prev?.map(follow=>({...follow,isFollowing:false})))
+        console.log('Unfollowed successsfully', response);
+      } else {
+        response = await apiCall?.follow(body);
+        setFollowing(prev=>prev?.map(follow=>({...follow,isFollowing:true})))
+        console.log('Followed successsfully', response);
+      }
+      // getUserData();
+      // getUsers();
+      // toast('success', 'follow request successfully');
     } catch (error) {
       console.error('Error toggling follow state:', error);
     }
   };
+
   return (
     <View style={styles?.container}>
       <InboxHeader title={headerTitle} backPress={() => navigation?.goBack()} />
@@ -95,7 +125,7 @@ const SuggestedContent = ({route}) => {
                     textStyle={styles?.btnTxt}
                     width={width * 0.26}
                     height={height * 0.04}
-                    title="Follow"
+                    title={following?.find(f=>f?.id=== item?.id)?.isFollowing ? 'Followed': 'Follow'}
                     onPress={() => toggleFollow(item?.id)}
                   />
                 </View>

@@ -9,22 +9,16 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>LSHandlerRank</key>
-			<string>Alternate</string>
 			<key>CFBundleTypeName</key>
 			<string>MKDirectionsRequest</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.apple.maps.directionsrequest</string>
 			</array>
 		</dict>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>This app requires access to your contacts to help you connect with friends and share content easily.</string>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
-	<key>UISupportsDocumentBrowser</key>
-	<true/>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -54,27 +48,8 @@
 	<string>20</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera so you can take photos and videos to share in the app.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library so you can select a photo to use as your profile picture.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to your photo library so you can upload a post or a story in the app.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need access to your location to provide map-based features and nearby content.</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>We need access to your microphone to record videos and audios.</string>
-	<key>UIFileSharingEnabled</key>
-    <true/>
-    <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/>
-	<key>UIBackgroundModes</key>
-    <array>
-    <string>audio</string>
-	<string>remote-notification</string>
-    </array>
-	<key>NSAppleMusicUsageDescription</key>
-    <string>This app needs access to your media library.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array>
 		<string>MKDirectionsModeBike</string>
@@ -95,6 +70,20 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app needs access to your media library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera so you can take photos and videos to share in the app. Also for the video calls too</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app requires access to your contacts to help you connect with friends and share content easily.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location to provide map-based features and nearby content.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to record videos and audios. Also for voice calls</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library so you can upload a post or a story in the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library so you can select a photo to use as your profile picture.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.ttf</string>
@@ -130,6 +119,17 @@
 		<string>PlusJakartaSans-SemiBold.ttf</string>
 		<string>PlusJakartaSans-SemiBoldItalic.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>remote-notification</string>
+		<string>bluetooth-peripheral</string>
+		<string>fetch</string>
+		<string>voip</string>
+		<string>processing</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -142,6 +142,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

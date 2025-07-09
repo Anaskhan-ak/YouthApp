@@ -1,4 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -7,20 +8,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {images} from '../../../assets/images';
+import { images } from '../../../assets/images';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
-import {height, Pixels, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
-import {apiCall} from '../../../services/apiCall';
-import {useEffect, useState} from 'react';
 import GradientText from '../../../components/text/GradientText';
-import {getDataLocally} from '../../../helper';
-import {toast} from '../../../components/toast';
+import { height, Pixels, width } from '../../../constant';
+import useUser from '../../../hooks/user';
+import { apiCall } from '../../../services/apiCall';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
 const SuggestedUsers = ({getUserData}) => {
   const navigation = useNavigation();
   const [users, setUsers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const user = useUser();
   const getUsers = async () => {
     try {
       const response = await apiCall?.getAllUsers({
@@ -32,20 +33,43 @@ const SuggestedUsers = ({getUserData}) => {
     } finally {
     }
   };
+
+  const getFollowers = async () => {
+    try {
+      const page = 1;
+      const limit = 20;
+      const response = await apiCall?.getFollowing(page, limit);
+      console.log('response', response?.results);
+      setFollowing(response?.results);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
   useEffect(() => {
     getUsers();
+    getFollowers();
   }, []);
 
   const toggleFollow = async followingId => {
+    // console.log("following id", followingId)
     try {
-      const user = await getDataLocally();
-      const response = await apiCall?.follow({
+      const body = {
         followerId: user?.id,
         followingId: followingId,
-      });
-      getUserData();
-      getUsers();
-      toast('success', 'follow request successfully');
+      };
+      let response;
+      if (following?.find(f => f?.id === followingId)?.isFollowing) {
+        response = await apiCall?.unfollow(body);
+        setFollowing(prev=>prev?.map(follow=>({...follow,isFollowing:false})))
+        console.log('Unfollowed successsfully', response);
+      } else {
+        response = await apiCall?.follow(body);
+        setFollowing(prev=>prev?.map(follow=>({...follow,isFollowing:true})))
+        console.log('Followed successsfully', response);
+      }
+      // getUserData();
+      // getUsers();
+      // toast('success', 'follow request successfully');
     } catch (error) {
       console.error('Error toggling follow state:', error);
     }
@@ -97,7 +121,7 @@ const SuggestedUsers = ({getUserData}) => {
                 textStyle={styles?.btnTxt}
                 width={width * 0.26}
                 height={height * 0.04}
-                title="Follow"
+                title={following?.find(f=>f?.id=== item?.id)?.isFollowing ? 'Followed': 'Follow'}
                 onPress={() => toggleFollow(item?.id)}
               />
             </View>

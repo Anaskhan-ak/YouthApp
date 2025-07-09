@@ -28,8 +28,7 @@ const Chats = () => {
       try {
         const userDetails = await getDataLocally()
         const response = await apiCall?.getChats({userId: userDetails?.id});
-        console.log('Successfully fetched chats');
-        console.log('Response', response);
+        // console.log('Response', response);
         setChats(response);
       } catch (error) {
         console.log('Error fetching chats');

@@ -1796,9 +1796,17 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-zego-callkit (1.0.6):
+    - React
   - react-native-zego-express-engine (3.20.2):
     - React
     - ZegoExpressEngine (= 3.20.2)
+  - react-native-zego-zim (2.21.0):
+    - React
+    - ZIM (= 2.21.0)
+  - react-native-zego-zpns (2.8.1):
+    - React
+    - ZPNs (= 2.6.0)
   - React-NativeModulesApple (0.79.5):
     - glog
     - hermes-engine
@@ -2559,6 +2567,8 @@ PODS:
     - ZegoUIKitReport (= 0.5.1)
   - ZegoExpressEngine (3.20.2)
   - ZegoUIKitReport (0.5.1)
+  - ZIM (2.21.0)
+  - ZPNs (2.6.0)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
@@ -2615,7 +2625,10 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-zego-callkit (from `../node_modules/zego-callkit-react-native`)
   - react-native-zego-express-engine (from `../node_modules/zego-express-engine-reactnative`)
+  - react-native-zego-zim (from `../node_modules/zego-zim-react-native`)
+  - react-native-zego-zpns (from `../node_modules/zego-zpns-react-native`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2695,6 +2708,8 @@ SPEC REPOS:
     - SocketRocket
     - ZegoExpressEngine
     - ZegoUIKitReport
+    - ZIM
+    - ZPNs
 
 EXTERNAL SOURCES:
   boost:
@@ -2802,8 +2817,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-zego-callkit:
+    :path: "../node_modules/zego-callkit-react-native"
   react-native-zego-express-engine:
     :path: "../node_modules/zego-express-engine-reactnative"
+  react-native-zego-zim:
+    :path: "../node_modules/zego-zim-react-native"
+  react-native-zego-zpns:
+    :path: "../node_modules/zego-zpns-react-native"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-oscompat:
@@ -2984,7 +3005,10 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 357110bd0d653344a63d3bc53099c171f3374a5e
   react-native-slider: 89552e4381bc34e492a7b53be7ec78221bbc9896
   react-native-video: 281c0d06976e33a1b44da3f911ffffaf82399cce
+  react-native-zego-callkit: db5d284343461b3dfee4953bd5ef8eb9de64b4be
   react-native-zego-express-engine: f41e8524a6e78321ff784bebfbd538562082c968
+  react-native-zego-zim: b839ce0b232b72911dcbee123c738cb6e741f532
+  react-native-zego-zpns: 1e0d0891e137f69dbbc88f64eb99262077cacab2
   React-NativeModulesApple: d2b9bd7d55dfd864e56c76592777ad32e8ab1f3d
   React-oscompat: 0592889a9fcf0eacb205532028e4a364e22907dd
   React-perflogger: 634408a9a0f5753faa577dfa81bc009edca01062
@@ -3043,6 +3067,8 @@ SPEC CHECKSUMS:
   zego-uikit-rn: d1107f9002db178deed07120d44c4e5f7af3b9cb
   ZegoExpressEngine: 0064f6044b5d1d00c40d815455e6ee032f1cb56b
   ZegoUIKitReport: 36f4bc9a02a4fdd5d1eda1bf665b42c54cbbfd89
+  ZIM: 8ce5077ca9282ab255d3ab924adc5a1f60f27f96
+  ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 
 PODFILE CHECKSUM: 85ad68a3914a0aee9aa7057959b3f8c11995236c
 

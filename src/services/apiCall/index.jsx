@@ -166,6 +166,12 @@ export const apiCall = {
     else throw result
   },
 
+  sendMessage : async(body) =>{
+    let result = await post(apis?.sendMessage,body)
+    if (result?.status) return result?.data?.message
+    else throw result
+  },
+
   //GET API CALL
   getAllDocuments: async params => {
     let result = await post(apis?.getDocuments, params);
