@@ -16,7 +16,6 @@ const Likes = ({actions}) => {
         }
         renderItem={({item, index}) => {
           const isMore = item?.moreCount !== undefined;
-          console.log("Item", item)
           return (
             <LinearGradient
               key={index}

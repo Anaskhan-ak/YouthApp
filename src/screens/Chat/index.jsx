@@ -11,6 +11,7 @@ import * as ZIM from 'zego-zim-react-native';
 import * as ZPNs from 'zego-zpns-react-native';
 import { images } from '../../assets/images';
 import ChatHeader from '../../components/headers/chat/chat';
+import { getDataLocally } from '../../helper';
 import useUser from '../../hooks/user';
 import { apiCall } from '../../services/apiCall';
 import { colors } from '../../utils/colors';
@@ -24,6 +25,7 @@ ZegoUIKitPrebuiltCallService.useSystemCallingUI([ZIM, ZPNs]);
 
 const Chat = ({route}) => {
   const {chatID, receiver} = route?.params;
+  // console.log("receiver", receiver);
   const [messages, setMessages] = useState([]);
   const [chatDetails, setChatDetails] = useState(false);
   const navigation = useNavigation();
@@ -31,12 +33,13 @@ const Chat = ({route}) => {
   const yourAppID = 1017984930
   const yourAppSign = 'd623688f27b5f06360f2c164c2898e950a7fd95c8a296dbac0bd89e1e2be81bc'
 
-  const onUserLogin = async (userID, userName, props) => {
+  const onUserLogin = async () => {
+    const userDetails = await getDataLocally()
     return ZegoUIKitPrebuiltCallService.init(
       yourAppID, // You can get it from ZEGOCLOUD's console
       yourAppSign, // You can get it from ZEGOCLOUD's console
-      userID, // It can be any valid characters, but we recommend using a phone number.
-      userName,
+      userDetails?.id, // It can be any valid characters, but we recommend using a phone number.
+      `${userDetails?.firstName} ${userDetails?.lastName}`,
       [ZIM, ZPNs],
       {
         ringtoneConfig: {
@@ -52,10 +55,7 @@ const Chat = ({route}) => {
   };
 
   useEffect(() => {
-    onUserLogin(
-      receiver?.userId,
-      `${receiver?.user?.firstName} ${receiver?.user?.lastName}`,
-    );
+    onUserLogin();
   }, []);
   useEffect(() => {
     const getAllChatMessages = async () => {
@@ -115,7 +115,7 @@ const Chat = ({route}) => {
               />
               {/* </View> */}
 
-              <ChatFooter />
+              <ChatFooter receiver={receiver}/>
             </ImageBackground>
           </KeyboardAvoidingView>
         )}

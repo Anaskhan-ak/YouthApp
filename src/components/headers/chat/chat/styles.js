@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft : width * 0.1,
-    flex:0.2
+    flex:1
   },
   button: {
     borderWidth: width * 0.003,
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flex:0.6
+    flex:1
   },
   image: {
     width: width * 0.1,

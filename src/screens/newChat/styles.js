@@ -36,7 +36,8 @@ export const styles = StyleSheet.create({
   },
   image: {
     width : width * 0.1,
-    height : width * 0.1
+    height : width * 0.1,
+    borderRadius : width * 0.1
   },
   name: {
     fontFamily : fonts?.plusJakartaSansSemiBold,

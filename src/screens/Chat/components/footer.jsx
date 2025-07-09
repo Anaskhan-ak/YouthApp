@@ -22,15 +22,19 @@ import {
   Sparkles,
 } from '../../../assets/images/svgs';
 import { height, width } from '../../../constant';
+import useUser from '../../../hooks/user';
+import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import CameraComponent from './camera';
 
-const ChatFooter = () => {
+const ChatFooter = ({receiver}) => {
   const [isTyping, setIsTyping] = useState(false);
+  const user= useUser()
   const [add, setAdd] = useState(false);
   const [camera, setCamera] = useState(false);
   const [media, setMedia] = useState({});
+  const [text, setText] = useState('')
   const [icons, setIcons] = useState([
     {
       name: 'documents',
@@ -140,6 +144,24 @@ const ChatFooter = () => {
     }
   };
 
+  const sendMessage = async () => {
+    try {
+      const body = {
+        userId: user?.id,
+        receiverId: receiver?.userId,
+        messageType: 'TEXT',
+        content: text,
+      };
+      const response = await apiCall?.sendMessage(body)
+      console.log('response',response)
+      setText('')
+    } catch (error) {
+      console.log('error',error);      
+    } finally{
+      setIsTyping(false)
+    }
+  };
+
   // console.log("Media", media)
   return (
     <View style={styles?.container}>
@@ -155,13 +177,15 @@ const ChatFooter = () => {
           placeholderTextColor={colors?.gray10}
           onPressIn={() => setIsTyping(true)}
           onBlur={() => setIsTyping(false)}
+          value={text}
+          onChangeText={setText}
         />
         <TouchableOpacity style={styles?.sparkles}>
           <Sparkles />
         </TouchableOpacity>
         <View style={styles?.buttonContainer}>
           {isTyping ? (
-            <TouchableOpacity style={styles?.sendIcon}>
+            <TouchableOpacity style={styles?.sendIcon} onPress={sendMessage}>
               <GradientMessageSendIcon />
             </TouchableOpacity>
           ) : (
