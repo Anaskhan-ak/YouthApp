@@ -24,7 +24,7 @@ const describeArc = (x, y, radius, startAngle, endAngle) => {
 
 const CircleCounter = ({
   size = width * 0.06,
-  segments = 12,
+  segments,
   filled = 4,
   strokeWidth = 3,
   gapDegrees = 4,
@@ -33,6 +33,7 @@ const CircleCounter = ({
   centerText = '4',
   centerTextColor = '#fff',
 }) => {
+  // console.log("segments", segments)
   const radius = (size - strokeWidth) / 2;
   const anglePerSegment = 360 / segments;
   const usableAngle = anglePerSegment - gapDegrees;

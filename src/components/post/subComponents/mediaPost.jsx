@@ -88,7 +88,12 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
     return (
       <TouchableOpacity
         onLongPress={() => modal?.setModal(prev => ({...prev, isPost: true}))}>
-        <View onLayout={handleMediaLayout} style={[styles.mediaContainer,!modal?.modal?.isPost &&{borderRadius: width * 0.04}]}>
+        <View
+          onLayout={handleMediaLayout}
+          style={[
+            styles.mediaContainer,
+            !modal?.modal?.isPost && {borderRadius: width * 0.04},
+          ]}>
           {!isVideo && (
             <View style={styles.mediaElements}>
               <TouchableOpacity onPress={() => setShowTags(!showTags)}>
@@ -96,7 +101,7 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
               </TouchableOpacity>
               {post?.media?.url?.length > 1 && (
                 <CircleCounter
-                  segments={post?.media?.length}
+                  segments={post?.media?.url?.length}
                   filled={index + 1}
                   centerText={index + 1}
                   activeColor={colors?.white}
@@ -131,7 +136,13 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: height * 0.015,
+        // width: width * 0.89,
+      }}>
       <FlatList
         data={post?.media?.url}
         horizontal
@@ -160,8 +171,8 @@ const MediaPost = ({post, modal, actions, setActions, isScrolling}) => {
           ))}
         </View>
       )}
-      {!modal?.modal?.isPost &&  (
-        <View style={[styles.reactionsTab, {width: mediaWidth}]}>
+      {!modal?.modal?.isPost && (
+        <View style={styles.reactionsTab}>
           <PostBottomTab
             post={post}
             actions={actions}
@@ -177,11 +188,10 @@ export default MediaPost;
 
 const styles = StyleSheet.create({
   mediaContainer: {
-    backgroundColor: colors?.black,
-    marginHorizontal: height * 0.01,
-    marginTop: height * 0.015,
+    marginHorizontal: width * 0.014,
+    // marginTop: height * 0.015,
     overflow: 'hidden',
-    borderRadius:20
+    borderRadius: 20,
   },
   mediaElements: {
     flexDirection: 'row',
@@ -198,8 +208,7 @@ const styles = StyleSheet.create({
   mediaImage: {
     width: width * 0.89,
     height: height * 0.38,
-    resizeMode: 'cover',
-    borderRadius:20
+    // borderRadius:20
   },
   pagination: {
     flexDirection: 'row',
@@ -219,9 +228,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 100,
     bottom: 0,
-    right: height * 0.0045,
-    left: height * 0.01,
-    alignSelf: 'center',
+    width: width * 0.89,
   },
   tagContainer: {
     flexDirection: 'row',

@@ -46,7 +46,7 @@ const Chats = () => {
     return (
       <TouchableOpacity
         style={styles?.itemContainer}
-        onPress={() => navigation?.navigate('Chat',{chatID: item?.id, receiver : otherParticipant?.user})}>
+        onPress={() => navigation?.navigate('Chat',{chatID: item?.id, receiver : otherParticipant})}>
         {/* left */}
         <View style={styles?.itemLeft}>
           <Image
