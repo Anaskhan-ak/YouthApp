@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import {
   FlatList,
   Image,
@@ -7,14 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {BackArrow} from '../../assets/images/svgs';
+import { BackArrow } from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import CustomSearchBar from '../../components/inputs/search';
 import InviteModal from '../../components/modals/genderModal/inviteModal';
 import GradientText from '../../components/text/GradientText';
-import {height, width} from '../../constant';
-import {styles} from './styles';
-import {useNavigation} from '@react-navigation/native';
+import { height, width } from '../../constant';
+import { styles } from './styles';
 
 const ContactsList = ({
   modal,
@@ -30,6 +30,7 @@ const ContactsList = ({
   const [inviteModal, setInviteModal] = useState(false);
   const [selectedContact, setSelectedContact] = useState();
   const navigation = useNavigation();
+  // console.log("following", following)
   return (
     <Modal animationType="slide" visible={modal} statusBarTranslucent>
       <View style={styles?.modalContent}>
@@ -61,7 +62,7 @@ const ContactsList = ({
             <Text style={styles?.contentHeading}>Youthapp Contacts</Text>
           )}
           renderItem={({item}) => {
-            const isFollowing = following.some(f => f.followingId === item?.id);
+            const isFollowing = following.find(f => f.id === item?.id)?.isFollowing;
             return (
               <View style={styles?.contentItem}>
                 <View style={styles?.itemLeftContent}>

@@ -1,8 +1,8 @@
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { useEffect, useRef, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useEffect, useRef, useState} from 'react';
+import {Image, ImageBackground, TouchableOpacity, View} from 'react-native';
 
-import { images } from '../../assets/images';
+import {images} from '../../assets/images';
 import {
   EventsIcon,
   FileAudio,
@@ -14,13 +14,13 @@ import {
   WhiteLeftArrow,
 } from '../../assets/images/svgs';
 
-import { pick } from '@react-native-documents/picker';
-import { ActivityIndicator } from 'react-native';
+import {pick} from '@react-native-documents/picker';
+import {ActivityIndicator} from 'react-native';
 import RNBottomSheet from '../../components/sheets/BottomSheet';
 import Stories from '../../components/stories';
-import { height, width } from '../../constant';
-import { getDataLocally } from '../../helper';
-import { apiCall } from '../../services/apiCall';
+import {height, width} from '../../constant';
+import {getDataLocally} from '../../helper';
+import {apiCall} from '../../services/apiCall';
 import EditProfile from './compoents/editProfile';
 import MultipleAccountsModal from './compoents/multipleAccountModal';
 import PostContentModal from './compoents/postContentModal';
@@ -29,7 +29,8 @@ import ProfileOption from './compoents/profileOption';
 import ProfilePicture from './compoents/profilePicture';
 import ProfileStats from './compoents/profileStats';
 import QRSheet from './compoents/qrCode';
-import { styles } from './styles';
+import {styles} from './styles';
+import {ScrollView} from 'react-native';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -45,11 +46,11 @@ const Profile = () => {
   const [editProfile, setEditProfile] = useState(false);
   const [qr, setQr] = useState(false);
   const qrRef = useRef(null);
-  const multipleAccountsRef = useRef(null)
-  const [multipleAcc, setMultipleAcc] = useState(false)
+  const multipleAccountsRef = useRef(null);
+  const [multipleAcc, setMultipleAcc] = useState(false);
   const focus = useIsFocused();
-  const settingsSheetRef = useRef(null)
-  const [settingsSheet, setSettingsSheet] = useState(false)
+  const settingsSheetRef = useRef(null);
+  const [settingsSheet, setSettingsSheet] = useState(false);
   const getStories = async () => {
     try {
       const userData = await getDataLocally();
@@ -119,95 +120,113 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={styles.scrollContentContainer}
+        showsVerticalScrollIndicator={false}>
+        {/* Cover Image Section */}
         <TouchableOpacity
-          onPress={() =>
-            editProfile ? setEditProfile(false) : navigation?.goBack()
-          }
-          style={styles.backButton}>
-          <WhiteLeftArrow />
-        </TouchableOpacity>
-        <View style={styles?.headerIcons}>
-          <TouchableOpacity onPress={()=> {
-            settingsSheetRef?.current?.snapToIndex(0);
-            }} style={styles?.headerIcon}>
-            <ProfileSettingsIcon/>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles?.headerIcon}>
-            <Menu width={width * 0.07} height={width * 0.07} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <TouchableOpacity
-        style={styles.coverImageContainer}
-        onPress={handleCoverImage}>
-        <Image
-          source={
-            userData?.coverImage
-              ? {uri: userData?.coverImage}
-              : images?.defaultPicture
-          }
-          style={
-            !userData?.coverImage
-              ? {
-                  width: width * 0.2,
-                  height: height * 0.1,
-                  borderRadius: width * 0.03,
+          style={styles.coverImageContainer}
+          onPress={handleCoverImage}>
+          <ImageBackground
+            source={
+              userData?.coverImage
+                ? {uri: userData?.coverImage}
+                : images?.defaultPicture
+            }
+            style={
+              !userData?.coverImage
+                ? {
+                    width: width * 0.2,
+                    height: height * 0.1,
+                    borderRadius: width * 0.03,
+                  }
+                : styles.coverImage
+            }>
+            <View style={styles.header}>
+              <TouchableOpacity
+                onPress={() =>
+                  editProfile ? setEditProfile(false) : navigation?.goBack()
                 }
-              : styles.coverImage
-          }
-        />
-      </TouchableOpacity>
+                style={styles.backButton}>
+                <WhiteLeftArrow />
+              </TouchableOpacity>
+              <View style={styles?.headerIcons}>
+                <TouchableOpacity
+                  onPress={() => settingsSheetRef?.current?.snapToIndex(0)}
+                  style={styles?.headerIcon}>
+                  <ProfileSettingsIcon />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles?.headerIcon}>
+                  <Menu width={width * 0.07} height={width * 0.07} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
 
-      <View style={[styles.profileContentContainer, editProfile && {flex: 1}]}>
-        <ProfilePicture
-          user={userData}
-          setUser={setUserData}
-          setEditProfile={setEditProfile}
-        />
-
-        {!userData ? (
-          <View style={styles?.indicator}>
-            <ActivityIndicator size={'large'} />
-          </View>
-        ) : editProfile ? (
-          <EditProfile
-            data={userData}
-            setData={setUserData}
+        {/* Profile Content */}
+        <View
+          style={[styles.profileContentContainer, editProfile && {flex: 1}]}>
+          <ProfilePicture
+            user={userData}
+            setUser={setUserData}
             setEditProfile={setEditProfile}
           />
-        ) : (
-          <>
-            <ProfileDetailCard
-              userName={`${userData?.firstName} ${userData?.lastName}`}
-              bio={userData?.bio}
-              links={userData?.links}
+
+          {!userData ? (
+            <View style={styles?.indicator}>
+              <ActivityIndicator size={'large'} />
+            </View>
+          ) : editProfile ? (
+            <EditProfile
+              data={userData}
+              setData={setUserData}
               setEditProfile={setEditProfile}
             />
-            <ProfileStats
-              post={userData?.numPosts}
-              followers={userData?.numFollowers}
-              followings={userData?.numFollowing}
-              subscribers={50}
-            />
-            <View style={styles?.icons}>
-              <ProfileOption
-                getUserData={getUserData}
+          ) : (
+            <>
+              <ProfileDetailCard
+                userName={`${userData?.firstName} ${userData?.lastName}`}
+                bio={userData?.bio}
+                links={userData?.links}
                 setEditProfile={setEditProfile}
-                setQr={setQr}
-                qrRef={qrRef}
-                accountsRef={multipleAccountsRef}
               />
-            </View>
-            {<Stories stories={stories} />}
-            <PostContentModal fixed options={options} setOptions={setOptions} />
-            <QRSheet setVisible={setQr} sheetRef={qrRef} />
-            <MultipleAccountsModal ref={multipleAccountsRef} setVisible={setMultipleAcc}/>
-            <RNBottomSheet setIsSheetOpen={setSettingsSheet} sheetRef={settingsSheetRef} isProfile={true}/>
-          </>
-        )}
-      </View>
+              <ProfileStats
+                post={userData?.numPosts}
+                followers={userData?.numFollowers}
+                followings={userData?.numFollowing}
+                subscribers={50}
+              />
+              <View style={styles?.icons}>
+                <ProfileOption
+                  getUserData={getUserData}
+                  setEditProfile={setEditProfile}
+                  setQr={setQr}
+                  qrRef={qrRef}
+                  accountsRef={multipleAccountsRef}
+                />
+              </View>
+              <Stories stories={stories} />
+              <PostContentModal
+                fixed
+                options={options}
+                setOptions={setOptions}
+              />
+              <QRSheet setVisible={setQr} sheetRef={qrRef} />
+              <MultipleAccountsModal
+                ref={multipleAccountsRef}
+                setVisible={setMultipleAcc}
+              />
+              <RNBottomSheet
+                setIsSheetOpen={setSettingsSheet}
+                sheetRef={settingsSheetRef}
+                isProfile={true}
+              />
+            </>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };

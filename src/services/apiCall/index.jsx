@@ -33,11 +33,6 @@ export const apiCall = {
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
-  getFollowing: async () => {
-    let result = await post(apis?.getFollowing);
-    if (result?.status === 200) return result?.data?.data;
-    else throw result;
-  },
   getStories: async params => {
     let result = await post(apis?.getStories, params);
     if (result?.status >= 200 && result?.status < 400) return result?.data?.data?.posts;
@@ -58,11 +53,7 @@ export const apiCall = {
     if (result?.status === 200) return result?.data?.data;
     else throw result;
   },
-  unfollow: async params => {
-    let result = await post(apis?.unfollow, params);
-    if (result?.status === 200) return result?.status;
-    else throw result;
-  },
+  
   addInterest: async params => {
     let result = await post(apis?.addInterest, params);
     if (result?.status === 200) return result?.status;
@@ -233,10 +224,21 @@ export const apiCall = {
     if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },
+
+  getFollowing: async ({page, limit}) => {
+    let result = await get(`${apis?.getFollowing}?page=${page}&limit=${limit}`);
+    if (result?.status === 200) return result?.data;
+    else throw result;
+  },
   // PATCH API CALL
   gatePassStatus: async obj => {
     let result = await patch(Apis.gatePassStatus, obj);
     if (result.status === 200) return result.data;
+  },
+  unfollow: async params => {
+    let result = await patch(apis?.unfollow, params);
+    if (result?.status === 200) return result?.status;
+    else throw result;
   },
   // DELETE API CALL
   deleteNotification: async params => {

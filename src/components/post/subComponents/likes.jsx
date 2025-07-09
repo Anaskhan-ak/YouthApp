@@ -16,6 +16,7 @@ const Likes = ({actions}) => {
         }
         renderItem={({item, index}) => {
           const isMore = item?.moreCount !== undefined;
+          console.log("Item", item)
           return (
             <LinearGradient
               key={index}
@@ -27,7 +28,7 @@ const Likes = ({actions}) => {
               {isMore ? (
                 <Text style={styles?.gradientText}>+{item.moreCount}</Text>
               ) : (
-                <Image source={item?.photo ? {uri : item?.photo} : images?.defaultProfilePicture} style={styles?.image} />
+                <Image source={item?.user?.photo ? {uri : item?.user?.photo} : images?.defaultProfilePicture} style={styles?.image} />
               )}
             </LinearGradient>
           );

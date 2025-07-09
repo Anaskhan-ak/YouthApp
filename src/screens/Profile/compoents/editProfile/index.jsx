@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { useState } from 'react';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import {useState} from 'react';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
 import {
   Platform,
   ScrollView,
@@ -9,18 +9,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { DropDown, GradientCross } from '../../../../assets/images/svgs';
+import {DropDown, GradientCross} from '../../../../assets/images/svgs';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
 import CountryPickerDropDown from '../../../../components/dropdowns/CountryPicker';
 import DateMonthPicker from '../../../../components/dropdowns/DatePicker';
 import AuthInput from '../../../../components/inputs/authInput';
 import GenderModal from '../../../../components/modals/genderModal';
 import GradientText from '../../../../components/text/GradientText';
-import { toast } from '../../../../components/toast';
-import { height, width } from '../../../../constant';
-import { apiCall } from '../../../../services/apiCall';
-import { colors } from '../../../../utils/colors';
-import { styles } from './styles';
+import {toast} from '../../../../components/toast';
+import {height, width} from '../../../../constant';
+import {apiCall} from '../../../../services/apiCall';
+import {colors} from '../../../../utils/colors';
+import {styles} from './styles';
 
 const EditProfile = ({data, setData, setEditProfile}) => {
   const [showGender, setShowGender] = useState(false);
@@ -284,6 +284,7 @@ const EditProfile = ({data, setData, setEditProfile}) => {
                   placeholder="Date Of Birth"
                   inputStyle={{color: colors?.text}}
                   icon={'calendar1'}
+                  onPress={() => setShowDate(prev => !prev)}
                 />
               </TouchableOpacity>
             );
@@ -395,7 +396,11 @@ const EditProfile = ({data, setData, setEditProfile}) => {
         setGender={setGender}
         value={gender}
       />
-      <CountryPickerDropDown showCountry={showCountry} setValue={setValue} />
+      <CountryPickerDropDown
+        showCountry={showCountry}
+        setShowCountry={setShowCountry}
+        setValue={setValue}
+      />
       <DateMonthPicker
         showDate={showDate}
         setShowDate={setShowDate}

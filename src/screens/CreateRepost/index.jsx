@@ -132,9 +132,11 @@ const CreateRepost = ({route}) => {
         <LinearGradient
           colors={[colors?.RGB4, colors?.RGB5]}
           style={styles?.post}>
-          <UserPostHeader post={post} user={post?.user} />
-          {renderPostContent(post)}
-        </LinearGradient>
+       <View style={styles.postInner}>
+    <UserPostHeader post={post} user={post?.user} />
+    {renderPostContent(post)}
+  </View>
+  </LinearGradient>
         {drawer && <Drawer />}
       </ScrollView>
 

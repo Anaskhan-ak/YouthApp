@@ -1,6 +1,7 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PrimaryButton from '../../../../components/buttons/PrimaryButton';
+import { height } from '../../../../constant';
 
 const MultipleAccountsModal = ({ref, setVisible}) => {
   return (
@@ -11,8 +12,8 @@ const MultipleAccountsModal = ({ref, setVisible}) => {
       index={-1}
       onChange={index => setVisible(index >= 0)}>
       <BottomSheetView style={styles?.container}>
-        <PrimaryButton title="Add an exisitng account" />
-        <PrimaryButton title="Create a new account" />
+        <View style={styles?.button}><PrimaryButton title="Add an exisitng account" /></View>
+        <View style={styles?.button}><PrimaryButton title="Create a new account" /></View>
       </BottomSheetView>
     </BottomSheet>
   );
@@ -22,4 +23,7 @@ export default MultipleAccountsModal;
 
 const styles = StyleSheet.create({
   container: {},
+  button : {
+    marginVertical : height * 0.005
+  }
 });

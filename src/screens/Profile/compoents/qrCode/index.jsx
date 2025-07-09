@@ -1,13 +1,16 @@
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import QRCode from 'react-native-qrcode-svg';
 import { ChainIcon, ShareProfileIcon } from '../../../../assets/images/svgs';
+import InviteModal from '../../../../components/modals/genderModal/inviteModal';
 import { width } from '../../../../constant';
 import { colors } from '../../../../utils/colors';
 import { styles } from './styles';
 
 export default function QRSheet({sheetRef, setVisible}) {
+  const [inviteModal, setInviteModal] = useState(false)
   return (
     <BottomSheet
         onChange={index => 
@@ -35,7 +38,7 @@ export default function QRSheet({sheetRef, setVisible}) {
             </LinearGradient>
             <Text style={styles?.iconText}>Copy Link</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles?.button}>
+          <TouchableOpacity style={styles?.button} onPress={()=>setInviteModal(true)}>
             <LinearGradient
               colors={[colors?.RGB1, colors?.RGB2]}
               style={styles?.icon}>
@@ -45,6 +48,11 @@ export default function QRSheet({sheetRef, setVisible}) {
           </TouchableOpacity>
         </View>
       </BottomSheetView>
+      {
+        inviteModal && (
+          <InviteModal setModal={setInviteModal}/>
+        )
+      }
     </BottomSheet>
   );
 }

@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import {
   Image,
@@ -9,12 +9,12 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {images} from '../../../assets/images';
-import {BlueTick} from '../../../assets/images/svgs';
+import { images } from '../../../assets/images';
+import { BlueTick } from '../../../assets/images/svgs';
 import PrimaryButton from '../../../components/buttons/PrimaryButton';
-import {height, Pixels, width} from '../../../constant';
-import {colors} from '../../../utils/colors';
-import {fonts} from '../../../utils/fonts';
+import { height, Pixels, width } from '../../../constant';
+import { colors } from '../../../utils/colors';
+import { fonts } from '../../../utils/fonts';
 
 const UserPostHeader = ({post, user}) => {
   const navigation = useNavigation();
@@ -51,23 +51,13 @@ const UserPostHeader = ({post, user}) => {
             <BlueTick />
           </View>
         </View>
-        <View style={[styles?.row, {marginTop: -height * 0.005}]}>
+        <View style={styles?.buttonrow}>
           <PrimaryButton
-            style={{
-              alignSelf: 'center',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: width * 0.14,
-              height: height * 0.024,
-            }}
-            textStyle={{
-              fontFamily: fonts?.montserratSemiBold,
-              fontSize: Pixels(10),
-              color: colors?.white,
-            }}
+            style={styles?.tag}
+            textStyle={styles?.tagText}
             title={formatDate(
               moment(post?.createdAt)
-                .startOf('hour')
+                .startOf('seconds')
                 .fromNow()
                 ?.replace('days', 'd')
                 ?.replace('day', 'd')
@@ -78,31 +68,25 @@ const UserPostHeader = ({post, user}) => {
                 ?.replace('seconds', 's')
                 ?.replace('second', 's')
                 ?.replace('months', 'mth')
-                ?.replace('month', 'mth'),
+                ?.replace('month', 'mth')
+                ?.replace("few", ""),
             )}
           />
           {post?.location && (
             <PrimaryButton
-              style={{
-                alignSelf: 'center',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: width * 0.16,
-                height: height * 0.024,
-                marginLeft: width * 0.01,
-              }}
-              textStyle={{
-                fontFamily: fonts?.montserratSemiBold,
-                fontSize: Pixels(10),
-                color: colors?.white,
-                paddingHorizontal: 2,
-              }}
+              style={[styles?.tag,{marginLeft : 3}]}
+              textStyle={styles?.tagText}
               title={
-                post?.location?.length > 7
-                  ? `${post?.location?.slice(0, 7)}...`
+                post?.location?.length > 8
+                  ? `${post?.location?.slice(0, 8)}...`
                   : post?.location
               }
             />
+          )}
+          {post?.type === 'EVENT' && (
+            <View style={styles?.eventTag}>
+              <Text style={styles?.tagText}>Event</Text>
+            </View>
           )}
         </View>
       </View>
@@ -149,4 +133,31 @@ const styles = StyleSheet.create({
   tick: {
     marginLeft: width * 0.06,
   },
+  buttonrow:{
+    flexDirection : 'row',
+    alignItems: 'start',
+    justifyContent: 'lex-start',
+    overflow : 'hidden',
+  },
+  tag: {
+    // alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.16,
+    height: height * 0.024,
+  },
+  tagText: {
+    fontFamily: fonts?.montserratSemiBold,
+    fontSize: Pixels(10),
+    color: colors?.white,
+  },
+  eventTag:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.12,
+    padding: height * 0.003,
+    backgroundColor : colors?.pink,
+    borderRadius : width * 0.015,
+    marginLeft : 5
+  }
 });

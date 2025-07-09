@@ -23,7 +23,7 @@ const playPauseHandler = () => {
     } else {
       const localPath = Platform.OS === 'ios' ? `file://${audioURL}` : audioURL;
       console.log('Playing path:', localPath);
-      SoundPlayer.play(localPath);
+      SoundPlayer.play(audioURL);
       setIsPlaying(true);
     }
   } catch (e) {

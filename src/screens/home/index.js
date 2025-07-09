@@ -120,9 +120,9 @@ const Home = () => {
       )}
       {isSheetOpen && (
         <BlurView
-          style={StyleSheet.absoluteFill}
-          blurType={Platform?.OS === 'ios' ? 'ultraThinMaterialDark' : 'light'}
-          blurAmount={10}
+          style={[StyleSheet.absoluteFill]}
+          blurType={Platform?.OS === 'ios' ? 'dark' : 'light'}
+          blurAmount={3}
           reducedTransparencyFallbackColor="white"
         />
       )}
