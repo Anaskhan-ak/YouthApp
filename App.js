@@ -1,17 +1,20 @@
-import {NavigationContainer} from '@react-navigation/native';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { NavigationContainer } from '@react-navigation/native';
+import {
+  ZegoUIKitPrebuiltCallFloatingMinimizedView
+} from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import { useEffect } from 'react';
+import { Linking } from 'react-native';
 import 'react-native-gesture-handler';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Provider} from 'react-redux';
-import StackNavigator from './src/navigation/StackNavigator';
-import {store} from './src/redux/store';
-import 'react-native-url-polyfill/auto';
-import {Linking} from 'react-native';
-import {useEffect} from 'react';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {config} from './src/environment';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import 'react-native-url-polyfill/auto';
+import { Provider } from 'react-redux';
+import { config } from './src/environment';
 import { requestNotificationPermission } from './src/helper';
+import StackNavigator from './src/navigation/StackNavigator';
+import { store } from './src/redux/store';
 
 const App = () => {
   const linking = {
@@ -43,23 +46,25 @@ const App = () => {
     offlineAccess: true,
   });
   useEffect(() => {
-    getNotificationPermission()
+    getNotificationPermission();
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
   }, []);
-  const getNotificationPermission = async ()  =>{
-     const getNotificationPermission = await requestNotificationPermission()
-  }
+  const getNotificationPermission = async () => {
+    const getNotificationPermission = await requestNotificationPermission();
+  };
   return (
     <NavigationContainer linking={linking}>
       <GestureHandlerRootView style={{flex: 1}}>
         <Provider store={store}>
           <BottomSheetModalProvider>
+             <ZegoUIKitPrebuiltCallFloatingMinimizedView />
             <StackNavigator />
             <Toast />
           </BottomSheetModalProvider>
         </Provider>
       </GestureHandlerRootView>
+      <ZegoUIKitPrebuiltCallFloatingMinimizedView />
     </NavigationContainer>
   );
 };

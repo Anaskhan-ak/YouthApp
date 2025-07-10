@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Contacts from 'react-native-contacts';
+// import Contacts from 'react-native-contacts';
 import LinearGradient from 'react-native-linear-gradient';
 import { images } from '../../assets/images';
 import CreateButton from '../../components/buttons/CreateButton';
@@ -42,84 +42,84 @@ const NewChat = () => {
     }
   };
 
-  const getContacts = async () => {
-    try {
-      if (Platform.OS === 'android') {
-        const permission = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-          {
-            title: 'Contacts Permission',
-            message: 'This app would like to view your contacts.',
-            buttonPositive: 'Please accept bare mortal',
-          },
-        );
-        if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
-          // setModal(false);
-          toast('Permissions denied');
-          return;
-        }
-      }
-      const results = await Contacts?.getContactsByPhoneNumber('03228214535');
-      // console.log('Contacts', results);
-      const formattedContacts = results.map((contact, index) => ({
-        id: index,
-        fullName:
-          contact.displayName ||
-          `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
-        photo: contact.thumbnailPath, // Path to the contact's photo (if available)
-        phoneNumbers: contact.phoneNumbers[0]?.number, // Array of phone numbers
-      }));
-      console.log('Formatted contacts', formattedContacts?.slice(0, 4));
-      const sanitizeNumber = number => {
-        if (!number) return null; // Remove undefined numbers
-        const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
-        return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
-      };
-      const extractedNumbers = results
-        ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
-        .filter(Boolean); // Remove null/undefined/short values
-      console.log('extractedNumbers', extractedNumbers);
-      // getYouthappContacts(extractedNumbers);
-      setContacts(formattedContacts);
-    } catch (error) {
-      console.log('Error fetching contacts', error);
-    }
-    // }
-  };
+  // const getContacts = async () => {
+  //   try {
+  //     if (Platform.OS === 'android') {
+  //       const permission = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+  //         {
+  //           title: 'Contacts Permission',
+  //           message: 'This app would like to view your contacts.',
+  //           buttonPositive: 'Please accept bare mortal',
+  //         },
+  //       );
+  //       if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
+  //         // setModal(false);
+  //         toast('Permissions denied');
+  //         return;
+  //       }
+  //     }
+  //     const results = await Contacts?.getContactsByPhoneNumber('03228214535');
+  //     // console.log('Contacts', results);
+  //     const formattedContacts = results.map((contact, index) => ({
+  //       id: index,
+  //       fullName:
+  //         contact.displayName ||
+  //         `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
+  //       photo: contact.thumbnailPath, // Path to the contact's photo (if available)
+  //       phoneNumbers: contact.phoneNumbers[0]?.number, // Array of phone numbers
+  //     }));
+  //     console.log('Formatted contacts', formattedContacts?.slice(0, 4));
+  //     const sanitizeNumber = number => {
+  //       if (!number) return null; // Remove undefined numbers
+  //       const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
+  //       return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
+  //     };
+  //     const extractedNumbers = results
+  //       ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
+  //       .filter(Boolean); // Remove null/undefined/short values
+  //     console.log('extractedNumbers', extractedNumbers);
+  //     // getYouthappContacts(extractedNumbers);
+  //     setContacts(formattedContacts);
+  //   } catch (error) {
+  //     console.log('Error fetching contacts', error);
+  //   }
+  //   // }
+  // };
 
-  const fetchNumbers = async () => {
-    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
-      title: 'Contacts',
-      message: 'This app would like to view your contacts.',
-      buttonPositive: 'Please accept bare mortal',
-    })
-      .then(res => {
-        console.log('Permission: ', res);
-        Contacts.getAll()
-          .then(contacts => {
-            // work with contacts
-            console.log(contacts);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      })
-      .catch(error => {
-        console.error('Permission error: ', error);
-      });
-  };
+  // const fetchNumbers = async () => {
+  //   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+  //     title: 'Contacts',
+  //     message: 'This app would like to view your contacts.',
+  //     buttonPositive: 'Please accept bare mortal',
+  //   })
+  //     .then(res => {
+  //       console.log('Permission: ', res);
+  //       Contacts.getAll()
+  //         .then(contacts => {
+  //           // work with contacts
+  //           console.log(contacts);
+  //         })
+  //         .catch(e => {
+  //           console.log(e);
+  //         });
+  //     })
+  //     .catch(error => {
+  //       console.error('Permission error: ', error);
+  //     });
+  // };
 
   useEffect(() => {
     getFollowing();
-    getContacts();
+    // getContacts();
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchNumbers();
-    }, 1000); // Delay 1 second
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     // fetchNumbers();
+  //   }, 1000); // Delay 1 second
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const renderItem = ({item, index}) => {
     // console.log('item', item);

@@ -1,10 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import * as ZegoUIKitCall from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import {
-  ZegoCallInvitationDialog,
   ZegoUIKitPrebuiltCallInCallScreen,
-  ZegoUIKitPrebuiltCallWaitingScreen
+  ZegoUIKitPrebuiltCallWaitingScreen,
 } from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import CallPage from '../screens/call';
 import Chat from '../screens/Chat';
 import ChatInbox from '../screens/ChatInbox';
 import CloseFriends from '../screens/closeFriends';
@@ -46,29 +45,26 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
-  // const {
-  //   ZegoCallInvitationDialog,
-  //   ZegoUIKitPrebuiltCallWaitingScreen,
-  //   ZegoUIKitPrebuiltCallInCallScreen,
-  //   ZegoUIKitPrebuiltCallFloatingMinimizedView,
-  // } = ZegoUIKitCall;
   return (
     <>
-      <ZegoCallInvitationDialog />
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
-          options={{headerShown: false}}
-          // DO NOT change the name
+          <Stack.Screen
+          options={{ headerShown: false }}
+          // DO NOT change the name 
           name="ZegoUIKitPrebuiltCallWaitingScreen"
           component={ZegoUIKitPrebuiltCallWaitingScreen}
         />
         <Stack.Screen
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           // DO NOT change the name
           name="ZegoUIKitPrebuiltCallInCallScreen"
           component={ZegoUIKitPrebuiltCallInCallScreen}
         />
-
+        <Stack.Screen
+          name="CallPage"
+          component={CallPage}
+          options={{headerShown: false, animation: 'slide_from_left'}}
+        />
         <Stack.Screen
           name="Onboarding"
           component={Onboarding}

@@ -261,7 +261,7 @@ const CreateYudio = () => {
       }
       const formData = new FormData();
       formData.append('audio', {
-        uri: `file://${fileUri}`, // Use the resolved file URI
+        uri: `file://${yudio}`, // Use the resolved file URI
         type: 'audio/mpeg',
         name: 'audio-file.wav',
       });

@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import {Camera, useCameraDevice} from 'react-native-vision-camera';
 import {ToggleCameraIcon, WhiteTick} from '../../../assets/images/svgs';
@@ -15,7 +15,22 @@ const CameraComponent = ({media, setMedia,setOptions}) => {
   const device = useCameraDevice(cameraDevice);
   const camera = useRef(null);
   const navigation = useNavigation();
+  
+useEffect(() => {
+  const configurePermissions = async () => {
+    const cameraPermission = await Camera.requestCameraPermission();
+    const microphonePermission = await Camera.requestMicrophonePermission();
 
+    if (
+      cameraPermission !== 'authorized' ||
+      microphonePermission !== 'authorized'
+    ) {
+      console.warn('Camera or mic permission not granted');
+    }
+  };
+
+  configurePermissions();
+}, []);
   const takePhoto = async () => {
     const photo = await camera.current?.takePhoto();
     const result = `file://${photo?.path}`;
@@ -54,7 +69,7 @@ const CameraComponent = ({media, setMedia,setOptions}) => {
   };
 
   const stopVideo = async () => {
-    await camera.current?.stopRecording();
+    await camera?.current?.stopRecording();
     setIsRecording(false);
   };
 
@@ -67,10 +82,11 @@ const CameraComponent = ({media, setMedia,setOptions}) => {
   );
   };
 
-  const onRetake = () => {
-    setPhotoUri(null);
-    setVideoUri(null);
-  };
+ const onRetake = () => {
+  setPhotoUri(null);
+  setVideoUri(null);
+  setMedia(prev => prev.slice(0, -1)); // remove last item
+};
 
   return (
     <View style={styles?.container}>

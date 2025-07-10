@@ -1,13 +1,24 @@
-import { ZegoSendCallInvitationButton } from '@zegocloud/zego-uikit-prebuilt-call-rn';
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Image, StatusBar, Text, TouchableOpacity, View } from 'react-native';
-import {
-  BackArrow,
-  VideoCallIcon
-} from '../../../../assets/images/svgs';
+import { BackArrow, VideoCallIcon, VoiceCallIcon } from '../../../../assets/images/svgs';
 import { styles } from './styles';
 
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { onUserLogin } from '../../../../common/zegoCall';
+import { getDataLocally } from '../../../../helper';
+
 const ChatHeader = ({user, backPress, onChatDetailsPress}) => {
-  // console.log("user", user)
+  const navigation = useNavigation();
+  useEffect(() => {
+    localData();
+  }, []);
+  const localData = async () => {
+    const userData = await getDataLocally();
+    if (userData) {
+      onUserLogin(userData?.id, userData?.firstName, navigation);
+    }
+  };
   return (
     <View style={styles?.container}>
       <StatusBar
@@ -28,15 +39,42 @@ const ChatHeader = ({user, backPress, onChatDetailsPress}) => {
       <View style={styles?.buttonContainer}>
         <TouchableOpacity style={styles?.button}>
           <VideoCallIcon />
-        </TouchableOpacity>       
+        </TouchableOpacity>
 
-        <TouchableOpacity style={styles?.button}>
-          {/* <VoiceCallIcon /> */}
-          <ZegoSendCallInvitationButton
+        <TouchableOpacity style={styles?.button} onPress={()=>{
+          navigation.navigate('CallPage', {
+            userID: user?.id,
+            userName: user?.title
+        })
+        }}>
+          <VoiceCallIcon />
+          {/* <ZegoSendCallInvitationButton
           invitees={[{userID: user?.id, userName: user?.title}]}
           isVideoCall={false}
           resourceID={'youth_data'} // Please fill in the resource ID name that has been configured in the ZEGOCLOUD's console here.
-        />
+        /> */}
+          {/* <ZegoSendCallInvitationButton
+            invitees={[{userID: user?.id, userName: user?.title}]}
+            isVideoCall={false}
+            showWaitingPageWhenGroupCall={true}
+            resourceID={'youth_data'}
+            notificationConfig={{
+              title: 'Incoming Call', // Add proper title
+              message: `Sannya is calling you`, // Use actual caller name
+            }}
+            onPressed={(errorCode, errorMessage, errorInvitees) => {
+              if (errorCode == 0) {
+                console.log('Error when error code 0', errorMessage);
+                toast('error', errorMessage);
+              } else {
+                toast(
+                  'error',
+                  `{type: ${ZegoToastType.error}, error: ${errorCode}\n\n${errorMessage}}`,
+                );
+                console.log('Error when error code not 0', errorMessage);
+              }
+            }}
+          /> */}
         </TouchableOpacity>
       </View>
     </View>

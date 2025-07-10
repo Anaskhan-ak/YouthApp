@@ -1,27 +1,23 @@
-import { useNavigation } from '@react-navigation/native';
-import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
-import { useEffect, useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
 import {
   FlatList,
   ImageBackground,
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
 } from 'react-native';
-import * as ZIM from 'zego-zim-react-native';
-import * as ZPNs from 'zego-zpns-react-native';
-import { images } from '../../assets/images';
+import {images} from '../../assets/images';
 import ChatHeader from '../../components/headers/chat/chat';
 import { getDataLocally } from '../../helper';
 import useUser from '../../hooks/user';
-import { apiCall } from '../../services/apiCall';
-import { colors } from '../../utils/colors';
+import {apiCall} from '../../services/apiCall';
+import {colors} from '../../utils/colors';
 import ChatDetails from './components/chatDetails';
 import ChatFooter from './components/footer';
 import ReceivedMessage from './components/receivedMessage';
 import SentMessage from './components/sentMessage';
-import { styles } from './styles';
-
-ZegoUIKitPrebuiltCallService.useSystemCallingUI([ZIM, ZPNs]);
+import {styles} from './styles';
 
 const Chat = ({route}) => {
   const {chatID, receiver} = route?.params;
@@ -30,33 +26,10 @@ const Chat = ({route}) => {
   const [chatDetails, setChatDetails] = useState(false);
   const navigation = useNavigation();
   const user = useUser();
-  const yourAppID = 1017984930
-  const yourAppSign = 'd623688f27b5f06360f2c164c2898e950a7fd95c8a296dbac0bd89e1e2be81bc'
+  const yourAppID = 1017984930;
+  const yourAppSign =
+    'd623688f27b5f06360f2c164c2898e950a7fd95c8a296dbac0bd89e1e2be81bc';
 
-  const onUserLogin = async () => {
-    const userDetails = await getDataLocally()
-    return ZegoUIKitPrebuiltCallService.init(
-      yourAppID, // You can get it from ZEGOCLOUD's console
-      yourAppSign, // You can get it from ZEGOCLOUD's console
-      userDetails?.id, // It can be any valid characters, but we recommend using a phone number.
-      `${userDetails?.firstName} ${userDetails?.lastName}`,
-      [ZIM, ZPNs],
-      {
-        ringtoneConfig: {
-          incomingCallFileName: 'zego_incoming.mp3',
-          outgoingCallFileName: 'zego_outgoing.mp3',
-        },
-        androidNotificationConfig: {
-          channelID: 'ZegoUIKit',
-          channelName: 'ZegoUIKit',
-        },
-      },
-    );
-  };
-
-  useEffect(() => {
-    onUserLogin();
-  }, []);
   useEffect(() => {
     const getAllChatMessages = async () => {
       try {
@@ -69,6 +42,7 @@ const Chat = ({route}) => {
       }
     };
     getAllChatMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors?.white}}>
@@ -90,7 +64,7 @@ const Chat = ({route}) => {
                 user={{
                   title: `${receiver?.user?.firstName} ${receiver?.user?.lastName}`,
                   // `${receiver?.firstName} ${receiver?.lastName}`,
-                  id : receiver?.userId,
+                  id: receiver?.userId,
                   image: receiver?.user?.photo
                     ? {uri: receiver?.user?.photo}
                     : images?.defaultProfilePicture,

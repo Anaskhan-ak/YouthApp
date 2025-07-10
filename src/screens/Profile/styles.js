@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { height, width } from '../../constant';
-import { colors } from '../../utils/colors';
+import {StyleSheet} from 'react-native';
+import {height, width} from '../../constant';
+import {colors} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,11 +11,11 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: height * 0.04,
     zIndex: 999,
-    flexDirection : 'row',
-    alignItems : 'center',
-    justifyContent : 'space-between',
-    width : width * 0.9,
-    alignSelf : 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: width * 0.9,
+    alignSelf: 'center',
   },
   backButton: {
     width: 40,
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   coverImageContainer: {
-    flex: 0.3,
+    height: height * 0.3,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors?.gray,
@@ -46,14 +46,17 @@ export const styles = StyleSheet.create({
   icons: {
     marginVertical: height * 0.008,
   },
-  indicator:{flex: 1, alignItems: 'center', justifyContent: 'center'},
-  headerIcons : {
-    flexDirection : 'row',
-    alignItems : 'center',
-    justifyContent : 'space-between',
+  indicator: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  headerIcon : {
-    padding : width * 0.02,
-    margin : width * 0.01,
-  }
+  headerIcon: {
+    padding: width * 0.02,
+    margin: width * 0.01,
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
+  },
 });

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
@@ -11,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Contacts from 'react-native-contacts';
+// import Contacts from 'react-native-contacts';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Cross } from '../../assets/images/svgs';
 import { GradientBorderButton } from '../../components/buttons/GradientBorderButton';
@@ -85,50 +86,50 @@ const FindFriends = () => {
     }
   };
 
-  const getContacts = async () => {
-    try {
-      if (Platform.OS === 'android') {
-        const permission = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-          {
-            title: 'Contacts Permission',
-            message: 'This app would like to view your contacts.',
-            buttonPositive: 'Please accept bare mortal',
-          },
-        );
-        if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
-          setModal(false);
-          return;
-        }
-      }
-      const results = await Contacts?.getAll();
-      // console.log('Contacts', results);
-      const formattedContacts = results.map((contact, index) => ({
-        id: index,
-        fullName:
-          contact.displayName ||
-          `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
-        photo: contact.thumbnailPath, // Path to the contact's photo (if available)
-        phoneNumbers: contact.phoneNumbers[0]?.number, // Array of phone numbers
-      }));
-      console.log('Formatted contacts', formattedContacts?.slice(0, 4));
-      const sanitizeNumber = number => {
-        if (!number) return null; // Remove undefined numbers
-        const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
-        return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
-      };
-      const extractedNumbers = results
-        ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
-        .filter(Boolean); // Remove null/undefined/short values
-      console.log('extractedNumbers', extractedNumbers);
-      // getYouthappContacts(extractedNumbers);
-      setPhoneNos(formattedContacts);
-      setFilteredNos(formattedContacts);
-    } catch (error) {
-      console.log('Error fetching contacts', error);
-    }
-    // }
-  };
+  // const getContacts = async () => {
+  //   try {
+  //     if (Platform.OS === 'android') {
+  //       const permission = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+  //         {
+  //           title: 'Contacts Permission',
+  //           message: 'This app would like to view your contacts.',
+  //           buttonPositive: 'Please accept bare mortal',
+  //         },
+  //       );
+  //       if (permission !== PermissionsAndroid.RESULTS.GRANTED) {
+  //         setModal(false);
+  //         return;
+  //       }
+  //     }
+  //     const results = await Contacts?.getAll();
+  //     // console.log('Contacts', results);
+  //     const formattedContacts = results.map((contact, index) => ({
+  //       id: index,
+  //       fullName:
+  //         contact.displayName ||
+  //         `${contact.givenName || ''} ${contact.familyName || ''}`.trim(),
+  //       photo: contact.thumbnailPath, // Path to the contact's photo (if available)
+  //       phoneNumbers: contact.phoneNumbers[0]?.number, // Array of phone numbers
+  //     }));
+  //     console.log('Formatted contacts', formattedContacts?.slice(0, 4));
+  //     const sanitizeNumber = number => {
+  //       if (!number) return null; // Remove undefined numbers
+  //       const sanitized = number.replace(/[^+\d]/g, '').trim(); // Remove spaces, dashes, and other characters
+  //       return sanitized.length >= 10 ? sanitized : null; // Keep numbers with at least 10 characters
+  //     };
+  //     const extractedNumbers = results
+  //       ?.map(number => sanitizeNumber(number?.phoneNumbers[0]?.number))
+  //       .filter(Boolean); // Remove null/undefined/short values
+  //     console.log('extractedNumbers', extractedNumbers);
+  //     // getYouthappContacts(extractedNumbers);
+  //     setPhoneNos(formattedContacts);
+  //     setFilteredNos(formattedContacts);
+  //   } catch (error) {
+  //     console.log('Error fetching contacts', error);
+  //   }
+  //   // }
+  // };
 
   const getFollowing = async () => {
     try {
@@ -192,7 +193,7 @@ const FindFriends = () => {
 
   useEffect(() => {
     getFollowing();
-    getContacts();
+    // getContacts();
     getYouthappContacts()
     const backHandler = BackHandler?.addEventListener(
       'hardwareBackPress',

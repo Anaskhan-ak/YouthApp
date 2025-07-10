@@ -26,6 +26,7 @@ import {apiCall} from '../../services/apiCall';
 import {colors} from '../../utils/colors';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { onUserLogin } from '../../common/zegoCall';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -62,6 +63,7 @@ const Login = () => {
         await AsyncStorage.setItem('rememberMe', 'rememberMe');
       }
       const jsonValue = JSON.stringify(result?.data);
+       onUserLogin(result?.data?.id, result?.data?.firstName, navigation)
       await AsyncStorage.setItem('UserLocalData', jsonValue);
       if(result?.data?.isFirstLogin){
       navigation?.navigate('Interests');
