@@ -1,81 +1,44 @@
-import React, {useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
-  Modal,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {BackArrow} from '../../assets/images/svgs';
-import {styles} from './styles';
-import {useNavigation} from '@react-navigation/native';
-import CustomSearchBar from '../../components/inputs/search';
-import {height, width} from '../../constant';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BackArrow } from '../../assets/images/svgs';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import CustomSearchBar from '../../components/inputs/search';
+import { height, width } from '../../constant';
+import { apiCall } from '../../services/apiCall';
+import { styles } from './styles';
 
 const ConnectionListing = ({route}) => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const {heading} = route?.params || '';
-  const users = [
-    {
-      id: 'cmbeywh9v0000yrc1vcoycrlm',
-      firstName: 'jamil',
-      lastName: 'ahmed',
-      country: 'pakistan',
-      photo: null,
-      coverImage: null,
-      isFollowing: true,
-      isFollower: false,
-      isSubscriber: true,
-    },
-    {
-      id: 'cmbeywh9v0001yrc1vcoycrlm',
-      firstName: 'ali',
-      lastName: 'khan',
-      country: 'pakistan',
-      photo: null,
-      coverImage: null,
-      isFollowing: false,
-      isFollower: true,
-      isSubscriber: false,
-    },
-    {
-      id: 'cmbeywh9v0002yrc1vcoycrlm',
-      firstName: 'sana',
-      lastName: 'fatima',
-      country: 'pakistan',
-      photo: null,
-      coverImage: null,
-      isFollowing: true,
-      isFollower: true,
-      isSubscriber: false,
-    },
-    {
-      id: 'cmbeywh9v0003yrc1vcoycrlm',
-      firstName: 'ahsan',
-      lastName: 'raza',
-      country: 'pakistan',
-      photo: null,
-      coverImage: null,
-      isFollowing: false,
-      isFollower: false,
-      isSubscriber: true,
-    },
-    {
-      id: 'cmbeywh9v0004yrc1vcoycrlm',
-      firstName: 'zara',
-      lastName: 'sheikh',
-      country: 'pakistan',
-      photo: null,
-      coverImage: null,
-      isFollowing: true,
-      isFollower: true,
-      isSubscriber: true,
-    },
-  ];
+  const [following, setFollowing] = useState([]);
+
+  useEffect(() => {
+    const getFollowing = async () => {
+      try {
+        const page = 1;
+        const limit = 20;
+        const response = await apiCall?.getFollowing(page, limit);
+        if (response) {
+          console.log('Following fetched successfully', response?.results);
+          setFollowing(response?.results);
+        }
+      } catch (error) {
+        console.log('Error fetching following', error);
+      }
+    };
+    getFollowing();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <SafeAreaView style={styles?.container}>
       <View style={styles?.header}>
@@ -94,13 +57,13 @@ const ConnectionListing = ({route}) => {
         //   func={}
       />
       <FlatList
-        data={users}
+        data={following}
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={() => (
           <Text
             style={
               styles?.contentHeading
-            }>{`All 12.5K ${heading?.toUpperCase()}`}</Text>
+            }>{`All ${following?.length} ${heading?.toUpperCase()}`}</Text>
         )}
         renderItem={({item}) => {
           return (

@@ -17,26 +17,30 @@ import {
 } from '../../../assets/images/svgs';
 import { toast } from '../../../components/toast';
 import { height, Pixels, width } from '../../../constant';
-import { getDataLocally } from '../../../helper';
+import useUser from '../../../hooks/user';
 import { apiCall } from '../../../services/apiCall';
 import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const PostModal = ({post, modal, setModal}) => {
-  const [following, setFollowing] = useState(false);
+  const [following, setFollowing] = useState([]);
+  const user = useUser();
   useEffect(() => {
     const getFollowing = async () => {
-      const userDetails = await getDataLocally();
       try {
-        const response = await apiCall?.getFollower(userDetails?.id);
+        const page = 1;
+        const limit = 20;
+        const response = await apiCall?.getFollowing(page, limit);
         if (response) {
-          setFollowing(response?.some(f => f?.followingId === post?.userId));
+          console.log('Following fetched successfully', response?.results);
+          setFollowing(response?.results);
         }
       } catch (error) {
         console.log('Error fetching following', error);
       }
     };
     getFollowing();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDownload = async () => {
@@ -109,13 +113,42 @@ const PostModal = ({post, modal, setModal}) => {
     }
   };
 
+  const handleFollow = async () => {
+    try {
+      const body = {
+        followerId: post?.userId,
+        followingId: user?.id,
+      };
+      const isAlreadyFollowing = following?.find(
+        f => f.id === post?.userId,
+      )?.isFollowing;
+      if (isAlreadyFollowing) {
+        const response = await apiCall?.unfollow(body);
+        console.log('Unfollowed successfully',response);
+        setFollowing(prev =>
+          prev?.map(follow => ({...follow, isFollowing: false})),
+        );
+      } else {
+        const response = await apiCall?.follow(body);
+        console.log('Followed successfully',response);
+        setFollowing(prev =>
+          prev?.map(follow => ({...follow, isFollowing: true})),
+        );
+      }
+    } catch (error) {
+      console.log('Error following/unfollwoing', error);
+    }
+  };
+
+
   const actions = [
     {
       type: 'follow',
-      title: following
+      title: following?.find(f => f.id === post?.userId)?.isFollowing
         ? `Following ${post?.user?.firstName} ${post?.user?.lastName}`
         : `Follow ${post?.user?.firstName} ${post?.user?.lastName}`,
       icon: <OutlineFollowIcon />,
+      func: handleFollow,
     },
     {
       type: 'block',
@@ -156,9 +189,9 @@ const PostModal = ({post, modal, setModal}) => {
                 borderBottomLeftRadius: width * 0.03,
                 borderBottomRightRadius: width * 0.03,
               },
-               {
-                width: modal?.modal?.isPost ? width * 0.87: width * 0.7,
-              }
+              {
+                width: modal?.modal?.isPost ? width * 0.87 : width * 0.7,
+              },
             ]}>
             <Text style={styles?.text}>{action?.title}</Text>
             {action?.icon}
@@ -175,7 +208,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     // transform : [{scale : 0.8}],
-    margin : width * 0.02
+    margin: width * 0.02,
   },
   button: {
     margin: height * 0.001,
@@ -184,7 +217,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    
   },
   text: {
     fontFamily: fonts?.montserratMedium,

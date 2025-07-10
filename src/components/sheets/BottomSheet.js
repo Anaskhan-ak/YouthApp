@@ -1,20 +1,20 @@
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
-import {useState} from 'react';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {BlueTick, Gallery} from '../../assets/images/svgs';
-import {NextButton} from '../../components/buttons/NextButton';
+import { BlueTick, Gallery } from '../../assets/images/svgs';
+import { NextButton } from '../../components/buttons/NextButton';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import GradientText from '../../components/text/GradientText';
-import {height, width} from '../../constant';
-import {colors} from '../../utils/colors';
+import { height, width } from '../../constant';
+import { colors } from '../../utils/colors';
 import {
   profileSettingsOptions,
   sideBottomSheetOptions,
 } from '../../utils/string';
-import {styles} from './styles';
+import { styles } from './styles';
 
 export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
   const [selected, setSelected] = useState(
@@ -65,7 +65,7 @@ export default function RNBottomSheet({sheetRef, setIsSheetOpen, isProfile}) {
       }}
       index={-1}
       enablePanDownToClose={true}
-      snapPoints={['75']}
+      snapPoints={['75%', '100%']}
       ref={sheetRef}
       backgroundStyle={{
         borderTopLeftRadius: 40,

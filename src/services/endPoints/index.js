@@ -16,7 +16,7 @@ export const apis = {
   getUsers : 'api/v1/getUsers',
   like  : 'api/v1/likePost',
   comment : 'api/v1/addComment',
-  getFollower : 'api/v1/getFollowing/',
+  
   reactOnComment : 'api/v1/reactoncomment',
   replyOnComment : 'api/v1/replyoncomment',
   getStories : 'api/v1/getStory',
@@ -41,7 +41,8 @@ export const apis = {
   getOnBoardingContent : 'api/v1/onboarding',
   getSavedPosts : 'api/v1/post/saved',
   getAlbums : 'api/v1/post/album',
-  getFollowing : 'api/v1/getFollower',
+  getFollower : 'api/v1/getFollower',
+  getFollowing : 'api/v1/getFollowing/',
   // DELETE ENDPOINTS
   // PATCH ENDPOINTS
 };

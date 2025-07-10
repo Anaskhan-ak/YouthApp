@@ -43,11 +43,7 @@ export const apiCall = {
     if (result?.status >= 200 && result?.status < 400) return result?.data?.data;
     else throw result;
   },
-  getFollower: async params => {
-    let result = await post(`${apis?.getFollower}${params}`);
-    if (result?.status === 200) return result?.data?.data;
-    else throw result;
-  },
+  
   follow: async params => {
     let result = await post(apis?.follow, params);
     if (result?.status === 200) return result?.data?.data;
@@ -233,6 +229,12 @@ export const apiCall = {
 
   getFollowing: async ({page, limit}) => {
     let result = await get(`${apis?.getFollowing}?page=${page}&limit=${limit}`);
+    if (result?.status === 200) return result?.data;
+    else throw result;
+  },
+
+  getFollower: async ({page, limit}) => {
+    let result = await get(`${apis?.getFollower}?page=${page}&limit=${limit}`);
     if (result?.status === 200) return result?.data;
     else throw result;
   },
