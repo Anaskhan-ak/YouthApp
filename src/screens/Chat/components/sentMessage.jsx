@@ -7,8 +7,6 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 
 const SentMessage = ({message}) => {
-  // console.log('Messageeeeee', message);
-
   const TextMessage = ({text, time}) => {
     return (
       <View style={styles?.textContainer}>

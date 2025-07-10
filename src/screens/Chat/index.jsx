@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   ImageBackground,
@@ -7,17 +7,16 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
-import {images} from '../../assets/images';
+import { images } from '../../assets/images';
 import ChatHeader from '../../components/headers/chat/chat';
-import { getDataLocally } from '../../helper';
 import useUser from '../../hooks/user';
-import {apiCall} from '../../services/apiCall';
-import {colors} from '../../utils/colors';
+import { apiCall } from '../../services/apiCall';
+import { colors } from '../../utils/colors';
 import ChatDetails from './components/chatDetails';
 import ChatFooter from './components/footer';
 import ReceivedMessage from './components/receivedMessage';
 import SentMessage from './components/sentMessage';
-import {styles} from './styles';
+import { styles } from './styles';
 
 const Chat = ({route}) => {
   const {chatID, receiver} = route?.params;
@@ -26,9 +25,6 @@ const Chat = ({route}) => {
   const [chatDetails, setChatDetails] = useState(false);
   const navigation = useNavigation();
   const user = useUser();
-  const yourAppID = 1017984930;
-  const yourAppSign =
-    'd623688f27b5f06360f2c164c2898e950a7fd95c8a296dbac0bd89e1e2be81bc';
 
   useEffect(() => {
     const getAllChatMessages = async () => {
@@ -44,6 +40,7 @@ const Chat = ({route}) => {
     getAllChatMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors?.white}}>
       <>
@@ -89,7 +86,13 @@ const Chat = ({route}) => {
               />
               {/* </View> */}
 
-              <ChatFooter receiver={receiver}/>
+              <ChatFooter
+                receiver={receiver}
+                message={{
+                  messages,
+                  setMessages,
+                }}
+              />
             </ImageBackground>
           </KeyboardAvoidingView>
         )}

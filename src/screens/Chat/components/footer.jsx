@@ -28,13 +28,13 @@ import { colors } from '../../../utils/colors';
 import { fonts } from '../../../utils/fonts';
 import CameraComponent from './camera';
 
-const ChatFooter = ({receiver}) => {
+const ChatFooter = ({receiver, message}) => {
   const [isTyping, setIsTyping] = useState(false);
-  const user= useUser()
+  const user = useUser();
   const [add, setAdd] = useState(false);
   const [camera, setCamera] = useState(false);
   const [media, setMedia] = useState({});
-  const [text, setText] = useState('')
+  const [text, setText] = useState('');
   const [icons, setIcons] = useState([
     {
       name: 'documents',
@@ -67,6 +67,36 @@ const ChatFooter = ({receiver}) => {
       active: false,
     },
   ]);
+  let socket;
+  const initializeSocket = async () => {
+    const token = await AsyncStorage.getItem('token');
+
+    const socket = io(config?.baseUrl, {
+      auth: {
+        token: token,
+      },
+    });
+
+    socket.on('connect', () => {
+      console.log('Socket connected!');
+    });
+
+    socket.on('connect_error', error => {
+      console.log('Socket connect error:', error.message); // will no longer say "authentication error"
+    });
+
+    return socket;
+  };
+
+  useEffect(() => {
+    (async () => {
+      socket = await initializeSocket();
+      socket?.on('receiveMessage', message => {
+        console.log('🚀 ~ socket?.on ~ message:', message);
+      });
+    })();
+  }, []);
+
   useEffect(() => {
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
@@ -152,13 +182,14 @@ const ChatFooter = ({receiver}) => {
         messageType: 'TEXT',
         content: text,
       };
-      const response = await apiCall?.sendMessage(body)
-      console.log('response',response)
-      setText('')
+      const response = await apiCall?.sendMessage(body);
+      console.log('response', response);
+      message?.setMessages(prev=>[...prev,response])
+      setText('');
     } catch (error) {
-      console.log('error',error);      
-    } finally{
-      setIsTyping(false)
+      console.log('error', error);
+    } finally {
+      setIsTyping(false);
     }
   };
 
